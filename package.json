@@ -1,0 +1,24 @@
+{
+  "name": "scholardb",
+  "version": "1.0.0",
+  "description": "Scholarly publications database for libraries heavily inspired by Bibapp",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mickelj/scholardb.git"
+  },
+  "author": "Jason T. Mickel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mickelj/scholardb/issues"
+  },
+  "homepage": "https://github.com/mickelj/scholardb#readme",
+  "dependencies": {
+    "express": "^4.14.1",
+    "express-vue": "^3.7.2",
+    "massive": "^2.6.0"
+  }
+}
