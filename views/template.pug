@@ -1,0 +1,23 @@
+doctype html
+html
+  head
+    title= title
+    include jquery.pug
+    include materialize.pug
+    link(rel='stylesheet', href='/css/style.css')
+  body
+    div.container
+      header.row
+        div.col.s8 
+          h1 #{title}
+        div.col.s4
+          p.right-align
+            small
+              em Presented by the Washington and Lee University Library
+      
+      div#content.row
+        block content
+        
+      footer.row
+        div.col.s12
+          small &copy; 2017, Washington and Lee University Library
