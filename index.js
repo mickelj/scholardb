@@ -5,10 +5,10 @@ app.set('port', (process.env.PORT || 5000));
 app.use(express.static(__dirname + '/public'));
 
 app.set('views', __dirname + '/views');
-app.set('view engine', 'ejs');
+app.set('view engine', 'pug');
 
 app.get('/', function(request, response) {
-  response.send("<h1>Hi!</h1>");
+  response.render('index', {title: "ScholarsDB Home", "message": "Welcome to ScholarsDB!"});
 });
 
 app.listen(app.get('port'), function() {
