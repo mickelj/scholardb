@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/mickelj/scholardb#readme",
   "dependencies": {
+    "body-parser": "^1.17.1",
     "express": "^4.14.1",
     "express-vue": "^3.7.2",
     "massive": "^2.6.0",
