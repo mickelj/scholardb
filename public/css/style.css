@@ -1,0 +1,12 @@
+.btn-floating.right-fab {
+  position: absolute;
+  right: 3px;
+  bottom: -15px;
+}
+
+.btn-floating {
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  font-size: small;
+}
