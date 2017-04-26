@@ -5,9 +5,10 @@ block content
     p.col.s12 Original scholarly works from members of the Washington and Lee Community
     
   div.row
-    div.col.s2
-      div.card
-        div.card-image
-          img(src="http://library.wlu.edu/scholar/system/data/3/original/jason_mickel.jpg?1417725619")
-          button.btn-floating.halfway-fab.blue.darken-4(data-badge-caption="Works") 4
-        p(style="padding: 0 0 10px;") Mickel
+    each pers, i in people
+      div.col.s2
+        div.card
+          div.card-image
+            img(src="https://www.wlu.edu/images/directory/thumbnails/" + pers.image)
+            button.btn-floating.halfway-fab.blue.darken-4= pers.count
+          p(style="padding: 0 0 10px;")= pers.last_name
