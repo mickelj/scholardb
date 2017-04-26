@@ -2,13 +2,12 @@ extends template
 
 block content
   div.row
-    p.col.s12 Original scholarly works from members of the Washington and Lee Community
-    
-  div.row
     div.col.s12.m8
       div.col.s12
         p.headline= sampling
       each pers, i in people
+        unless i%5
+          div.row
         div.col.s2
           div.card
             div.card-image
