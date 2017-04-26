@@ -1,5 +1,5 @@
 var express = require('express');
-var app = require('../index');
+var app = express();
 var router = express.Router();
 var db = app.get('db');
 
