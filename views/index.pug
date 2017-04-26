@@ -21,8 +21,10 @@ block content
           div.card-panel
             p.work-title= work.title_primary
             p.work-type= work.type
+            - var authlist = []
             each auth in work.contributors
-              p.work-authors= auth.display_name
+              - authlist.push(auth)
+            p.work-authors= authlist.join(", ")
             p.work-pub= work.name
               span.work-date= work.publication_date_year
       
