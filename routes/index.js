@@ -1,4 +1,5 @@
 const express = require('express');
+const app = require('../index.js');
 const router = express.Router();
 const db = app.get('db');
 
