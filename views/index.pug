@@ -7,12 +7,12 @@ block content
   div.row
     div.col.s12.m8
       div.col.s12
-        p.headline A Sample of W&amp;L Scholars
+        p.headline= sampling
       each pers, i in people
         div.col.s2
           div.card
             div.card-image
-              img(src="https://www.wlu.edu/images/directory/thumbnails/" + pers.image + ".jpg")
+              img(src=imgrootdir + pers.image + defimgext)
               button.btn-floating.right-fab.blue.darken-4= pers.count
             p.cardname= pers.last_name
     div.col.s12.m4

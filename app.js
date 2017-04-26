@@ -1,12 +1,14 @@
-var express = require('express');
-var app = express();
+const express = require('express');
+const app = express();
+const nconf = require('nconf');
+nconf.file('env', 'config/environment.json');
+nconf.file('database', 'config/database.json');
 
-var bodyparser = require('body-parser');
-var index = require('./routes/index');
-var massive = require('massive');
-//var connectionString = "postgres://knyadlimluugnb:ab832b8ca2651471a862e489e4f44f6754019e8c795a20a582e2f64a8ec13c7d@ec2-54-225-240-168.compute-1.amazonaws.com:5432/ddk942mhci1bsc";
-var connectionString = process.env.DATABASE_URL;
-var massiveInstance = massive.connectSync({connectionString: connectionString});
+const bodyparser = require('body-parser');
+const index = require('./routes/index');
+const massive = require('massive');
+const connectionString = (process.env.DATABASE_URL || nconf.get('database:connectionString'));
+const massiveInstance = massive.connectSync({connectionString: connectionString});
 
 app.set('port', (process.env.PORT || 5000));
 app.use(express.static(__dirname + '/public'));
@@ -15,6 +17,7 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'pug');
 
 app.set('db', massiveInstance);
+app.set('nconf', nconf);
 
 app.use('/', index);
 

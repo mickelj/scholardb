@@ -6,17 +6,45 @@ html
     include materialize.pug
     link(rel='stylesheet', href='/css/style.css')
   body
+    div.navbar-fixed
+      nav.blue.darken-4
+        div.nav-wrapper
+          a.brand-logo(href="#") #{appname}
+          a.button-collapse(href="#", data-activates="mobile-menu")
+            i.material-icons menu
+          ul#nav-mobile.right.hide-on-med-and-down
+            li
+              a(href="/works") Works
+            li
+              a(href="/departments") Departments &amp; Programs
+            li
+              a(href="/people") People
+            li
+              a(href="/publications") Publications
+            li
+              a(href="/publishers") Publishers
+          ul#mobile-menu.side-nav
+            li
+              a(href="/works") Works
+            li
+              a(href="/departments") Departments &amp; Programs
+            li
+              a(href="/people") People
+            li
+              a(href="/publications") Publications
+            li
+              a(href="/publishers") Publishers
+
     header.row
-      div.col.s12.m9
-        h1 #{message}
-      div.col.s12.m3
-        p.right-align
-          em Presented by the Washington and Lee University Library
-    
+      div.col.s12
+        p.tagline= tagline
+  
     main.row
       block content
       
     footer.row
       div.col.s12
         p.center-align
-          small &copy; 2017, Washington and Lee University Library
+          small &copy; #{organization}
+    
+    script(type="text/javascript", src="/js/script.js")
