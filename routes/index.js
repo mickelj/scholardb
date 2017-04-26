@@ -1,3 +1,4 @@
+var express = require('express');
 var app = require('../index');
 var router = express.Router();
 var db = app.get('db');
