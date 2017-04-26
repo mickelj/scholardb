@@ -5,7 +5,9 @@ block content
     p.col.s12 Original scholarly works from members of the Washington and Lee Community
     
   div.row
-    div.col.s12.m9
+    div.col.s12.m8
+      div.col.s12
+        p.headline A Sample of W&amp;L Scholars
       each pers, i in people
         div.col.s2
           div.card
@@ -13,8 +15,8 @@ block content
               img(src="https://www.wlu.edu/images/directory/thumbnails/" + pers.image + ".jpg")
               button.btn-floating.right-fab.blue.darken-4= pers.count
             p(style="padding: 0 0 10px;")= pers.last_name
-    div.col.s12.m3
-      h3 Recent Contributions
+    div.col.s12.m4
+      p.headline Recent Contributions
       div.col.s4.m12
         p first
       div.col.s4.m12

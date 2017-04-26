@@ -10,3 +10,11 @@
   line-height: 30px;
   font-size: small;
 }
+
+.headline {
+  font-size: 1.5rem;
+  background: #0D47A1;
+  color: #fff;
+  padding: 10px;
+  border-radius: 4px;
+}
