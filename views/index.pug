@@ -21,7 +21,8 @@ block content
           div.card-panel
             p.work-title= work.title_primary
             p.work-type= work.type
-            p.work-authors= work.contributors
+            each auth in work.contributors
+              p.work-authors= auth.display_name
             p.work-pub= work.name
               span.work-date= work.publication_date_year
       
