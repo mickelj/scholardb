@@ -16,10 +16,12 @@ block content
             p.cardname= pers.last_name
     div.col.s12.m4
       p.headline Recent Contributions
-      div.col.s4.m12
-        p first
-      div.col.s4.m12
-        p second
-      div.col.s4.m12
-        p third
+      each work in works
+        div.col.s4.m12
+          div.card-panel
+            p.work-title= work.title_primary
+            p.work-type= work.type
+            p.work-authors= work.contributors
+            p.work-pub= work.name
+              span.work-date= work.publication_date_year
       
