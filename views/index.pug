@@ -20,7 +20,7 @@ block content
         div.col.s4.m12
           div.card-panel
             p.work-title= work.title_primary
-            p.work-type= work.type
+            p.work-type= work.description
             - var authlist = []
             each auth in work.contributors
               - authlist.push(auth.display_name)
