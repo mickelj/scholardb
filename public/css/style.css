@@ -44,6 +44,10 @@
   margin-top: 2px;
 }
 
+input[type="search"] {
+  margin: 0;
+}
+
 .card-panel {
   padding: 1px 15px;
 }
@@ -70,4 +74,28 @@
 }
 .work-date:before {
     content: " (";
+}
+
+@media screen and (min-width: 1201px) {
+  .xl0 {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .l0 {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .m0 {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .s0 {
+    display: none;
+  }
 }
