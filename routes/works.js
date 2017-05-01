@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/', function(req, res) {
+  var nconf = req.app.get('nconf');
   res.render('works', {
     title: nconf.get('application:appname') + " - Works",
     tagline: nconf.get('application:tagline'),
