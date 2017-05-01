@@ -2,6 +2,10 @@
   margin-bottom: 0;
 }
 
+.row .col {
+  padding: 0 .5rem;
+}
+
 .btn-floating.right-fab {
   position: absolute;
   right: 3px;
@@ -17,11 +21,11 @@
 }
 
 .headline {
-  font-size: 1.5rem;
+  font-size: 1.35rem;
   background: #0D47A1;
   color: #fff;
-  padding: 10px;
-  border-radius: 4px;
+  padding: .5em;
+  border-radius: 2px;
 }
 
 .cardname {

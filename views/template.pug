@@ -37,8 +37,15 @@ html
               a(href="/publishers") Publishers
 
     header.row
-      div.col.s12
+      div.col.s12.m8
         p.tagline= tagline
+      div.col.s12.m4
+        form
+          div.input-field
+            input#search(type="search", required)
+            label.label-icon(for="search")
+              i.material-icons search
+            i.material-icons close
   
     main.row
       block content
@@ -46,6 +53,7 @@ html
     footer.row
       div.col.s12
         p.center-align
-          small &copy; #{organization}
+          - var year = new Date().getFullYear()
+          small &copy; #{year}, #{organization}
     
     script(type="text/javascript", src="/js/script.js")
