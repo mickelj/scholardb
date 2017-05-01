@@ -3,7 +3,7 @@
     "organization"  : "Washington and Lee University Library",
     "orgshortname"  : "W&L",
     "appname"       : "W&L Scholar",
-    "logo"          : "/images/wlupubs_logo.png",
+    "logo"          : "/images/wlupubs_logo_white.png",
     "tagline"       : "Original scholarly works from members of the Washington and Lee Community",
     "imgrootdir"    : "https://www.wlu.edu/images/directory/thumbnails/",
     "defimgext"     : ".jpg"
