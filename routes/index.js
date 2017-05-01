@@ -27,6 +27,7 @@ function getRecentWorks(req, res, next) {
 
 function renderHomePage(req, res) {
   var nconf = req.app.get('nconf');
+  console.log(req.works);
   res.render('index', {
     people: req.scholars,
     works: req.works,
