@@ -23,7 +23,7 @@ block content
             p.work-type= work.type
             - var authlist = []
             each auth in work.contributors
-              - authlist.push(auth)
+              - authlist.push(auth.display_name)
             p.work-authors #{authlist.join(", ")}
             p.work-pub= work.name
               span.work-date= work.publication_date_year
