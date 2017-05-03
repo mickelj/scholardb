@@ -9,26 +9,26 @@ block content
           ul.collection.with-header
             li.collection-header Work Types
             each wt in filter_worktypes
-              li.collection-item= wt
+              li.collection-item #{wt.fld} (#{wt.cnt})
         div.filter-group
           ul.collection.with-header
             li.collection-header Departments &amp; Programs
-            each dw in filter_deptworks
-              li.collection-item= dw
+            each wt in filter_deptworks
+              li.collection-item #{wt.fld} (#{wt.cnt})
         div.filter-group
           ul.collection.with-header
             li.collection-header People
-            each pw in filter_peopleworks
-              li.collection-item= pw
+            each wt in filter_peopleworks
+              li.collection-item #{wt.fld} (#{wt.cnt})
         div.filter-group
           ul.collection.with-header
             li.collection-header Publications
-            each pw in filter_publicationworks
-              li.collection-item= pw
+            each wt in filter_publicationworks
+              li.collection-item #{wt.fld} (#{wt.cnt})
         div.filter-group
           ul.collection.with-header
             li.collection-header Publishers
-            each pw in filter_publisherworks
-              li.collection-item= pw
+            each wt in filter_publisherworks
+              li.collection-item #{wt.fld} (#{wt.cnt})
           
       div.col.s12.m9 Results

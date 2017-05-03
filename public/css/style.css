@@ -86,7 +86,7 @@ input[type="search"] {
   padding: 0 !important;
 }
 
-.sidebar.sidebar-title {
+.sidebar .sidebar-title {
   padding: .75rem;
   margin: 0 0 .5rem;
   letter-spacing: .01rem;

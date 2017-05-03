@@ -3,7 +3,7 @@ const router = express.Router();
 
 function getWorkTypeCount (req, res, next) {
   var db = req.app.get('db');
-  db.run("SELECT description, COUNT(type) FROM works JOIN work_types USING (type) GROUP BY description ORDER BY count(description) DESC", function(err, results) {
+  db.run("SELECT description AS fld, COUNT(type) AS cnt FROM works JOIN work_types USING (type) GROUP BY description ORDER BY count(description) DESC", function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
@@ -15,7 +15,7 @@ function getWorkTypeCount (req, res, next) {
 
 function getDeptWorkCount (req, res, next) {
   var db = req.app.get('db');
-  db.run("SELECT groups.name, COUNT(works.id) FROM works, JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) LEFT JOIN people p ON p.id = person_id, groups JOIN UNNEST(p.group_membership) AS group_id ON group_id = groups.id WHERE groups.hidden = false GROUP BY groups.name ORDER BY COUNT(works.id) DESC", function(err, results) {
+  db.run("SELECT groups.name AS fld, COUNT(works.id) AS cnt FROM works, JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) LEFT JOIN people p ON p.id = person_id, groups JOIN UNNEST(p.group_membership) AS group_id ON group_id = groups.id WHERE groups.hidden = false GROUP BY groups.name ORDER BY COUNT(works.id) DESC", function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
@@ -27,7 +27,7 @@ function getDeptWorkCount (req, res, next) {
 
 function getPeopleWorkCount (req, res, next) {
   var db = req.app.get('db');
-  db.run("SELECT CONCAT_WS(', ', last_name, first_name) AS full_name, COUNT(works.id) FROM works, JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) JOIN people p on p.id = person_id GROUP BY full_name ORDER BY COUNT(works.id) DESC;", function(err, results) {
+  db.run("SELECT CONCAT_WS(', ', last_name, first_name) AS fld, COUNT(works.id) AS cnt FROM works, JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) JOIN people p on p.id = person_id GROUP BY fld ORDER BY COUNT(works.id) DESC;", function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
@@ -39,7 +39,7 @@ function getPeopleWorkCount (req, res, next) {
 
 function getYearWorkCount (req, res, next) {
   var db = req.app.get('db');
-  db.run("SELECT publication_date_year, COUNT(id) FROM works GROUP BY publication_date_year ORDER BY publication_date_year DESC", function(err, results) {
+  db.run("SELECT publication_date_year AS fld, COUNT(id) AS cnt FROM works GROUP BY publication_date_year ORDER BY publication_date_year DESC", function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
@@ -51,7 +51,7 @@ function getYearWorkCount (req, res, next) {
 
 function getPublicationWorkCount (req, res, next) {
   var db = req.app.get('db');
-  db.run("SELECT name, COUNT(works.id) FROM works JOIN publications ON publications.id = works.publication_id WHERE name <> 'Unknown' GROUP BY name ORDER BY COUNT(works.id) DESC", function(err, results) {
+  db.run("SELECT name AS fld, COUNT(works.id) AS cnt FROM works JOIN publications ON publications.id = works.publication_id WHERE name <> 'Unknown' GROUP BY name ORDER BY COUNT(works.id) DESC", function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
