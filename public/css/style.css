@@ -57,27 +57,39 @@ input[type="search"] {
 }
 
 .work-title {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .work-type {
-    font-size: smaller;
-    margin-top: -15px;
+  font-size: smaller;
+  margin-top: -15px;
 }
 
 .work-pub {
-    font-style: italic;
+  font-style: italic;
 }
 
 .work-date {
-    font-style: normal;
+  font-style: normal;
 }
 
 .work-date:after {
-    content: ")";
+  content: ")";
 }
+
 .work-date:before {
-    content: " (";
+  content: " (";
+}
+
+.sidebar {
+  border-radius: 2px;
+  padding: 0 !important;
+}
+
+.sidebar.sidebar-title {
+  padding: .75rem;
+  margin: 0 0 .5rem;
+  letter-spacing: .01rem;
 }
 
 @media screen and (min-width: 1201px) {

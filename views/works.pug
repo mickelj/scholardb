@@ -3,5 +3,32 @@ extends template
 block content
   div.container
     div.row
-      div.col.s0.m2.sidebar Filter box
-      div.col.s12.m10 Content
+      div.col.s0.m2.offset-m1.sidebar
+        div.indigo.darken-4.white-text.sidebar-title Filter Results
+          div.filter-group
+            ul.collection.with-header
+              li.collection-header Work Types
+              each wt in filter_worktypes
+                li.collection-item= wt
+          div.filter-group
+            ul.collection.with-header
+              li.collection-header Departments &amp; Programs
+              each dw in filter_deptworks
+                li.collection-item= dw
+          div.filter-group
+            ul.collection.with-header
+              li.collection-header People
+              each pw in filter_peopleworks
+                li.collection-item= pw
+          div.filter-group
+            ul.collection.with-header
+              li.collection-header Publications
+              each pw in filter_publicationworks
+                li.collection-item= pw
+          div.filter-group
+            ul.collection.with-header
+              li.collection-header Publishers
+              each pw in filter_publisherworks
+                li.collection-item= pw
+          
+      div.col.s12.m9 Results
