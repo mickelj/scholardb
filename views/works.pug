@@ -3,7 +3,7 @@ extends template
 block content
   div.container
     div.row
-      div.col.s0.m2.offset-m1.sidebar
+      div.col.s0.m2.offset-m1.sidebar.z-depth-1
         div.indigo.darken-4.white-text.sidebar-title Filter Results
         div.filter-group
           ul.collection.with-header
@@ -19,6 +19,11 @@ block content
           ul.collection.with-header
             li.collection-header People
             each wt in filter_peopleworks
+              li.collection-item #{wt.fld} (#{wt.cnt})
+        div.filter-group
+          ul.collection.with-header
+            li.collection-header Years
+            each wt in filter_yearworks
               li.collection-item #{wt.fld} (#{wt.cnt})
         div.filter-group
           ul.collection.with-header

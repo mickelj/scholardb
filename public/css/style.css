@@ -92,6 +92,21 @@ input[type="search"] {
   letter-spacing: .01rem;
 }
 
+.filter-group .collection.with-header .collection-item {
+  padding: .25rem 2rem;
+  font-size: .85rem;
+}
+
+.filter-group .collection {
+  border-style: none;
+}
+
+.filter-group .collection.with-header .collection.header {
+  font-weight: 700;
+  letter-spacing: .01em;
+  padding: .5rem 1rem;
+}
+
 @media screen and (min-width: 1201px) {
   .xl0 {
     display: none;

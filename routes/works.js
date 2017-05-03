@@ -63,7 +63,7 @@ function getPublicationWorkCount (req, res, next) {
 
 function getPublisherWorkCount (req, res, next) {
   var db = req.app.get('db');
-  db.run("SELECT publishers.name, COUNT(works.id) FROM works JOIN publications ON publications.id = works.publication_id JOIN publishers ON publishers.id = publications.publisher_id WHERE publishers.name <> 'Unknown' AND publications.name <> 'Unknown' GROUP BY publishers.name ORDER BY COUNT(works.id) DESC", function(err, results) {
+  db.run("SELECT publishers.name AS fld, COUNT(works.id) AS cnt FROM works JOIN publications ON publications.id = works.publication_id JOIN publishers ON publishers.id = publications.publisher_id WHERE publishers.name <> 'Unknown' AND publications.name <> 'Unknown' GROUP BY publishers.name ORDER BY COUNT(works.id) DESC", function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
@@ -88,11 +88,12 @@ function renderWorksList (req, res) {
     filter_worktypes: req.filter_worktypes,
     filter_deptworks: req.filter_deptworks,
     filter_peopleworks: req.filter_peopleworks,
+    filter_yearworks: req.filter_yearworks,
     filter_publicationworks: req.filter_publicationworks,
     filter_publisherworks: req.filter_publisherworks
   });
 }
 
-router.get('/', getWorkTypeCount, getDeptWorkCount, getPeopleWorkCount, getPublicationWorkCount, getPublisherWorkCount, renderWorksList);
+router.get('/', getWorkTypeCount, getDeptWorkCount, getPeopleWorkCount, getYearWorkCount, getPublicationWorkCount, getPublisherWorkCount, renderWorksList);
 
 module.exports = router;
