@@ -12,34 +12,64 @@ block content
               if index < 5
                 li.collection-item #{wt.fld} (#{wt.cnt})
               else if index == 5
-                li.collection-item.filter-toggle Show more results...
+                li.btn.waves-effect.waves-light.filter-toggle Show more results...
                 li.collection-item.hide #{wt.fld} (#{wt.cnt})
               else
                 li.collection-item.hide #{wt.fld} (#{wt.cnt})
         div.filter-group
           ul.collection.with-header
             li.collection-header Departments &amp; Programs
-            each wt in filter_deptworks
-              li.collection-item #{wt.fld} (#{wt.cnt})
+            each wt, index in filter_deptworks
+              if index < 5
+                li.collection-item #{wt.fld} (#{wt.cnt})
+              else if index == 5
+                li.btn.waves-effect.waves-light.filter-toggle Show more results...
+                li.collection-item.hide #{wt.fld} (#{wt.cnt})
+              else
+                li.collection-item.hide #{wt.fld} (#{wt.cnt})
         div.filter-group
           ul.collection.with-header
             li.collection-header People
-            each wt in filter_peopleworks
-              li.collection-item #{wt.fld} (#{wt.cnt})
+            each wt, index in filter_peopleworks
+              if index < 5
+                li.collection-item #{wt.fld} (#{wt.cnt})
+              else if index == 5
+                li.btn.waves-effect.waves-light.filter-toggle Show more results...
+                li.collection-item.hide #{wt.fld} (#{wt.cnt})
+              else
+                li.collection-item.hide #{wt.fld} (#{wt.cnt})
         div.filter-group
           ul.collection.with-header
             li.collection-header Years
-            each wt in filter_yearworks
-              li.collection-item #{wt.fld} (#{wt.cnt})
+            each wt, index in filter_yearworks
+              if index < 5
+                li.collection-item #{wt.fld} (#{wt.cnt})
+              else if index == 5
+                li.btn.waves-effect.waves-light.filter-toggle Show more results...
+                li.collection-item.hide #{wt.fld} (#{wt.cnt})
+              else
+                li.collection-item.hide #{wt.fld} (#{wt.cnt})
         div.filter-group
           ul.collection.with-header
             li.collection-header Publications
-            each wt in filter_publicationworks
-              li.collection-item #{wt.fld} (#{wt.cnt})
+            each wt, index in filter_publicationworks
+              if index < 5
+                li.collection-item #{wt.fld} (#{wt.cnt})
+              else if index == 5
+                li.btn.waves-effect.waves-light.filter-toggle Show more results...
+                li.collection-item.hide #{wt.fld} (#{wt.cnt})
+              else
+                li.collection-item.hide #{wt.fld} (#{wt.cnt})
         div.filter-group
           ul.collection.with-header
             li.collection-header Publishers
-            each wt in filter_publisherworks
-              li.collection-item #{wt.fld} (#{wt.cnt})
+            each wt, index in filter_publisherworks
+              if index < 5
+                li.collection-item #{wt.fld} (#{wt.cnt})
+              else if index == 5
+                li.btn.waves-effect.waves-light.filter-toggle Show more results...
+                li.collection-item.hide #{wt.fld} (#{wt.cnt})
+              else
+                li.collection-item.hide #{wt.fld} (#{wt.cnt})
           
       div.col.s12.m9 Results
