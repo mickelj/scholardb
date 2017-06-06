@@ -8,8 +8,14 @@ block content
         div.filter-group
           ul.collection.with-header
             li.collection-header Work Types
-            each wt in filter_worktypes
-              li.collection-item #{wt.fld} (#{wt.cnt})
+            each wt, index in filter_worktypes
+              if index < 5
+                li.collection-item #{wt.fld} (#{wt.cnt})
+              else if index == 5
+                li.collection-item.filter-toggle Show more results...
+                li.collection-item.hide #{wt.fld} (#{wt.cnt})
+              else
+                li.collection-item.hide #{wt.fld} (#{wt.cnt})
         div.filter-group
           ul.collection.with-header
             li.collection-header Departments &amp; Programs
