@@ -105,6 +105,12 @@ input[type="search"] {
   font-weight: 700;
   letter-spacing: .01em;
   padding: .5rem 1rem;
+  border-top: 3px double #999;
+}
+
+.filter-toggle {
+    font-size: .75em;
+    font-style: italic;
 }
 
 @media screen and (min-width: 1201px) {
