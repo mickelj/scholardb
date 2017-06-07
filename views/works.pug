@@ -12,19 +12,19 @@ block content
         div.col.s12.m6
           label(for='resultsPerPage') Results Per Page:
           select#resultsPerPage(name='resultsPerPage')
-            if limit == '10'
+            if limit == 10
               option(selected) 10
             else
               option 10
-            if limit == '25'
+            if limit == 25
               option(selected) 25
             else
               option 25
-            if limit == '50'
+            if limit == 50
               option(selected) 50
             else
               option 50
-            if limit == '100'
+            if limit == 100
               option(selected) 100
             else
               option 100

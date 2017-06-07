@@ -1,48 +1,35 @@
 ul.pagination
   if cur_page == 1
     li.disabled
+      i.material-icons fast_rewind
+    li.disabled
+      i.material-icons skip_previous
   else
     li.waves-effect
-    a(href="/works?page=${cur_page-1}&limit=${limit}")
-      i.material-icons chevron_left
-  if cur_page == 1
-    li.active
-  else
+      a(href="/works?page=1&limit=" + limit)
+        i.material-icons(title="First Page (1)") fast_rewind
     li.waves-effect
-      a(href="/works?page=1&limit=${limit}") 1
-  if cur_page == 2
-    li.active
-  else
-    li.waves-effect
-      a(href="/works?page=2&limit=${limit}") 2
-  if cur_page >= 9
-    li ...
-  if cur_page >= 3 && cur_page <= page_count - 2
-    - var n = cur_page
-  else
-    - var n = cur_page - 4
-  while n < cur_page + 4 && n < page_count
-    if cur_page == n
-      li.active
-    else
-      li.waves-effect
-        a(href="/works?page=${n}&limit=${limit}")= n
-    - n++
-  if page_count - cur_page >= 8
-    li ...
-  if cur_page == page_count - 1
-    li.active
-  else
-    li.waves-effect
-      a(href="/works?page=${page_count-1}&limit=${limit}")= page_count - 1
-  if cur_page == page_count
-    li.active
-  else
-    li.waves-effect
-    a(href="/works?page=${page_count}&limit=${limit}")= page_count
+      a(href="/works?page="+ (cur_page - 1) + "&limit=" + limit)
+        i.material-icons(title="Previous Page (" + (cur_page - 1) + ")") skip_previous
+
+  select#page-selector(name="page-selector")
+    - var n = 1
+    while n <= page_count
+      if n == cur_page
+        option(value=n, selected) Page #{n}
+      else
+        option(value=n) Page #{n}
+      - n++
+
   if cur_page == page_count
     li.disabled
+      i.material-icons skip_next
+    li.disabled
+      i.material-icons fast_forward
   else
     li.waves-effect
-    a(href="/works?page=${cur_page+1}&limit=${limit}")
-      i.material-icons chevron_right
+      a(href="/works?page=" + (cur_page + 1) + "&limit=" + limit)
+        i.material-icons(title="Next Page (" + (cur_page + 1) + ")") skip_next
+    li.waves-effect
+      a(href="/works?page=" + page_count + "&limit=" + limit)
+        i.material-icons(title="Last Page (" + page_count + ")") fast_forward
