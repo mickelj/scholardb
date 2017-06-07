@@ -11,5 +11,5 @@ $(document).ready(function() {
 
    $('#page-selector').on('change', function() {
      $(this).parent().submit();
-   })
+   });
 });
