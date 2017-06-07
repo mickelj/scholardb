@@ -6,4 +6,6 @@ $(document).ready(function() {
      var txt = $(this).next().is(':visible') ? 'Show fewer results...' : 'Show more results...';
      $(this).text(txt);
    });
+
+   $('select').material_select();
 });
