@@ -72,4 +72,13 @@ block content
               else
                 li.collection-item.hide #{wt.fld} (#{wt.cnt})
           
-      div.col.s12.m9 Results
+      div.col.s12.m9
+        ul.collection.works
+          each work in works_list
+            li.collection-item.avatar
+              p.title= title
+              p.work-type= type
+              p.contributors= contributors
+              p.publication= publication
+                span.year= year
+          

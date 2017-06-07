@@ -101,7 +101,7 @@ input[type="search"] {
   border-style: none;
 }
 
-.filter-group .collection.with-header .collection.header {
+.filter-group .collection.with-header .collection-header {
   font-weight: 700;
   letter-spacing: .01em;
   padding: .5rem 1rem;
