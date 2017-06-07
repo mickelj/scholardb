@@ -149,6 +149,12 @@ function getWorkDetail(req, res, next) {
 function renderWorkDetail(req, res) {
   var nconf = req.app.get('nconf');
 
+  if (req.work_detail.url.match(/^10/) {
+    var url = 'http://dx.doi.org/' + req.work_detail.url;
+  } else {
+    var url = req.work_detail.url;
+  }
+
   res.render('work_detail', {
     title: nconf.get('application:appname') + " - Work: " + req.work_detail.work_title,
     tagline: nconf.get('application:tagline'),
@@ -158,7 +164,8 @@ function renderWorkDetail(req, res) {
     imgrootdir: nconf.get('application:imgrootdir'),
     organization: nconf.get('application:organization'),
     searchdeftext: nconf.get('application:searchdeftext'),
-    work_detail: req.work_detail
+    work_detail: req.work_detail,
+    url: url
   });
 }
 

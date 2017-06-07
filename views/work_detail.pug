@@ -4,7 +4,7 @@ block content
   div.container
     div.row
       div.col.s12
-        h3= work_detail.work_title
+        h2= work_detail.work_title
         p.work-type= work_detail.work_type
     
     div.row
@@ -49,10 +49,6 @@ block content
             tr
               th.align-right URL:
               td
-                - if work_detail.url.match(/^10/)
-                  - var url = 'http://dx.doi.org/' + work_detail.url
-                - else
-                  - var url = work_detail.url
                 a(href=url)= url
           if work_detail.summary
             tr
