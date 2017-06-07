@@ -3,18 +3,18 @@ ul.pagination
     li.disabled
   else
     li.waves-effect
-      a(href="/works?page=#{cur_page-1}&limit=#{limit}")
-        i.material-icons chevron_left
+    a(href="/works?page=${cur_page-1}&limit=${limit}")
+      i.material-icons chevron_left
   if cur_page == 1
     li.active
   else
     li.waves-effect
-      a(href="/works?page=1&limit=#{limit}") 1
+      a(href="/works?page=1&limit=${limit}") 1
   if cur_page == 2
     li.active
   else
     li.waves-effect
-      a(href="/works?page=1&limit=#{limit}") 2
+      a(href="/works?page=2&limit=${limit}") 2
   if cur_page >= 9
     li ...
   if cur_page >= 3 && cur_page <= page_count - 2
@@ -26,7 +26,7 @@ ul.pagination
       li.active
     else
       li.waves-effect
-        a(href="/works?page=#{i}&limit=#{limit}")= n
+        a(href="/works?page=${n}&limit=${limit}")= n
     - n++
   if page_count - cur_page >= 8
     li ...
@@ -34,15 +34,15 @@ ul.pagination
     li.active
   else
     li.waves-effect
-      a(href="/works?page=#{page_count-1}&limit=#{limit}")= page_count - 1
+      a(href="/works?page=${page_count-1}&limit=${limit}")= page_count - 1
   if cur_page == page_count
     li.active
   else
     li.waves-effect
-      a(href="/works?page=#{page_count}&limit=#{limit}")= page_count
+    a(href="/works?page=${page_count}&limit=${limit}")= page_count
   if cur_page == page_count
     li.disabled
   else
     li.waves-effect
-      a(href="/works?page=#{cur_page+1}&limit=#{limit}")
-        i.material-icons chevron_right
+    a(href="/works?page=${cur_page+1}&limit=${limit}")
+      i.material-icons chevron_right
