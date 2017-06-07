@@ -8,4 +8,8 @@ $(document).ready(function() {
    });
 
    $('select').material_select();
+
+   $('#page-selector').on('change', function() {
+     $(this).parent().submit();
+   })
 });

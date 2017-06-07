@@ -1,3 +1,11 @@
+select.browser-default {
+  display: inline;
+  width: auto;
+  width: calc(100%/4);
+  min-width: 125px;
+  height: auto;
+}
+
 .container {
   width: 100%;
 }

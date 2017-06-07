@@ -12,14 +12,16 @@ ul.pagination
       a(href="/works?page="+ (cur_page - 1) + "&limit=" + limit)
         i.material-icons(title="Previous Page (" + (cur_page - 1) + ")") skip_previous
 
-  select#page-selector.browser-default(name="page-selector")
-    - var n = 1
-    while n <= page_count
-      if n == cur_page
-        option(value=n, selected) Page #{n}
-      else
-        option(value=n) Page #{n}
-      - n++
+  form(method="get", action="/works")
+    select#page-selector.browser-default(name="page")
+      - var n = 1
+      while n <= page_count
+        if n == cur_page
+          option(value=n, selected) Page #{n}
+        else
+          option(value=n) Page #{n}
+        - n++
+    input(type="hidden", name="limit", value=limit)
 
   if cur_page == page_count
     li.disabled.grey-text.lighten-1
