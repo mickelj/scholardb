@@ -5,13 +5,13 @@ ul.pagination
     li.waves-effect
       a(href="/works?page=#{cur_page-1}&limit=#{limit}")
         i.material-icons chevron_left
-  - var i = 0;
-  while i < page_count
-    if cur_page == i
+  - var n = 0;
+  while n < page_count
+    if cur_page == n
       li.active
     else
       li.waves-effect
-        a(href="/works?page=#{i}&limit=#{limit}")= i
+        a(href="/works?page=#{i}&limit=#{limit}")= n
   if cur_page == page_count
     li.disabled
   else
