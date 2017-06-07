@@ -75,7 +75,7 @@ function getPublisherWorkCount (req, res, next) {
 
 function getWorksCount(req, res, next) {
   var db = req.app.get('db');
-  db.works.count({}, function(err, results) {
+  db.run("SELECT count(*) FROM works", function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
