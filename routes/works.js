@@ -111,6 +111,9 @@ function renderWorksList (req, res) {
   // var cur_page = 1;
   // var offset = 0;
 
+  console.log(limit);
+  console.log(req.works_count);
+
   res.render('works', {
     title: nconf.get('application:appname') + " - Works",
     tagline: nconf.get('application:tagline'),
