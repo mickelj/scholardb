@@ -149,7 +149,7 @@ function getWorkDetail(req, res, next) {
 function renderWorkDetail(req, res) {
   var nconf = req.app.get('nconf');
 
-  if (req.work_detail.url.match(/^10/) {
+  if (req.work_detail.url.match(/^10/)) {
     var url = 'http://dx.doi.org/' + req.work_detail.url;
   } else {
     var url = req.work_detail.url;
