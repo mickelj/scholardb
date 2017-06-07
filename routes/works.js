@@ -135,7 +135,7 @@ function getWorkDetail(req, res, next) {
   var db = req.app.get('db');
   var work_id = req.params.id;
 
-  db.run("SELECT works.id, title_primary as work_title, description as work_type, (select string_agg(display_name, '; ') from jsonb_to_recordset(contributors) as x(display_name text)) as contributors, publications.name as publication, publishers.name as publisher, publication_date_year as year, volume, issue, start_page, end_page, location, url, summary FROM works JOIN publications ON publications.id = works.publication_id JOIN work_types USING (type) JOIN publishers ON publishers.id = publications.publisher_id WHERE works.id = $1", [work_id], function(err, results) {
+  db.run("SELECT works.id, title_primary as work_title, description as work_type, (select string_agg(display_name, '; ') from jsonb_to_recordset(contributors) as x(display_name text)) as contributors, publications.name as publication, publishers.name as publisher, publication_date_year as year, volume, issue, start_page, end_page, location, works.url, summary FROM works JOIN publications ON publications.id = works.publication_id JOIN work_types USING (type) JOIN publishers ON publishers.id = publications.publisher_id WHERE works.id = $1", [work_id], function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
