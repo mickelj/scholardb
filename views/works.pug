@@ -4,81 +4,40 @@ block content
   div.container
     div.row
       div.col.s0.m2.offset-m1.sidebar.z-depth-1
-        div.indigo.darken-4.white-text.sidebar-title Filter Results
-        div.filter-group
-          ul.collection.with-header
-            li.collection-header Work Types
-            each wt, index in filter_worktypes
-              if index < 5
-                li.collection-item #{wt.fld} (#{wt.cnt})
-              else if index == 5
-                li.btn.waves-effect.waves-light.light-blue.darken-2.filter-toggle Show more results...
-                li.collection-item.hide #{wt.fld} (#{wt.cnt})
-              else
-                li.collection-item.hide #{wt.fld} (#{wt.cnt})
-        div.filter-group
-          ul.collection.with-header
-            li.collection-header Departments &amp; Programs
-            each wt, index in filter_deptworks
-              if index < 5
-                li.collection-item #{wt.fld} (#{wt.cnt})
-              else if index == 5
-                li.btn.waves-effect.waves-light.light-blue.darken-2.filter-toggle Show more results...
-                li.collection-item.hide #{wt.fld} (#{wt.cnt})
-              else
-                li.collection-item.hide #{wt.fld} (#{wt.cnt})
-        div.filter-group
-          ul.collection.with-header
-            li.collection-header People
-            each wt, index in filter_peopleworks
-              if index < 5
-                li.collection-item #{wt.fld} (#{wt.cnt})
-              else if index == 5
-                li.btn.waves-effect.waves-light.light-blue.darken-2.filter-toggle Show more results...
-                li.collection-item.hide #{wt.fld} (#{wt.cnt})
-              else
-                li.collection-item.hide #{wt.fld} (#{wt.cnt})
-        div.filter-group
-          ul.collection.with-header
-            li.collection-header Years
-            each wt, index in filter_yearworks
-              if index < 5
-                li.collection-item #{wt.fld} (#{wt.cnt})
-              else if index == 5
-                li.btn.waves-effect.waves-light.light-blue.darken-2.filter-toggle Show more results...
-                li.collection-item.hide #{wt.fld} (#{wt.cnt})
-              else
-                li.collection-item.hide #{wt.fld} (#{wt.cnt})
-        div.filter-group
-          ul.collection.with-header
-            li.collection-header Publications
-            each wt, index in filter_publicationworks
-              if index < 5
-                li.collection-item #{wt.fld} (#{wt.cnt})
-              else if index == 5
-                li.btn.waves-effect.waves-light.light-blue.darken-2.filter-toggle Show more results...
-                li.collection-item.hide #{wt.fld} (#{wt.cnt})
-              else
-                li.collection-item.hide #{wt.fld} (#{wt.cnt})
-        div.filter-group
-          ul.collection.with-header
-            li.collection-header Publishers
-            each wt, index in filter_publisherworks
-              if index < 5
-                li.collection-item #{wt.fld} (#{wt.cnt})
-              else if index == 5
-                li.btn.waves-effect.waves-light.light-blue.darken-2.filter-toggle Show more results...
-                li.collection-item.hide #{wt.fld} (#{wt.cnt})
-              else
-                li.collection-item.hide #{wt.fld} (#{wt.cnt})
+        include filters.pug
           
       div.col.s12.m9
-        ul.collection.works
+        div.col.s12.m6
+          h2.works-count #{works_count} Works Found
+        div.col.s12.m6
+          label(for='resultsPerPage') Results Per Page:
+          select#resultsPerPage(name='resultsPerPage')
+            if limit == 10
+              option(selected) 10
+            else
+              option 10
+            if limit == 25
+              option(selected) 25
+            else
+              option 25
+            if limit == 50
+              option(selected) 50
+            else
+              option 50
+            if limit == 100
+              option(selected) 100
+            else
+              option 100
+          button.btn.waves-effect.waves-light.light-blue.darken-2.update-results Update
+        div.col.s12.pagination
+          include pagination.pug
+        ul.col.s12.collection.works
           each work in works_list
             li.collection-item.avatar
-              p.title= work.work_title
+              p.title.work-title= work.work_title
               p.work-type= work.work_type
               p.contributors= work.contributors
-              p.publication= work.publication
-                span.year= work.year
-          
+              p.work-pub= work.publication
+                span.work-date work.year
+        div.col.s12.pagination
+          include pagination.pug

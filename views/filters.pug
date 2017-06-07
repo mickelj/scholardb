@@ -1,0 +1,67 @@
+div.indigo.darken-4.white-text.sidebar-title Filter Results
+div.filter-group
+  ul.collection.with-header
+    li.collection-header Work Types
+    each wt, index in filter_worktypes
+      if index < 5
+        li.collection-item #{wt.fld} (#{wt.cnt})
+      else if index == 5
+        li.btn-flat.waves-effect.waves-light.filter-toggle Show more results...
+        li.collection-item.hide #{wt.fld} (#{wt.cnt})
+      else
+        li.collection-item.hide #{wt.fld} (#{wt.cnt})
+div.filter-group
+  ul.collection.with-header
+    li.collection-header Departments &amp; Programs
+    each wt, index in filter_deptworks
+      if index < 5
+        li.collection-item #{wt.fld} (#{wt.cnt})
+      else if index == 5
+        li.btn-flat.waves-effect.waves-light.filter-toggle Show more results...
+        li.collection-item.hide #{wt.fld} (#{wt.cnt})
+      else
+        li.collection-item.hide #{wt.fld} (#{wt.cnt})
+div.filter-group
+  ul.collection.with-header
+    li.collection-header People
+    each wt, index in filter_peopleworks
+      if index < 5
+        li.collection-item #{wt.fld} (#{wt.cnt})
+      else if index == 5
+        li.btn-flat.waves-effect.waves-light.filter-toggle Show more results...
+        li.collection-item.hide #{wt.fld} (#{wt.cnt})
+      else
+        li.collection-item.hide #{wt.fld} (#{wt.cnt})
+div.filter-group
+  ul.collection.with-header
+    li.collection-header Years
+    each wt, index in filter_yearworks
+      if index < 5
+        li.collection-item #{wt.fld} (#{wt.cnt})
+      else if index == 5
+        li.btn-flat.waves-effect.waves-light.filter-toggle Show more results...
+        li.collection-item.hide #{wt.fld} (#{wt.cnt})
+      else
+        li.collection-item.hide #{wt.fld} (#{wt.cnt})
+div.filter-group
+  ul.collection.with-header
+    li.collection-header Publications
+    each wt, index in filter_publicationworks
+      if index < 5
+        li.collection-item #{wt.fld} (#{wt.cnt})
+      else if index == 5
+        li.btn-flat.waves-effect.waves-light.filter-toggle Show more results...
+        li.collection-item.hide #{wt.fld} (#{wt.cnt})
+      else
+        li.collection-item.hide #{wt.fld} (#{wt.cnt})
+div.filter-group
+  ul.collection.with-header
+    li.collection-header Publishers
+    each wt, index in filter_publisherworks
+      if index < 5
+        li.collection-item #{wt.fld} (#{wt.cnt})
+      else if index == 5
+        li.btn-flat.waves-effect.waves-light.filter-toggle Show more results...
+        li.collection-item.hide #{wt.fld} (#{wt.cnt})
+      else
+        li.collection-item.hide #{wt.fld} (#{wt.cnt})

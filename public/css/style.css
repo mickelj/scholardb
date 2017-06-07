@@ -56,8 +56,13 @@ input[type="search"] {
   padding: 1px 15px;
 }
 
+.works {
+  margin-top: 0;
+}
+
 .work-title {
   font-weight: bold;
+  letter-spacing: .02em;
 }
 
 .work-type {

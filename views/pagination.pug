@@ -1,0 +1,20 @@
+ul.pagination
+  if cur_page == 1
+    li.disabled
+  else
+    li.waves-effect
+      a(href="/works?page=#{cur_page-1}&limit=#{limit}")
+        i.material-icons chevron_left
+  - var i = 0;
+  while i < page_count
+    if cur_page == i
+      li.active
+    else
+      li.waves-effect
+        a(href="/works?page=#{i}&limit=#{limit}")= i
+  if cur_page == page_count
+    li.disabled
+  else
+    li.waves-effect
+      a(href="/works?page=#{cur_page+1}&limit=#{limit}")
+        i.material-icons chevron_right
