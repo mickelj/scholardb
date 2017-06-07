@@ -106,13 +106,6 @@ function renderWorksList (req, res) {
   var page_count = Math.ceil(req.works_count[0].total_works / limit);
   var cur_page = req.query.page ? req.query.page : 1;
   var offset = (cur_page - 1) * limit;
-  // var limit = 10;
-  // var page_count = 176;
-  // var cur_page = 1;
-  // var offset = 0;
-
-  console.log(limit);
-  console.log(req.works_count[0].total_works);
 
   res.render('works', {
     title: nconf.get('application:appname') + " - Works",
