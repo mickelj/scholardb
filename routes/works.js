@@ -75,12 +75,12 @@ function getPublisherWorkCount (req, res, next) {
 
 function getWorksCount(req, res, next) {
   var db = req.app.get('db');
-  db.run("SELECT count(*) as total FROM works", function(err, results) {
+  db.run("SELECT count(*) as total_works FROM works", function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
 
-    req.works_count = results.total;
+    req.works_count = results;
     return next();
   })
 }
@@ -103,7 +103,7 @@ function renderWorksList (req, res) {
   var nconf = req.app.get('nconf');
 
   var limit = req.query.limit ? req.query.limit : 10;
-  var page_count = Math.ceil(req.works_count / limit);
+  var page_count = Math.ceil(req.works_count.total_works / limit);
   var cur_page = req.query.page ? req.query.page : 1;
   var offset = (cur_page - 1) * limit;
   // var limit = 10;
@@ -127,7 +127,7 @@ function renderWorksList (req, res) {
     filter_yearworks: req.filter_yearworks,
     filter_publicationworks: req.filter_publicationworks,
     filter_publisherworks: req.filter_publisherworks,
-    works_count: req.works_count,
+    works_count: req.works_count.total_works,
     works_list: req.works_list,
     limit: limit,
     page_count: page_count,
