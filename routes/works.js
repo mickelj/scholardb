@@ -103,7 +103,7 @@ function renderWorksList (req, res) {
   var nconf = req.app.get('nconf');
 
   var limit = req.query.limit ? req.query.limit : 10;
-  var page_count = Math.ceil(req.works_count.total_works / limit);
+  var page_count = Math.ceil(req.works_count[0].total_works / limit);
   var cur_page = req.query.page ? req.query.page : 1;
   var offset = (cur_page - 1) * limit;
   // var limit = 10;
@@ -112,7 +112,7 @@ function renderWorksList (req, res) {
   // var offset = 0;
 
   console.log(limit);
-  console.log(req.works_count);
+  console.log(req.works_count[0].total_works);
 
   res.render('works', {
     title: nconf.get('application:appname') + " - Works",
@@ -130,7 +130,7 @@ function renderWorksList (req, res) {
     filter_yearworks: req.filter_yearworks,
     filter_publicationworks: req.filter_publicationworks,
     filter_publisherworks: req.filter_publisherworks,
-    works_count: req.works_count.total_works,
+    works_count: req.works_count[0].total_works,
     works_list: req.works_list,
     limit: limit,
     page_count: page_count,
