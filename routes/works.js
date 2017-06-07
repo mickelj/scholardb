@@ -102,10 +102,14 @@ function getWorksList(req, res, next) {
 function renderWorksList (req, res) {
   var nconf = req.app.get('nconf');
 
-  var limit = req.query.limit ? req.query.limit : 10;
-  var page_count = Math.ceil(req.works_count / limit);
-  var cur_page = req.query.page ? req.query.page : 1;
-  var offset = (cur_page - 1) * limit;
+  //var limit = req.query.limit ? req.query.limit : 10;
+  //var page_count = Math.ceil(req.works_count / limit);
+  //var cur_page = req.query.page ? req.query.page : 1;
+  //var offset = (cur_page - 1) * limit;
+  var limit = 10;
+  var page_count = 176;
+  var cur_page = 1;
+  var offset = 0;
 
   res.render('works', {
     title: nconf.get('application:appname') + " - Works",
