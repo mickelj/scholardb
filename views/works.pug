@@ -76,9 +76,9 @@ block content
         ul.collection.works
           each work in works_list
             li.collection-item.avatar
-              p.title= title
-              p.work-type= type
-              p.contributors= contributors
-              p.publication= publication
-                span.year= year
+              p.title= work.work_title
+              p.work-type= work.work_type
+              p.contributors= work.contributors
+              p.publication= work.publication
+                span.year= work.year
           

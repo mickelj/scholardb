@@ -75,7 +75,7 @@ function getPublisherWorkCount (req, res, next) {
 
 function getWorksList(req, res, next) {
   var db = req.app.get('db');
-  db.run("SELECT works.id, title_primary as title, description as type, (select string_agg(display_name, '; ') from jsonb_to_recordset(contributors) as x(display_name text)) as contributors, name as publication, publication_date_year as year FROM works JOIN publications ON publications.id = works.publication_id JOIN work_types USING (type) ORDER BY publication_date_year DESC, publication_date_month DESC, publication_date_day DESC LIMIT $1 OFFSET $2", [req.query.limit ? req.query.limit : 10, req.query.offset ? req.query.offset : 0], function(err, results) {
+  db.run("SELECT works.id, title_primary as work_title, description as work_type, (select string_agg(display_name, '; ') from jsonb_to_recordset(contributors) as x(display_name text)) as contributors, name as publication, publication_date_year as year FROM works JOIN publications ON publications.id = works.publication_id JOIN work_types USING (type) ORDER BY publication_date_year DESC, publication_date_month DESC, publication_date_day DESC LIMIT $1 OFFSET $2", [req.query.limit ? req.query.limit : 10, req.query.offset ? req.query.offset : 0], function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
