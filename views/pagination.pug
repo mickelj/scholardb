@@ -5,13 +5,41 @@ ul.pagination
     li.waves-effect
       a(href="/works?page=#{cur_page-1}&limit=#{limit}")
         i.material-icons chevron_left
-  - var n = 0;
-  while n < page_count
+  if cur_page == 1
+    li.active
+  else
+    li.waves-effect
+      a(href="/works?page=1&limit=#{limit}") 1
+  if cur_page == 2
+    li.active
+  else
+    li.waves-effect
+      a(href="/works?page=1&limit=#{limit}") 2
+  if cur_page >= 9
+    li ...
+  if cur_page >= 3 && cur_page <= page_count - 2
+    - var n = cur_page
+  else
+    - var n = cur_page - 4
+  while n < cur_page + 4 && n < page_count
     if cur_page == n
       li.active
     else
       li.waves-effect
         a(href="/works?page=#{i}&limit=#{limit}")= n
+    - n++
+  if page_count - cur_page >= 8
+    li ...
+  if cur_page == page_count - 1
+    li.active
+  else
+    li.waves-effect
+      a(href="/works?page=#{page_count-1}&limit=#{limit}")= page_count - 1
+  if cur_page == page_count
+    li.active
+  else
+    li.waves-effect
+      a(href="/works?page=#{page_count}&limit=#{limit}")= page_count
   if cur_page == page_count
     li.disabled
   else
