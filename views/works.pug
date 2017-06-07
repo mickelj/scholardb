@@ -30,7 +30,7 @@ block content
               option 100
           button.btn.waves-effect.waves-light.light-blue.darken-2.update-results Update
         div.col.s12.pagination
-          //include pagination.pug
+          include pagination.pug
         ul.col.s12.collection.works
           each work in works_list
             li.collection-item.avatar
@@ -40,4 +40,4 @@ block content
               p.work-pub= work.publication
                 span.work-date= work.year
         div.col.s12.pagination
-          //include pagination.pug
+          include pagination.pug
