@@ -30,14 +30,15 @@ block content
                   option(selected) 100
                 else
                   option 100
-              input(type="hidden", name="page", value=cur_page)
+              input(type="hidden", name="page", value="1")
               button.btn.waves-effect.waves-light.light-blue.darken-2(type="submit") Update
         div.col.s12.center-align
           include pagination.pug
         ul.col.s12.collection.works
           each work in works_list
             li.collection-item.avatar
-              p.title.work-title= work.work_title
+              p.title.work-title
+                a(href="/works/"+ work.id)= work.work_title
               p.work-type= work.work_type
               p.contributors= work.contributors
               p.work-pub= work.publication

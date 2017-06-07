@@ -88,7 +88,7 @@ function getWorksCount(req, res, next) {
 function getWorksList(req, res, next) {
   var db = req.app.get('db');
   var limit = req.query.limit ? req.query.limit : 10;
-  var offset = req.query.page ? (req.query.page - 1) * limit : 1;
+  var offset = req.query.page ? (req.query.page - 1) * limit : 0;
   db.run("SELECT works.id, title_primary as work_title, description as work_type, (select string_agg(display_name, '; ') from jsonb_to_recordset(contributors) as x(display_name text)) as contributors, name as publication, publication_date_year as year FROM works JOIN publications ON publications.id = works.publication_id JOIN work_types USING (type) ORDER BY publication_date_year DESC, works.id DESC LIMIT $1 OFFSET $2", [limit, offset], function(err, results) {
     if (err || !results.length) {
       return next(err);
@@ -112,7 +112,6 @@ function renderWorksList (req, res) {
     tagline: nconf.get('application:tagline'),
     logo: nconf.get('application:logo'),
     appname: nconf.get('application:appname'),
-    sampling: "A Sample of " + nconf.get('application:orgshortname') + " Scholars",
     defimgext: nconf.get('application:defimgext'),
     imgrootdir: nconf.get('application:imgrootdir'),
     organization: nconf.get('application:organization'),
@@ -132,6 +131,39 @@ function renderWorksList (req, res) {
   });
 }
 
+function getWorkDetail(req, res, next) {
+  var db = req.app.get('db');
+  var work_id = req.params.id;
+
+  db.run("SELECT works.id, title_primary as work_title, description as work_type, (select string_agg(display_name, '; ') from jsonb_to_recordset(contributors) as x(display_name text)) as contributors, publications.name as publication, publishers.name as publisher, publication_date_year as year, volume, issue, start_page, end_page, location, url, summary FROM works JOIN publications ON publications.id = works.publication_id JOIN work_types USING (type) JOIN publishers ON publishers.id = publications.publisher_id WHERE works.id = $1", [work_id], function(err, results) {
+    if (err || !results.length) {
+      return next(err);
+    }
+
+    req.work_detail = results[0];
+    return next();
+  });
+
+}
+
+function renderWorkDetail(req, res) {
+  var nconf = req.app.get('nconf');
+
+  res.render('work_detail', {
+    title: nconf.get('application:appname') + " - Work: " + req.work_detail.work_title,
+    tagline: nconf.get('application:tagline'),
+    logo: nconf.get('application:logo'),
+    appname: nconf.get('application:appname'),
+    defimgext: nconf.get('application:defimgext'),
+    imgrootdir: nconf.get('application:imgrootdir'),
+    organization: nconf.get('application:organization'),
+    searchdeftext: nconf.get('application:searchdeftext'),
+    work_detail: req.work_detail
+  });
+}
+
 router.get('/', getWorkTypeCount, getDeptWorkCount, getPeopleWorkCount, getYearWorkCount, getPublicationWorkCount, getPublisherWorkCount, getWorksCount, getWorksList, renderWorksList);
+
+router.get('/:id', getWorkDetail, renderWorkDetail);
 
 module.exports = router;
