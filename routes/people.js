@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-function getPeopleList(res, req, next) {
+function getPeopleList(req, res, next) {
   var db = req.app.get('db');
 
   var page = req.query.page ? req.query.page : "A";
@@ -16,7 +16,7 @@ function getPeopleList(res, req, next) {
   });
 }
 
-function renderPeopleList(res, req) {
+function renderPeopleList(req, res) {
   var nconf = req.app.get('nconf');
   var cur_page = req.query.page ? req.query.page : "A";
 
