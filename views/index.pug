@@ -11,20 +11,36 @@ block content
         div.col.s2
           div.card
             div.card-image
-              img.responsive-img(src=imgrootdir + pers.image + defimgext)
-              button.btn-floating.right-fab.blue.darken-4= pers.count
-            p.cardname= pers.last_name
+              a(href="/people/" + pers.person_id)
+                img.responsive-img(src=imgrootdir + pers.image + defimgext)
+                button.btn-floating.right-fab.blue.darken-4= pers.count
+            p.cardname
+              a(href="/people/" + pers.person_id)= pers.last_name
     div.col.s12.m4
       p.headline Recent Contributions
       each work in works
         div.col.s4.m12
           div.card-panel
-            p.work-title= work.title_primary
-            p.work-type= work.description
-            - var authlist = []
-            each auth in work.contributors
-              - authlist.push(auth.display_name)
-            p.work-authors #{authlist.join(", ")}
-            p.work-pub= work.name
-              span.work-date= work.publication_date_year
+            p.title.work-title
+              a(href="/works/"+ work.id)= work.work_title
+            p.work-type= work.work_type
+            p.contributors
+              each contrib, index in work.contributors
+                case contrib.role
+                  when "Author"
+                  when "Performer"
+                  when "Composer"
+                  when "Creator"
+                  when "Director"
+                  when "Presenter"
+                    if contrib.person_id
+                      span
+                        a(href="/people/" + contrib.person_id)= contrib.display_name
+                    else
+                      span= contrib.display_name
+                    if index < work.contributors.length - 1
+                      | ; 
+            p.work-pub
+              a(href="/publications/" + work.pubid)= work.publication
+              span.work-date= work.year
       

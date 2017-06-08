@@ -12,6 +12,7 @@ select.browser-default {
   width: calc(100%/4);
   min-width: 125px;
   height: auto;
+  margin-left: 10px;
 }
 
 .container {

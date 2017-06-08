@@ -11,58 +11,57 @@ block content
       div.col.s12
         table
           tr
-            th.align-right Contributors:
+            th.right-align Contributors:
             td
-              p.contributors
-                each contrib, index in work_detail.contributors
-                  if contrib.person_id
-                    div
-                      a(href="/people/" + contrib.person_id)= contrib.display_name
-                        span.contrib-role  (#{contrib.role})
-                  else
-                    div= contrib.display_name
+              each contrib, index in work_detail.contributors
+                if contrib.person_id
+                  div
+                    a(href="/people/" + contrib.person_id)= contrib.display_name
                       span.contrib-role  (#{contrib.role})
+                else
+                  div= contrib.display_name
+                    span.contrib-role  (#{contrib.role})
           if work_detail.publication
             tr
-              th.align-right Publication Title:
+              th.right-align Publication Title:
               td.work-pub
                 a(href="/publications/" + work_detail.pubid)= work_detail.publication
           if work_detail.volume
             tr
-              th.align-right Volume:
+              th.right-align Volume:
               td= work_detail.volume
           if work_detail.issue
             tr
-              th.align-right Issue:
+              th.right-align Issue:
               td= work_detail.issue
           if work_detail.publisher
             tr
-              th.align-right Publisher:
+              th.right-align Publisher:
               td
-                a(href="/publishers/" + publisherid)= work_detail.publisher
+                a(href="/publishers/" + work_detail.publisherid)= work_detail.publisher
           if work_detail.location
             tr
-              th.align-right Location:
+              th.right-align Location:
               td= work_detail.location
           if work_detail.year
             tr
-              th.align-right Date Published:
+              th.right-align Date Published:
               td= work_detail.year
           if work_detail.start_page
             tr
-              th.align-right Starting Page:
+              th.right-align Starting Page:
               td= work_detail.start_page
           if work_detail.end_page
             tr
-              th.align-right Ending Page:
+              th.right-align Ending Page:
               td= work_detail.end_page
           if work_detail.url
             tr
-              th.align-right URL:
+              th.right-align URL:
               td
                 a(href=url)= url
           if work_detail.summary
             tr
-              th.align-right Summary:
+              th.right-align Summary:
               td= work_detail.summary
         
