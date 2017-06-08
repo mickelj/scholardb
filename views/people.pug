@@ -14,15 +14,15 @@ block content
             th Contributor
             th Departments/Programs
             th Works in Database
-          each pers in people_list
-            td
-              a(href="/people/" + pers.person_id)
-                img.responsive-img(src=imgrootdir + pers.image + defimgext)
-            td
-              a(href="/people/" + pers.person_id) #{pers.last_name}, #{pers.first_name}
-            td
-              each dept in pers.memberships
-                div
-                  a(href="/departments/" + dept.id)= dept.name
-            td
-              | #{pers.works_count}
+            each pers in people_list
+              td
+                a(href="/people/" + pers.person_id)
+                  img.responsive-img(src=imgrootdir + pers.image + defimgext)
+              td
+                a(href="/people/" + pers.person_id) #{pers.last_name}, #{pers.first_name}
+              td
+                each dept in pers.memberships
+                  div
+                    a(href="/departments/" + dept.id)= dept.name
+              td
+                |= pers.cnt

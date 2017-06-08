@@ -6,7 +6,7 @@ function getPeopleList(req, res, next) {
 
   var page = req.query.page ? req.query.page : "A";
 
-  db.run("SELECT p.id as person_id, first_name, last_name, lower(left(email, strpos(email, '@') - 1)) as image, jsonb_agg(g) as memberships, count(w.id) as works_count FROM works w, JSONB_TO_RECORDSET(w.contributors) AS x(person_id int) JOIN people p on p.id = person_id, (select id, name, sort_name from groups where hidden = false) g JOIN UNNEST(p.group_membership) AS group_id ON group_id = g.id WHERE last_name LIKE $1 AND p.active = true GROUP BY p.id, first_name, last_name, image_url ORDER BY last_name, first_name", [page + "%"], function(err, results) {
+  db.run("SELECT p.id as person_id, first_name, last_name, lower(left(email, strpos(email, '@') - 1)) as image, jsonb_agg(g) as memberships FROM people p, (select id, name, sort_name from groups where hidden = false) g JOIN UNNEST(p.group_membership) AS group_id ON group_id = g.id WHERE last_name LIKE $1 AND p.active = true GROUP BY p.id, first_name, last_name, image_url ORDER BY last_name, first_name", [page + "%"], function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
@@ -16,9 +16,25 @@ function getPeopleList(req, res, next) {
   });
 }
 
+function getPeopleWorkCount (req, res, next) {
+  var db = req.app.get('db');
+  db.run("SELECT person_id, COUNT(works.id) AS cnt FROM works, JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) JOIN people p on p.id = person_id GROUP BY person_id;", function(err, results) {
+    if (err || !results.length) {
+      return next(err);
+    }
+
+    req.people_works = results;
+    return next();
+  });
+}
+
 function renderPeopleList(req, res) {
   var nconf = req.app.get('nconf');
   var cur_page = req.query.page ? req.query.page : "A";
+
+  var combPeople = _.map(req.people_list, function(person) {
+    return _.extend(person, _.omit(_.findWhere(req.people_works, {person_id: member.person_id), 'person_id'}));
+  });
 
   res.render('people', {
     title: nconf.get('application:appname') + " - People",
@@ -29,11 +45,11 @@ function renderPeopleList(req, res) {
     imgrootdir: nconf.get('application:imgrootdir'),
     organization: nconf.get('application:organization'),
     searchdeftext: nconf.get('application:searchdeftext'),
-    people_list: req.people_list,
+    people_list: combPeople,
     cur_page: cur_page
   });
 }
 
-router.get('/', getPeopleList, renderPeopleList);
+router.get('/', getPeopleList, getPeopleWorkCount, renderPeopleList);
 
 module.exports = router;
