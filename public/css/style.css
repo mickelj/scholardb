@@ -4,6 +4,7 @@ form {
 
 td, th {
   padding: 5px 10px;
+  vertical-align: top;
 }
 
 select.browser-default {
@@ -105,7 +106,7 @@ input[type="search"] {
 
 .contrib-role {
   font-size: smaller;
-  color: #cfd8dc;
+  color: #78909c;
 }
 
 .sidebar {
