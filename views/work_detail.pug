@@ -12,11 +12,21 @@ block content
         table
           tr
             th.align-right Contributors:
-            td= work_detail.contributors
+            td
+              p.contributors
+                each contrib, index in work_detail.contributors
+                  if contrib.person_id
+                    div
+                      a(href="/people/" + contrib.person_id)= contrib.display_name
+                        span.contrib-role  (#{contrib.role})
+                  else
+                    div= contrib.display_name
+                      span.contrib-role  (#{contrib.role})
           if work_detail.publication
             tr
               th.align-right Publication Title:
-              td.work-pub= work_detail.publication
+              td.work-pub
+                a(href="/publications/" + work_detail.pubid)= work_detail.publication
           if work_detail.volume
             tr
               th.align-right Volume:
@@ -28,7 +38,8 @@ block content
           if work_detail.publisher
             tr
               th.align-right Publisher:
-              td= work_detail.publisher
+              td
+                a(href="/publishers/" + publisherid)= work_detail.publisher
           if work_detail.location
             tr
               th.align-right Location:

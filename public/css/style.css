@@ -102,6 +102,11 @@ input[type="search"] {
   content: " (";
 }
 
+.contrib-role {
+  font-size: smaller;
+  color: #cfd8dc;
+}
+
 .sidebar {
   border-radius: 2px;
   padding: 0 !important;
@@ -132,6 +137,7 @@ input[type="search"] {
 .filter-toggle {
     font-size: .75em;
     font-style: italic;
+    width: 100%;
 }
 
 @media screen and (min-width: 1201px) {

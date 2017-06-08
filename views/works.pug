@@ -39,7 +39,6 @@ block content
               p.title.work-title
                 a(href="/works/"+ work.id)= work.work_title
               p.work-type= work.work_type
-              - var contribList = []
               p.contributors
                 each contrib, index in work.contributors
                   case contrib.role
@@ -51,13 +50,13 @@ block content
                     when "Presenter"
                       if contrib.person_id
                         span
-                          a(href="/person/" + contrib.person_id)= contrib.display_name
+                          a(href="/people/" + contrib.person_id)= contrib.display_name
                       else
                         span= contrib.display_name
                       if index < work.contributors.length - 1
                         | ; 
-              //p.contributors= work.contributors
-              p.work-pub= work.publication
+              p.work-pub
+                a(href="/publications/" + work.pubid)= work.publication
                 span.work-date= work.year
         div.col.s12.center-align
           include pagination.pug
