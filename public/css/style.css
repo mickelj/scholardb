@@ -16,6 +16,10 @@ select.browser-default {
   margin-left: 10px;
 }
 
+.people-list img {
+  max-height: 125px;
+}
+
 .container {
   width: 100%;
 }
