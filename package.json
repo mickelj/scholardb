@@ -22,6 +22,7 @@
     "express-vue": "^3.7.2",
     "massive": "^2.6.0",
     "nconf": "^0.8.4",
-    "pug": "^2.0.0-beta.12"
+    "pug": "^2.0.0-beta.12",
+    "underscore": "^1.8.3"
   }
 }
