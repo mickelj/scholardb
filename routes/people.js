@@ -37,8 +37,6 @@ function renderPeopleList(req, res) {
     return _.extend(person, _.omit(_.findWhere(req.people_works, {person_id: person.person_id}), 'person_id'));
   });
 
-  console.log(combPeople);
-
   res.render('people', {
     title: nconf.get('application:appname') + " - People",
     tagline: nconf.get('application:tagline'),

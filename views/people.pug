@@ -16,9 +16,9 @@ block content
             th Works in Database
             each pers in people_list
               tr
-                td
+                td.image-cell
                   a(href="/people/" + pers.person_id)
-                    img.responsive-img(src=imgrootdir + pers.image + defimgext)
+                    img.responsive-img.circle(src=imgrootdir + pers.image + defimgext)
                 td
                   a(href="/people/" + pers.person_id) #{pers.last_name}, #{pers.first_name}
                 td

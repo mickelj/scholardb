@@ -17,7 +17,11 @@ select.browser-default {
 }
 
 .people-list img {
-  max-height: 125px;
+  max-height: 85px;
+}
+
+.people-list .image-cell {
+  width: 10%;
 }
 
 .container {
