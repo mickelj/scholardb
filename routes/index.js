@@ -3,7 +3,7 @@ const router = express.Router();
 
 function getRandomScholars(req, res, next) {
   var db = req.app.get('db');
-  db.run("SELECT person_id, last_name, lower(left(email, strpos(email, '@') - 1)) as image, count(works.id) FROM works, jsonb_to_recordset(works.contributors) AS w(person_id int) LEFT JOIN people p ON p.id = person_id WHERE active = true GROUP BY last_name, email HAVING count(works.id) > 2 ORDER BY random() LIMIT 18", function(err, results) {
+  db.run("SELECT person_id, last_name, lower(left(email, strpos(email, '@') - 1)) as image, count(works.id) FROM works, jsonb_to_recordset(works.contributors) AS w(person_id int) LEFT JOIN people p ON p.id = person_id WHERE active = true GROUP BY person_id, last_name, email HAVING count(works.id) > 2 ORDER BY random() LIMIT 18", function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
