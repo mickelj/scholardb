@@ -2,6 +2,10 @@ form {
   display: inline;
 }
 
+td, th {
+  padding: 5px 10px;
+}
+
 select.browser-default {
   display: inline;
   width: auto;

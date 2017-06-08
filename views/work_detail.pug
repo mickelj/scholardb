@@ -4,7 +4,7 @@ block content
   div.container
     div.row
       div.col.s12
-        h2= work_detail.work_title
+        h4.work-title= work_detail.work_title
         p.work-type= work_detail.work_type
     
     div.row
@@ -16,7 +16,7 @@ block content
           if work_detail.publication
             tr
               th.align-right Publication Title:
-              td= work_detail.publication
+              td.work-pub= work_detail.publication
           if work_detail.volume
             tr
               th.align-right Volume:

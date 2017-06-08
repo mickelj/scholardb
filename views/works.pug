@@ -31,7 +31,6 @@ block content
                 else
                   option 100
               input(type="hidden", name="page", value="1")
-              button.btn.waves-effect.waves-light.light-blue.darken-2(type="submit") Update
         div.col.s12.center-align
           include pagination.pug
         ul.col.s12.collection.works
@@ -40,7 +39,24 @@ block content
               p.title.work-title
                 a(href="/works/"+ work.id)= work.work_title
               p.work-type= work.work_type
-              p.contributors= work.contributors
+              - var contribList = []
+              p.contributors
+                each contrib, index in work.contributors
+                  case contrib.role
+                    when "Author"
+                    when "Performer"
+                    when "Composer"
+                    when "Creator"
+                    when "Director"
+                    when "Presenter"
+                      if contrib.person_id
+                        span
+                          a(href="/person/" + contrib.person_id)= contrib.display_name
+                      else
+                        span= contrib.display_name
+                      if index < work.contributors.length - 1
+                        | ; 
+              //p.contributors= work.contributors
               p.work-pub= work.publication
                 span.work-date= work.year
         div.col.s12.center-align
