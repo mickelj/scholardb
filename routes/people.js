@@ -33,7 +33,7 @@ function renderPeopleList(req, res) {
   var cur_page = req.query.page ? req.query.page : "A";
 
   var combPeople = _.map(req.people_list, function(person) {
-    return _.extend(person, _.omit(_.findWhere(req.people_works, {person_id: member.person_id), 'person_id'}));
+    return _.extend(person, _.omit(_.findWhere(req.people_works, {person_id: member.person_id}), 'person_id'));
   });
 
   res.render('people', {
