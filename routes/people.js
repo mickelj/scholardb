@@ -6,7 +6,7 @@ function getPeopleList(req, res, next) {
   var db = req.app.get('db');
   var page = req.query.page ? req.query.page : "A";
 
-  db.run("SELECT p.id as person_id, first_name, last_name, lower(left(email, strpos(email, '@') - 1)) as image, jsonb_agg(g) as memberships FROM people p, (select id, name, sort_name from groups where hidden = false) g JOIN UNNEST(p.group_membership) AS group_id ON group_id = g.id WHERE last_name LIKE $1 AND p.active = true GROUP BY p.id, first_name, last_name, image_url ORDER BY last_name, first_name", [page + "%"], function(err, results) {
+  db.run("SELECT p.id as person_id, first_name, last_name, LEFT(last_name, 1) as first_letter, COUNT(*) FROM people GROUP BY first_letter ORDER BY first_letter;lower(left(email, strpos(email, '@') - 1)) as image, jsonb_agg(g) as memberships FROM people p, (select id, name, sort_name from groups where hidden = false) g JOIN UNNEST(p.group_membership) AS group_id ON group_id = g.id WHERE last_name LIKE $1 AND p.active = true GROUP BY p.id, first_name, last_name, image_url ORDER BY last_name, first_name", [page + "%"], function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
@@ -20,13 +20,14 @@ function getPeopleWorkCount (req, res, next) {
   var db = req.app.get('db');
   var page = req.query.page ? req.query.page : "A";
 
-  db.run("SELECT person_id, COUNT(works.id) AS cnt FROM works, JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) JOIN people p on p.id = person_id WHERE p.last_name LIKE $1 GROUP BY person_id, p.last_name", [page + "%"], function(err, results) {
+  db.run("SELECT person_id, UPPER(LEFT(last_name, 1)) as first_letter, COUNT(works.id) AS cnt FROM works, JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) JOIN people p on p.id = person_id WHERE p.last_name LIKE $1 and p.active = true GROUP BY person_id, first_letter", [page + "%"], function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
 
     req.people_works = results;
-    console.log(results);
+    _.countBy(results, function(results.first_letter))
+
     return next();
   });
 }
