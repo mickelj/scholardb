@@ -26,6 +26,7 @@ function getPeopleWorkCount (req, res, next) {
     }
 
     req.people_works = results;
+    console.log(results);
     return next();
   });
 }
