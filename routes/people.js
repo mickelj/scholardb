@@ -20,30 +20,16 @@ function getPeopleWorkCount (req, res, next) {
   var db = req.app.get('db');
   var page = req.query.page ? req.query.page : "A";
 
-  db.run("SELECT person_id, UPPER(LEFT(last_name, 1)) as first_letter, COUNT(works.id) AS cnt FROM works, JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) JOIN people p on p.id = person_id WHERE p.last_name LIKE $1 and p.active = true GROUP BY person_id, first_letter", [page + "%"], function(err, results) {
+  db.run("SELECT person_id, UPPER(LEFT(last_name, 1)) as first_letter, COUNT(works.id) AS cnt FROM works, JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) JOIN people p on p.id = person_id WHERE p.active = true GROUP BY person_id, first_letter", function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
 
     req.people_works = results;
-    var letter_counts = _.countBy(results, function(row) {
+    req.letter_list = _.countBy(results, function(row) {
         return row.first_letter;
     });
 
-    console.log(letter_counts);
-    return next();
-  });
-}
-
-function getLetterList(req, res, next) {
-  var db = req.app.get('db');
-
-  db.run("SELECT UPPER(LEFT(last_name, 1)) as first_letter, COUNT(*) FROM people GROUP BY first_letter ORDER BY first_letter", function(err, results) {
-    if (err || !results.length) {
-      return next(err);
-    }
-
-    req.letter_list = results;
     return next();
   });
 }
@@ -72,6 +58,6 @@ function renderPeopleList(req, res) {
   });
 }
 
-router.get('/', getPeopleList, getPeopleWorkCount, getLetterList, renderPeopleList);
+router.get('/', getPeopleList, getPeopleWorkCount, renderPeopleList);
 
 module.exports = router;
