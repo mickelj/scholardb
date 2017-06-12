@@ -13,6 +13,10 @@ $(document).ready(function() {
      $(this).parent().submit();
    });
 
+   $('#letter-selector').on('change', function() {
+     $(this).parent().submit();
+   });
+
    $('#resultsPerPage').on('change', function() {
      $(this).parent().submit();
    });

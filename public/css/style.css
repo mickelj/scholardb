@@ -20,10 +20,6 @@ select.browser-default {
   max-height: 85px;
 }
 
-.people-list .image-cell {
-  width: 10%;
-}
-
 .container {
   width: 100%;
 }

@@ -10,13 +10,13 @@ block content
       div.col.s12
         table.striped.people-list
           tr
-            th
-            th Contributor
-            th Departments/Programs
-            th Works in Database
+            th(style="width: 10%")
+            th(style="width: 20%") Contributor
+            th(style="width: 20%") Departments/Programs
+            th.center-align(style="width: 10%") Works in Database
             each pers in people_list
               tr
-                td.image-cell
+                td
                   a(href="/people/" + pers.person_id)
                     img.responsive-img.circle(src=imgrootdir + pers.image + defimgext)
                 td
@@ -25,4 +25,8 @@ block content
                   each dept in pers.memberships
                     div
                       a(href="/departments/" + dept.id)= dept.name
-                td= pers.cnt
+                td.center-align= pers.cnt
+
+    div.row
+      div.col.s12
+        include letters.pug
