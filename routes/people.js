@@ -20,7 +20,7 @@ function getPeopleWorkCount (req, res, next) {
   var db = req.app.get('db');
   var page = req.query.page ? req.query.page : "A";
 
-  db.run("SELECT person_id, UPPER(LEFT(last_name, 1)) as first_letter, COUNT(works.id) AS cnt FROM works, JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) JOIN people p on p.id = person_id WHERE p.active = true GROUP BY person_id, first_letter", function(err, results) {
+  db.run("SELECT person_id, UPPER(LEFT(last_name, 1)) as first_letter, COUNT(works.id) AS cnt FROM works, JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) JOIN people p on p.id = person_id WHERE p.active = true GROUP BY person_id, first_letter ORDER BY first_letter", function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
@@ -29,6 +29,15 @@ function getPeopleWorkCount (req, res, next) {
     req.letter_list = _.countBy(results, function(row) {
         return row.first_letter;
     });
+    //
+    // var keys = Object.keys(letters);
+    // var i, len = keys.length;
+    //
+    // keys.sort();
+    //
+    // for (i = 0; i < len; i++) {
+    //   k = keys[i];
+    // }
 
     return next();
   });
