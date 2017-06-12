@@ -9,11 +9,11 @@ $(document).ready(function() {
 
    $('select').material_select();
 
-   $('#page-selector').on('change', function() {
+   $('.page-selector').on('change', function() {
      $(this).parent().submit();
    });
 
-   $('#letter-selector').on('change', function() {
+   $('.letter-selector').on('change', function() {
      $(this).parent().submit();
    });
 

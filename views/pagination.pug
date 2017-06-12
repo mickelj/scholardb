@@ -13,7 +13,7 @@ ul.pagination
         i.material-icons(title="Previous Page (" + (cur_page - 1) + ")") skip_previous
 
   form(method="get", action="/works")
-    select#page-selector.browser-default(name="page")
+    select#page-selector.page-selector.browser-default(name="page")
       - var n = 1
       while n <= page_count
         if n == cur_page
