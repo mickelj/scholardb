@@ -4,6 +4,10 @@ ul.pagination
     select#letter-selector.letter-selector.browser-default(name="page")
       each letter in letter_list
         if letter.first_letter == cur_letter
-          option(value=letter.first_letter, selected) #{letter.first_letter} (#{letter.count})
+          option(value=letter.first_letter, selected) #{letter.first_letter} 
+          small
+            (#{letter.count})
         else
-          option(value=letter.first_letter) #{letter.first_letter} (#{letter.count})
+          option(value=letter.first_letter) #{letter.first_letter} 
+          small
+            (#{letter.count})

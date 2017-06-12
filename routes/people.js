@@ -26,8 +26,11 @@ function getPeopleWorkCount (req, res, next) {
     }
 
     req.people_works = results;
-    _.countBy(results, function(results.first_letter))
+    var letter_counts = _.countBy(results, function(row) {
+        return row.first_letter;
+    });
 
+    console.log(letter_counts);
     return next();
   });
 }
