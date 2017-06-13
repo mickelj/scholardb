@@ -23,8 +23,8 @@ block content
                   a(href="/people/" + pers.person_id) #{pers.last_name}, #{pers.first_name}
                 td
                   each dept in pers.memberships
-                    div
-                      if dept.id
+                    if dept
+                      div
                         a(href="/departments/" + dept.id)= dept.name
                 td.center-align= pers.cnt
 
