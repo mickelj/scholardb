@@ -3,11 +3,13 @@ extends template
 block content
   div.container
     div.row
-      div.col.s12
-        h3 #{pers.first_name} #{pers.last_name}
-        
+      div.col.s12.m8
+        h4 #{pers.first_name} #{pers.last_name}
+      div.col.s12.m4.right-align
+        h4.grey-text.works-count Works Found: #{works_count}
+
     div.row
-      div.col.s12.m3
+      div.col.s12.m3.z-depth-2.person-profile-sidebar
         div.col.s3.m12
           img.responsive-img.circle(src=imgrootdir + pers.image + defimgext)
         div.col.s3.m12
@@ -22,7 +24,5 @@ block content
           p.person-profile-section.blue.darken-4.white-text Publications
           
       div.col.s12.m9.person-works
-        div.col.s12 
-          h4.works-count Works Found: #{works_count}
         div.col.s12
           include works_list.pug

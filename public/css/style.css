@@ -108,6 +108,11 @@ input[type="search"] {
   content: " (";
 }
 
+.works-count {
+  font-style: italic;
+  letter-spacing: -.02em;
+}
+
 .contrib-role {
   font-size: smaller;
   color: #78909c;
@@ -147,8 +152,12 @@ input[type="search"] {
 }
 
 .person-works {
-  height: 800px;
-  overflow: scroll;
+  height: 68vh;
+  overflow-y: scroll;
+}
+
+.person-profile.sidebar {
+  padding: .75em;
 }
 
 .person-profile-section {
