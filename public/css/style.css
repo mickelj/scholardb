@@ -157,7 +157,7 @@ input[type="search"] {
 }
 
 .person-profile-sidebar {
-  padding: .75em;
+  padding: .75em !important;
 }
 
 .person-profile-section {

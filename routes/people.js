@@ -96,9 +96,16 @@ function getPersonWorksList (req, res, next) {
 
     req.person_works_list = results;
     req.works_count = results.length;
-    req.publications_count = _.countBy(results, function(pub) {
-      return [pub.pubid, pub.publication];
-    });
+    req.publications_count = results.reduce(function (allPubs, pub) {
+        if (pub.id in allPubs) {
+          allPubs[pub.id].count++;
+        } else {
+          allPubs[pub.id] = {count: 1};
+          allPubs[pub.id].name = pub.publication;
+        }
+        return allPubs;
+    }, {});
+
     return next();
   });
 }

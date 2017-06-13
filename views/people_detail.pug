@@ -22,9 +22,9 @@ block content
           p.person-profile-section.blue.darken-4.white-text #{orgshortname} Co-Authors
         div.col.s3.m12
           p.person-profile-section.blue.darken-4.white-text Publications
-          each count, pub in pub_count
+          each detail, pubid in pub_count
             div.publication 
-              a(href="/publications/" + pub[0]) #{pub[1]} (#{count})
+              a(href="/publications/" + pubid) #{detail.name} (#{detail.count})
           
       div.col.s12.m9.person-works
         div.col.s12
