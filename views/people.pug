@@ -24,7 +24,8 @@ block content
                 td
                   each dept in pers.memberships
                     div
-                      a(href="/departments/" + dept.id)= dept.name
+                      if dept.id
+                        a(href="/departments/" + dept.id)= dept.name
                 td.center-align= pers.cnt
 
     div.row
