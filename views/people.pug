@@ -26,7 +26,10 @@ block content
                     if dept
                       div
                         a(href="/departments/" + dept.id)= dept.name
-                td.center-align= pers.cnt
+                if pers.cnt
+                  td.center-align= pers.cnt
+                else
+                  td.center-align 0
 
     div.row
       div.col.s12.center-align

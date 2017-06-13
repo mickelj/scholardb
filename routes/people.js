@@ -6,12 +6,16 @@ function getPeopleList(req, res, next) {
   var db = req.app.get('db');
   var page = req.query.page ? req.query.page : "A";
 
-  db.run("SELECT p.id as person_id, first_name, last_name, lower(left(email, strpos(email, '@') - 1)) as image, jsonb_agg(g) as memberships FROM people p LEFT JOIN LATERAL (select id, name, sort_name from groups where hidden = false AND groups.id = ANY(p.group_membership)) g ON TRUE WHERE last_name LIKE $1 AND p.active = true GROUP BY p.id, first_name, last_name, image_url ORDER BY last_name, first_name", [page + "%"], function(err, results) {
+  db.run("SELECT p.id as person_id, first_name, last_name, UPPER(LEFT(last_name, 1)) as first_letter, lower(left(email, strpos(email, '@') - 1)) as image, jsonb_agg(g) as memberships FROM people p LEFT JOIN LATERAL (select id, name, sort_name from groups where hidden = false AND groups.id = ANY(p.group_membership)) g ON TRUE WHERE last_name LIKE $1 AND p.active = true GROUP BY p.id, first_name, last_name, first_letter, image ORDER BY last_name, first_name", [page + "%"], function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
 
     req.people_list = results;
+    req.letter_list = _.countBy(results, function(row) {
+        return row.first_letter;
+    });
+
     return next();
   });
 }
@@ -20,16 +24,12 @@ function getPeopleWorkCount (req, res, next) {
   var db = req.app.get('db');
   var page = req.query.page ? req.query.page : "A";
 
-  db.run("SELECT person_id, UPPER(LEFT(last_name, 1)) as first_letter, COUNT(works.id) AS cnt FROM works, JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) LEFT JOIN people p on p.id = person_id WHERE p.active = true GROUP BY person_id, first_letter ORDER BY first_letter", function(err, results) {
+  db.run("SELECT person_id, COUNT(works.id) AS cnt FROM works, JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) LEFT JOIN people p on person_id = p.id WHERE p.active = true GROUP BY person_id", function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
 
     req.people_works = results;
-    req.letter_list = _.countBy(results, function(row) {
-        return row.first_letter;
-    });
-
     return next();
   });
 }
