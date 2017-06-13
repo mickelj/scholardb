@@ -4,22 +4,25 @@ block content
   div.container
     div.row
       div.col.s12
-        h3 #{pers.last_name}, #{pers.first_name}
+        h3 #{pers.first_name} #{pers.last_name}
         
     div.row
-      div.col.s12.m5
+      div.col.s12.m3
         div.col.s3.m12
           img.responsive-img.circle(src=imgrootdir + pers.image + defimgext)
         div.col.s3.m12
-          h4 Departments &amp; Programs
-            each dept in pers.memberships
-              if dept
-                div
-                  a(href="/departments/" + dept.id)= dept.name
+          p.person-profile-section.blue.darken-4.white-text Departments &amp; Programs
+          each dept in pers.memberships
+            if dept
+              div
+                a(href="/departments/" + dept.id)= dept.name
         div.col.s3.m12
-          h4 #{orgshortname} Co-Authors
+          p.person-profile-section.blue.darken-4.white-text #{orgshortname} Co-Authors
         div.col.s3.m12
-          h4 Publications
+          p.person-profile-section.blue.darken-4.white-text Publications
           
       div.col.s12.m9.person-works
-        include works_list.pug
+        div.col.s12 
+          h4.works-count Works Found: #{works_count}
+        div.col.s12
+          include works_list.pug

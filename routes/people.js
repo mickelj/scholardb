@@ -95,6 +95,7 @@ function getPersonWorksList (req, res, next) {
     }
 
     req.person_works_list = results;
+    req.works_count = results.length;
     return next();
   });
 }
@@ -113,7 +114,8 @@ function renderPersonDetail(req, res) {
     searchdeftext: nconf.get('application:searchdeftext'),
     orgshortname: nconf.get('application:orgshortname'),
     works_list: req.person_works_list,
-    pers: req.person_detail
+    pers: req.person_detail,
+    works_count: req.works_count
   });
 }
 
