@@ -1,0 +1,25 @@
+extends template
+
+block content
+  div.container
+    div.row
+      div.col.s12
+        h3 #{pers.last_name}, #{pers.first_name}
+        
+    div.row
+      div.col.s12.m5
+        div.col.s3.m12
+          img.responsive-img.circle(src=imgrootdir + pers.image + defimgext)
+        div.col.s3.m12
+          h4 Departments &amp; Programs
+            each dept in pers.memberships
+              if dept
+                div
+                  a(href="/departments/" + dept.id)= dept.name
+        div.col.s3.m12
+          h4 #{orgshortname} Co-Authors
+        div.col.s3.m12
+          h4 Publications
+          
+      div.col.s12.m9.person-works
+        include works_list.pug

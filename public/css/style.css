@@ -141,9 +141,14 @@ input[type="search"] {
 }
 
 .filter-toggle {
-    font-size: .75em;
-    font-style: italic;
-    width: 100%;
+  font-size: .75em;
+  font-style: italic;
+  width: 100%;
+}
+
+.person-works {
+  height: 800px;
+  overflow: scroll;
 }
 
 @media screen and (min-width: 1201px) {

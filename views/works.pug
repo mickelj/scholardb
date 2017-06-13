@@ -33,30 +33,6 @@ block content
               input(type="hidden", name="page", value="1")
         div.col.s12.center-align
           include pagination.pug
-        ul.col.s12.collection.works
-          each work in works_list
-            li.collection-item.avatar
-              p.title.work-title
-                a(href="/works/"+ work.id)= work.work_title
-              p.work-type= work.work_type
-              p.contributors
-                each contrib, index in work.contributors
-                  case contrib.role
-                    when "Author"
-                    when "Performer"
-                    when "Composer"
-                    when "Creator"
-                    when "Director"
-                    when "Presenter"
-                      if contrib.person_id
-                        span
-                          a(href="/people/" + contrib.person_id)= contrib.display_name
-                      else
-                        span= contrib.display_name
-                      if index < work.contributors.length - 1
-                        | ; 
-              p.work-pub
-                a(href="/publications/" + work.pubid)= work.publication
-                span.work-date= work.year
+        include works_list.pug
         div.col.s12.center-align
           include pagination.pug
