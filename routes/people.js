@@ -75,7 +75,7 @@ function getPersonDetail (req, res, next) {
   var db = req.app.get('db');
   var person_id = req.params.id;
 
-  db.run("SELECT p.id as person_id, first_name, last_name, lower(left(email, strpos(email, '@') - 1)) as image, jsonb_agg(g) as memberships FROM people p LEFT JOIN LATERAL (select id, name, sort_name from groups where hidden = false AND groups.id = ANY(p.group_membership) order by sort_name) g ON TRUE WHERE person_id = $1 AND p.active = true GROUP BY p.id, first_name, last_name, first_letter, image ORDER BY last_name, first_name", [person_id], function(err, results) {
+  db.run("SELECT p.id as person_id, first_name, last_name, lower(left(email, strpos(email, '@') - 1)) as image, jsonb_agg(g) as memberships FROM people p LEFT JOIN LATERAL (select id, name, sort_name from groups where hidden = false AND groups.id = ANY(p.group_membership) order by sort_name) g ON TRUE WHERE p.id = $1 AND p.active = true GROUP BY p.id, first_name, last_name, first_letter, image ORDER BY last_name, first_name", [person_id], function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
