@@ -23,7 +23,8 @@ block content
         div.col.s3.m12
           p.person-profile-section.blue.darken-4.white-text Publications
           each count, pub in pub_count
-            div #{pub} (#{count})
+            div.publication 
+              a(href="/publications/" + pub[0]) #{pub[1]} (#{count})
           
       div.col.s12.m9.person-works
         div.col.s12
