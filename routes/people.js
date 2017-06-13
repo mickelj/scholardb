@@ -34,6 +34,19 @@ function getPeopleWorkCount (req, res, next) {
   });
 }
 
+function getLetterPagerCounts (req, res, next) {
+  var db = req.app.get('db');
+
+  db.run("SELECT UPPER(LEFT(last_name, 1)) as first_letter, count(*) FROM people p WHERE p.active = true GROUP BY first_letter ORDER BY first_letter", function(err, results) {
+    if (err || !results.length) {
+      return next(err);
+    }
+
+    req.letter_list = results;
+    return next();
+  });
+}
+
 function renderPeopleList(req, res) {
   var nconf = req.app.get('nconf');
   var cur_letter = req.query.page ? req.query.page : "A";
@@ -58,6 +71,6 @@ function renderPeopleList(req, res) {
   });
 }
 
-router.get('/', getPeopleList, getPeopleWorkCount, renderPeopleList);
+router.get('/', getPeopleList, getPeopleWorkCount, getLetterPagerCounts, renderPeopleList);
 
 module.exports = router;

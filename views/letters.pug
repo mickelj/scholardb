@@ -2,8 +2,8 @@ ul.pagination
   form(method="get", action=cur_list)
     label(for="letter-selector") Jump to: 
     select#letter-selector.letter-selector.browser-default(name="page")
-      each count, letter in letter_list
-        if letter == cur_letter
-          option(value=letter, selected) #{letter} (#{count})
+      each letter in letter_list
+        if letter.first_letter == cur_letter
+          option(value=letter.first_letter, selected) #{letter.first_letter} (#{letter.count})
         else
-          option(value=letter) #{letter} (#{count})
+          option(value=letter.first_letter) #{letter.first_letter} (#{letter.count})
