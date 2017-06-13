@@ -22,6 +22,8 @@ block content
           p.person-profile-section.blue.darken-4.white-text #{orgshortname} Co-Authors
         div.col.s3.m12
           p.person-profile-section.blue.darken-4.white-text Publications
+          each count, pub in pub_count
+            div #{pub} (#{count})
           
       div.col.s12.m9.person-works
         div.col.s12

@@ -96,6 +96,9 @@ function getPersonWorksList (req, res, next) {
 
     req.person_works_list = results;
     req.works_count = results.length;
+    req.publications_count = _.countBy(results, function(pub) {
+      return pub.publication;
+    });
     return next();
   });
 }
@@ -115,7 +118,8 @@ function renderPersonDetail(req, res) {
     orgshortname: nconf.get('application:orgshortname'),
     works_list: req.person_works_list,
     pers: req.person_detail,
-    works_count: req.works_count
+    works_count: req.works_count,
+    pub_count: req.publications_count
   });
 }
 
