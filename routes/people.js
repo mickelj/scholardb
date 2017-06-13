@@ -6,7 +6,7 @@ function getPeopleList(req, res, next) {
   var db = req.app.get('db');
   var page = req.query.page ? req.query.page : "A";
 
-  db.run("SELECT p.id as person_id, first_name, last_name, lower(left(email, strpos(email, '@') - 1)) as image, jsonb_agg(g) as memberships FROM people p, (select id, name, sort_name from groups where hidden = false) g LEFT JOIN UNNEST(p.group_membership) AS group_id ON group_id = g.id WHERE last_name LIKE $1 AND p.active = true GROUP BY p.id, first_name, last_name, image_url ORDER BY last_name, first_name", [page + "%"], function(err, results) {
+  db.run("SELECT p.id as person_id, first_name, last_name, lower(left(email, strpos(email, '@') - 1)) as image, jsonb_agg(g) as memberships FROM people p LEFT JOIN LATERAL (select id, name, sort_name from groups where hidden = false AND groups.id = ANY(p.group_membership)) g ON TRUE WHERE last_name LIKE $1 AND p.active = true GROUP BY p.id, first_name, last_name, image_url ORDER BY last_name, first_name", [page + "%"], function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
