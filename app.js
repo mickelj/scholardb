@@ -22,13 +22,13 @@ app.set('nconf', nconf);
 const index = require('./routes/index');
 const works = require('./routes/works');
 const people = require('./routes/people');
-// const departments = require('./routes/departments');
+const departments = require('./routes/departments');
 // const publications = require('./routes/publications');
 // const publishers = require('./routes/publishers');
 app.use('/', index);
 app.use('/works', works);
 app.use('/people', people);
-// app.use('/departments', departments);
+app.use('/departments', departments);
 // app.use('/publications', publications);
 // app.use('/publishers', publishers);
 

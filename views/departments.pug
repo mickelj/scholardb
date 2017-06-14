@@ -1,0 +1,31 @@
+extends template
+
+block content
+  div.row
+    div.col.s12.center-align
+      include letters.pug
+
+  div.row
+    div.col.s12
+      table.striped.dept-list
+        tr
+          th(style="width: 25%") Department/Program
+          th(style="width: 25%") Department/Program URL
+          th(style="width: 25%") Parent Department/Program
+          th.center-align(style="width: 10%") # of Members
+          each dept in dept_list
+            tr
+              td
+                a(href="/departments/" + dept.group_id)= dept.group_name
+              td
+                a(href=dept.url)= dept.url
+              td
+                a(href="/departments/" + dept.parent_id)= dept.parent_id
+              if dept.cnt
+                td.center-align= dept.cnt
+              else
+                td.center-align 0
+
+  div.row
+    div.col.s12.center-align
+      include letters.pug
