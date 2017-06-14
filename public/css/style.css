@@ -1,3 +1,7 @@
+header {
+  margin-bottom: 1vh;
+}
+
 form {
   display: inline;
 }
@@ -21,11 +25,12 @@ select.browser-default {
 }
 
 .container {
-  width: 95%;
+  width: 95vw;
 }
 
 .row {
   margin-bottom: 0;
+  width: 95vw;
 }
 
 .row .col {
