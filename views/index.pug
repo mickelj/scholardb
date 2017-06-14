@@ -12,7 +12,7 @@ block content
           div.card
             div.card-image
               a(href="/people/" + pers.person_id)
-                img.responsive-img(src=imgrootdir + pers.image + defimgext)
+                img.responsive-img(src=imgrootdir + pers.image + defimgext, alt=pers.first_name + " " + pers.last_name)
                 button.btn-floating.right-fab.blue.darken-4= pers.count
             p.cardname
               a(href="/people/" + pers.person_id)= pers.last_name
