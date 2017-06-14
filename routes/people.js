@@ -6,7 +6,7 @@ function getPeopleList(req, res, next) {
   var db = req.app.get('db');
   var page = req.query.page ? req.query.page : "A";
 
-  db.run("SELECT p.id as person_id, first_name, last_name, UPPER(LEFT(last_name, 1)) as first_letter, lower(left(email, strpos(email, '@') - 1)) as image, jsonb_agg(g) as memberships FROM people p LEFT JOIN LATERAL (select id, name, sort_name from groups where hidden = false AND groups.id = ANY(p.group_membership) order by sort_name) g ON TRUE WHERE last_name LIKE $1 AND p.active = true GROUP BY p.id, first_name, last_name, first_letter, image ORDER BY last_name, first_name", [page + "%"], function(err, results) {
+  db.run("SELECT p.id as person_id, first_name, last_name, UPPER(LEFT(last_name, 1)) as first_letter, lower(left(email, strpos(email, '@') - 1)) as image, jsonb_agg(g) as memberships FROM people p LEFT JOIN LATERAL (select id, name, sort_name from groups where hidden = false AND groups.id = ANY(p.group_membership) order by sort_name) g ON TRUE WHERE last_name LIKE $1 GROUP BY p.id, first_name, last_name, first_letter, image ORDER BY last_name, first_name", [page + "%"], function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
@@ -24,7 +24,7 @@ function getPeopleWorkCount (req, res, next) {
   var db = req.app.get('db');
   var page = req.query.page ? req.query.page : "A";
 
-  db.run("SELECT person_id, COUNT(works.id) AS cnt FROM works, JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) LEFT JOIN people p on person_id = p.id WHERE p.active = true GROUP BY person_id", function(err, results) {
+  db.run("SELECT person_id, COUNT(works.id) AS cnt FROM works, JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) LEFT JOIN people p on person_id = p.id GROUP BY person_id", function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
@@ -37,7 +37,7 @@ function getPeopleWorkCount (req, res, next) {
 function getLetterPagerCounts (req, res, next) {
   var db = req.app.get('db');
 
-  db.run("SELECT UPPER(LEFT(last_name, 1)) as first_letter, count(*) FROM people p WHERE p.active = true GROUP BY first_letter ORDER BY first_letter", function(err, results) {
+  db.run("SELECT UPPER(LEFT(last_name, 1)) as first_letter, count(*) FROM people p GROUP BY first_letter ORDER BY first_letter", function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
@@ -75,7 +75,7 @@ function getPersonDetail (req, res, next) {
   var db = req.app.get('db');
   var person_id = req.params.id;
 
-  db.run("SELECT p.id as person_id, first_name, last_name, lower(left(email, strpos(email, '@') - 1)) as image, jsonb_agg(g) as memberships FROM people p LEFT JOIN LATERAL (select id, name, sort_name from groups where hidden = false AND groups.id = ANY(p.group_membership) order by sort_name) g ON TRUE WHERE p.id = $1 AND p.active = true GROUP BY p.id, first_name, last_name, image ORDER BY last_name, first_name", [person_id], function(err, results) {
+  db.run("SELECT p.id as person_id, first_name, last_name, lower(left(email, strpos(email, '@') - 1)) as image, jsonb_agg(g) as memberships FROM people p LEFT JOIN LATERAL (select id, name, sort_name from groups where hidden = false AND groups.id = ANY(p.group_membership) order by sort_name) g ON TRUE WHERE p.id = $1 GROUP BY p.id, first_name, last_name, image ORDER BY last_name, first_name", [person_id], function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
@@ -106,7 +106,7 @@ function getPersonWorksList (req, res, next) {
       return allPubs;
     }, {});
 
-    req.publications_count = _.sortBy(_.sortBy(pubcount, 'name'), 'count').reverse();
+    req.publications_count = _.sortBy(pubcount, 'count').reverse();
 
     var coauth_ids = [req.person_detail.person_id];
     var coauthors = [];
