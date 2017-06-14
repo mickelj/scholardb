@@ -3,7 +3,11 @@ extends template
 block content
   div.row.s0.m12.valign-wrapper
     div.col.s12.m7
-      h3 #{pers.first_name} #{pers.last_name}
+      h3 #{pers.first_name} 
+        if pers.middle_name
+          | #{pers.middle_name} 
+        | #{pers.last_name}
+#{pers.last_name}
     div.col.s12.m5.right-align
       h5.grey-text.works-count Works Found: #{works_count}
   div.row.s12.hide-on-med-and-up
@@ -11,7 +15,10 @@ block content
       div.col.s3
         img.responsive-img.circle(src=imgrootdir + pers.image + defimgext, alt=pers.first_name + " " + pers.last_name)
       div.col.s9
-        h4 #{pers.first_name} #{pers.last_name}
+        h4 #{pers.first_name} 
+          if pers.middle_name
+            | #{pers.middle_name} 
+          | #{pers.last_name}
     div.col.s12
       h6.grey-text.works-count Works Found: #{works_count}
 
