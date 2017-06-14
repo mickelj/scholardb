@@ -96,7 +96,7 @@ function getPersonWorksList (req, res, next) {
 
     req.person_works_list = results;
     req.works_count = results.length;
-    req.publications_count = results.reduce(function (allPubs, pub) {
+    var pubcount = results.reduce(function (allPubs, pub) {
       if (pub.pubid in allPubs) {
         allPubs[pub.pubid].count++;
       } else {
@@ -105,6 +105,8 @@ function getPersonWorksList (req, res, next) {
       }
       return allPubs;
     }, {});
+
+    req.publications_count = _.sortBy(_.sortBy(pubcount, 'name'), 'count').reverse();
 
     var coauth_ids = [req.person_detail.person_id];
     var coauthors = [];
