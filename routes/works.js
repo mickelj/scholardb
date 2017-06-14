@@ -51,7 +51,7 @@ function getYearWorkCount (req, res, next) {
 
 function getPublicationWorkCount (req, res, next) {
   var db = req.app.get('db');
-  db.run("SELECT name AS fld, COUNT(works.id) AS cnt FROM works JOIN publications ON publications.id = works.publication_id WHERE name <> 'Unknown' GROUP BY name ORDER BY COUNT(works.id) DESC", function(err, results) {
+  db.run("SELECT name AS fld, COUNT(works.id) AS cnt FROM works JOIN publications ON publications.authority_id = works.publication_id WHERE name <> 'Unknown' GROUP BY name ORDER BY COUNT(works.id) DESC", function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
@@ -63,7 +63,7 @@ function getPublicationWorkCount (req, res, next) {
 
 function getPublisherWorkCount (req, res, next) {
   var db = req.app.get('db');
-  db.run("SELECT publishers.name AS fld, COUNT(works.id) AS cnt FROM works JOIN publications ON publications.id = works.publication_id JOIN publishers ON publishers.id = publications.publisher_id WHERE publishers.name <> 'Unknown' AND publications.name <> 'Unknown' GROUP BY publishers.name ORDER BY COUNT(works.id) DESC", function(err, results) {
+  db.run("SELECT publishers.name AS fld, COUNT(works.id) AS cnt FROM works JOIN publications ON publications.authority_id = works.publication_id JOIN publishers ON publishers.id = publications.publisher_id WHERE publishers.name <> 'Unknown' AND publications.name <> 'Unknown' GROUP BY publishers.name ORDER BY COUNT(works.id) DESC", function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
@@ -136,7 +136,7 @@ function getWorkDetail(req, res, next) {
   var db = req.app.get('db');
   var work_id = req.params.id;
 
-  db.run("SELECT works.id, title_primary as work_title, description as work_type, contributors, publications.name as publication, publications.id as pubid, publishers.name as publisher, publishers.id as publisherid, publication_date_year as year, volume, issue, start_page, end_page, location, works.url, summary FROM works JOIN publications ON publications.id = works.publication_id JOIN work_types USING (type) JOIN publishers ON publishers.id = publications.publisher_id WHERE works.id = $1", [work_id], function(err, results) {
+  db.run("SELECT works.id, title_primary as work_title, description as work_type, contributors, publications.name as publication, publications.authority_id as pubid, publishers.name as publisher, publishers.id as publisherid, publication_date_year as year, volume, issue, start_page, end_page, location, works.url, summary FROM works JOIN publications ON publications.id = works.publication_id JOIN work_types USING (type) JOIN publishers ON publishers.id = publications.publisher_id WHERE works.id = $1", [work_id], function(err, results) {
     if (err || !results.length) {
       return next(err);
     }

@@ -89,7 +89,7 @@ function getPersonWorksList (req, res, next) {
   var db = req.app.get('db');
   var person_id = req.params.id;
 
-  db.run("SELECT works.id, title_primary as work_title, description as work_type, contributors, name as publication, publications.id as pubid, publication_date_year as year FROM works JOIN publications ON publications.id = works.publication_id JOIN work_types USING (type), JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) WHERE person_id = $1 ORDER BY publication_date_year DESC, works.id DESC", [person_id], function(err, results) {
+  db.run("SELECT works.id, title_primary as work_title, description as work_type, contributors, name as publication, publications.authority_id as pubid, publication_date_year as year FROM works JOIN publications ON publications.authority_id = works.publication_id JOIN work_types USING (type), JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) WHERE person_id = $1 ORDER BY publication_date_year DESC, works.id DESC", [person_id], function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
