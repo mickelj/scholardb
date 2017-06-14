@@ -33,8 +33,8 @@ block content
             if contrib.person_id
               if coauthors.indexOf(contrib.person_id) == -1
                 - coauthors.push(contrib.person_id)
-              div.contributor
-                a(href="/people/" + contrib.person_id)= contrib.display_name
+                div.contributor
+                  a(href="/people/" + contrib.person_id)= contrib.display_name
 
       div.col.s3.m12
         p.person-profile-section.blue.darken-4.white-text Publications
