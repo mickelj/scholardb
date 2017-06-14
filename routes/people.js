@@ -106,6 +106,21 @@ function getPersonWorksList (req, res, next) {
       return allPubs;
     }, {});
 
+    var coauth_ids = [req.person_detail.person_id];
+    var coauthors = [];
+    for (var i = 0 ; i < results.length ; i++) {
+      for (var j = 0 ; j < results[i].contributors.length ; j++) {
+        if (results[i].contributors[j].person_id) {
+          if (coauth_ids.indexOf(results[i].contributors[j].person_id) == -1) {
+            coauth_ids.push(results[i].contributors[j].person_id);
+            coauthors.push({id: results[i].contributors[j].person_id, name: results[i].contributors[j].display_name});
+          }
+        }
+      }
+    }
+
+    req.coauthors = _.sortBy(coauthors, name);
+
     return next();
   });
 }
@@ -126,7 +141,8 @@ function renderPersonDetail(req, res) {
     works_list: req.person_works_list,
     pers: req.person_detail,
     works_count: req.works_count,
-    pub_count: req.publications_count
+    pub_count: req.publications_count,
+    coauthors: req.coauthors
   });
 }
 

@@ -27,14 +27,9 @@ block content
               a(href="/departments/" + dept.id)= dept.name
       div.col.s3.m12
         p.person-profile-section.blue.darken-4.white-text #{orgshortname} Co-Authors
-        - var coauthors = []
-        each work in works_list
-          each contrib in work.contributors
-            if contrib.person_id
-              if coauthors.indexOf(contrib.person_id) == -1
-                - coauthors.push(contrib.person_id)
-                div.contributor
-                  a(href="/people/" + contrib.person_id)= contrib.display_name
+        each ca in coauthors
+          div.contributor
+            a(href="/people/" + ca.id)= ca.name
 
       div.col.s3.m12
         p.person-profile-section.blue.darken-4.white-text Publications
