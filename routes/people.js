@@ -106,6 +106,8 @@ function getPersonWorksList (req, res, next) {
         return allPubs;
     }, {});
 
+    console.log(req.publications_count);
+
     return next();
   });
 }
