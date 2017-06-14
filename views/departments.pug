@@ -18,9 +18,9 @@ block content
               td
                 a(href="/departments/" + dept.group_id)= dept.group_name
               td
-                a(href=dept.url)= dept.url
+                a(href=dept.url, target='_blank')= dept.url
               td
-                a(href="/departments/" + dept.parent_id)= dept.parent_id
+                a(href="/departments/" + dept.parent_id)= dept.parent_name
               if dept.cnt
                 td.center-align= dept.cnt
               else

@@ -131,7 +131,7 @@ function renderPersonDetail(req, res) {
   var nconf = req.app.get('nconf');
 
   res.render('people_detail', {
-    title: nconf.get('application:appname') + " - People",
+    title: nconf.get('application:appname') + " - Person: " + req.person_detail.last_name + ", " + req.person_detail.first_name + " " + req.person_detail.middle_name,
     tagline: nconf.get('application:tagline'),
     logo: nconf.get('application:logo'),
     appname: nconf.get('application:appname'),
