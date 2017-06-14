@@ -8,16 +8,17 @@ block content
       div.col.s12.m5.right-align
         h5.grey-text.works-count Works Found: #{works_count}
     div.row.s12.hide-on-med-and-up
-      div.col.s3
-        img.responsive-img.circle(src=imgrootdir + pers.image + defimgext, alt=pers.first_name + " " + pers.last_name)
-      div.col.s9
-        h3 #{pers.first_name} #{pers.last_name}
+      div.valign-wrapper
+        div.col.s3
+          img.responsive-img.circle(src=imgrootdir + pers.image + defimgext, alt=pers.first_name + " " + pers.last_name)
+        div.col.s9
+          h4 #{pers.first_name} #{pers.last_name}
       div.col.s12
         h6.grey-text.works-count Works Found: #{works_count}
 
     div.row
       div.col.hide-on-small-only.m3.z-depth-2.person-profile-sidebar
-        div.col.s3.m12
+        div.col.s3.m12.center-align
           img.responsive-img.circle(src=imgrootdir + pers.image + defimgext, alt=pers.first_name + " " + pers.last_name)
         div.col.s3.m12
           p.person-profile-section.blue.darken-4.white-text Departments &amp; Programs
@@ -27,6 +28,11 @@ block content
                 a(href="/departments/" + dept.id)= dept.name
         div.col.s3.m12
           p.person-profile-section.blue.darken-4.white-text #{orgshortname} Co-Authors
+          each contrib, index in works_list.contributors
+            if contrib.person_id
+              div.contributor
+                a(href="/people/" + contrib.person_id)= contrib.display_name
+
         div.col.s3.m12
           p.person-profile-section.blue.darken-4.white-text Publications
           each detail, pubid in pub_count

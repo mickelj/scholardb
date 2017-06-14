@@ -20,4 +20,6 @@ $(document).ready(function() {
    $('#resultsPerPage').on('change', function() {
      $(this).parent().submit();
    });
+
+   $(".person-works").height($(".person-profile-sidebar").height());
 });

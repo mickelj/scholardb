@@ -1,5 +1,5 @@
 header {
-  margin-bottom: 1vh;
+  margin-bottom: 1vh !important;
 }
 
 form {
@@ -157,7 +157,7 @@ input[type="search"] {
 }
 
 .person-works {
-  height: 68vh;
+  /*height: 68vh;*/
   overflow-y: scroll;
 }
 
