@@ -97,16 +97,16 @@ function getPersonWorksList (req, res, next) {
     req.person_works_list = results;
     req.works_count = results.length;
     req.publications_count = results.reduce(function (allPubs, pub) {
-        if (pub.id in allPubs) {
-          allPubs[pub.id].count++;
+        if (pub.pubid in allPubs) {
+          allPubs[pub.pubid].count++;
         } else {
-          allPubs[pub.id] = {count: 1};
-          allPubs[pub.id].name = pub.publication;
+          allPubs[pub.pubid] = {count: 1};
+          allPubs[pub.pubid].name = pub.publication;
         }
         return allPubs;
     }, {});
 
-    console.log(req.publications_count);
+    //console.log(req.publications_count);
 
     return next();
   });
