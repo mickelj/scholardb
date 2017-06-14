@@ -119,7 +119,7 @@ function getPersonWorksList (req, res, next) {
       }
     }
 
-    req.coauthors = _.sortBy(coauthors, name);
+    req.coauthors = _.sortBy(coauthors, 'name');
 
     return next();
   });
