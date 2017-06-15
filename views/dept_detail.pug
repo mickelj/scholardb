@@ -14,12 +14,12 @@ block content
         
       div.moreinfo
         p.headline More Information
-        if dept_detail.url
+        if dept.url
           div
-            a(href=dept_detail.url, target="_blank") #{dept.group_name} Department Homepage
-        if dept_detail.parent_id
+            a(href=dept.url, target="_blank") #{dept.group_name} Department Homepage
+        if dept.parent_id
           div
-            a(href="/departments/" + dept_detail.parent_id) Belongs to: #{dept_detail.parent_name}
+            a(href="/departments/" + dept.parent_id) Belongs to: #{dept.parent_name}
   
     div.col.s12.m6.detail-works
       p.headline Works Found: #{works_count}
