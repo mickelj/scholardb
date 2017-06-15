@@ -146,13 +146,13 @@ function renderDeptDetail(req, res) {
     dept: req.dept_detail,
     people: req.dept_people,
     works_list: req.dept_works_list,
-    works_count: req.works_count,
+    works_count: req.total_works,
     pub_count: req.publications_count,
     limit: limit,
     page_count: page_count,
     cur_page: cur_page,
     offset: offset,
-    cur_list: req.baseUrl
+    cur_list: req.baseUrl + "/" + req.params.id
   });
 }
 

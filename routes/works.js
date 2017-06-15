@@ -117,7 +117,7 @@ function renderWorksList (req, res) {
     filter_yearworks: req.filter_yearworks,
     filter_publicationworks: req.filter_publicationworks,
     filter_publisherworks: req.filter_publisherworks,
-    works_count: req.works_count[0].total_works,
+    works_count: req.total_works,
     works_list: req.works_list,
     limit: limit,
     page_count: page_count,
