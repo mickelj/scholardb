@@ -21,5 +21,5 @@ $(document).ready(function() {
      $(this).parent().submit();
    });
 
-   $(".person-works").height($(".person-profile-sidebar").height());
+   $(".detail-works").height($(".detail-profile-sidebar").height());
 });

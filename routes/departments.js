@@ -52,14 +52,8 @@ function renderDeptList(req, res) {
   });
 
   res.render('departments', {
+    appconf: nconf.get('application'),
     title: nconf.get('application:appname') + " - Departments",
-    tagline: nconf.get('application:tagline'),
-    logo: nconf.get('application:logo'),
-    appname: nconf.get('application:appname'),
-    defimgext: nconf.get('application:defimgext'),
-    imgrootdir: nconf.get('application:imgrootdir'),
-    organization: nconf.get('application:organization'),
-    searchdeftext: nconf.get('application:searchdeftext'),
     dept_list: combDepts,
     cur_letter: cur_letter,
     letter_list: req.letter_list,

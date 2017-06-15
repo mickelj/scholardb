@@ -156,12 +156,12 @@ input[type="search"] {
   width: 100%;
 }
 
-.person-works {
+.detail-works {
   /*height: 68vh;*/
   overflow-y: scroll;
 }
 
-.person-profile-sidebar {
+.detail-profile-sidebar {
   padding: .75em !important;
 }
 
@@ -170,7 +170,7 @@ input[type="search"] {
   border-radius: 2px;
 }
 
-.person-profile-sidebar .publication {
+.detail-profile-sidebar .publication {
   text-indent: -1.5em;
   margin-left: 1.5em;
 }

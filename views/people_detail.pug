@@ -12,7 +12,7 @@ block content
   div.row.s12.hide-on-med-and-up
     div.valign-wrapper
       div.col.s3
-        img.responsive-img.circle(src=imgrootdir + pers.image + defimgext, alt=pers.first_name + " " + pers.last_name)
+        img.responsive-img.circle(src=appconf.imgrootdir + pers.image + appconf.defimgext, alt=pers.first_name + " " + pers.last_name)
       div.col.s9
         h4 #{pers.first_name} 
           if pers.middle_name
@@ -22,9 +22,9 @@ block content
       h6.grey-text.works-count Works Found: #{works_count}
 
   div.row
-    div.col.hide-on-small-only.m3.z-depth-2.person-profile-sidebar
+    div.col.hide-on-small-only.m3.z-depth-2.detail-profile-sidebar
       div.col.s3.m12.center-align
-        img.responsive-img.circle(src=imgrootdir + pers.image + defimgext, alt=pers.first_name + " " + pers.last_name)
+        img.responsive-img.circle(src=appconf.imgrootdir + pers.image + appconf.defimgext, alt=pers.first_name + " " + pers.last_name)
       div.col.s3.m12
         p.person-profile-section.blue.darken-4.white-text Departments &amp; Programs
         each dept in pers.memberships
@@ -43,6 +43,6 @@ block content
           div.publication 
             a(href="/publications/" + pubid) #{detail.name} (#{detail.count})
           
-    div.col.s12.m9.person-works
+    div.col.s12.m9.detail-works
       div.col.s12
         include works_list.pug
