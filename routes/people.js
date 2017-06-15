@@ -56,14 +56,8 @@ function renderPeopleList(req, res) {
   });
 
   res.render('people', {
+    appconf: nconf.get('application'),
     title: nconf.get('application:appname') + " - People",
-    tagline: nconf.get('application:tagline'),
-    logo: nconf.get('application:logo'),
-    appname: nconf.get('application:appname'),
-    defimgext: nconf.get('application:defimgext'),
-    imgrootdir: nconf.get('application:imgrootdir'),
-    organization: nconf.get('application:organization'),
-    searchdeftext: nconf.get('application:searchdeftext'),
     people_list: combPeople,
     cur_letter: cur_letter,
     letter_list: req.letter_list,
@@ -131,15 +125,8 @@ function renderPersonDetail(req, res) {
   var nconf = req.app.get('nconf');
 
   res.render('people_detail', {
+    appconf: nconf.get('application'),
     title: nconf.get('application:appname') + " - Person: " + req.person_detail.last_name + ", " + req.person_detail.first_name + " " + req.person_detail.middle_name,
-    tagline: nconf.get('application:tagline'),
-    logo: nconf.get('application:logo'),
-    appname: nconf.get('application:appname'),
-    defimgext: nconf.get('application:defimgext'),
-    imgrootdir: nconf.get('application:imgrootdir'),
-    organization: nconf.get('application:organization'),
-    searchdeftext: nconf.get('application:searchdeftext'),
-    orgshortname: nconf.get('application:orgshortname'),
     works_list: req.person_works_list,
     pers: req.person_detail,
     works_count: req.works_count,

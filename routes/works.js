@@ -109,14 +109,8 @@ function renderWorksList (req, res) {
   var offset = (cur_page - 1) * limit;
 
   res.render('works', {
+    appconf: nconf.get('application'),
     title: nconf.get('application:appname') + " - Works",
-    tagline: nconf.get('application:tagline'),
-    logo: nconf.get('application:logo'),
-    appname: nconf.get('application:appname'),
-    defimgext: nconf.get('application:defimgext'),
-    imgrootdir: nconf.get('application:imgrootdir'),
-    organization: nconf.get('application:organization'),
-    searchdeftext: nconf.get('application:searchdeftext'),
     filter_worktypes: req.filter_worktypes,
     filter_deptworks: req.filter_deptworks,
     filter_peopleworks: req.filter_peopleworks,
@@ -156,14 +150,8 @@ function renderWorkDetail(req, res) {
   }
 
   res.render('work_detail', {
+    appconf: nconf.get('application'),
     title: nconf.get('application:appname') + " - Work: " + req.work_detail.work_title,
-    tagline: nconf.get('application:tagline'),
-    logo: nconf.get('application:logo'),
-    appname: nconf.get('application:appname'),
-    defimgext: nconf.get('application:defimgext'),
-    imgrootdir: nconf.get('application:imgrootdir'),
-    organization: nconf.get('application:organization'),
-    searchdeftext: nconf.get('application:searchdeftext'),
     work_detail: req.work_detail,
     url: url
   });

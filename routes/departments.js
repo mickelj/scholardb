@@ -113,14 +113,8 @@ function renderDeptDetail(req, res) {
   var nconf = req.app.get('nconf');
 
   res.render('dept_detail', {
+    appconf: nconf.get('application'),
     title: nconf.get('application:appname') + " - Department: " + req.dept_detail.group_name,
-    tagline: nconf.get('application:tagline'),
-    logo: nconf.get('application:logo'),
-    appname: nconf.get('application:appname'),
-    defimgext: nconf.get('application:defimgext'),
-    imgrootdir: nconf.get('application:imgrootdir'),
-    organization: nconf.get('application:organization'),
-    searchdeftext: nconf.get('application:searchdeftext'),
     dept: req.dept_detail,
     people: req.dept_people,
     works_list: req.dept_works_list
