@@ -89,6 +89,20 @@ function getDeptPeople (req, res, next) {
   });
 }
 
+function getDeptWorksCount(req, res, next) {
+  var db = req.app.get('db');
+  var dept_id = req.params.id;
+
+  db.run("SELECT count(*) as total_works FROM works LEFT JOIN people p ON person_id = p.id LEFT JOIN LATERAL (select id, name, sort_name from groups where hidden = false AND groups.id = ANY(p.group_membership)) g ON TRUE WHERE g.id = $1", function(err, results) {
+    if (err || !results.length) {
+      return next(err);
+    }
+
+    req.total_works = results[0].total_works;
+    return next();
+  });
+}
+
 function getDeptWorksList (req, res, next) {
   var db = req.app.get('db');
   var dept_id = req.params.id;
@@ -122,7 +136,7 @@ function getDeptWorksList (req, res, next) {
 function renderDeptDetail(req, res) {
   var nconf = req.app.get('nconf');
   var limit = req.query.limit ? req.query.limit : 10;
-  var page_count = Math.ceil(req.works_count[0].total_works / limit);
+  var page_count = Math.ceil(req.total_works / limit);
   var cur_page = req.query.page ? req.query.page : 1;
   var offset = (cur_page - 1) * limit;
 
@@ -143,6 +157,6 @@ function renderDeptDetail(req, res) {
 }
 
 router.get('/', getDeptList, getDeptMembersCount, getLetterPagerCounts, renderDeptList);
-router.get('/:id', getDeptDetail, getDeptPeople, getDeptWorksList, renderDeptDetail);
+router.get('/:id', getDeptDetail, getDeptPeople, getDeptWorksCount, getDeptWorksList, renderDeptDetail);
 
 module.exports = router;

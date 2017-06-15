@@ -80,9 +80,9 @@ function getWorksCount(req, res, next) {
       return next(err);
     }
 
-    req.works_count = results;
+    req.works_count = results[0].total_works;
     return next();
-  })
+  });
 }
 
 function getWorksList(req, res, next) {
@@ -104,7 +104,7 @@ function renderWorksList (req, res) {
   var nconf = req.app.get('nconf');
 
   var limit = req.query.limit ? req.query.limit : 10;
-  var page_count = Math.ceil(req.works_count[0].total_works / limit);
+  var page_count = Math.ceil(req.total_works / limit);
   var cur_page = req.query.page ? req.query.page : 1;
   var offset = (cur_page - 1) * limit;
 
