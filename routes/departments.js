@@ -92,8 +92,10 @@ function getDeptPeople (req, res, next) {
 function getDeptWorksList (req, res, next) {
   var db = req.app.get('db');
   var dept_id = req.params.id;
+  var limit = req.query.limit ? req.query.limit : 10;
+  var offset = req.query.page ? (req.query.page - 1) * limit : 0;
 
-  db.run("SELECT works.id, title_primary as work_title, description as work_type, contributors, publications.name as publication, publications.authority_id as pubid, publication_date_year as year FROM works JOIN publications ON publications.authority_id = works.publication_id JOIN work_types USING (type), JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) LEFT JOIN people p ON person_id = p.id LEFT JOIN LATERAL (select id, name, sort_name from groups where hidden = false AND groups.id = ANY(p.group_membership)) g ON TRUE WHERE g.id = $1 ORDER BY publication_date_year DESC, works.id DESC", [dept_id], function(err, results) {
+  db.run("SELECT works.id, title_primary as work_title, description as work_type, contributors, publications.name as publication, publications.authority_id as pubid, publication_date_year as year FROM works JOIN publications ON publications.authority_id = works.publication_id JOIN work_types USING (type), JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) LEFT JOIN people p ON person_id = p.id LEFT JOIN LATERAL (select id, name, sort_name from groups where hidden = false AND groups.id = ANY(p.group_membership)) g ON TRUE WHERE g.id = $1 ORDER BY publication_date_year DESC, works.id DESC LIMIT $2 OFFSET $3", [dept_id, limit, offset], function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
@@ -119,6 +121,10 @@ function getDeptWorksList (req, res, next) {
 
 function renderDeptDetail(req, res) {
   var nconf = req.app.get('nconf');
+  var limit = req.query.limit ? req.query.limit : 10;
+  var page_count = Math.ceil(req.works_count[0].total_works / limit);
+  var cur_page = req.query.page ? req.query.page : 1;
+  var offset = (cur_page - 1) * limit;
 
   res.render('dept_detail', {
     appconf: nconf.get('application'),
@@ -127,7 +133,12 @@ function renderDeptDetail(req, res) {
     people: req.dept_people,
     works_list: req.dept_works_list,
     works_count: req.works_count,
-    pub_count: req.publications_count
+    pub_count: req.publications_count,
+    limit: limit,
+    page_count: page_count,
+    cur_page: cur_page,
+    offset: offset,
+    cur_list: req.baseUrl
   });
 }
 

@@ -3,7 +3,7 @@ div.col.s12.m9
     h4.works-count Works Found: #{works_count}
   div.col.s12.m6.right-align
     p
-      form(method="get", action="/works")
+      form(method="get", action=cur_list)
         label(for='resultsPerPage') Results Per Page:
         select#resultsPerPage.browser-default(name='limit')
           if limit == 10

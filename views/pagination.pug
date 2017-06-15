@@ -6,13 +6,13 @@ ul.pagination
       i.material-icons skip_previous
   else
     li.waves-effect
-      a(href="/works?page=1&limit=" + limit)
+      a(href=cur_list + "?page=1&limit=" + limit)
         i.material-icons(title="First Page (1)") fast_rewind
     li.waves-effect
-      a(href="/works?page="+ (cur_page - 1) + "&limit=" + limit)
+      a(href=cur_list + "?page="+ (cur_page - 1) + "&limit=" + limit)
         i.material-icons(title="Previous Page (" + (cur_page - 1) + ")") skip_previous
 
-  form(method="get", action="/works")
+  form(method="get", action=cur_list)
     select#page-selector.page-selector.browser-default(name="page")
       - var n = 1
       while n <= page_count
@@ -30,8 +30,8 @@ ul.pagination
       i.material-icons fast_forward
   else
     li.waves-effect
-      a(href="/works?page=" + (Number(cur_page) + 1) + "&limit=" + limit)
+      a(href=cur_list + "?page=" + (Number(cur_page) + 1) + "&limit=" + limit)
         i.material-icons(title="Next Page (" + (Number(cur_page) + 1) + ")") skip_next
     li.waves-effect
-      a(href="/works?page=" + page_count + "&limit=" + limit)
+      a(href=cur_list + "?page=" + page_count + "&limit=" + limit)
         i.material-icons(title="Last Page (" + page_count + ")") fast_forward
