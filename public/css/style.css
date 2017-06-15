@@ -30,7 +30,6 @@ select.browser-default {
 
 .row {
   margin-bottom: 0;
-  width: 95vw;
 }
 
 .row .col {
@@ -196,5 +195,10 @@ input[type="search"] {
 @media screen and (max-width: 600px) {
   .s0 {
     display: none;
+  }
+
+  .detail-works {
+    overflow-y: auto;
+    height: 100%;
   }
 }
