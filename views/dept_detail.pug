@@ -3,23 +3,28 @@ extends template
 block content
   div.row
     div.col.s12.m6.detail-profile-sidebar
-      div.members
+      div.row
         p.headline Members of #{dept.group_name}
         include scholar_cards.pug
-      div.publications-list
+      
+      div.row
         p.headline Publications
         each detail, pubid in pub_count
           div.publication 
             a(href="/publications/" + pubid) #{detail.name} (#{detail.count})
         
-      div.moreinfo
+      div.row
         p.headline More Information
-        if dept.url
-          div
-            a(href=dept.url, target="_blank") #{dept.group_name} Department Homepage
+        if dept.url 
+          div.row
+            div.col.s6 Department Homepage:
+            div.col.s6 
+              a(href=dept.url, target="_blank")= dept.group_name
         if dept.parent_id
-          div
-            a(href="/departments/" + dept.parent_id) Belongs to: #{dept.parent_name}
+          div.row
+            div.col.s6 Belongs to:
+            div.col.s6
+              a(href="/departments/" + dept.parent_id)= dept.parent_name
   
     div.col.s12.m6.detail-works
       p.headline Works Found: #{works_count}
