@@ -161,7 +161,7 @@ input[type="search"] {
   overflow-y: scroll;
 }
 
-.detail-profile-sidebar > div {
+.person-profile-sidebar {
   padding: .75em !important;
 }
 

@@ -99,6 +99,7 @@ function getDeptWorksList (req, res, next) {
     }
 
     req.dept_works_list = results;
+    req.works_count = results.length;
     return next();
   });
 }
