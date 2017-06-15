@@ -93,7 +93,7 @@ function getDeptWorksCount(req, res, next) {
   var db = req.app.get('db');
   var dept_id = req.params.id;
 
-  db.run("SELECT count(*) as total_works FROM works LEFT JOIN people p ON person_id = p.id LEFT JOIN LATERAL (select id, name, sort_name from groups where hidden = false AND groups.id = ANY(p.group_membership)) g ON TRUE WHERE g.id = $1", function(err, results) {
+  db.run("SELECT count(*) as total_works FROM works, JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) LEFT JOIN people p ON person_id = p.id LEFT JOIN LATERAL (select id, name, sort_name from groups where hidden = false AND groups.id = ANY(p.group_membership)) g ON TRUE WHERE g.id = $1", function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
