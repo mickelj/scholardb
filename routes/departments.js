@@ -100,6 +100,19 @@ function getDeptWorksList (req, res, next) {
 
     req.dept_works_list = results;
     req.works_count = results.length;
+
+    var pubcount = results.reduce(function (allPubs, pub) {
+      if (pub.pubid in allPubs) {
+        allPubs[pub.pubid].count++;
+      } else {
+        allPubs[pub.pubid] = {count: 1};
+        allPubs[pub.pubid].name = pub.publication;
+      }
+      return allPubs;
+    }, {});
+
+    req.publications_count = _.sortBy(pubcount, 'name');
+
     return next();
   });
 }
@@ -112,7 +125,9 @@ function renderDeptDetail(req, res) {
     title: nconf.get('application:appname') + " - Department: " + req.dept_detail.group_name,
     dept: req.dept_detail,
     people: req.dept_people,
-    works_list: req.dept_works_list
+    works_list: req.dept_works_list,
+    works_count: req.works_count,
+    pub_count: req.publications_count
   });
 }
 

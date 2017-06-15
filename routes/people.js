@@ -100,7 +100,7 @@ function getPersonWorksList (req, res, next) {
       return allPubs;
     }, {});
 
-    req.publications_count = _.sortBy(pubcount, 'count').reverse();
+    req.publications_count = _.sortBy(pubcount, 'name');
 
     var coauth_ids = [req.person_detail.person_id];
     var coauthors = [];

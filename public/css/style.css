@@ -157,7 +157,7 @@ input[type="search"] {
 }
 
 .detail-works {
-  /*height: 68vh;*/
+  min-height: 75vh;
   overflow-y: scroll;
 }
 
