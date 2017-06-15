@@ -10,7 +10,7 @@ html
       nav.blue.darken-4
         div.nav-wrapper
           a.brand-logo(href="/")
-            img(src=logo, alt=appname)
+            img(src=appconf.logo, alt=appconf.appname)
           a.button-collapse(href="#", data-activates="mobile-menu")
             i.material-icons menu
           ul#nav-mobile.right.hide-on-med-and-down
@@ -38,11 +38,11 @@ html
 
     header.row
       div.col.s12.m8
-        p.tagline= tagline
+        p.tagline= appconf.tagline
       div.col.s12.m4
         form
           div.input-field
-            input#search(type="search", required, placeholder=searchdeftext)
+            input#search(type="search", required, placeholder=appconf.searchdeftext)
             label.label-icon(for="search")
               i.material-icons search
             i.material-icons close
@@ -54,6 +54,7 @@ html
       div.col.s12
         p.center-align
           - var year = new Date().getFullYear()
-          small &copy; #{year}, #{organization}
+          small &copy; #{year}, 
+            a(href=appconf.orgurl, target="_blank")= appconf.organization
     
     script(type="text/javascript", src="/js/script.js")

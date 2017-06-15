@@ -2,6 +2,7 @@
   "application": {
     "organization"  : "Washington and Lee University Library",
     "orgshortname"  : "W&L",
+    "orgurl"        : "http://library.wlu.edu",
     "appname"       : "W&L Scholar",
     "logo"          : "/images/wlupubs_logo_white.png",
     "tagline"       : "Original scholarly works from the Washington and Lee University community",
