@@ -80,7 +80,7 @@ function getWorksCount(req, res, next) {
       return next(err);
     }
 
-    req.works_count = results[0].total_works;
+    req.total_works = results[0].total_works;
     return next();
   });
 }

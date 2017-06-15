@@ -40,7 +40,5 @@ block content
             a(href="/publications/" + pubid) #{detail.name} (#{detail.count})
           
     div.col.s12.m9.detail-works
-      div.col.s12
-        p.headline Works Found: #{works_count}
-      div.col.s12
-        include works_list.pug
+      p.headline Works Found: #{total_works}
+      include works_block.pug

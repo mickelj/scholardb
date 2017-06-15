@@ -79,11 +79,27 @@ function getPersonDetail (req, res, next) {
   });
 }
 
-function getPersonWorksList (req, res, next) {
+function getPersonWorksCount(req, res, next) {
   var db = req.app.get('db');
   var person_id = req.params.id;
 
-  db.run("SELECT works.id, title_primary as work_title, description as work_type, contributors, name as publication, publications.authority_id as pubid, publication_date_year as year FROM works JOIN publications ON publications.authority_id = works.publication_id JOIN work_types USING (type), JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) WHERE person_id = $1 ORDER BY publication_date_year DESC, works.id DESC", [person_id], function(err, results) {
+  db.run("SELECT count(*) as total_works FROM works, JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) WHERE person_id = $1", [person_id], function(err, results) {
+    if (err || !results.length) {
+      return next(err);
+    }
+
+    req.total_works = results[0].total_works;
+    return next();
+  });
+}
+
+function getPersonWorksList (req, res, next) {
+  var db = req.app.get('db');
+  var person_id = req.params.id;
+  var limit = req.query.limit ? req.query.limit : 10;
+  var offset = req.query.page ? (req.query.page - 1) * limit : 0;
+
+  db.run("SELECT works.id, title_primary as work_title, description as work_type, contributors, name as publication, publications.authority_id as pubid, publication_date_year as year FROM works JOIN publications ON publications.authority_id = works.publication_id JOIN work_types USING (type), JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) WHERE person_id = $1 ORDER BY publication_date_year DESC, works.id DESC LIMIT $2 OFFSET $3", [person_id, limit, offset], function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
@@ -123,19 +139,28 @@ function getPersonWorksList (req, res, next) {
 
 function renderPersonDetail(req, res) {
   var nconf = req.app.get('nconf');
+  var limit = req.query.limit ? req.query.limit : 10;
+  var page_count = Math.ceil(req.total_works / limit);
+  var cur_page = req.query.page ? req.query.page : 1;
+  var offset = (cur_page - 1) * limit;
 
   res.render('people_detail', {
     appconf: nconf.get('application'),
     title: nconf.get('application:appname') + " - Person: " + req.person_detail.last_name + ", " + req.person_detail.first_name + " " + req.person_detail.middle_name,
     works_list: req.person_works_list,
     pers: req.person_detail,
-    works_count: req.works_count,
+    total_works: req.total_works,
     pub_count: req.publications_count,
-    coauthors: req.coauthors
+    coauthors: req.coauthors,
+    limit: limit,
+    page_count: page_count,
+    cur_page: cur_page,
+    offset: offset,
+    cur_list: req.baseUrl + "/" + req.params.id
   });
 }
 
 router.get('/', getPeopleList, getPeopleWorkCount, getLetterPagerCounts, renderPeopleList);
-router.get('/:id', getPersonDetail, getPersonWorksList, renderPersonDetail);
+router.get('/:id', getPersonDetail, getPersonWorksCount, getPersonWorksList, renderPersonDetail);
 
 module.exports = router;

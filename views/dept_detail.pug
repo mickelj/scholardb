@@ -6,12 +6,13 @@ block content
       div.row
         p.headline Members of #{dept.group_name}
         include scholar_cards.pug
-      
-      div.row
-        p.headline Publications
-        each detail, pubid in pub_count
-          div.publication 
-            a(href="/publications/" + pubid) #{detail.name} (#{detail.count})
+        
+      //-
+        div.row
+          p.headline Publications
+          each detail, pubid in pub_count
+            div.publication 
+              a(href="/publications/" + pubid) #{detail.name} (#{detail.count})
         
       div.row
         p.headline More Information
@@ -27,6 +28,5 @@ block content
               a(href="/departments/" + dept.parent_id)= dept.parent_name
   
     div.col.s12.m6.detail-works
-      p.headline Works Found: #{works_count}
-      //- include works_list.pug
+      p.headline Works Found: #{total_works}
       include works_block.pug
