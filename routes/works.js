@@ -104,13 +104,13 @@ function getWorksList(req, res, next) {
 }
 
 function getWorksImages (req, res, next) {
-  var ccurlbase = 'https://scholarsdb-coce.herokuapp.com/cover?provider=ol,gb&id=';
+  var nconf = req.app.get('nconf');
 
   var idents = _.map(req.works_list, function(work) {
     return work.identifier ? work.identifier.replace(/-/g, '') : 'null';
   });
 
-  request.get(ccurlbase + idents.join(','), function(err, res, body) {
+  request.get(nconf.get('application:ccurlbase') + idents.join(','), function(err, res, body) {
     if (err) {
       return next(err);
     }
@@ -122,7 +122,6 @@ function getWorksImages (req, res, next) {
       work.coverimage = (wi in imgobj ? imgobj[wi] : null);
     });
 
-    console.log(req.works_list)
     return next();
   });
 }

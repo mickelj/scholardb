@@ -1,27 +1,29 @@
-ul.col.s12.collection.works
+div.col.s12.works
   each work in works_list
-    li.collection-item.avatar
-      if work.coverimage
-        img(src=work.coverimage)
-      p.title.work-title
-        a(href="/works/"+ work.id) !{work.work_title}
-      p.work-type= work.work_type
-      p.contributors
-        each contrib, index in work.contributors
-          case contrib.role
-            when "Author"
-            when "Performer"
-            when "Composer"
-            when "Creator"
-            when "Director"
-            when "Presenter"
-              if contrib.person_id
-                span
-                  a(href="/people/" + contrib.person_id)= contrib.display_name
-              else
-                span= contrib.display_name
-              if index < work.contributors.length - 1
-                | ; 
-      p.work-pub
-        a(href="/publications/" + work.pubid)= work.publication
-        span.work-date= work.year
+    div.card.horizontal
+      div.card-image
+        if work.coverimage
+          img(src=work.coverimage)
+      div.card-content
+        p.title.work-title
+          a(href="/works/"+ work.id) !{work.work_title}
+        p.work-type= work.work_type
+        p.contributors
+          each contrib, index in work.contributors
+            case contrib.role
+              when "Author"
+              when "Performer"
+              when "Composer"
+              when "Creator"
+              when "Director"
+              when "Presenter"
+                if contrib.person_id
+                  span
+                    a(href="/people/" + contrib.person_id)= contrib.display_name
+                else
+                  span= contrib.display_name
+                if index < work.contributors.length - 1
+                  | ; 
+        p.work-pub
+          a(href="/publications/" + work.pubid)= work.publication
+          span.work-date= work.year

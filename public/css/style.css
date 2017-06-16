@@ -82,6 +82,10 @@ input[type="search"] {
   padding: 1px 15px;
 }
 
+.card.horizontal .card-image {
+    width: 20%;
+}
+
 .works {
   margin-top: 0;
 }
