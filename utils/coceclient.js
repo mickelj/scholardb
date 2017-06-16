@@ -9,7 +9,7 @@ cc.fetch(['isbn1','isbn2'], function(isbn, url) {
 
 **/
 
-function CoceClient(url, provider) {
+exports.CoceClient = function (url, provider) {
 
     var founds = {};    // Private cache for already found ISBN
     var notfounds = {}; // ISBN not found in Coce
