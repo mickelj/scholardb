@@ -110,7 +110,7 @@ function getWorksImages (req, res, next) {
     return val.identifier ? val.identifier : null;
   });
 
-  request.get(ccserver + idents.join(','), function(err, res, body) {
+  request.get(ccurlbase + idents.join(','), function(err, res, body) {
     body = JSON.parse(body);
     console.log(body);
   });
