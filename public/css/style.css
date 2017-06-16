@@ -83,7 +83,12 @@ input[type="search"] {
 }
 
 .card.horizontal .card-image {
-    width: 20%;
+    min-width: 20%;
+    max-width: 20%;
+}
+
+.card .card-image img {
+  display: inline-block;
 }
 
 .works {

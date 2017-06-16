@@ -1,7 +1,7 @@
 div.col.s12.works
   each work in works_list
-    div.card.horizontal
-      div.card-image
+    div.card.horizontal.valign-wrapper
+      div.card-image.center-align
         if work.coverimage
           img(src=work.coverimage)
       div.card-content
