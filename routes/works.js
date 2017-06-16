@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const _ = require('underscore');
 const coce = require('../utils/coceclient');
+const request = require('request');
 
 function getWorkTypeCount (req, res, next) {
   var db = req.app.get('db');
@@ -103,14 +104,24 @@ function getWorksList(req, res, next) {
 }
 
 function getWorksImages (req, res, next) {
-  var cc = new coce.CoceClient('https://scholarsdb-coce.herokuapp.com', 'ol,gb');
-  _.map(req.works_list, function(val) {
-    if (val.identifier) {
-      cc.fetch([val.identifier], function(isbn, url) {
-        val.coverimage = url;
-      });
-    }
+  var ccurlbase = 'https://scholarsdb-coce.herokuapp.com/cover?provider=ol,gb&id=';
+
+  var idents = _.map(req.works_list, function(val) {
+    return val.identifier ? val.identifier : null;
   });
+
+  request.get(ccserver + idents.join(','), function(err, res, body) {
+    body = JSON.parse(body);
+    console.log(body);
+  });
+
+  // _.map(req.works_list, function(val) {
+  //   if (val.identifier) {
+  //     cc.fetch([val.identifier], function(isbn, url) {
+  //       val.coverimage = url;
+  //     });
+  //   }
+  // });
 
   return next();
 }
