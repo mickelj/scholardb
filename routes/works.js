@@ -118,7 +118,7 @@ function getWorksImages (req, res, next) {
     imgobj = JSON.parse(body);
 
     _.map(req.works_list, function(work) {
-      var wi = (work.identifier ? work.identifier.replace(/-/g, '') : null;
+      var wi = (work.identifier ? work.identifier.replace(/-/g, '') : null);
       work.coverimage = (wi in imgobj ? imgobj[wi] : null);
     });
 
