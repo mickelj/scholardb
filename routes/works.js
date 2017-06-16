@@ -149,7 +149,7 @@ function renderWorksList (req, res) {
     page_count: page_count,
     cur_page: cur_page,
     offset: offset,
-    cur_list: req.baseUrl + "/" + req.params.id
+    cur_list: req.baseUrl
   });
 }
 

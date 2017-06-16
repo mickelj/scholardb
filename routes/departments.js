@@ -109,7 +109,7 @@ function getDeptWorksList (req, res, next) {
   var limit = req.query.limit ? req.query.limit : 10;
   var offset = req.query.page ? (req.query.page - 1) * limit : 0;
 
-  db.run("SELECT works.id, title_primary as work_title, description as work_type, contributors, publications.name as publication, publications.authority_id as pubid, publication_date_year as year FROM works JOIN publications ON publications.authority_id = works.publication_id JOIN work_types USING (type), JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) LEFT JOIN people p ON person_id = p.id LEFT JOIN LATERAL (select id, name, sort_name from groups where hidden = false AND groups.id = ANY(p.group_membership)) g ON TRUE WHERE g.id = $1 ORDER BY publication_date_year DESC, works.id DESC LIMIT $2 OFFSET $3", [dept_id, limit, offset], function(err, results) {
+  db.run("SELECT works.id, title_primary as work_title, description as work_type, contributors, pi.identifier, publications.name as publication, publications.authority_id as pubid, publication_date_year as year FROM works JOIN publications ON publications.authority_id = works.publication_id JOIN work_types USING (type) LEFT JOIN LATERAL (select identifier from publications p2, JSONB_TO_RECORDSET(identifiers) as w(type text, identifier text) WHERE p2.id = publications.id AND type LIKE 'ISBN%') pi ON TRUE, JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) LEFT JOIN people p ON person_id = p.id LEFT JOIN LATERAL (select id, name, sort_name from groups where hidden = false AND groups.id = ANY(p.group_membership)) g ON TRUE WHERE g.id = $1 ORDER BY publication_date_year DESC, works.id DESC LIMIT $2 OFFSET $3", [dept_id, limit, offset], function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
@@ -128,6 +128,29 @@ function getDeptWorksList (req, res, next) {
     }, {});
 
     req.publications_count = _.sortBy(pubcount, 'name');
+
+    return next();
+  });
+}
+
+function getWorksImages (req, res, next) {
+  var nconf = req.app.get('nconf');
+
+  var idents = _.map(req.dept_works_list, function(work) {
+    return work.identifier ? work.identifier.replace(/-/g, '') : 'null';
+  });
+
+  request.get(nconf.get('application:ccurlbase') + idents.join(','), function(err, res, body) {
+    if (err) {
+      return next(err);
+    }
+
+    imgobj = JSON.parse(body);
+
+    _.map(req.dept_works_list, function(work) {
+      var wi = (work.identifier ? work.identifier.replace(/-/g, '') : null);
+      work.coverimage = (wi in imgobj ? imgobj[wi] : null);
+    });
 
     return next();
   });
@@ -157,6 +180,6 @@ function renderDeptDetail(req, res) {
 }
 
 router.get('/', getDeptList, getDeptMembersCount, getLetterPagerCounts, renderDeptList);
-router.get('/:id', getDeptDetail, getDeptPeople, getDeptWorksCount, getDeptWorksList, renderDeptDetail);
+router.get('/:id', getDeptDetail, getDeptPeople, getDeptWorksCount, getDeptWorksList, getWorksImages, renderDeptDetail);
 
 module.exports = router;
