@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const _ = require('underscore');
-const coce = require('../utils/coceclient');
 const request = require('request');
 
 function getWorkTypeCount (req, res, next) {

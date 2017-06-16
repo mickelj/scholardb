@@ -1,6 +1,7 @@
 const express = require('express');
 const _ = require('underscore');
 const router = express.Router();
+const request = require('request');
 
 function getDeptList(req, res, next) {
   var db = req.app.get('db');
