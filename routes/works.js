@@ -106,22 +106,19 @@ function getWorksList(req, res, next) {
 function getWorksImages (req, res, next) {
   var ccurlbase = 'https://scholarsdb-coce.herokuapp.com/cover?provider=ol,gb&id=';
 
-  var idents = _.map(req.works_list, function(val) {
-    return val.identifier ? val.identifier.replace(/-/g, '') : 'null';
+  var idents = _.map(req.works_list, function(work) {
+    return work.identifier ? work.identifier.replace(/-/g, '') : 'null';
   });
 
   request.get(ccurlbase + idents.join(','), function(err, res, body) {
-    body = JSON.parse(body);
-    console.log(body);
+    imgobj = JSON.parse(body);
+
+    _.map(req.works_list, function(work) {
+      work.coverimage = (work.identifier in imgobj ? imgobj[work.identifier] : null);
+    });
   });
 
-  // _.map(req.works_list, function(val) {
-  //   if (val.identifier) {
-  //     cc.fetch([val.identifier], function(isbn, url) {
-  //       val.coverimage = url;
-  //     });
-  //   }
-  // });
+  console.log(req.works_list)
 
   return next();
 }
