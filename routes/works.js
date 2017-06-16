@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const _ = require('underscore');
 const coce = require('../utils/coceclient');
-const request = require('request');
+const request = require('request-promise');
 
 function getWorkTypeCount (req, res, next) {
   var db = req.app.get('db');
@@ -104,21 +104,28 @@ function getWorksList(req, res, next) {
 }
 
 function getWorksImages (req, res, next) {
-  var ccurlbase = 'https://scholarsdb-coce.herokuapp.com/cover?provider=ol,gb&id=';
 
   var idents = _.map(req.works_list, function(work) {
     return work.identifier ? work.identifier.replace(/-/g, '') : 'null';
   });
 
-  request.get(ccurlbase + idents.join(','), function(err, res, body) {
-    imgobj = JSON.parse(body);
+  var options = {
+    uri : 'https://scholarsdb-coce.herokuapp.com/cover',
+    qs  : {
+      provider : 'ol,gb',
+      id : idents.join(',')
+    },
+    headers : { 'User-Agent': 'Request-Promise' },
+    json : true
+  };
 
+  request(options).then(function(imgobj))
     _.map(req.works_list, function(work) {
       work.coverimage = (work.identifier in imgobj ? imgobj[work.identifier] : null);
     });
   });
 
-  console.log(req.works_list)
+  console.log(req.works_list);
 
   return next();
 }

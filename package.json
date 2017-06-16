@@ -23,6 +23,7 @@
     "nconf": "^0.8.4",
     "pug": "^2.0.0-beta.12",
     "request": "^2.81.0",
+    "request-promise": "^4.2.1",
     "underscore": "^1.8.3"
   }
 }
