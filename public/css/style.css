@@ -91,6 +91,10 @@ input[type="search"] {
   display: inline-block;
 }
 
+.icon {
+  font-size: 15vh;
+}
+
 .works {
   margin-top: 0;
 }
