@@ -120,6 +120,7 @@ function getWorksImages (req, res, next) {
   };
 
   request(options).then(function(imgobj) {
+    console.log(imgobj);
     var stuff = _.map(req.works_list, function(work) {
       work.coverimage = (work.identifier in imgobj ? imgobj[work.identifier] : null);
     });
