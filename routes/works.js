@@ -148,7 +148,8 @@ function renderWorksList (req, res) {
     limit: limit,
     page_count: page_count,
     cur_page: cur_page,
-    offset: offset
+    offset: offset,
+    cur_list: req.baseUrl + "/" + req.params.id
   });
 }
 
