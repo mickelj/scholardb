@@ -1,6 +1,6 @@
 each pers, i in people
   div.col.s4.m3.l2
-    div.card
+    div.card.hoverable
       div.card-image
         a(href="/people/" + pers.person_id)
           img.responsive-img(src=appconf.imgrootdir + pers.image + appconf.defimgext, alt=pers.first_name + " " + pers.last_name)

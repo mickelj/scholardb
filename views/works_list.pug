@@ -1,6 +1,8 @@
 ul.col.s12.collection.works
   each work in works_list
     li.collection-item.avatar
+      if work.coverimage
+        img(src=work.coverimage)
       p.title.work-title
         a(href="/works/"+ work.id) !{work.work_title}
       p.work-type= work.work_type

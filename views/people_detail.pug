@@ -27,11 +27,13 @@ block content
           if dept
             div
               a(href="/departments/" + dept.id)= dept.name
-      div.col.s3.m12
-        p.person-profile-section.blue.darken-4.white-text #{orgshortname} Co-Authors
-        each ca in coauthors
-          div.contributor
-            a(href="/people/" + ca.id)= ca.name
+              
+      if coauthors
+        div.col.s3.m12
+          p.person-profile-section.blue.darken-4.white-text #{orgshortname} Co-Authors
+          each ca in coauthors
+            div.contributor
+              a(href="/people/" + ca.id)= ca.name
 
       div.col.s3.m12
         p.person-profile-section.blue.darken-4.white-text Publications

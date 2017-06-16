@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const _ = require('underscore');
+const coce = require('utils/coceclient');
 
 function getWorkTypeCount (req, res, next) {
   var db = req.app.get('db');
@@ -90,7 +92,7 @@ function getWorksList(req, res, next) {
   var limit = req.query.limit ? req.query.limit : 10;
   var offset = req.query.page ? (req.query.page - 1) * limit : 0;
 
-  db.run("SELECT works.id, title_primary as work_title, description as work_type, contributors, name as publication, publications.id as pubid, publication_date_year as year FROM works JOIN publications ON publications.id = works.publication_id JOIN work_types USING (type) ORDER BY publication_date_year DESC, works.id DESC LIMIT $1 OFFSET $2", [limit, offset], function(err, results) {
+  db.run("SELECT works.id, title_primary as work_title, description as work_type, contributors, name as publication, publications.id as pubid, pi.identifier, publication_date_year as year FROM works JOIN publications ON publications.id = works.publication_id JOIN work_types USING (type) LEFT JOIN LATERAL (select identifier from publications p2, JSONB_TO_RECORDSET(identifiers) as w(type text, identifier text) WHERE p2.id = publications.id AND type LIKE 'ISBN%') pi ON TRUE ORDER BY publication_date_year DESC, works.id DESC LIMIT $1 OFFSET $2", [limit, offset], function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
@@ -98,6 +100,19 @@ function getWorksList(req, res, next) {
     req.works_list = results;
     return next();
   });
+}
+
+function getWorksImages (req, res, next) {
+  var cc = new coce.CoceClient('https://scholarsdb-coce.herokuapp.com', 'ol,gb');
+  _.map(req.works_list, function(val) {
+    if (val.identifier) {
+      cc.fetch([val.identifier], function(isbn, url) {
+        val.coverimage = url;
+      });
+    }
+  });
+
+  return next();
 }
 
 function renderWorksList (req, res) {
@@ -117,7 +132,7 @@ function renderWorksList (req, res) {
     filter_yearworks: req.filter_yearworks,
     filter_publicationworks: req.filter_publicationworks,
     filter_publisherworks: req.filter_publisherworks,
-    works_count: req.total_works,
+    total_works: req.total_works,
     works_list: req.works_list,
     limit: limit,
     page_count: page_count,
@@ -157,7 +172,7 @@ function renderWorkDetail(req, res) {
   });
 }
 
-router.get('/', getWorkTypeCount, getDeptWorkCount, getPeopleWorkCount, getYearWorkCount, getPublicationWorkCount, getPublisherWorkCount, getWorksCount, getWorksList, renderWorksList);
+router.get('/', getWorkTypeCount, getDeptWorkCount, getPeopleWorkCount, getYearWorkCount, getPublicationWorkCount, getPublisherWorkCount, getWorksCount, getWorksList, getWorksImages, getrenderWorksList);
 
 router.get('/:id', getWorkDetail, renderWorkDetail);
 
