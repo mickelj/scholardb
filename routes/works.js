@@ -172,7 +172,7 @@ function renderWorkDetail(req, res) {
   });
 }
 
-router.get('/', getWorkTypeCount, getDeptWorkCount, getPeopleWorkCount, getYearWorkCount, getPublicationWorkCount, getPublisherWorkCount, getWorksCount, getWorksList, getWorksImages, getrenderWorksList);
+router.get('/', getWorkTypeCount, getDeptWorkCount, getPeopleWorkCount, getYearWorkCount, getPublicationWorkCount, getPublisherWorkCount, getWorksCount, getWorksList, getWorksImages, renderWorksList);
 
 router.get('/:id', getWorkDetail, renderWorkDetail);
 
