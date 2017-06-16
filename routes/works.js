@@ -121,7 +121,7 @@ function getWorksImages (req, res, next) {
       work.coverimage = (work.identifier in imgobj ? imgobj[work.identifier] : null);
     });
 
-    console.log(req.works)
+    console.log(req.works_list)
     return next();
   });
 }
