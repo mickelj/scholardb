@@ -107,7 +107,7 @@ function getWorksImages (req, res, next) {
   var ccurlbase = 'https://scholarsdb-coce.herokuapp.com/cover?provider=ol,gb&id=';
 
   var idents = _.map(req.works_list, function(val) {
-    return val.identifier ? val.identifier : 'null';
+    return val.identifier ? val.identifier.replace(/-/g, '') : 'null';
   });
 
   request.get(ccurlbase + idents.join(','), function(err, res, body) {
