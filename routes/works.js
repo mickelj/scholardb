@@ -119,17 +119,16 @@ function getWorksImages (req, res, next) {
     json : true
   };
 
-  var stuff;
-
   request(options).then(function(imgobj) {
-    stuff = _.map(req.works_list, function(work) {
+    var stuff = _.map(req.works_list, function(work) {
       work.coverimage = (work.identifier in imgobj ? imgobj[work.identifier] : null);
     });
+    console.log(stuff);
+
+    return next();
+  }).catch(function(err) {
+    return next(err);
   });
-
-  console.log(stuff);
-
-  return next();
 }
 
 function renderWorksList (req, res) {
