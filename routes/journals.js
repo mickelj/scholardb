@@ -136,7 +136,7 @@ function getRomeoDetails (req, res, next) {
         return next(err);
       }
 
-      console.log(result);
+      console.dir(result);
 
       req.romeo = result;
       return next();
