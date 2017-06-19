@@ -136,6 +136,7 @@ function getRomeoDetails (req, res, next) {
         return next(err);
       }
 
+      req.romeo = {};
       req.romeo.numhits = result.romeoapi.header[0].numhits[0];
       req.romeo.publisher = result.romeoapi.publishers[0].publisher[0];
       return next();
