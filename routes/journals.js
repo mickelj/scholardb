@@ -136,7 +136,7 @@ function getRomeoDetails (req, res, next) {
         return next(err);
       }
 
-      console.log(result);
+      req.romeo = results;
       return next();
     });
   });
@@ -156,6 +156,7 @@ function renderJournalDetail(req, res) {
     people: req.journal_people,
     works_list: req.journal_works_list,
     total_works: req.total_works,
+    romeo: req.romeo,
     limit: limit,
     page_count: page_count,
     cur_page: cur_page,

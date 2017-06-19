@@ -21,11 +21,8 @@ block content
               each ident in journal.identifiers
                 div= ident.identifier
 
-        if journal.romeo_color
-          div.row
-            div.col.s6 RoMEO Color:
-            div.col.s6
-              span #{journal.romeo_color} #{romeo_color_name}
+        if journal.romeo.header.numhits
+          include romeo.pug
 
     div.col.s12.m6.detail-works
       p.headline Works Found: #{total_works}
