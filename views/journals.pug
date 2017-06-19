@@ -23,7 +23,7 @@ block content
                 a(href="/journals/" + journal.id)= journal.name
               td
                 a(href="/publishers/" + journal.publisher_id)= journal.publisher_name
-              if dept.cnt
+              if journal.cnt
                 td.center-align= journal.cnt
               else
                 td.center-align 0
