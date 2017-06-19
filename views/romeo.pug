@@ -23,7 +23,7 @@ div.collapsible(data-collapsible="accordion")
           td
             +romeoicon(romeo.publisher.preprints[0].prearchiving[0])
             if romeo.publisher.preprints[0].prerestrictions[0]
-              ol
+              ul
                 each pr in romeo.publisher.preprints[0].prerestrictions[0].prerestriction
                   li= pr
       if romeo.publisher.postprints[0]
@@ -31,27 +31,27 @@ div.collapsible(data-collapsible="accordion")
           th Can archive POST-prints:
           td
             +romeoicon(romeo.publisher.postprints[0].postarchiving[0])
-              if romeo.publisher.postprints[0].postrestrictions[0]
-                ol
-                  each pr in romeo.publisher.postprints[0].postrestrictions[0].postrestriction
-                    li= pr
+            if romeo.publisher.postprints[0].postrestrictions[0]
+              ul
+                each pr in romeo.publisher.postprints[0].postrestrictions[0].postrestriction
+                  li= pr
       if romeo.publisher.pdfversion[0]
         tr
           th Can archive publisher/PDF version:
           td
             +romeoicon(romeo.publisher.pdfversion[0].pdfarchiving[0])
-              if romeo.publisher.pdfversion[0].pdfrestrictions[0]
-                ol
-                  each pr in romeo.publisher.pdfversion[0].pdfrestrictions[0].pdfrestriction
-                    li= pr
-      if romeo.publisher.conditions[0].condition[0]
+            if romeo.publisher.pdfversion[0].pdfrestrictions[0]
+              ul
+                each pr in romeo.publisher.pdfversion[0].pdfrestrictions[0].pdfrestriction
+                  li= pr
+      if romeo.publisher.conditions[0]
         tr
           th Conditions for ANY archving:
           td
-            ol
+            ul
               each cond in romeo.publisher.conditions[0].condition
                 li= cond
-      if romeo.publisher.copyrightlinks[0].copyrightlink[0]
+      if romeo.publisher.copyrightlinks[0]
         tr
           th Copyright Links from Publisher:
           td
