@@ -23,7 +23,7 @@ block content
               div.col.s6 
                 each ident in journal.identifiers
                   div= ident.identifier
-          if romeo.numhits
+          if romeo.numhits > 0
             include romeo.pug
 
     div.col.s12.m6.detail-works
