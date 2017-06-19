@@ -2,6 +2,7 @@ const express = require('express');
 const _ = require('underscore');
 const router = express.Router();
 const request = require('request');
+const xml2js = require('xml2js');
 
 function getJournalList(req, res, next) {
   var db = req.app.get('db');
@@ -66,7 +67,7 @@ function getJournalDetail (req, res, next) {
   var db = req.app.get('db');
   var journal_id = req.params.id;
 
-  db.run("SELECT j.id, j.name, publisher_id, p.name as publisher_name, identifiers FROM publications j LEFT JOIN publishers p ON j.publisher_id = p.id WHERE j.id = $1", [journal_id], function(err, results) {
+  db.run("SELECT DISTINCT ON (j.id) j.id, j.name, publisher_id, p.name as publisher_name, identifier as issn, identifiers FROM publications j LEFT JOIN publishers p ON j.publisher_id = p.id, JSONB_TO_RECORDSET(identifiers) as w(type text, identifier text) WHERE j.id = $1", [journal_id], function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
@@ -118,6 +119,26 @@ function getJournalWorksList (req, res, next) {
     req.journal_works_list = results;
     req.works_count = results.length;
     return next();
+  });
+}
+
+function getRomeoDetails (req, res, next) {
+  var nconf = req.app.get('nconf');
+  var romeourl = nconf.get('romeourl') + nconf.get('romeoapikey');
+
+  request.get(romeourl + '&issn=' + req.journal_detail.issn, function(err, res, body) {
+    if (err) {
+      return next(err);
+    }
+
+    xml2js.parseString(body, function(err, result) {
+      if (err) {
+        return next(err);
+      }
+
+      console.log(result);
+      return next();
+    });
   });
 }
 
