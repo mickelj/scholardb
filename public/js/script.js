@@ -7,6 +7,8 @@ $(document).ready(function() {
      $(this).text(txt);
    });
 
+   $('.collapsible').collapsible();
+
    $('select').material_select();
 
    $('.page-selector').on('change', function() {
