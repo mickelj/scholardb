@@ -22,7 +22,7 @@ div.collapsible(data-collapsible="accordion")
           th Can archive PRE-prints:
           td
             +romeoicon(romeo.publisher.preprints[0].prearchiving[0])
-              if romeo.publisher.preprints[0].prerestrictions[0].prerestriction[0]
+              if romeo.publisher.preprints[0].prerestrictions[0]
                 ol
                   each pr in romeo.publisher.preprints[0].prerestrictions[0].prerestriction
                     li= pr
@@ -31,7 +31,7 @@ div.collapsible(data-collapsible="accordion")
           th Can archive POST-prints:
           td
             +romeoicon(romeo.publisher.postprints[0].postarchiving[0])
-              if romeo.publisher.postprints.postrestrictions[0].postrestriction[0]
+              if romeo.publisher.postprints.postrestrictions[0]
                 ol
                   each pr in romeo.publisher.postprints[0].postrestrictions[0].postrestriction
                     li= pr
@@ -40,7 +40,7 @@ div.collapsible(data-collapsible="accordion")
           th Can archive publisher/PDF version:
           td
             +romeoicon(romeo.publisher.pdfversion[0].pdfarchiving[0])
-              if romeo.publisher.pdfversion[0].pdfrestrictions[0].pdfrestriction[0]
+              if romeo.publisher.pdfversion[0].pdfrestrictions[0]
                 ol
                   each pr in romeo.publisher.pdfversion[0].pdfrestrictions[0].pdfrestriction
                     li= pr

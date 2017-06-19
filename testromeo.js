@@ -14,6 +14,10 @@ request.get(romeourl + '&issn=1444-1586', function(err, res, body) {
       return next(err);
     }
 
-    console.log(util.inspect(result.romeoapi.publishers[0].publisher[0], false, null));
+    if (result.romeoapi.publishers[0].publisher[0].postprints[0].postrestrictions[0]) {
+      console.log(util.inspect(result.romeoapi.publishers[0].publisher[0].postprints[0].postrestrictions[0].postrestriction, false, null));
+    } else {
+      console.log('None');
+    }
   });
 });
