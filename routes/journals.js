@@ -124,7 +124,7 @@ function getJournalWorksList (req, res, next) {
 
 function getRomeoDetails (req, res, next) {
   var nconf = req.app.get('nconf');
-  var romeourl = nconf.get('romeourl') + nconf.get('romeoapikey');
+  var romeourl = nconf.get('application:romeourl') + nconf.get('application:romeoapikey');
 
   request.get(romeourl + '&issn=' + req.journal_detail.issn, function(err, res, body) {
     if (err) {
