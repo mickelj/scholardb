@@ -22,16 +22,16 @@ div.collapsible(data-collapsible="accordion")
           th Can archive PRE-prints:
           td
             +romeoicon(romeo.publisher.preprints[0].prearchiving[0])
-              if romeo.publisher.preprints[0].prerestrictions[0]
-                ol
-                  each pr in romeo.publisher.preprints[0].prerestrictions[0].prerestriction
-                    li= pr
+            if romeo.publisher.preprints[0].prerestrictions[0]
+              ol
+                each pr in romeo.publisher.preprints[0].prerestrictions[0].prerestriction
+                  li= pr
       if romeo.publisher.postprints[0]
         tr
           th Can archive POST-prints:
           td
             +romeoicon(romeo.publisher.postprints[0].postarchiving[0])
-              if romeo.publisher.postprints.postrestrictions[0]
+              if romeo.publisher.postprints[0].postrestrictions[0]
                 ol
                   each pr in romeo.publisher.postprints[0].postrestrictions[0].postrestriction
                     li= pr
