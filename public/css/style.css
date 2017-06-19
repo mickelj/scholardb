@@ -193,7 +193,7 @@ input[type="search"] {
 }
 
 .moreinfo > ul > li {
-  padding: 1em 0;
+  line-height: 2rem;
 }
 
 .moreinfo .collapsible {
@@ -212,10 +212,19 @@ input[type="search"] {
 .moreinfo .collapsible-body {
   padding: 0;
   margin-top: 4em;
+  line-height: initial;
 }
 
 .moreinfo .collapsible-body th {
   width: 40%;
+}
+
+.moreinfo .collapsible-body ul.browser-default {
+  padding-left: 15px;
+}
+
+.moreinfo .collapsible-body ul.browser-default li {
+  list-style-type: disc;
 }
 
 .romeo-footnote img {

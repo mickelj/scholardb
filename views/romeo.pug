@@ -19,7 +19,7 @@ mixin romeoicon(icontext)
 
 li
   div.collapsible-header
-    div.col.s6 RoMEO Color:
+    div.col.s6: b RoMEO Color:
     - var rcolor = (romeo.publisher.romeocolour[0] == "gray" ? "grey" : romeo.publisher.romeocolour[0])
     div(class="col s6 lighten-1 " + rcolor)= rcolor
 
@@ -31,7 +31,7 @@ li
           td
             +romeoicon(romeo.publisher.preprints[0].prearchiving[0])
             if romeo.publisher.preprints[0].prerestrictions[0]
-              ul
+              ul.browser-default
                 each pr in romeo.publisher.preprints[0].prerestrictions[0].prerestriction
                   li= pr
       if romeo.publisher.postprints[0]
@@ -40,7 +40,7 @@ li
           td
             +romeoicon(romeo.publisher.postprints[0].postarchiving[0])
             if romeo.publisher.postprints[0].postrestrictions[0]
-              ul
+              ul.browser-default
                 each pr in romeo.publisher.postprints[0].postrestrictions[0].postrestriction
                   li= pr
       if romeo.publisher.pdfversion[0]
@@ -49,21 +49,21 @@ li
           td
             +romeoicon(romeo.publisher.pdfversion[0].pdfarchiving[0])
             if romeo.publisher.pdfversion[0].pdfrestrictions[0]
-              ul
+              ul.browser-default
                 each pr in romeo.publisher.pdfversion[0].pdfrestrictions[0].pdfrestriction
                   li= pr
       if romeo.publisher.conditions[0]
         tr
           th Conditions for ANY archving:
           td
-            ul
+            ul.browser-default
               each cond in romeo.publisher.conditions[0].condition
                 li= cond
       if romeo.publisher.copyrightlinks[0]
         tr
           th Copyright Links from Publisher:
           td
-            ol
+            ul.browser-default
               each cl in romeo.publisher.copyrightlinks[0].copyrightlink
                 li
                  a(href=cl.copyrightlinkurl[0], target="_blank")= cl.copyrightlinktext[0]
