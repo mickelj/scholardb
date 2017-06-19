@@ -12,12 +12,14 @@ block content
         ul.collapsible(data-collapsible="accordion")
           if journal.publisher_id 
             li
-              div.col.s6 Publisher:
+              div.col.s6
+                b Publisher:
               div.col.s6 
                 a(href="/publishers/", journal.publisher_id)= journal.publisher_name
           if journal.identifiers
             li
-              div.col.s6 Identifiers:
+              div.col.s6
+                b Identifiers:
               div.col.s6 
                 each ident in journal.identifiers
                   div= ident.identifier

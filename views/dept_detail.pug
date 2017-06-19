@@ -11,12 +11,14 @@ block content
         p.headline More Information
         if dept.url 
           div.row
-            div.col.s6 Department Homepage:
+            div.col.s6
+              b Department Homepage:
             div.col.s6 
               a(href=dept.url, target="_blank")= dept.group_name
         if dept.parent_id
           div.row
-            div.col.s6 Belongs to:
+            div.col.s6
+              b Belongs to:
             div.col.s6
               a(href="/departments/" + dept.parent_id)= dept.parent_name
   
