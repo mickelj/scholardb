@@ -9,17 +9,18 @@ block content
 
       div.row
         p.headline More Information
-        if journal.publisher_id 
-          div.row
-            div.col.s6 Publisher:
-            div.col.s6 
-              a(href="/publishers/", journal.publisher_id)= journal.publisher_name
-        if journal.identifiers
-          div.row
-            div.col.s6 Identifiers:
-            div.col.s6 
-              each ident in journal.identifiers
-                div= ident.identifier
+        ul.collapsible(data-collapsible="accordion")
+          if journal.publisher_id 
+            li
+              div.col.s6 Publisher:
+              div.col.s6 
+                a(href="/publishers/", journal.publisher_id)= journal.publisher_name
+          if journal.identifiers
+            li
+              div.col.s6 Identifiers:
+              div.col.s6 
+                each ident in journal.identifiers
+                  div= ident.identifier
 
         if romeo.numhits
           include romeo.pug

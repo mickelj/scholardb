@@ -10,12 +10,12 @@ mixin romeoicon(icontext)
     when "cannot"
       span.icon.ion-close-circled.red-text No
 
-div.collapsible(data-collapsible="accordion")
-  div.row.collapsible-header
+li
+  div.collapsible-header
     div.col.s6 RoMEO Color:
     div(class="col s2 lighten-1" + romeo.publisher.romeocolour[0])
     div.col.s4= romeo.publisher.romeocolour[0]
-  div.row.collapsible-body
+  div.collapsible-body
     table.striped
       if romeo.publisher.preprints[0]
         tr
