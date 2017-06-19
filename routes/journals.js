@@ -136,7 +136,7 @@ function getRomeoDetails (req, res, next) {
         return next(err);
       }
 
-      req.romeo = results;
+      req.romeo = result;
       return next();
     });
   });
