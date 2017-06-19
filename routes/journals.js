@@ -165,6 +165,6 @@ function renderJournalDetail(req, res) {
 }
 
 router.get('/', getJournalList, getJournalWorkCount, getLetterPagerCounts, renderJournalList);
-router.get('/:id', getJournalDetail, getJournalPeople, getJournalAllWorkCount, getJournalWorksList, renderJournalDetail);
+router.get('/:id', getJournalDetail, getJournalPeople, getJournalAllWorkCount, getJournalWorksList, getRomeoDetails, renderJournalDetail);
 
 module.exports = router;
