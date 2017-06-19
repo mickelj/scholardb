@@ -136,6 +136,10 @@ function getRomeoDetails (req, res, next) {
         return next(err);
       }
 
+      console.log(result.header);
+      console.log(result.journals);
+      console.log(result.publishers);
+
       req.romeo = result;
       return next();
     });
