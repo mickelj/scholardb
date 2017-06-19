@@ -219,12 +219,17 @@ input[type="search"] {
   width: 40%;
 }
 
-.moreinfo .collapsible-body ul.browser-default {
-  padding-left: 15px;
+.moreinfo .collapsible-body th, .moreinfo .collapsible-body td {
+  padding: .75rem;
 }
 
-.moreinfo .collapsible-body ul.browser-default li {
+.moreinfo .collapsible-body ul.browser-default {
+  padding-left: 1.15em;
   list-style-type: disc;
+}
+
+.moreinfo .collapsible-body ul.browser-default.restrictions {
+  margin-top: 1em;
 }
 
 .romeo-footnote img {
