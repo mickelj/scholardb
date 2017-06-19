@@ -56,7 +56,7 @@ function renderJournalList(req, res) {
   res.render('journals', {
     appconf: nconf.get('application'),
     title: nconf.get('application:appname') + " - Journals",
-    dept_list: combJournals,
+    journal_list: combJournals,
     cur_letter: cur_letter,
     letter_list: req.letter_list,
     cur_list: req.baseUrl
