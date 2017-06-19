@@ -1,4 +1,32 @@
 extends template
 
 block content
-  
+  div.row
+    div.col.s12.center-align
+      include letters.pug
+      
+  div.row
+    div.col.s12
+      table.striped.dept-list
+        tr
+          th(style="width: 15%") Identifiers
+          th(style="width: 30%") Journal Name
+          th(style="width: 30%") Publisher
+          th.center-align(style="width: 10%") # of Works
+          each journal in journal_list
+            tr
+              td
+                each ident in journal.dept.group_name
+                  div= ident.identifier
+              td
+                a(href="/journals/" + journal.id)= journal.name
+              td
+                a(href="/publishers/" + journal.publisher_id)= journal.publisher_name
+              if dept.cnt
+                td.center-align= journal.cnt
+              else
+                td.center-align 0
+
+  div.row
+    div.col.s12.center-align
+      include letters.pug
