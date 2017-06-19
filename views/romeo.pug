@@ -13,49 +13,49 @@ mixin romeoicon(icontext)
 div.collapsible(data-collapsible="accordion")
   div.row.collapsible-header
     div.col.s6 RoMEO Color:
-    div(class="col s2 lighten-1" + romeo.publishers.publisher.romeocolour)
-    div.col.s4= romeo.publishers.publisher.romeocolour
+    div(class="col s2 lighten-1" + romeo.publisher.romeocolour[0])
+    div.col.s4= romeo.publisher.romeocolour[0]
   div.row.collapsible-body
     table.striped
-      if romeo.publishers.publisher.preprints
+      if romeo.publisher.preprints[0]
         tr
           th Can archive PRE-prints:
-          td= +romeoicon(romeo.publishers.publisher.preprints.prearchiving)
-            if romeo.publishers.publisher.preprints.prerestrictions
+          td= +romeoicon(romeo.publisher.preprints[0].prearchiving[0])
+            if romeo.publisher.preprints[0].prerestrictions[0].prerestriction[0]
               ol
-                each pr in romeo.publishers.publisher.preprints.prerestrictions
-                  li= pr.prerestriction
-      if romeo.publishers.publisher.postprints
+                each pr in romeo.publisher.preprints[0].prerestrictions[0].prerestriction
+                  li= pr
+      if romeo.publisher.postprints[0]
         tr
           th Can archive POST-prints:
-          td= +romeoicon(romeo.publishers.publisher.postprints.postarchiving)
-            if romeo.publishers.publisher.postprints.postrestrictions
+          td= +romeoicon(romeo.publisher.postprints[0].postarchiving[0])
+            if romeo.publisher.postprints.postrestrictions[0].postrestriction[0]
               ol
-                each pr in romeo.publishers.publisher.postprints.postrestrictions
-                  li= pr.postrestriction
-      if romeo.publishers.publisher.pdfversion
+                each pr in romeo.publisher.postprints[0].postrestrictions[0].postrestriction
+                  li= pr
+      if romeo.publisher.pdfversion[0]
         tr
           th Can archive publisher/PDF version:
-          td= +romeoicon(romeo.publishers.publisher.pdfversion.pdfarchiving)
-            if romeo.publishers.publisher.pdfversion.pdfrestrictions
+          td= +romeoicon(romeo.publisher.pdfversion[0].pdfarchiving[0])
+            if romeo.publisher.pdfversion[0].pdfrestrictions[0].pdfrestriction[0]
               ol
-                each pr in romeo.publishers.publisher.pdfversion.pdfrestrictions
-                  li= pr.pdfrestriction
-      if romeo.publishers.publisher.conditions
+                each pr in romeo.publisher.pdfversion[0].pdfrestrictions[0].pdfrestriction
+                  li= pr
+      if romeo.publisher.conditions[0].condition[0]
         tr
           th Conditions for ANY archving:
           td
             ol
-              each cond in romeo.publishers.publisher.conditions
-                li= cond.condition
-      if romeo.publishers.publisher.copyrightlinks
+              each cond in romeo.publisher.conditions[0].condition
+                li= cond
+      if romeo.publisher.copyrightlinks[0].copyrightlink[0]
         tr
           th Copyright Links from Publisher:
           td
             ol
-              each cl in romeo.publishers.publisher.copyrightlinks
+              each cl in romeo.publisher.copyrightlinks[0].copyrightlink
                 li
-                 a(href=cl.copyrightlink.copyrightlinkurl, target="_blank")= cl.copyrightlink.copyrightlinktext
+                 a(href=cl.copyrightlinkurl[0], target="_blank")= cl.copyrightlinktext[0]
     
     p
       img(src="/images/romeosmall.gif", alt="SHERPA/RoMEO logo")

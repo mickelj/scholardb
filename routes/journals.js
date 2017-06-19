@@ -136,11 +136,8 @@ function getRomeoDetails (req, res, next) {
         return next(err);
       }
 
-      console.log(result.header[0]);
-      console.log(result.journals[0]);
-      console.log(result.publishers[0]);
-
-      req.romeo = result;
+      req.romeo.numhits = result.romeoapi.header[0].numhits[0];
+      req.romeo.publisher = result.romeoapi.publishers[0].publisher[0];
       return next();
     });
   });
