@@ -16,8 +16,9 @@ block content
           each journal in journal_list
             tr
               td
-                each ident in journal.dept.group_name
-                  div= ident.identifier
+                if journal.identifiers
+                  each ident in journal.identifiers
+                    div= ident.identifier
               td
                 a(href="/journals/" + journal.id)= journal.name
               td
