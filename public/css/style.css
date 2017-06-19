@@ -89,6 +89,7 @@ input[type="search"] {
 
 .card .card-image img {
   display: inline-block;
+  max-height: 194px;
 }
 
 .icon {

@@ -23,13 +23,13 @@ const index = require('./routes/index');
 const works = require('./routes/works');
 const people = require('./routes/people');
 const departments = require('./routes/departments');
-// const publications = require('./routes/publications');
+const journals = require('./routes/journals');
 // const publishers = require('./routes/publishers');
 app.use('/', index);
 app.use('/works', works);
 app.use('/people', people);
 app.use('/departments', departments);
-// app.use('/publications', publications);
+app.use('/journals', journals);
 // app.use('/publishers', publishers);
 
 app.listen(app.get('port'), function() {
