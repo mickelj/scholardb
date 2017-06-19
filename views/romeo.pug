@@ -2,19 +2,27 @@ mixin romeoicon(icontext)
   case icontext
     when "unclear"
     when "unknown"
-      span.icon.ion-help-circled.blue-grey-text.text-lighten-1 Unclear/Unknown
+      span.icon.ion-help-circled.blue-grey-text.text-lighten-1 
+      span Unclear/Unknown
     when "can"
-      span.icon.ion-checkmark-circled.green-text.darken-1 Yes
+      span.icon.ion-checkmark-circled.green-text.darken-1 
+      span Yes
     when "restricted"
-      span.icon.ion-alert-circled.amber-text.text-accent-3 With Restrictions
+      span.icon.ion-alert-circled.amber-text.text-accent-3 
+      span With Restrictions
     when "cannot"
-      span.icon.ion-close-circled.red-text No
+      span.icon.ion-close-circled.red-text 
+      span No
+    default
+      span.icon.ion-minus-circled.blue-grey-text.text-lighten-1  
+      span No Data Available
 
 li
   div.collapsible-header
     div.col.s6 RoMEO Color:
-    div(class="col s2 lighten-1" + romeo.publisher.romeocolour[0])
-    div.col.s4= romeo.publisher.romeocolour[0]
+    - var rcolor = (romeo.publisher.romeocolour[0] == "gray" ? "grey" : romeo.publisher.romeocolour[0])
+    div(class="col s1 lighten-1 " + rcolor)= rcolor
+
   div.collapsible-body
     table.striped
       if romeo.publisher.preprints[0]
@@ -60,14 +68,14 @@ li
                 li
                  a(href=cl.copyrightlinkurl[0], target="_blank")= cl.copyrightlinktext[0]
     
-    p
+    p.romeo-footnote.valign-wrapper
       img(src="/images/romeosmall.gif", alt="SHERPA/RoMEO logo")
       small This information is derived from the 
         a(href="http://www.sherpa.ac.uk/romeo.php", target="_blank") RoMEO
         | database which is compiled by 
         a(href="http://www.sherpa.ac.uk", target="_blank") SHERPA 
         | and has been modified for use here.
-    p
+    p.romeo-footnote.valign-wrapper
       a(rel="license", href="http://creativecommons.org/licenses/by-nc-sa/4.0/")
         img(alt="Creative Commons License", style="border-width:0", src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png")
       small This work is licensed under a 
