@@ -192,6 +192,27 @@ input[type="search"] {
   margin-left: 1.5em;
 }
 
+.moreinfo li {
+  line-height: 2rem;
+}
+
+.moreinfo .collapsible {
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  box-shadow: none;
+}
+
+.moreinfo .collapsible-header {
+  line-height: inherit;
+  padding: 0;
+  border-bottom: none;
+}
+
+.moreinfo .collapsible-body {
+  padding: 0;
+}
+
 .romeo-footnote img {
   margin-right: 1em;
 }
