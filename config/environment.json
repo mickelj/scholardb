@@ -9,6 +9,7 @@
     "imgrootdir"    : "https://www.wlu.edu/images/directory/thumbnails/",
     "defimgext"     : ".jpg",
     "searchdeftext" : "Search for works, contributors, or publications",
-    "ccurlbase"     : "https://scholarsdb-coce.herokuapp.com/cover?provider=ol,gb&id="
+    "ccurlbase"     : "https://scholarsdb-coce.herokuapp.com/cover?provider=ol,gb&id=",
+    "romeoapikey"   : "bEi1YdbpB6Y"
   }
 }

@@ -7,13 +7,6 @@ block content
         p.headline Current Members of #{dept.group_name}
         include scholar_cards.pug
         
-      //-
-        div.row
-          p.headline Publications
-          each detail, pubid in pub_count
-            div.publication 
-              a(href="/publications/" + pubid) #{detail.name} (#{detail.count})
-        
       div.row
         p.headline More Information
         if dept.url 

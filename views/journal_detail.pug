@@ -1,0 +1,32 @@
+extends template
+
+block content
+  div.row
+    div.col.s12.m6.detail-profile-sidebar
+      div.row
+        p.headline Published in #{journal.name}
+        include scholar_cards.pug
+
+  div.row
+    p.headline More Information
+    if journal.publisher_id 
+      div.row
+        div.col.s6 Publisher:
+        div.col.s6 
+          a(href="/publishers/", journal.publisher_id)= journal.publisher_name
+    if journal.identifiers
+      div.row
+        div.col.s6 Identifiers:
+        div.col.s6 
+          each ident in journal.identifiers
+            div= ident.identifier
+
+    if journal.romeo_color
+      div.row
+        div.col.s6 RoMEO Color:
+        div.col.s6
+          span #{journal.romeo_color} #{romeo_color_name}
+
+div.col.s12.m6.detail-works
+  p.headline Works Found: #{total_works}
+  include works_block.pug
