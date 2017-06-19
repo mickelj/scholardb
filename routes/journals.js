@@ -7,7 +7,7 @@ function getJournalList(req, res, next) {
   var db = req.app.get('db');
   var page = req.query.page ? req.query.page : "A";
 
-  db.run("SELECT DISTINCT ON (j.sort_name) j.id, j.name, publisher_id, p.name, identifier as issn, identifiers FROM publications j LEFT JOIN publishers p ON j.publisher_id = p.id, JSONB_TO_RECORDSET(identifiers) as w(type text, identifier text) WHERE type LIKE 'ISSN%' AND sort_name LIKE $1 ORDER BY j.sort_name", [(page + "%").toLowerCase()], function(err, results) {
+  db.run("SELECT DISTINCT ON (j.sort_name) j.id, j.name, publisher_id, p.name, identifier as issn, identifiers FROM publications j LEFT JOIN publishers p ON j.publisher_id = p.id, JSONB_TO_RECORDSET(identifiers) as w(type text, identifier text) WHERE type LIKE 'ISSN%' AND j.sort_name LIKE $1 ORDER BY j.sort_name", [(page + "%").toLowerCase()], function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
