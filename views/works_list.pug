@@ -1,54 +1,55 @@
 div.col.s12.works
-  each work in works_list
-    div.card.horizontal.valign-wrapper
-      div.card-image.center-align
-        if work.coverimage
-          img(src=work.coverimage)
-        else
-          case work.work_type
-            when "Book"
-            when "Book Section"
-              span.icon.ion-ios-book.blue-grey-text.text-lighten-1
-            when "Journal Article"
-              span.icon.ion-document-text.blue-grey-text.text-lighten-1
-            when "Conference Paper"
-            when "Presentation/Lecture"
-            when "Conference Poster"
-              span.icon.ion-ios-people.blue-grey-text.text-lighten-1
-            when "Webpage"
-              span.icon.ion-earth.blue-grey-text.text-lighten-1
-            when "Blog Post"
-              span.icon.ion-social-rss.blue-grey-text.text-lighten-1
-            when "Sound Recording"
-              span.icon.ion-volume-medium.blue-grey-text.text-lighten-1
-            when "Video Recording"
-              span.icon.ion-videocamera.blue-grey-text.text-lighten-1
-            when "Book Review"
-              span.icon.ion-ios-bookmarks.blue-grey-text.text-lighten-1
-            when "Working Paper/Whitepaper/Report"
-              span.icon.ion-ios-list.blue-grey-text.text-lighten-1
-            default
-              span.icon.ion-document.blue-grey-text.text-lighten-1
-      div.card-content
-        p.title.work-title
-          a(href="/works/"+ work.id) !{work.work_title}
-        p.work-type= work.work_type
-        p.contributors
-          each contrib, index in work.contributors
-            case contrib.role
-              when "Author"
-              when "Performer"
-              when "Composer"
-              when "Creator"
-              when "Director"
-              when "Presenter"
-                if contrib.person_id
-                  span
-                    a(href="/people/" + contrib.person_id)= contrib.display_name
-                else
-                  span= contrib.display_name
-                if index < work.contributors.length - 1
-                  | ; 
-        p.work-pub
-          a(href="/publications/" + work.pubid)= work.publication
-          span.work-date= work.year
+  if works_list
+    each work in works_list
+      div.card.horizontal.valign-wrapper
+        div.card-image.center-align
+          if work.coverimage
+            img(src=work.coverimage)
+          else
+            case work.work_type
+              when "Book"
+              when "Book Section"
+                span.icon.ion-ios-book.blue-grey-text.text-lighten-1
+              when "Journal Article"
+                span.icon.ion-document-text.blue-grey-text.text-lighten-1
+              when "Conference Paper"
+              when "Presentation/Lecture"
+              when "Conference Poster"
+                span.icon.ion-ios-people.blue-grey-text.text-lighten-1
+              when "Webpage"
+                span.icon.ion-earth.blue-grey-text.text-lighten-1
+              when "Blog Post"
+                span.icon.ion-social-rss.blue-grey-text.text-lighten-1
+              when "Sound Recording"
+                span.icon.ion-volume-medium.blue-grey-text.text-lighten-1
+              when "Video Recording"
+                span.icon.ion-videocamera.blue-grey-text.text-lighten-1
+              when "Book Review"
+                span.icon.ion-ios-bookmarks.blue-grey-text.text-lighten-1
+              when "Working Paper/Whitepaper/Report"
+                span.icon.ion-ios-list.blue-grey-text.text-lighten-1
+              default
+                span.icon.ion-document.blue-grey-text.text-lighten-1
+        div.card-content
+          p.title.work-title
+            a(href="/works/"+ work.id) !{work.work_title}
+          p.work-type= work.work_type
+          p.contributors
+            each contrib, index in work.contributors
+              case contrib.role
+                when "Author"
+                when "Performer"
+                when "Composer"
+                when "Creator"
+                when "Director"
+                when "Presenter"
+                  if contrib.person_id
+                    span
+                      a(href="/people/" + contrib.person_id)= contrib.display_name
+                  else
+                    span= contrib.display_name
+                  if index < work.contributors.length - 1
+                    | ; 
+          p.work-pub
+            a(href="/publications/" + work.pubid)= work.publication
+            span.work-date= work.year

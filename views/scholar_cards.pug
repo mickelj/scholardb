@@ -1,9 +1,10 @@
-each pers, i in people
-  div.col.s4.m3.l2
-    div.card.hoverable
-      div.card-image
-        a(href="/people/" + pers.person_id)
-          img.responsive-img(src=appconf.imgrootdir + pers.image + appconf.defimgext, alt=pers.first_name + " " + pers.last_name)
-          button.btn-floating.right-fab.blue.darken-4= pers.count
-      p.cardname
-        a(href="/people/" + pers.person_id)= pers.last_name
+if people
+  each pers, i in people
+    div.col.s4.m3.l2
+      div.card.hoverable
+        div.card-image
+          a(href="/people/" + pers.person_id)
+            img.responsive-img(src=appconf.imgrootdir + pers.image + appconf.defimgext, alt=pers.first_name + " " + pers.last_name)
+            button.btn-floating.right-fab.blue.darken-4= pers.count
+        p.cardname
+          a(href="/people/" + pers.person_id)= pers.last_name
