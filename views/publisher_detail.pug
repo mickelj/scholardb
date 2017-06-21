@@ -23,17 +23,9 @@ block content
             div.col.s4
               b Publication List
             div.col.s8.carousel.carousel-slider(data-indicators="true")
-              - var pubsets = [];
-              - var setind = 0;
-              each pub, index in publisher.publications
-                if !(index % 10)
-                  - setind = index
-                  - pubsets[setind] = []
-                - pubsets[setind].push(pub)
-              - var pslen = pubsets.length
               each ps, index in pubsets
-                div.carousel-item(href="#" + index/10)
-                  p: b Page #{index + 1} of #{pslen}
+                div.carousel-item(href="#" + index)
+                  p: b Page #{index + 1} of #{pubsets.length}
                   each pub in ps
                     div
                       if pub.identifiers && pub.identifiers[0].type == "ISSN"

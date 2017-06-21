@@ -71,6 +71,17 @@ function getPublisherDetail (req, res, next) {
     }
 
     req.publisher_detail = results[0];
+    var pubsets = [];
+    var setind = 0;
+    for (var i = 0 ; i < results[0].publications.length ; i++) {
+      if !(i % 10) {
+        setind = index;
+        pubsets[setind] = [];
+      }
+      pubsets[setind].push(results[0].publications[i]);
+    }
+
+    req.publication_sets = pubsets;
     return next();
   });
 }
@@ -131,6 +142,7 @@ function renderPublisherDetail(req, res) {
     appconf: nconf.get('application'),
     title: nconf.get('application:appname') + " - Publisher: " + req.publisher_detail.name,
     publisher: req.publisher_detail,
+    pubsets: req.publication_sets,
     people: req.publisher_people,
     works_list: req.publisher_works_list,
     total_works: req.total_works,
