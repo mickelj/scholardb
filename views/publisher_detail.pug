@@ -1,10 +1,11 @@
 extends template
 
 mixin publink(pub)
-  if pub.identifiers && pub.identifiers[0].type == "ISSN"
-    a(href="/journals/" + pub.id)= pub.name
-  else
-    span= pub.name
+  div
+    if pub.identifiers && pub.identifiers[0].type == "ISSN"
+      a(href="/journals/" + pub.id)= pub.name
+    else
+      span= pub.name
 
 block content
   div.row
@@ -35,7 +36,7 @@ block content
                     p:b Page #{index/10 + 1} of #{Math.ceil(publisher.publications.length/10)}
                     +publink(pub)
                 else
-                  +publink(pub)
+                    +publink(pub)
         
     div.col.s12.m6.detail-works
       p.headline Works Found: #{total_works}
