@@ -11,13 +11,13 @@ block content
         tr
           th(style="width: 35%") Publisher Name
           th(style="width: 35%") Publisher URL
-          th.center-align(style="width: 10%") # of Publications in DB
+          th.center-align(style="width: 10%") # of Works
           each pub in publisher_list
             tr
               td
                 a(href="/publishers/" + pub.id)= pub.name
               td
-                a(href=url)= pub.url
+                a(href=pub.url, target="_blank")= pub.url
               if pub.cnt
                 td.center-align= pub.cnt
               else

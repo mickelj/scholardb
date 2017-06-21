@@ -65,7 +65,7 @@ function getPublicationWorkCount (req, res, next) {
 
 function getPublisherWorkCount (req, res, next) {
   var db = req.app.get('db');
-  db.run("SELECT publishers.name AS fld, COUNT(works.id) AS cnt FROM works JOIN publications ON publications.authority_id = works.publication_id JOIN publishers ON publishers.id = publications.publisher_id WHERE publishers.name <> 'Unknown' AND publications.name <> 'Unknown' GROUP BY publishers.name ORDER BY COUNT(works.id) DESC", function(err, results) {
+  db.run("SELECT publishers.name AS fld, COUNT(works.id) AS cnt FROM works JOIN publications ON publications.authority_id = works.publication_id JOIN publishers ON publishers.id = publications.publisher_id WHERE publishers.sort_name <> 'unknown' AND publications.sort_name <> 'unknown' GROUP BY publishers.name ORDER BY COUNT(works.id) DESC", function(err, results) {
     if (err || !results.length) {
       return next(err);
     }

@@ -21,12 +21,20 @@ block content
     div.col.hide-on-small-only.m3.z-depth-2.detail-profile-sidebar.person-profile-sidebar
       div.col.s3.m12.center-align
         img.responsive-img.circle(src=appconf.imgrootdir + pers.image + appconf.defimgext, alt=pers.first_name + " " + pers.last_name)
-      div.col.s3.m12
-        p.person-profile-section.blue.darken-4.white-text Departments &amp; Programs
-        each dept in pers.memberships
-          if dept
-            div
-              a(href="/departments/" + dept.id)= dept.name
+      if pers.pen_names
+        div.col.s3.m12
+          p.person-profile-section.blue.darken-4.white-text Pen Names
+          each pn in pers.pen_names
+            if pn
+              div= pn.display_name    
+      
+      if pers.memberships
+        div.col.s3.m12
+          p.person-profile-section.blue.darken-4.white-text Departments &amp; Programs
+          each dept in pers.memberships
+            if dept
+              div
+                a(href="/departments/" + dept.id)= dept.name
               
       if coauthors
         div.col.s3.m12

@@ -61,6 +61,88 @@ function renderPublisherList(req, res) {
   });
 }
 
+function getPublisherDetail (req, res, next) {
+  var db = req.app.get('db');
+  var publisher_id = req.params.id;
+
+  db.run("SELECT pub.id, pub.name, pub.url, array_to_json(array_agg(j)) as publications FROM publishers pub JOIN LATERAL (select id, name, identifiers from publications where publisher_id = pub.id order by sort_name) j ON TRUE WHERE pub.id = $1 GROUP BY pub.id, pub.name, pub.url", [publisher_id], function(err, results) {
+    if (err || !results.length) {
+      return next(err);
+    }
+
+    req.publisher_detail = results[0];
+    return next();
+  });
+}
+
+function getPublisherPeople (req, res, next) {
+  var db = req.app.get('db');
+  var publisher_id = req.params.id;
+
+  db.run("SELECT person_id, first_name, last_name, lower(left(email, strpos(email, '@') - 1)) as image, count(works.id) FROM works, jsonb_to_recordset(works.contributors) AS w(person_id int) LEFT JOIN people p ON p.id = person_id LEFT JOIN publications j ON p.publication_id = j.id LEFT JOIN publishers pub ON j.publisher_id = pub.id WHERE pub.id = $1 AND active = true GROUP BY person_id, first_name, last_name, email ORDER BY last_name, first_name", [publisher_id], function(err, results) {
+    if (err || !results.length) {
+      return next(err);
+    }
+
+    req.publisher_people = results;
+    return next();
+  });
+}
+
+function getPublisherAllWorkCount (req, res, next) {
+  var db = req.app.get('db');
+  var publisher_id = req.params.id;
+
+  db.run("SELECT pub.id, COUNT(works.id) AS cnt FROM publishers pub JOIN publications j ON pub.id = j.publisher_id JOIN works ON j.id = works.publication_id WHERE pub.id = $1 GROUP BY pub.id", [publisher_id], function(err, results) {
+    if (err || !results.length) {
+      return next(err);
+    }
+
+    req.total_works = results[0].cnt;
+    return next();
+  });
+}
+
+function getPublisherWorksList (req, res, next) {
+  var db = req.app.get('db');
+  var publisher_id = req.params.id;
+  var limit = req.query.limit ? req.query.limit : 10;
+  var offset = req.query.page ? (req.query.page - 1) * limit : 0;
+
+  db.run("SELECT DISTINCT works.id, title_primary as work_title, description as work_type, contributors, j.name as publication, j.id as pubid, publication_date_year as year FROM works JOIN publications j ON j.id = works.publication_id JOIN publishers pub ON j.publisher_id = pub.id JOIN work_types USING (type), JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) LEFT JOIN people p ON person_id = p.id WHERE pub.id = $1 ORDER BY publication_date_year DESC, works.id DESC LIMIT $2 OFFSET $3", [publisher_id, limit, offset], function(err, results) {
+    if (err || !results.length) {
+      return next(err);
+    }
+
+    req.publisher_works_list = results;
+    req.works_count = results.length;
+    return next();
+  });
+}
+
+function renderPublisherDetail(req, res) {
+  var nconf = req.app.get('nconf');
+  var limit = req.query.limit ? req.query.limit : 10;
+  var page_count = Math.ceil(req.total_works / limit);
+  var cur_page = req.query.page ? req.query.page : 1;
+  var offset = (cur_page - 1) * limit;
+
+  res.render('publisher_detail', {
+    appconf: nconf.get('application'),
+    title: nconf.get('application:appname') + " - Publisher: " + req.publisher_detail.name,
+    publisher: req.publisher_detail,
+    people: req.publisher_people,
+    works_list: req.publisher_works_list,
+    total_works: req.total_works,
+    limit: limit,
+    page_count: page_count,
+    cur_page: cur_page,
+    offset: offset,
+    cur_list: req.baseUrl + "/" + req.params.id
+  });
+}
+
 router.get('/', getPublisherList, getPublisherWorkCount, getLetterPagerCounts, renderPublisherList);
+router.get('/:id', getPublisherDetail, getPublisherPeople, getPublisherAllWorkCount, getPublisherWorksList, renderPublisherDetail)
 
 module.exports = router;

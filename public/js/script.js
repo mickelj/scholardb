@@ -9,6 +9,8 @@ $(document).ready(function() {
 
    $('.collapsible').collapsible();
 
+   $('.carousel.carousel-slider').carousel({fullWidth: true});
+
    $('select').material_select();
 
    $('.page-selector').on('change', function() {
