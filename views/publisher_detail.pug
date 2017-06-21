@@ -1,10 +1,10 @@
+extends template
+
 mixin publink(pub)
   if pub.identifiers && pub.identifiers[0].type == "ISSN"
     a(href="/journals/" + pub.id)= pub.name
   else
     span= pub.name
-
-extends template
 
 block content
   div.row
