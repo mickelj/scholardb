@@ -32,7 +32,7 @@ block content
                 - pubsets[setind].push(pub)
               each ps, index in pubsets
                 div.carousel-item(href="#" + index/10)
-                  p: b Page #{index + 1} of #{Math.ceil(pubsets.length)}
+                  p: b Page #{index + 1} of #{pubsets.length}
                   each pub in ps
                     div
                       if pub.identifiers && pub.identifiers[0].type == "ISSN"
