@@ -1,5 +1,8 @@
-div.col.s12.center-align
-  include pagination.pug
+mixin pagination
+  if total_works > 10
+    div.col.s12.center-align
+      include pagination.pug
+
++pagination
 include works_list.pug
-div.col.s12.center-align
-  include pagination.pug
++pagination
