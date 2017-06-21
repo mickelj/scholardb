@@ -26,15 +26,16 @@ block content
               div.col.s7
                 each ident in journal.identifiers
                   div= ident.identifier
-          if romeo.numhits > 0 && journal.ident_type == "ISSN"
+          if romeo.numhits > 0
             include romeo.pug
           else
-            li
-              div
-                div.col.s5
-                  b Not found in RoMEO:
-                div.col.s7
-                  a(href="http://www.sherpa.ac.uk/forms/new-journal.php?la=en&fIDnum=%7C&mode=simple&service-identifier=romeo&form-context-url=http%3A%2F%2Fwww.sherpa.ac.uk%2Fromeo%2Fsearch.php", target="_blank") Suggest addition to RoMEO database 
+            if journal.ident_type == "ISSN"
+              li
+                div
+                  div.col.s5
+                    b Not found in RoMEO:
+                  div.col.s7
+                    a(href="http://www.sherpa.ac.uk/forms/new-journal.php?la=en&fIDnum=%7C&mode=simple&service-identifier=romeo&form-context-url=http%3A%2F%2Fwww.sherpa.ac.uk%2Fromeo%2Fsearch.php", target="_blank") Suggest addition to RoMEO database 
 
 
     div.col.s12.m6.detail-works
