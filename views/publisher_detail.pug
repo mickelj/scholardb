@@ -1,3 +1,9 @@
+mixin publink(pub)
+  if pub.identifiers && pub.identifiers[0].type == "ISSN"
+    a(href="/journals/" + pub.id)= pub.name
+  else
+    span= pub.name
+
 extends template
 
 block content
@@ -23,12 +29,13 @@ block content
             div.col.s4
               b Publication List
             div.col.s8.carousel.carousel-slider(data-indicators="true")
-              each pub in publisher.publications
-                div
-                  if pub.identifiers && pub.identifiers[0].type == "ISSN"
-                    a(href="/journals/" + pub.id)= pub.name
-                  else
-                    span= pub.name
+              each pub, index in publisher.publications
+                if !(index % 10)
+                  div.carousel-item(href="#" + index/10)
+                    p:b Page #{index/10 + 1} of #{Math.ceil(publisher.publications.length/10)}
+                    +publink(pub)
+                else
+                  +publink(pub)
         
     div.col.s12.m6.detail-works
       p.headline Works Found: #{total_works}
