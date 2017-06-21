@@ -79,6 +79,8 @@ function getPublisherDetail (req, res, next) {
         setind = i;
         pubsets[setind] = [];
       }
+      console.log("var setind is: " + setind)
+      console.log("var i is: " + i)
       pubsets[setind].push(results[0].publications[i]);
     }
 
