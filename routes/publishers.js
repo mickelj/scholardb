@@ -76,7 +76,7 @@ function getPublisherDetail (req, res, next) {
     var setind = 0;
     for (var i = 0 ; i < results[0].publications.length ; i++) {
       if (!(i % 10)) {
-        setind = i;
+        setind = Math.floor(i/10);
         pubsets[setind] = [];
       }
       console.log("var setind is: " + setind)
