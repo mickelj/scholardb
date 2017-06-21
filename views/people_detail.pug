@@ -38,16 +38,16 @@ block content
               
       if coauthors.length
         div.col.s3.m12
-          p.person-profile-section.blue.darken-4.white-text #{orgshortname} Co-Authors
+          p.person-profile-section.blue.darken-4.white-text #{appconf.orgshortname} Co-Authors
           each ca in coauthors
             div.contributor
               a(href="/people/" + ca.id)= ca.name
 
       div.col.s3.m12
         p.person-profile-section.blue.darken-4.white-text Publications
-        each detail, pubid in pub_count
+        each detail in pub_count
           div.publication 
-            a(href="/publications/" + pubid) #{detail.name} (#{detail.count})
+            a(href="/publications/" + detail.id) #{detail.name} (#{detail.count})
           
     div.col.s12.m9.detail-works
       p.headline Works Found: #{total_works}
