@@ -113,6 +113,7 @@ function getPersonWorksList (req, res, next) {
       } else {
         allPubs[pub.pubid] = {count: 1};
         allPubs[pub.pubid].name = pub.publication;
+        allPubs[pub.pubid].id = pub.pubid;
       }
       return allPubs;
     }, {});

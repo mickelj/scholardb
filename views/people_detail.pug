@@ -47,7 +47,7 @@ block content
         p.person-profile-section.blue.darken-4.white-text Publications
         each detail in pub_count
           div.publication 
-            a(href="/publications/" + detail.id) #{detail.name} (#{detail.count})
+            a(href="/publications/" + detail.pubid) #{detail.name} (#{detail.count})
           
     div.col.s12.m9.detail-works
       p.headline Works Found: #{total_works}
