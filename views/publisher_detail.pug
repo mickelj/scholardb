@@ -30,12 +30,17 @@ block content
             div.col.s4
               b Publication List
             div.col.s8.carousel.carousel-slider(data-indicators="true")
+              - var pubsets = [];
+              - var setind = 0;
               each pub, index in publisher.publications
                 if !(index % 10)
-                  div.carousel-item(href="#" + index/10)
-                    p:b Page #{index/10 + 1} of #{Math.ceil(publisher.publications.length/10)}
-                    +publink(pub)
-                else
+                  - setind = index % 10
+                  - pubsets[setind] = []
+                - pubsets[setind].push(pub)
+              each ps, index in pubsets
+                div.carousel-item(href="#" + index/10)
+                  p: b Page #{index + 1} of #{Math.ceil(pubsets.length)}
+                  each pub in ps
                     +publink(pub)
         
     div.col.s12.m6.detail-works
