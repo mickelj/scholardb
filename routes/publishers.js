@@ -120,7 +120,7 @@ function getPublisherWorksList (req, res, next) {
   var limit = req.query.limit ? req.query.limit : 10;
   var offset = req.query.page ? (req.query.page - 1) * limit : 0;
 
-  db.run("SELECT DISTINCT works.id, title_primary as work_title, description as work_type, contributors, j.name as publication, j.id as pubid, publication_date_year as year, pi.identifier FROM works JOIN publications j ON j.id = works.publication_id JOIN publishers pub ON j.publisher_id = pub.id JOIN work_types USING (type) LEFT JOIN LATERAL (select identifier from publications p2, JSONB_TO_RECORDSET(identifiers) as w(type text, identifier text) WHERE p2.id = publications.id AND type LIKE 'ISBN%') pi ON TRUE, JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) LEFT JOIN people p ON person_id = p.id WHERE pub.id = $1 ORDER BY publication_date_year DESC, works.id DESC LIMIT $2 OFFSET $3", [publisher_id, limit, offset], function(err, results) {
+  db.run("SELECT DISTINCT works.id, title_primary as work_title, description as work_type, contributors, j.name as publication, j.id as pubid, publication_date_year as year, pi.identifier FROM works JOIN publications j ON j.id = works.publication_id JOIN publishers pub ON j.publisher_id = pub.id JOIN work_types USING (type) LEFT JOIN LATERAL (select identifier from publications j2, JSONB_TO_RECORDSET(identifiers) as w(type text, identifier text) WHERE j2.id = j.id AND type LIKE 'ISBN%') pi ON TRUE, JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) LEFT JOIN people p ON person_id = p.id WHERE pub.id = $1 ORDER BY publication_date_year DESC, works.id DESC LIMIT $2 OFFSET $3", [publisher_id, limit, offset], function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
