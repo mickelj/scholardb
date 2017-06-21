@@ -1,12 +1,5 @@
 extends template
 
-mixin publink(pub)
-  div
-    if pub.identifiers && pub.identifiers[0].type == "ISSN"
-      a(href="/journals/" + pub.id)= pub.name
-    else
-      span= pub.name
-
 block content
   div.row
     div.col.s12
@@ -40,8 +33,14 @@ block content
               each ps, index in pubsets
                 div.carousel-item(href="#" + index/10)
                   p: b Page #{index + 1} of #{Math.ceil(pubsets.length)}
+                  - console.dir(ps)
                   each pub in ps
-                    +publink(pub)
+                    div
+                      if pub.identifiers && pub.identifiers[0].type == "ISSN"
+                        a(href="/journals/" + pub.id)= pub.name
+                      else
+                        span= pub.name
+
         
     div.col.s12.m6.detail-works
       p.headline Works Found: #{total_works}
