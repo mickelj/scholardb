@@ -2,26 +2,34 @@ mixin romeoicon(icontext)
   case icontext
     when "unclear"
     when "unknown"
-      span.icon.ion-help-circled.blue-grey-text.text-lighten-1 
+      span.icon.ion-help-circled.blue-grey-text.text-lighten-1
       span Unclear/Unknown
     when "can"
-      span.icon.ion-checkmark-circled.green-text.darken-1 
+      span.icon.ion-checkmark-circled.green-text.darken-1
       span Yes
     when "restricted"
-      span.icon.ion-alert-circled.amber-text.text-accent-3 
+      span.icon.ion-alert-circled.amber-text.text-accent-4
       span With Restrictions
     when "cannot"
-      span.icon.ion-close-circled.red-text 
+      span.icon.ion-close-circled.red-text
       span No
     default
-      span.icon.ion-minus-circled.blue-grey-text.text-lighten-1  
+      span.icon.ion-minus-circled.blue-grey-text.text-lighten-1
       span No Data Available
+
+mixin romeocolor(rcolor)
+  case rcolor
+    when "gray"
+      div(class="col s7 lighten-1 grey")= rcolor
+    when "yellow"
+      div(class="col s7 lighten-1 amber")= rcolor
+    default
+      div(class="col s7 lighten-1 " + rcolor)= rcolor
 
 li
   div.collapsible-header.active
     div.col.s5: b RoMEO Color:
-    - var rcolor = (romeo.publisher.romeocolour[0] == "gray" ? "grey" : romeo.publisher.romeocolour[0])
-    div(class="col s7 lighten-1 " + rcolor)= rcolor
+    +romeocolor(romeo.publisher.romeocolour[0])
 
   div.collapsible-body
     table.striped

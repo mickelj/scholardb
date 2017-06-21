@@ -183,6 +183,10 @@ input[type="search"] {
   padding: .75em !important;
 }
 
+.person-profile-sidebar img {
+  max-width: 180px;
+}
+
 .person-profile-section {
   padding: 5px;
   border-radius: 2px;

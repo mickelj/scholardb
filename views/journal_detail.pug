@@ -7,7 +7,7 @@ block content
   div.row
     div.col.s12.m6.detail-profile-sidebar
       div.row
-        p.headline Active #{appconf.orgshortname} Contributors to #{journal.name}
+        p.headline Active #{appconf.orgshortname} Contributors
         include scholar_cards.pug
 
       div.row.moreinfo
@@ -18,7 +18,7 @@ block content
               div.col.s5
                 b Publisher:
               div.col.s7 
-                a(href="/publishers/", journal.publisher_id)= journal.publisher_name
+                a(href="/publishers/" + journal.publisher_id)= journal.publisher_name
           if journal.identifiers
             li
               div.col.s5
