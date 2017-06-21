@@ -26,7 +26,7 @@ block content
               div.col.s7
                 each ident in journal.identifiers
                   div= ident.identifier
-          if romeo.numhits > 0 && journal.issn
+          if romeo.numhits > 0 && journal.identtype == "ISSN"
             include romeo.pug
           else
             li

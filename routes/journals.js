@@ -67,7 +67,7 @@ function getJournalDetail (req, res, next) {
   var db = req.app.get('db');
   var journal_id = req.params.id;
 
-  db.run("SELECT DISTINCT ON (j.id) j.id, j.name, publisher_id, p.name as publisher_name, identifier as issn, identifiers FROM publications j LEFT JOIN publishers p ON j.publisher_id = p.id, JSONB_TO_RECORDSET(identifiers) as w(type text, identifier text) WHERE j.id = $1", [journal_id], function(err, results) {
+  db.run("SELECT DISTINCT ON (j.id) j.id, j.name, publisher_id, p.name as publisher_name, type as ident_type, identifier as issn, identifiers FROM publications j LEFT JOIN publishers p ON j.publisher_id = p.id, JSONB_TO_RECORDSET(identifiers) as w(type text, identifier text) WHERE j.id = $1", [journal_id], function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
