@@ -1,5 +1,12 @@
 extends template
 
+mixin pubitem(pub)
+  div
+    if pub.identifiers && pub.identifiers[0].type == "ISSN"
+      a(href="/journals/" + pub.id)= pub.name
+    else
+      span= pub.name
+
 block content
   div.row
     div.col.s12
@@ -22,17 +29,16 @@ block content
           div.row
             div.col.s4
               b Publication List
-            div.col.s8.carousel.carousel-slider(data-indicators="true")
-              each ps, index in pubsets
-                div.carousel-item(href="#" + index)
-                  p.center: b Page #{index + 1} of #{pubsets.length}
-                  each pub in ps
-                    div
-                      if pub.identifiers && pub.identifiers[0].type == "ISSN"
-                        a(href="/journals/" + pub.id)= pub.name
-                      else
-                        span= pub.name
-
+            if pubsets.length > 1
+              div.col.s8.carousel.carousel-slider(data-indicators="true")
+                each ps, index in pubsets
+                  div.carousel-item(href="#" + index)
+                    p.center: b Page #{index + 1} of #{pubsets.length}
+                    each pub in ps
+                      +pubitem(pub)
+            else
+              each pub in pubsets[0]
+                +pubitem(pub)
         
     div.col.s12.m6.detail-works
       p.headline Works Found: #{total_works}
