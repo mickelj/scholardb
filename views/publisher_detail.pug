@@ -27,13 +27,12 @@ block content
               - var setind = 0;
               each pub, index in publisher.publications
                 if !(index % 10)
-                  - setind = index % 10
+                  - setind = index
                   - pubsets[setind] = []
                 - pubsets[setind].push(pub)
               each ps, index in pubsets
                 div.carousel-item(href="#" + index/10)
                   p: b Page #{index + 1} of #{Math.ceil(pubsets.length)}
-                  - console.dir(ps)
                   each pub in ps
                     div
                       if pub.identifiers && pub.identifiers[0].type == "ISSN"
