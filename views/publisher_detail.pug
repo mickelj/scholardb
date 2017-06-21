@@ -25,7 +25,7 @@ block content
             div.col.s8.carousel.carousel-slider(data-indicators="true")
               each ps, index in pubsets
                 div.carousel-item(href="#" + index)
-                  p: b Page #{index + 1} of #{pubsets.length}
+                  p.center: b Page #{index + 1} of #{pubsets.length}
                   each pub in ps
                     div
                       if pub.identifiers && pub.identifiers[0].type == "ISSN"

@@ -229,8 +229,17 @@ input[type="search"] {
   list-style-type: disc;
 }
 
+.moreinfo .collapsible-body ul.browser-default li {
+  list-style-type: disc;
+}
+
 .moreinfo .collapsible-body ul.browser-default.restrictions {
   margin-top: 1em;
+}
+
+.moreinfo .indicators {
+  background: #0D47A1;
+  border-radius: 2px;
 }
 
 .romeo-footnote img {

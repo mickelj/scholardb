@@ -19,9 +19,9 @@ mixin romeoicon(icontext)
 
 li
   div.collapsible-header.active
-    div.col.s6: b RoMEO Color:
+    div.col.s5: b RoMEO Color:
     - var rcolor = (romeo.publisher.romeocolour[0] == "gray" ? "grey" : romeo.publisher.romeocolour[0])
-    div(class="col s6 lighten-1 " + rcolor)= rcolor
+    div(class="col s7 lighten-1 " + rcolor)= rcolor
 
   div.collapsible-body
     table.striped
@@ -81,6 +81,3 @@ li
       small This work is licensed under a 
         a(rel="license", href="http://creativecommons.org/licenses/by-nc-sa/4.0/") Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License
         | .
-
-  
-    

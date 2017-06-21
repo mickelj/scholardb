@@ -1,7 +1,6 @@
 const express = require('express');
 const _ = require('underscore');
 const router = express.Router();
-const util = require('util');
 
 function getPublisherList (req, res, next) {
   var db = req.app.get('db');
@@ -79,12 +78,8 @@ function getPublisherDetail (req, res, next) {
         setind = Math.floor(i/10);
         pubsets[setind] = [];
       }
-      console.log("var setind is: " + setind)
-      console.log("var i is: " + i)
       pubsets[setind].push(results[0].publications[i]);
     }
-
-    console.log(util.inspect(pubsets), false, null);
 
     req.publication_sets = pubsets;
     return next();
