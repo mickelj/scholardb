@@ -66,7 +66,7 @@ function getPublisherDetail (req, res, next) {
   var db = req.app.get('db');
   var publisher_id = req.params.id;
 
-  db.run("SELECT pub.id, pub.name, pub.url, array_to_json(array_agg(j)) as publications FROM publishers pub JOIN LATERAL (select id, name, identifiers from publications where publisher_id = pub.id order by sort_name) j ON TRUE WHERE pub.id = $1 GROUP BY pub.id, pub.name, pub.url", [publisher_id], function(err, results) {
+  db.run("SELECT pub.id, pub.name, pub.url, array_to_json(array_agg(j)) as publications FROM publishers pub LEFT JOIN LATERAL (select id, name, identifiers from publications where publisher_id = pub.id order by sort_name) j ON TRUE WHERE pub.id = $1 GROUP BY pub.id, pub.name, pub.url", [publisher_id], function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
