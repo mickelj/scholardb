@@ -32,7 +32,7 @@ function searchPeople(req, res, next) {
   var query = req.query.terms ? req.query.terms : null;
 
   if (query) {
-    db.run("SELECT id, last_name, first_name, middle_name, TS_RANK_CD(full_name_search, query, 32/* rank/(rank+1) */) AS rank FROM people, TO_TSQUERY('''" + query + "''') query WHERE query @@ full_title_search ORDER BY rank DESC", function(err, results) {
+    db.run("SELECT id, last_name, first_name, middle_name, TS_RANK_CD(full_name_search, query, 32/* rank/(rank+1) */) AS rank FROM people, TO_TSQUERY('''" + query + "''') query WHERE query @@ full_name_search ORDER BY rank DESC", function(err, results) {
       if (err) {
         return next(err);
       }
