@@ -34,9 +34,9 @@ div.col.s12.works
           p.title.work-title
             a(href="/works/"+ work.id) !{work.work_title}
               if work.title_secondary
-                | : !{work_detail.title_secondary}
+                | : !{work.title_secondary}
               if work.title_tertiary
-                |  (!{work_detail.title_tertiary})
+                |  (!{work.title_tertiary})
 
           p.work-type= work.work_type
           p.contributors
