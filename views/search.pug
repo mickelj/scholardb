@@ -4,7 +4,7 @@ mixin res_badge(count)
   span.white-text.badge(data-badge-caption="Found")= count
 
 block content
-  div.container
+  div.container.search-results
     div.row
       div.col.s12
         if terms
@@ -20,9 +20,9 @@ block content
               +res_badge(works.length)
         div.row
           div.col.s12
-            div.collection
+            div.collection.container
               each el in works
-                a.collection-item(href="/works/" + el.id)= el.title_primary
+                a.collection-item.blue-text.text-accent-3(href="/works/" + el.id)= el.title_primary
 
     if people
       div.row
@@ -32,9 +32,9 @@ block content
               +res_badge(people.length)
         div.row
           div.col.s12
-            div.collection
+            div.collection.container
               each el in people
-                a.collection-item(href="/people/" + el.id)= (el.last_name + ", " + el.first_name + (el.middle_name ? " " + el.middle_name : ""))
+                a.collection-item.blue-text.text-accent-3(href="/people/" + el.id)= (el.last_name + ", " + el.first_name + (el.middle_name ? " " + el.middle_name : ""))
             
     if depts
       div.row
@@ -43,9 +43,9 @@ block content
             +res_badge(depts.length)
       div.row
         div.col.s12
-          div.collection
+          div.collection.container
             each el in depts
-              a.collection-item(href="/departments/" + el.id)= el.name
+              a.collection-item.blue-text.text-accent-3(href="/departments/" + el.id)= el.name
           
     if publications
       div.row
@@ -54,9 +54,9 @@ block content
             +res_badge(publications.length)
       div.row
         div.col.s12
-          div.collection
+          div.collection.container
             each el in publications
-              a(href="/journals/" + el.id)= el.name
+              a.collection-item.blue-text.text-accent-3(href="/journals/" + el.id)= el.name
           
     if publishers
       div.row
@@ -65,6 +65,6 @@ block content
             +res_badge(publishers.length)
       div.row
         div.col.s12
-          div.collection
+          div.collection.container
             each el in publishers
-              a(href="/publishers/" + el.id)= el.name
+              a.collection-item.blue-text.text-accent-3(href="/publishers/" + el.id)= el.name

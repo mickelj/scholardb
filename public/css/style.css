@@ -68,6 +68,11 @@ select.browser-default {
   padding-top: 4px;
 }
 
+.search-results .headline {
+  margin-top: .5em
+  margin-bottom: .5em;
+}
+
 input[type=search]:not(.browser-default):focus:not([readonly]) + label {
   border-bottom: 1px solid #0D47A1;
   box-shadow: 0 1px 0 0 #0D47A1;
