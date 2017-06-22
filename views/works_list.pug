@@ -4,7 +4,7 @@ div.col.s12.works
       div.card.horizontal.valign-wrapper
         div.card-image.center-align
           if work.coverimage
-            img(src=work.coverimage)
+            img(src=work.coverimage, alt="Cover Image for " + work.work_title)
           else
             case work.work_type
               when "Book"

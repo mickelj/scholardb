@@ -12,7 +12,7 @@ block content
         p.work-type= work_detail.work_type
     
     div.row
-      div.col.s12
+      div.col.s7
         table
           tr
             th.right-align Contributors:
@@ -64,3 +64,6 @@ block content
               th.right-align URL:
               td
                 a(href=url)= url        
+      if coverimage
+        div.col.s5
+          img(src=coverimage, alt="Cover Image for " + work_detail.work_title)

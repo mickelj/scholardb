@@ -156,7 +156,7 @@ function getWorkDetail(req, res, next) {
   var db = req.app.get('db');
   var work_id = req.params.id;
 
-  db.run("SELECT works.id, title_primary as work_title, title_secondary, title_tertiary, description as work_type, contributors, publications.name as publication, publications.authority_id as pubid, publishers.name as publisher, publishers.id as publisherid, publication_date_year as year, volume, issue, start_page, end_page, location, works.url, summary FROM works JOIN publications ON publications.id = works.publication_id JOIN work_types USING (type) JOIN publishers ON publishers.id = publications.publisher_id WHERE works.id = $1", [work_id], function(err, results) {
+  db.run("SELECT works.id, title_primary as work_title, title_secondary, title_tertiary, description as work_type, contributors, publications.name as publication, publications.authority_id as pubid, publishers.name as publisher, publishers.id as publisherid, publication_date_year as year, volume, issue, start_page, end_page, location, works.url, pi.identifier FROM works LEFT JOIN publications ON publications.id = works.publication_id LEFT JOIN work_types USING (type) LEFT JOIN publishers ON publishers.id = publications.publisher_id LEFT JOIN LATERAL (select identifier from publications p2, JSONB_TO_RECORDSET(identifiers) as w(type text, identifier text) WHERE p2.id = publications.id AND type LIKE 'ISBN%') pi ON TRUE WHERE works.id = $1", [work_id], function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
@@ -164,6 +164,26 @@ function getWorkDetail(req, res, next) {
     req.work_detail = results[0];
     return next();
   });
+}
+
+function getSingleImage (req, res, next) {
+  var nconf = req.app.get('nconf');
+  var wi = req.work_detail.identifier ? req.work_detail.identifier.replace(/-/g, '') : null;
+
+  if (wi) {
+    request.get(nconf.get('application:ccurlbase') + wi, function(err, res, body) {
+      if (err) {
+        return next(err);
+      }
+
+      imgobj = JSON.parse(body);
+      req.coverimage = (wi in imgobj ? imgobj[wi] : null);
+      return next();
+    });
+  } else {
+    req.coverimage = null;
+    return next();
+  }
 }
 
 function renderWorkDetail(req, res) {
@@ -179,12 +199,13 @@ function renderWorkDetail(req, res) {
     appconf: nconf.get('application'),
     title: nconf.get('application:appname') + " - Work: " + req.work_detail.work_title,
     work_detail: req.work_detail,
+    coverimage: req.coverimage,
     url: url
   });
 }
 
 router.get('/', getWorkTypeCount, getDeptWorkCount, getPeopleWorkCount, getYearWorkCount, getPublicationWorkCount, getPublisherWorkCount, getWorksCount, getWorksList, getWorksImages, renderWorksList);
 
-router.get('/:id', getWorkDetail, renderWorkDetail);
+router.get('/:id', getWorkDetail, getSingleImage, renderWorkDetail);
 
 module.exports = router;
