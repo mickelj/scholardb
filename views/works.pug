@@ -1,34 +1,36 @@
 extends template
 
 block content
-  div.row
-    div.col.s0.m2.offset-m1.sidebar.z-depth-1
-      include filters.pug
+  div.container
+    div.row.valign-wrapper
+      div.col.s12.m9
+        h4 All Available Works
         
-    div.col.s12.m9
-      div.row
-        div.col.s12.right-align
-          p
-            form(method="get", action=cur_list)
-              label(for='resultsPerPage') Results Per Page:
-              select#resultsPerPage.browser-default(name='limit')
-                if limit == 10
-                  option(selected) 10
-                else
-                  option 10
-                if limit == 25
-                  option(selected) 25
-                else
-                  option 25
-                if limit == 50
-                  option(selected) 50
-                else
-                  option 50
-                if limit == 100
-                  option(selected) 100
-                else
-                  option 100
-              input(type="hidden", name="page", value="1")
-      div.row
-        div.col.s12
-          include works_block.pug
+      div.col.s0.m3.right-align
+        form(method="get", action=cur_list)
+          label(for='resultsPerPage') Results Per Page:
+          select#resultsPerPage.browser-default(name='limit')
+            if limit == 10
+              option(selected) 10
+            else
+              option 10
+            if limit == 25
+              option(selected) 25
+            else
+              option 25
+            if limit == 50
+              option(selected) 50
+            else
+              option 50
+            if limit == 100
+              option(selected) 100
+            else
+              option 100
+          input(type="hidden", name="page", value="1")
+
+    div.row
+      div.col.s0.m2.sidebar.z-depth-1
+        include filters.pug
+          
+      div.col.s12.m10
+        include works_block.pug
