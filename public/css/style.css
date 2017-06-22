@@ -59,6 +59,10 @@ select.browser-default {
   margin-top: 0;
 }
 
+.headline .badge {
+  padding-top: 4px;
+}
+
 #searchform .btn {
   height: auto;
   padding-top: 4px;

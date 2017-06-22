@@ -1,64 +1,70 @@
 extends template
 
 mixin res_badge(count)
-  span.badge(data-badge-caption="Found")= count
-
-mixin res_lists(list, dest, display)
-  div.collection
-    each el in list
-      a.collection-item(href="/" + dest + "/" + el.id) #{eval(el.display)}
+  span.white-text.badge(data-badge-caption="Found")= count
 
 block content
-  div.row
-    div.col.s12
-      if terms
-        h4 Search Results for: #{terms}
-      else
-        h4 Search #{appconf.appname}
-  
-  if works
+  div.container
     div.row
+      div.col.s12
+        if terms
+          h4 Search Results for: #{terms}
+        else
+          h4 Search #{appconf.appname}
+    
+    if works
       div.row
-        div.col.s12
-          p.headline Works
-            +res_badge(works.length)
-      div.row
-        div.col.s12
-          +res_lists(works, 'works', 'title_primary')
+        div.row
+          div.col.s12
+            p.headline Works
+              +res_badge(works.length)
+        div.row
+          div.col.s12
+            div.collection
+              each el in works
+                a.collection-item(href="/works/" + el.id)= el.title_primary
 
-  if people
-    div.row
+    if people
+      div.row
+        div.row
+          div.col.s12
+            p.headline Contributors
+              +res_badge(people.length)
+        div.row
+          div.col.s12
+            div.collection
+              each el in people
+                a.collection-item(href="/people/" + el.id)= (el.last_name + ", " + el.first_name + (el.middle_name ? " " + el.middle_name : ""))
+            
+    if depts
       div.row
         div.col.s12
-          p.headline Contributors
-            +res_badge(people.length)
+          p.headline Departments/Programs
+            +res_badge(depts.length)
       div.row
         div.col.s12
-          +res_lists(people, 'people', '(ln + ", " + fn + (mn ? " " + mn : ""))')
+          div.collection
+            each el in depts
+              a.collection-item(href="/departments/" + el.id)= el.name
           
-  if depts
-    div.row
-      div.col.s12
-        p.headline Departments/Programs
-          +res_badge(depts.length)
-    div.row
-      div.col.s12
-        +res_lists(depts, 'departments', 'name')
-        
-  if publications
-    div.row
-      div.col.s12
-        p.headline Publications
-          +res_badge(publications.length)
-    div.row
-      div.col.s12
-        +res_lists(publications, 'journals', 'name')
-        
-  if publishers
-    div.row
-      div.col.s12
-        p.headline Publishers
-          +res_badge(publishers.length)
-    div.row
-      div.col.s12
-        +res_lists(publishers, 'publishers', 'name')
+    if publications
+      div.row
+        div.col.s12
+          p.headline Publications
+            +res_badge(publications.length)
+      div.row
+        div.col.s12
+          div.collection
+            each el in publications
+              a(href="/journals/" + el.id)= el.name
+          
+    if publishers
+      div.row
+        div.col.s12
+          p.headline Publishers
+            +res_badge(publishers.length)
+      div.row
+        div.col.s12
+          div.collection
+            each el in publishers
+              a(href="/publishers/" + el.id)= el.name
