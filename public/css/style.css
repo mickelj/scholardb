@@ -50,6 +50,13 @@ select.browser-default {
   font-size: 90%;
 }
 
+#searchform .btn-floating {
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 1rem;
+}
+
 .headline {
   font-size: 1.35rem;
   background: #0D47A1;
@@ -74,7 +81,7 @@ select.browser-default {
   margin-bottom: .5em;
 }
 
-input[type=search]:not(.browser-default):focus:not([readonly]) + label {
+input[type=search]:not(.browser-default):focus:not([readonly]) {
   border-bottom: 1px solid #0D47A1;
   box-shadow: 0 1px 0 0 #0D47A1;
 }
@@ -261,8 +268,12 @@ input[type="search"] {
   margin-top: 1em;
 }
 
+.moreinfo .carousel {
+  height: 555px !important;
+}
+
 .moreinfo .collection-item {
-  font-size: .9rem;
+  font-size: .9rem !important;
 }
 
 .moreinfo .indicators {

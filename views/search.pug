@@ -13,6 +13,7 @@ block content
       div.row
         div.col.s12
           p: b No results found.
+          
     else
       if works
         div.row
@@ -40,33 +41,36 @@ block content
               
       if depts
         div.row
-          div.col.s12
-            p.headline Departments/Programs
-              +res_badge(depts.length)
-        div.row
-          div.col.s12
-            div.collection.container
-              each el in depts
-                a.collection-item.blue-text.text-accent-3(href="/departments/" + el.id)= el.name
+          div.row
+            div.col.s12
+              p.headline Departments/Programs
+                +res_badge(depts.length)
+          div.row
+            div.col.s12
+              div.collection.container
+                each el in depts
+                  a.collection-item.blue-text.text-accent-3(href="/departments/" + el.id)= el.name
             
       if publications
         div.row
-          div.col.s12
-            p.headline Publications
-              +res_badge(publications.length)
-        div.row
-          div.col.s12
-            div.collection.container
-              each el in publications
-                a.collection-item.blue-text.text-accent-3(href="/journals/" + el.id)= el.name
+          div.row
+            div.col.s12
+              p.headline Publications
+                +res_badge(publications.length)
+          div.row
+            div.col.s12
+              div.collection.container
+                each el in publications
+                  a.collection-item.blue-text.text-accent-3(href="/journals/" + el.id)= el.name
             
       if publishers
         div.row
-          div.col.s12
-            p.headline Publishers
-              +res_badge(publishers.length)
-        div.row
-          div.col.s12
-            div.collection.container
-              each el in publishers
-                a.collection-item.blue-text.text-accent-3(href="/publishers/" + el.id)= el.name
+          div.row
+            div.col.s12
+              p.headline Publishers
+                +res_badge(publishers.length)
+          div.row
+            div.col.s12
+              div.collection.container
+                each el in publishers
+                  a.collection-item.blue-text.text-accent-3(href="/publishers/" + el.id)= el.name
