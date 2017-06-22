@@ -25,7 +25,7 @@ block content
               b Publisher URL:
             div.col.s8 
               a(href=publisher.url, target="_blank")= publisher.url
-        if publisher.publications
+        if publisher.publications[0]
           div.row
             div.col.s4
               b Publication List
