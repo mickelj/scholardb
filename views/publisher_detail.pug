@@ -20,16 +20,16 @@ block content
         p.headline More Information
         if publisher.url 
           div.row
-            div.col.s4
+            div.col.s3
               b Publisher URL:
-            div.col.s8 
+            div.col.s9 
               a(href=publisher.url, target="_blank")= publisher.url
         if publisher.publications[0]
           div.row
-            div.col.s4
+            div.col.s3
               b Publication List
             if pubsets.length > 1
-              div.col.s8.carousel.carousel-slider(data-indicators="true")
+              div.col.s9.carousel.carousel-slider(data-indicators="true")
                 each ps, index in pubsets
                   div.carousel-item(href="#" + index)
                     p.center: b Page #{index + 1} of #{pubsets.length}
@@ -37,7 +37,7 @@ block content
                       each pub in ps
                         +pubitem(pub)
             else
-              div.col.s8
+              div.col.s9
                 div.collection
                   each pub in pubsets[0]
                     +pubitem(pub)
