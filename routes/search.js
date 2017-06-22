@@ -21,6 +21,9 @@ function searchWorks(req, res, next) {
 
       return next();
     });
+  } else {
+    req.works_results = null;
+    return next();
   }
 }
 
@@ -42,6 +45,9 @@ function searchPeople(req, res, next) {
 
       return next();
     });
+  } else {
+    req.people_results = null;
+    return next();
   }
 }
 
@@ -63,6 +69,9 @@ function searchDepts(req, res, next) {
 
       return next();
     });
+  } else {
+    req.dept_results = null;
+    return next();
   }
 }
 
@@ -84,6 +93,9 @@ function searchPublications(req, res, next) {
 
       return next();
     });
+  } else {
+    req.publication_results = null;
+    return next();
   }
 }
 
@@ -105,6 +117,9 @@ function searchPublishers(req, res, next) {
 
       return next();
     });
+  } else {
+    req.publisher_results = null;
+    return next();
   }
 }
 
@@ -114,7 +129,7 @@ function renderSearchResults (req, res) {
 
   res.render('search', {
     appconf: nconf.get('application'),
-    title: nconf.get('application:appname') + " - Search Results for terms: " + query,
+    title: nconf.get('application:appname') + " - Search" + (query ? " Results for Terms: " + query : ""), 
     terms: query,
     works: req.works_results,
     people: req.people_results,
