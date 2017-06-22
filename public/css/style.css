@@ -1,5 +1,5 @@
 header {
-  margin-bottom: 1vh !important;
+  margin-bottom: 3vh !important;
 }
 
 form {
@@ -57,6 +57,16 @@ select.browser-default {
   padding: .5em;
   border-radius: 2px;
   margin-top: 0;
+}
+
+#searchform .btn {
+  height: auto;
+  padding-top: 4px;
+}
+
+input[type=search]:not(.browser-default):focus:not([readonly]) + label {
+  border-bottom: 1px solid #0D47A1;
+  box-shadow: 0 1px 0 0 #0D47A1;
 }
 
 .cardname {

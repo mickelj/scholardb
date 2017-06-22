@@ -40,11 +40,13 @@ html
     header.row
       div.col.s12.m7
         p.tagline= appconf.tagline
-      div.col.s12.m5
+      div.col.s12.m5(style="margin-top: 10px")
         form#searchform(method="get", action="/search")
-          input#search(type="search", required, placeholder=appconf.searchdeftext, name="terms")
-          button.btn.waves-effect.waves-light.blue.darken-4(type="submit")
-            i.material-icons search
+          div.col.s10
+            input#search(type="search", required, placeholder=appconf.searchdeftext, name="terms")
+          div.col.s2
+            button.btn.waves-effect.waves-light.blue.darken-4(type="submit")
+              i.material-icons search
   
     main
       block content
