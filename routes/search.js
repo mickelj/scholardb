@@ -8,7 +8,7 @@ function searchWorks(req, res, next) {
   var query = req.query.terms ? req.query.terms : null;
 
   if (query) {
-    db.run("SELECT id, title_primary, TS_RANK_CD(full_title_search, query, 32/* rank/(rank+1) */) AS rank FROM works, TO_TSQUERY('''$1''') query WHERE query @@ full_title_search ORDER BY rank DESC", [query], function(err, results) {
+    db.run("SELECT id, title_primary, TS_RANK_CD(full_title_search, query, 32/* rank/(rank+1) */) AS rank FROM works, TO_TSQUERY('''" + query + "''') query WHERE query @@ full_title_search ORDER BY rank DESC", function(err, results) {
       if (err) {
         return next(err);
       }
@@ -32,7 +32,7 @@ function searchPeople(req, res, next) {
   var query = req.query.terms ? req.query.terms : null;
 
   if (query) {
-    db.run("SELECT id, last_name, first_name, middle_name, TS_RANK_CD(full_name_search, query, 32/* rank/(rank+1) */) AS rank FROM people, TO_TSQUERY('''$1''') query WHERE query @@ full_title_search ORDER BY rank DESC", [query], function(err, results) {
+    db.run("SELECT id, last_name, first_name, middle_name, TS_RANK_CD(full_name_search, query, 32/* rank/(rank+1) */) AS rank FROM people, TO_TSQUERY('''" + query + "''') query WHERE query @@ full_title_search ORDER BY rank DESC", function(err, results) {
       if (err) {
         return next(err);
       }
@@ -56,7 +56,7 @@ function searchDepts(req, res, next) {
   var query = req.query.terms ? req.query.terms : null;
 
   if (query) {
-    db.run("SELECT id, name, TS_RANK_CD(to_tsvector('english', name), query, 32/* rank/(rank+1) */) AS rank FROM groups, TO_TSQUERY('''$1''') query WHERE query @@ to_tsvector('english', name) ORDER BY rank DESC", [query], function(err, results) {
+    db.run("SELECT id, name, TS_RANK_CD(to_tsvector('english', name), query, 32/* rank/(rank+1) */) AS rank FROM groups, TO_TSQUERY('''" + query + "''') query WHERE query @@ to_tsvector('english', name) ORDER BY rank DESC", function(err, results) {
       if (err) {
         return next(err);
       }
@@ -80,7 +80,7 @@ function searchPublications(req, res, next) {
   var query = req.query.terms ? req.query.terms : null;
 
   if (query) {
-    db.run("SELECT id, name, TS_RANK_CD(to_tsvector('english', name), query, 32/* rank/(rank+1) */) AS rank FROM publications, TO_TSQUERY('''$1''') query WHERE query @@ to_tsvector('english', name) ORDER BY rank DESC", [query], function(err, results) {
+    db.run("SELECT id, name, TS_RANK_CD(to_tsvector('english', name), query, 32/* rank/(rank+1) */) AS rank FROM publications, TO_TSQUERY('''" + query + "''') query WHERE query @@ to_tsvector('english', name) ORDER BY rank DESC", function(err, results) {
       if (err) {
         return next(err);
       }
@@ -104,7 +104,7 @@ function searchPublishers(req, res, next) {
   var query = req.query.terms ? req.query.terms : null;
 
   if (query) {
-    db.run("SELECT id, name, TS_RANK_CD(to_tsvector('english', name), query, 32/* rank/(rank+1) */) AS rank FROM publishers, TO_TSQUERY('''$1''') query WHERE query @@ to_tsvector('english', name) ORDER BY rank DESC", [query], function(err, results) {
+    db.run("SELECT id, name, TS_RANK_CD(to_tsvector('english', name), query, 32/* rank/(rank+1) */) AS rank FROM publishers, TO_TSQUERY('''" + query + "''') query WHERE query @@ to_tsvector('english', name) ORDER BY rank DESC", function(err, results) {
       if (err) {
         return next(err);
       }
@@ -129,7 +129,7 @@ function renderSearchResults (req, res) {
 
   res.render('search', {
     appconf: nconf.get('application'),
-    title: nconf.get('application:appname') + " - Search" + (query ? " Results for Terms: " + query : ""), 
+    title: nconf.get('application:appname') + " - Search" + (query ? " Results for Terms: " + query : ""),
     terms: query,
     works: req.works_results,
     people: req.people_results,
