@@ -1,11 +1,10 @@
 extends template
 
 mixin pubitem(pub)
-  div
-    if pub.identifiers && pub.identifiers[0].type == "ISSN"
-      a(href="/journals/" + pub.id)= pub.name
-    else
-      span= pub.name
+  if pub.identifiers && pub.identifiers[0].type == "ISSN"
+    a.collection-item(href="/journals/" + pub.id)= pub.name
+  else
+    p.collection-item= pub.name
 
 block content
   div.row
@@ -34,13 +33,14 @@ block content
                 each ps, index in pubsets
                   div.carousel-item(href="#" + index)
                     p.center: b Page #{index + 1} of #{pubsets.length}
-                    each pub in ps
-                      +pubitem(pub)
+                    div.collection
+                      each pub in ps
+                        +pubitem(pub)
             else
               div.col.s8
-                each pub in pubsets[0]
-                  +pubitem(pub)
+                div.collection
+                  each pub in pubsets[0]
+                    +pubitem(pub)
         
     div.col.s12.m6.detail-works
-      p.headline Works Found: #{total_works}
       include works_block.pug

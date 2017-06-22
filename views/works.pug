@@ -7,7 +7,8 @@ block content
         
     div.col.s12.m9
       div.col.s12.m6
-        h4.works-count Works Found: #{total_works}
+        p.headline Works
+          span.badge(data-badge-caption="Found")= total_works
       div.col.s12.m6.right-align
         p
           form(method="get", action=cur_list)

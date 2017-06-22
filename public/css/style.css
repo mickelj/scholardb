@@ -61,6 +61,7 @@ select.browser-default {
 
 .headline .badge {
   padding-top: 4px;
+  color: #fff;
 }
 
 #searchform .btn {
