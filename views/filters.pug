@@ -1,10 +1,12 @@
 p.headline Filters
-div.filter-group
-  p: b Applied filters:
-  div.chips
-    each af, index in applied_filters
-      div.chip #{af.fld}
-        i.close.material-icons close
+
+if applied_filters
+  div.filter-group
+    p: b Applied filters:
+    div.chips
+      each af, index in applied_filters
+        div.chip #{af.fld}
+          i.close.material-icons close
 
 div.filter-group
   div.collection.with-header
