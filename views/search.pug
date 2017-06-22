@@ -9,7 +9,7 @@ block content
       div.col.s12
         h4 Search Results for: #{terms}
     
-    if !works || !people || !depts || !publications || !publishers
+    if !works && !publications && !publishers && !depts && !people
       div.row
         div.col.s12
           p: b No results found.
