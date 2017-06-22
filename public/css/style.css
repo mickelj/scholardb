@@ -57,6 +57,28 @@ select.browser-default {
   font-size: 1rem;
 }
 
+::-webkit-input-placeholder {
+  color: #aaa;
+  font-style: italic;
+}
+
+:-moz-placeholder {
+  /* Firefox 18- */
+  color: #aaa;
+  font-style: italic;
+}
+
+::-moz-placeholder {
+  /* Firefox 19+ */
+  color: #aaa;
+  font-style: italic;
+}
+
+:-ms-input-placeholder {
+  color: #aaa;
+  font-style: italic;
+}
+
 .headline {
   font-size: 1.35rem;
   background: #0D47A1;

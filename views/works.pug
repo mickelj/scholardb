@@ -6,29 +6,29 @@ block content
       include filters.pug
         
     div.col.s12.m9
-      div.col.s12.m6
-        p.headline Works
-          span.badge(data-badge-caption="Found")= total_works
-      div.col.s12.m6.right-align
-        p
-          form(method="get", action=cur_list)
-            label(for='resultsPerPage') Results Per Page:
-            select#resultsPerPage.browser-default(name='limit')
-              if limit == 10
-                option(selected) 10
-              else
-                option 10
-              if limit == 25
-                option(selected) 25
-              else
-                option 25
-              if limit == 50
-                option(selected) 50
-              else
-                option 50
-              if limit == 100
-                option(selected) 100
-              else
-                option 100
-            input(type="hidden", name="page", value="1")
-      include works_block.pug
+      div.row
+        div.col.s12.right-align
+          p
+            form(method="get", action=cur_list)
+              label(for='resultsPerPage') Results Per Page:
+              select#resultsPerPage.browser-default(name='limit')
+                if limit == 10
+                  option(selected) 10
+                else
+                  option 10
+                if limit == 25
+                  option(selected) 25
+                else
+                  option 25
+                if limit == 50
+                  option(selected) 50
+                else
+                  option 50
+                if limit == 100
+                  option(selected) 100
+                else
+                  option 100
+              input(type="hidden", name="page", value="1")
+      div.row
+        div.col.s12
+          include works_block.pug

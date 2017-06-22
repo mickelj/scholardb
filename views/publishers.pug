@@ -1,32 +1,33 @@
 extends template
 
 block content
-  div.row
-    div.col.s12.center-align
-      include letters.pug
-      
-  div.row
-    div.col.s12
-      h4 Publishers
-      
-  div.row
-    div.col.s12
-      table.striped.dept-list
-        tr
-          th(style="width: 35%") Publisher Name
-          th(style="width: 35%") Publisher URL
-          th.center-align(style="width: 10%") # of Works
-          each pub in publisher_list
-            tr
-              td
-                a(href="/publishers/" + pub.id)= pub.name
-              td
-                a(href=pub.url, target="_blank")= pub.url
-              if pub.cnt
-                td.center-align= pub.cnt
-              else
-                td.center-align 0
+  div.container
+    div.row
+      div.col.s12.center-align
+        include letters.pug
+        
+    div.row
+      div.col.s12
+        h4 Publishers
+        
+    div.row
+      div.col.s12
+        table.striped.dept-list
+          tr
+            th(style="width: 35%") Publisher Name
+            th(style="width: 35%") Publisher URL
+            th.center-align(style="width: 10%") # of Works
+            each pub in publisher_list
+              tr
+                td
+                  a(href="/publishers/" + pub.id)= pub.name
+                td
+                  a(href=pub.url, target="_blank")= pub.url
+                if pub.cnt
+                  td.center-align= pub.cnt
+                else
+                  td.center-align 0
 
-  div.row
-    div.col.s12.center-align
-      include letters.pug
+    div.row
+      div.col.s12.center-align
+        include letters.pug

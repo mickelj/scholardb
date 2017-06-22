@@ -42,7 +42,7 @@ html
         p.tagline= appconf.tagline
       div.col.s12.m5(style="margin-top: 10px")
         form#searchform(method="get", action="/search")
-          div.col.s11
+          div.col.s10
             input#search(type="search", required, placeholder=appconf.searchdeftext, name="terms")
           div.col.s1
             button.btn-floating.waves-effect.waves-light.blue.darken-4(type="submit")
