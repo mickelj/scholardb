@@ -2,19 +2,19 @@ mixin romeoicon(icontext)
   case icontext
     when "unclear"
     when "unknown"
-      span.icon.ion-help-circled.blue-grey-text.text-lighten-1
+      span.icon.ion-help-circled.blue-grey-text.text-lighten-1 
       span Unclear/Unknown
     when "can"
-      span.icon.ion-checkmark-circled.green-text.darken-1
+      span.icon.ion-checkmark-circled.green-text.darken-1 
       span Yes
     when "restricted"
-      span.icon.ion-alert-circled.amber-text.text-accent-4
+      span.icon.ion-alert-circled.amber-text.text-accent-4 
       span With Restrictions
     when "cannot"
-      span.icon.ion-close-circled.red-text
+      span.icon.ion-close-circled.red-text 
       span No
     default
-      span.icon.ion-minus-circled.blue-grey-text.text-lighten-1
+      span.icon.ion-minus-circled.blue-grey-text.text-lighten-1 
       span No Data Available
 
 mixin romeocolor(rcolor)
@@ -35,7 +35,7 @@ li
     table.striped
       if romeo.publisher.preprints[0]
         tr
-          th Can archive PRE-prints:
+          th Can archive PRE-prints?
           td
             +romeoicon(romeo.publisher.preprints[0].prearchiving[0])
             if romeo.publisher.preprints[0].prerestrictions[0]
@@ -44,7 +44,7 @@ li
                   li !{pr}
       if romeo.publisher.postprints[0]
         tr
-          th Can archive POST-prints:
+          th Can archive POST-prints?
           td
             +romeoicon(romeo.publisher.postprints[0].postarchiving[0])
             if romeo.publisher.postprints[0].postrestrictions[0]
@@ -53,7 +53,7 @@ li
                   li !{pr}
       if romeo.publisher.pdfversion[0]
         tr
-          th Can archive publisher/PDF version:
+          th Can archive publisher/PDF version?
           td
             +romeoicon(romeo.publisher.pdfversion[0].pdfarchiving[0])
             if romeo.publisher.pdfversion[0].pdfrestrictions[0]
@@ -62,14 +62,14 @@ li
                   li !{pr}
       if romeo.publisher.conditions[0]
         tr
-          th Conditions for ANY archving:
+          th Conditions for ANY archiving:
           td
             ul.browser-default
               each cond in romeo.publisher.conditions[0].condition
                 li !{cond}
       if romeo.publisher.copyrightlinks[0]
         tr
-          th Copyright Links from Publisher:
+          th Copyright links from publisher:
           td
             ul.browser-default
               each cl in romeo.publisher.copyrightlinks[0].copyrightlink

@@ -33,6 +33,11 @@ div.col.s12.works
         div.card-content
           p.title.work-title
             a(href="/works/"+ work.id) !{work.work_title}
+              if work_detail.title_secondary
+                | : !{work_detail.title_secondary}
+              if work_detail.title_tertiary
+                |  (!{work_detail.title_tertiary})
+
           p.work-type= work.work_type
           p.contributors
             each contrib, index in work.contributors
