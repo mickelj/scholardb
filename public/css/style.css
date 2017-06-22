@@ -212,6 +212,7 @@ input[type="search"] {
 .filter-group .collection.with-header .collection-item {
   padding: .25rem 2rem;
   font-size: .85rem;
+  cursor: pointer;
 }
 
 .filter-group .collection {

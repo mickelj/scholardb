@@ -27,4 +27,8 @@ $(document).ready(function() {
    });
 
    $(".detail-works").css('max-height', ($(".detail-profile-sidebar").height()));
+
+   $(".filter-group .collection-with-header .collection-item").on('click', function() {
+     console.log($(this).data('worktype-filter-id'));
+   })
 });
