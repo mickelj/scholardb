@@ -43,10 +43,10 @@ html
       div.col.s12.m4
         form#searchform(method="get", action="/search")
           div.input-field
-            input#terms(type="search", required, placeholder=appconf.searchdeftext, name='terms')
-            i.material-icons close
-          button.btn.waves-effect.waves-light(type="submit", name="action") Search
-            i.material-icons.right search
+            input#search(type="search", required, placeholder=appconf.searchdeftext)
+            label.label-icon(for="search")
+              i.material-icons search
+            i.material-icons send
   
     main
       block content
