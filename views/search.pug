@@ -7,64 +7,66 @@ block content
   div.container.search-results
     div.row
       div.col.s12
-        if terms
-          h4 Search Results for: #{terms}
-        else
-          h4 Search #{appconf.appname}
+        h4 Search Results for: #{terms}
     
-    if works
+    if !works || !people || !depts || !publications || !publishers
       div.row
+        div.col.s12
+          p: b No results found.
+    else
+      if works
         div.row
-          div.col.s12
-            p.headline Works
-              +res_badge(works.length)
-        div.row
-          div.col.s12
-            div.collection.container
-              each el in works
-                a.collection-item.blue-text.text-accent-3(href="/works/" + el.id)= el.title_primary
+          div.row
+            div.col.s12
+              p.headline Works
+                +res_badge(works.length)
+          div.row
+            div.col.s12
+              div.collection.container
+                each el in works
+                  a.collection-item.blue-text.text-accent-3(href="/works/" + el.id)= el.title_primary
 
-    if people
-      div.row
+      if people
+        div.row
+          div.row
+            div.col.s12
+              p.headline Contributors
+                +res_badge(people.length)
+          div.row
+            div.col.s12
+              div.collection.container
+                each el in people
+                  a.collection-item.blue-text.text-accent-3(href="/people/" + el.id)= (el.last_name + ", " + el.first_name + (el.middle_name ? " " + el.middle_name : ""))
+              
+      if depts
         div.row
           div.col.s12
-            p.headline Contributors
-              +res_badge(people.length)
+            p.headline Departments/Programs
+              +res_badge(depts.length)
         div.row
           div.col.s12
             div.collection.container
-              each el in people
-                a.collection-item.blue-text.text-accent-3(href="/people/" + el.id)= (el.last_name + ", " + el.first_name + (el.middle_name ? " " + el.middle_name : ""))
+              each el in depts
+                a.collection-item.blue-text.text-accent-3(href="/departments/" + el.id)= el.name
             
-    if depts
-      div.row
-        div.col.s12
-          p.headline Departments/Programs
-            +res_badge(depts.length)
-      div.row
-        div.col.s12
-          div.collection.container
-            each el in depts
-              a.collection-item.blue-text.text-accent-3(href="/departments/" + el.id)= el.name
-          
-    if publications
-      div.row
-        div.col.s12
-          p.headline Publications
-            +res_badge(publications.length)
-      div.row
-        div.col.s12
-          div.collection.container
-            each el in publications
-              a.collection-item.blue-text.text-accent-3(href="/journals/" + el.id)= el.name
-          
-    if publishers
-      div.row
-        div.col.s12
-          p.headline Publishers
-            +res_badge(publishers.length)
-      div.row
-        div.col.s12
-          div.collection.container
-            each el in publishers
-              a.collection-item.blue-text.text-accent-3(href="/publishers/" + el.id)= el.name
+      if publications
+        div.row
+          div.col.s12
+            p.headline Publications
+              +res_badge(publications.length)
+        div.row
+          div.col.s12
+            div.collection.container
+              each el in publications
+                a.collection-item.blue-text.text-accent-3(href="/journals/" + el.id)= el.name
+            
+      if publishers
+        div.row
+          div.col.s12
+            p.headline Publishers
+              +res_badge(publishers.length)
+        div.row
+          div.col.s12
+            div.collection.container
+              each el in publishers
+                a.collection-item.blue-text.text-accent-3(href="/publishers/" + el.id)= el.name

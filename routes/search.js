@@ -32,7 +32,7 @@ function searchPeople(req, res, next) {
   var query = req.query.terms ? req.query.terms : null;
 
   if (query) {
-    db.run("SELECT id, last_name, first_name, middle_name, TS_RANK_CD(full_name_search, query, 32/* rank/(rank+1) */) AS rank FROM people, TO_TSQUERY('''" + query + "''') query WHERE query @@ full_name_search ORDER BY rank DESC", function(err, results) { 
+    db.run("SELECT id, last_name, first_name, middle_name, TS_RANK_CD(full_name_search, query, 32/* rank/(rank+1) */) AS rank FROM people, TO_TSQUERY('''" + query + "''') query WHERE query @@ full_name_search ORDER BY rank DESC", function(err, results) {
       if (err) {
         return next(err);
       }
@@ -127,16 +127,20 @@ function renderSearchResults (req, res) {
   var nconf = req.app.get('nconf');
   var query = req.query.terms ? req.query.terms : null;
 
-  res.render('search', {
-    appconf: nconf.get('application'),
-    title: nconf.get('application:appname') + " - Search" + (query ? " Results for Terms: " + query : ""),
-    terms: query,
-    works: req.works_results,
-    people: req.people_results,
-    depts: req.dept_results,
-    publications: req.publication_results,
-    publishers: req.publisher_results
-  });
+  if (!query) {
+    res.redirect('/');
+  } else {
+    res.render('search', {
+      appconf: nconf.get('application'),
+      title: nconf.get('application:appname') + " - Search" + (query ? " Results for Terms: " + query : ""),
+      terms: query,
+      works: req.works_results,
+      people: req.people_results,
+      depts: req.dept_results,
+      publications: req.publication_results,
+      publishers: req.publisher_results
+    });
+  }
 }
 
 router.get('/', searchWorks, searchPeople, searchDepts, searchPublications, searchPublishers, renderSearchResults);
