@@ -33,9 +33,9 @@ div.col.s12.works
         div.card-content
           p.title.work-title
             a(href="/works/"+ work.id) !{work.work_title}
-              if work_detail.title_secondary
+              if work.title_secondary
                 | : !{work_detail.title_secondary}
-              if work_detail.title_tertiary
+              if work.title_tertiary
                 |  (!{work_detail.title_tertiary})
 
           p.work-type= work.work_type
