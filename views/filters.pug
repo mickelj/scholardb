@@ -1,15 +1,22 @@
 p.headline Filters
 div.filter-group
-  ul.collection.with-header
-    li.collection-header Work Types
+  p: b Applied filters:
+  div.chips
+    each af, index in applied_filters
+      div.chip #{af.fld}
+        i.close.material-icons close
+
+div.filter-group
+  div.collection.with-header
+    div.collection-header Work Types
     each wt, index in filter_worktypes
       if index < 5
-        li.collection-item #{wt.fld} (#{wt.cnt})
+        a.collection-item(data-worktype-filter-id=wt.type) #{wt.fld} (#{wt.cnt})
       else if index == 5
-        li.btn-flat.waves-effect.waves-light.filter-toggle Show more filters...
-        li.collection-item.hide #{wt.fld} (#{wt.cnt})
+        a.btn-flat.waves-effect.waves-light.filter-toggle Show more filters...
+        a.collection-item.hide(data-worktype-filter-id=wt.type) #{wt.fld} (#{wt.cnt})
       else
-        li.collection-item.hide #{wt.fld} (#{wt.cnt})
+        a.collection-item.hide(data-worktype-filter-id=wt.type) #{wt.fld} (#{wt.cnt})
 div.filter-group
   ul.collection.with-header
     li.collection-header Departments &amp; Programs

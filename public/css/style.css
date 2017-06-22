@@ -2,6 +2,10 @@ header {
   margin-bottom: 3vh !important;
 }
 
+footer {
+  margin-top: 3vh !important;
+}
+
 form {
   display: inline;
 }
@@ -58,25 +62,29 @@ select.browser-default {
 }
 
 ::-webkit-input-placeholder {
-  color: #aaa;
+  color: #999;
   font-style: italic;
+  font-size: .9rem;
 }
 
 :-moz-placeholder {
   /* Firefox 18- */
-  color: #aaa;
+  color: #999;
   font-style: italic;
+  font-size: .9rem;
 }
 
 ::-moz-placeholder {
   /* Firefox 19+ */
-  color: #aaa;
+  color: #999;
   font-style: italic;
+  font-size: .9rem;
 }
 
 :-ms-input-placeholder {
-  color: #aaa;
+  color: #999;
   font-style: italic;
+  font-size: .9rem;
 }
 
 .headline {
