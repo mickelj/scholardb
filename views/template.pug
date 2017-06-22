@@ -38,15 +38,13 @@ html
               a(href="/publishers") Publishers
 
     header.row
-      div.col.s12.m8
+      div.col.s12.m7
         p.tagline= appconf.tagline
-      div.col.s12.m4
+      div.col.s12.m5
         form#searchform(method="get", action="/search")
-          div.input-field
-            input#search(type="search", required, placeholder=appconf.searchdeftext)
-            label.label-icon(for="search")
-              i.material-icons search
-            i.material-icons send
+          input#search(type="search", required, placeholder=appconf.searchdeftext, name="terms")
+          button.btn.waves-effect.waves-light.blue.darken-4(type="submit")
+            i.material-icons search
   
     main
       block content
