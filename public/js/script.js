@@ -5,6 +5,7 @@ $(document).ready(function() {
      $(this).nextAll().toggleClass('hide');
      var txt = $(this).next().is(':visible') ? 'Show fewer filters...' : 'Show more filters...';
      $(this).text(txt);
+     $(this).toggleClass('red').toggleClass('white-text');
    });
 
    $('.collapsible').collapsible();
