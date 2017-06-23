@@ -77,7 +77,7 @@ function getPublisherWorkCount (req, res, next) {
   var db = req.app.get('db');
   var filters = req.sqlfilters ? req.sqlfilters : null;
 
-  db.run("SELECT publishers.id, publishers.name AS fld, COUNT(works.id) AS cnt FROM works LEFT JOIN publications ON publications.id = works.publication_id LEFT JOIN publishers ON publications.publisher_id = publishers.id LEFT JOIN work_types USING (type) LEFT JOIN LATERAL (select identifier from publications p2, JSONB_TO_RECORDSET(identifiers) as w(type text, identifier text) WHERE p2.id = publications.id AND type LIKE 'ISBN%' LIMIT 1) pi ON TRUE WHERE " + filters + "AND publishers.sort_name <> 'unknown' AND publications.sort_name <> 'unknown' GROUP BY publishers.id, publishers.name ORDER BY COUNT(works.id) DESC", function(err, results) {
+  db.run("SELECT publishers.id, publishers.name AS fld, COUNT(works.id) AS cnt FROM works LEFT JOIN publications ON publications.id = works.publication_id LEFT JOIN publishers ON publications.publisher_id = publishers.id LEFT JOIN work_types USING (type) LEFT JOIN LATERAL (select identifier from publications p2, JSONB_TO_RECORDSET(identifiers) as w(type text, identifier text) WHERE p2.id = publications.id AND type LIKE 'ISBN%' LIMIT 1) pi ON TRUE WHERE " + filters + " AND publishers.sort_name <> 'unknown' AND publications.sort_name <> 'unknown' GROUP BY publishers.id, publishers.name ORDER BY COUNT(works.id) DESC", function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
