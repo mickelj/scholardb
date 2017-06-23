@@ -45,7 +45,7 @@ $(document).ready(function() {
 
   $(".detail-works").css('max-height', ($(".detail-profile-sidebar").height()));
 
-  $(".filter-group .collection-item").on('click', function() {
+  $(".filter-group a.collection-item").on('click', function() {
     var filtype = $(this).data('filter-type');
     var val = $(this).data('filter-id');
     var limit = getUrlParameter('limit') ? "&limit=" + getUrlParameter('limit') : "";
