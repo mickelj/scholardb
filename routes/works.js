@@ -186,7 +186,7 @@ function renderWorksList (req, res) {
     filter_publisherworks: req.filter_publisherworks,
     total_works: req.total_works,
     works_list: req.works_list,
-    //applied_filters: req.filters,
+    applied_filters: req.filters,
     limit: limit,
     page_count: page_count,
     cur_page: cur_page,
