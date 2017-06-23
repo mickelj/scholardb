@@ -10,9 +10,9 @@ function getUrlParameter(sParam) {
     if (sParameterName[0] === sParam) {
       return sParameterName[1] === undefined ? true : sParameterName[1];
     }
-
-    return undefined;
   }
+
+  return undefined;
 }
 
 $(document).ready(function() {
@@ -50,6 +50,7 @@ $(document).ready(function() {
     var val = $(this).data('filter-id');
 
     var filstr = getUrlParameter('filters');
+    console.log(filstr);
     if (filstr) {
       var filters = JSON.parse(filstr);
 
