@@ -83,7 +83,7 @@ $(document).ready(function() {
       if (val in filters[filindex].ids) {
         if (filter[filindex].ids.length > 1) {
           filters[filindex].ids.splice(_.indexOf(filters[filindex].ids, val), 1);
-          alert("removed piece: " + filters[filindex].ids);=;
+          alert("removed piece: " + filters[filindex].ids);
         } else { // remove the entire object from the array
           filters.splice(filindex, 1);
           alert("removed entire filter: " + filters);
