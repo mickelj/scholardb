@@ -5,7 +5,7 @@ const request = require('request');
 
 function getWorkTypeCount (req, res, next) {
   var db = req.app.get('db');
-  var filters = req.filters ? req.filters : "TRUE";
+  var filters = req.sqlfilters ? req.sqlfilters : "TRUE";
 
   db.run("SELECT type, description AS fld, COUNT(type) AS cnt FROM works LEFT JOIN publications ON publications.id = works.publication_id LEFT JOIN publishers ON publications.publisher_id = publishers.id LEFT JOIN work_types USING (type) LEFT JOIN LATERAL (select identifier from publications p2, JSONB_TO_RECORDSET(identifiers) as w(type text, identifier text) WHERE p2.id = publications.id AND type LIKE 'ISBN%' LIMIT 1) pi ON TRUE WHERE " + filters + " GROUP BY type, description ORDER BY count(description) DESC", function(err, results) {
     if (err || !results.length) {
@@ -19,7 +19,7 @@ function getWorkTypeCount (req, res, next) {
 
 function getDeptWorkCount (req, res, next) {
   var db = req.app.get('db');
-  var filters = req.filters ? req.filters : "TRUE";
+  var filters = req.sqlfilters ? req.sqlfilters : "TRUE";
 
   db.run("SELECT groups.id, groups.name AS fld, COUNT(works.id) AS cnt FROM works, JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) LEFT JOIN people p ON p.id = person_id, groups JOIN UNNEST(p.group_membership) AS group_id ON group_id = groups.id WHERE groups.hidden = false GROUP BY groups.id, groups.name ORDER BY COUNT(works.id) DESC", function(err, results) {
     if (err || !results.length) {
@@ -33,7 +33,7 @@ function getDeptWorkCount (req, res, next) {
 
 function getPeopleWorkCount (req, res, next) {
   var db = req.app.get('db');
-  var filters = req.filters ? req.filters : "TRUE";
+  var filters = req.sqlfilters ? req.sqlfilters : "TRUE";
 
   db.run("SELECT p.id, CONCAT_WS(', ', last_name, first_name) AS fld, COUNT(works.id) AS cnt FROM works LEFT JOIN publications ON publications.id = works.publication_id LEFT JOIN publishers ON publications.publisher_id = publishers.id LEFT JOIN work_types USING (type) LEFT JOIN LATERAL (select identifier from publications p2, JSONB_TO_RECORDSET(identifiers) as w(type text, identifier text) WHERE p2.id = publications.id AND type LIKE 'ISBN%' LIMIT 1) pi ON TRUE, JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) JOIN people p on p.id = person_id WHERE " + filters + " GROUP BY p.id, fld ORDER BY COUNT(works.id) DESC", function(err, results) {
     if (err || !results.length) {
@@ -47,7 +47,7 @@ function getPeopleWorkCount (req, res, next) {
 
 function getYearWorkCount (req, res, next) {
   var db = req.app.get('db');
-  var filters = req.filters ? req.filters : "TRUE";
+  var filters = req.sqlfilters ? req.sqlfilters : "TRUE";
 
   db.run("SELECT publication_date_year AS fld, COUNT(works.id) AS cnt FROM works LEFT JOIN publications ON publications.id = works.publication_id LEFT JOIN publishers ON publications.publisher_id = publishers.id LEFT JOIN work_types USING (type) LEFT JOIN LATERAL (select identifier from publications p2, JSONB_TO_RECORDSET(identifiers) as w(type text, identifier text) WHERE p2.id = publications.id AND type LIKE 'ISBN%' LIMIT 1) pi ON TRUE WHERE " + filters + " GROUP BY publication_date_year ORDER BY publication_date_year DESC", function(err, results) {
     if (err || !results.length) {
@@ -61,9 +61,9 @@ function getYearWorkCount (req, res, next) {
 
 function getPublicationWorkCount (req, res, next) {
   var db = req.app.get('db');
-  var filters = req.filters ? req.filters : "TRUE";
+  var filters = req.sqlfilters ? req.sqlfilters : "TRUE";
 
-  db.run("SELECT publications.id, publications.name AS fld, COUNT(works.id) AS cnt FROM works LEFT JOIN publications ON publications.id = works.publication_id LEFT JOIN publishers ON publications.publisher_id = publishers.id LEFT JOIN work_types USING (type) LEFT JOIN LATERAL (select identifier from publications p2, JSONB_TO_RECORDSET(identifiers) as w(type text, identifier text) WHERE p2.id = publications.id AND type LIKE 'ISBN%' LIMIT 1) pi ON TRUE WHERE " + filters + " AND name <> 'Unknown' GROUP BY publications.id, publications.name ORDER BY COUNT(works.id) DESC", function(err, results) {
+  db.run("SELECT publications.id, publications.name AS fld, COUNT(works.id) AS cnt FROM works LEFT JOIN publications ON publications.id = works.publication_id LEFT JOIN publishers ON publications.publisher_id = publishers.id LEFT JOIN work_types USING (type) LEFT JOIN LATERAL (select identifier from publications p2, JSONB_TO_RECORDSET(identifiers) as w(type text, identifier text) WHERE p2.id = publications.id AND type LIKE 'ISBN%' LIMIT 1) pi ON TRUE WHERE " + filters + " AND publications.name <> 'Unknown' GROUP BY publications.id, publications.name ORDER BY COUNT(works.id) DESC", function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
@@ -75,7 +75,7 @@ function getPublicationWorkCount (req, res, next) {
 
 function getPublisherWorkCount (req, res, next) {
   var db = req.app.get('db');
-  var filters = req.filters ? req.filters : null;
+  var filters = req.sqlfilters ? req.sqlfilters : null;
 
   db.run("SELECT publishers.id, publishers.name AS fld, COUNT(works.id) AS cnt FROM works LEFT JOIN publications ON publications.id = works.publication_id LEFT JOIN publishers ON publications.publisher_id = publishers.id LEFT JOIN work_types USING (type) LEFT JOIN LATERAL (select identifier from publications p2, JSONB_TO_RECORDSET(identifiers) as w(type text, identifier text) WHERE p2.id = publications.id AND type LIKE 'ISBN%' LIMIT 1) pi ON TRUE WHERE " + filters + "AND publishers.sort_name <> 'unknown' AND publications.sort_name <> 'unknown' GROUP BY publishers.id, publishers.name ORDER BY COUNT(works.id) DESC", function(err, results) {
     if (err || !results.length) {
@@ -91,38 +91,38 @@ function getWorksList(req, res, next) {
   var db = req.app.get('db');
   var limit = req.query.limit ? req.query.limit : 10;
   var offset = req.query.page ? (req.query.page - 1) * limit : 0;
-  var filters = req.query.filters ? JSON.parse(req.query.filters) : null;
+  req.filters = req.query.filters ? JSON.parse(req.query.filters) : null;
   var filterlist = [];
 
-  if (_.findWhere(filters, {type: 'worktypes'})) {
-    filterlist.push("works.type IN ('" + _.findWhere(filters, {type: 'worktypes'}).ids.join("','") + "')");
+  if (_.findWhere(req.filters, {type: 'worktypes'})) {
+    filterlist.push("works.type IN ('" + _.findWhere(req.filters, {type: 'worktypes'}).ids.join("','") + "')");
   }
 
-  if (_.findWhere(filters, {type: 'people'})) {
+  if (_.findWhere(req.filters, {type: 'people'})) {
     var people = "works.contributors @> ANY(ARRAY[";
     var idlist = [];
-    _.findWhere(filters, {type: 'people'}).ids.forEach(function (id) {
+    _.findWhere(req.filters, {type: 'people'}).ids.forEach(function (id) {
       idlist.push("'[{\"person_id\" : " + id + "}]'");
     });
     people += idlist.join(",") + "]::jsonb[])";
     filterlist.push(people);
   }
 
-  if (_.findWhere(filters, {type: 'years'})) {
-    filterlist.push("works.publication_date_year IN (" + _.findWhere(filters, {type: 'years'}).ids.toString() + ")");
+  if (_.findWhere(req.filters, {type: 'years'})) {
+    filterlist.push("works.publication_date_year IN (" + _.findWhere(req.filters, {type: 'years'}).ids.toString() + ")");
   }
 
-  if (_.findWhere(filters, {type: 'publications'})) {
-    filterlist.push("works.publication_id IN (" + _.findWhere(filters, {type: 'publications'}).ids.toString() + ")");
+  if (_.findWhere(req.filters, {type: 'publications'})) {
+    filterlist.push("works.publication_id IN (" + _.findWhere(req.filters, {type: 'publications'}).ids.toString() + ")");
   }
 
-  if (_.findWhere(filters, {type: 'publishers'})) {
-    filterlist.push("publishers.id IN (" + _.findWhere(filters, {type: 'publishers'}).ids.toString() + ")");
+  if (_.findWhere(req.filters, {type: 'publishers'})) {
+    filterlist.push("publishers.id IN (" + _.findWhere(req.filters, {type: 'publishers'}).ids.toString() + ")");
   }
 
-  req.filters = (filterlist.length) ? filterlist.join(" AND ") : "TRUE";
+  req.sqlfilters = (filterlist.length) ? filterlist.join(" AND ") : "TRUE";
 
-  db.run("SELECT works.id, title_primary as work_title, title_secondary, title_tertiary, description as work_type, contributors, publications.name as publication, publications.id as pubid, pi.identifier, publication_date_year as year FROM works LEFT JOIN publications ON publications.id = works.publication_id LEFT JOIN publishers ON publications.publisher_id = publishers.id LEFT JOIN work_types USING (type) LEFT JOIN LATERAL (select identifier from publications p2, JSONB_TO_RECORDSET(identifiers) as w(type text, identifier text) WHERE p2.id = publications.id AND type LIKE 'ISBN%' LIMIT 1) pi ON TRUE WHERE " + req.filters + " ORDER BY publication_date_year DESC, works.id DESC LIMIT $1 OFFSET $2", [limit, offset], function(err, results) {
+  db.run("SELECT works.id, title_primary as work_title, title_secondary, title_tertiary, description as work_type, contributors, publications.name as publication, publications.id as pubid, pi.identifier, publication_date_year as year FROM works LEFT JOIN publications ON publications.id = works.publication_id LEFT JOIN publishers ON publications.publisher_id = publishers.id LEFT JOIN work_types USING (type) LEFT JOIN LATERAL (select identifier from publications p2, JSONB_TO_RECORDSET(identifiers) as w(type text, identifier text) WHERE p2.id = publications.id AND type LIKE 'ISBN%' LIMIT 1) pi ON TRUE WHERE " + req.sqlfilters + " ORDER BY publication_date_year DESC, works.id DESC LIMIT $1 OFFSET $2", [limit, offset], function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
@@ -134,7 +134,7 @@ function getWorksList(req, res, next) {
 
 function getWorksCount(req, res, next) {
   var db = req.app.get('db');
-  db.run("SELECT COUNT(works.id) as total_works FROM works LEFT JOIN publications ON publications.id = works.publication_id LEFT JOIN publishers ON publications.publisher_id = publishers.id LEFT JOIN work_types USING (type) LEFT JOIN LATERAL (select identifier from publications p2, JSONB_TO_RECORDSET(identifiers) as w(type text, identifier text) WHERE p2.id = publications.id AND type LIKE 'ISBN%' LIMIT 1) pi ON TRUE WHERE " + req.filters, function(err, results) {
+  db.run("SELECT COUNT(works.id) as total_works FROM works LEFT JOIN publications ON publications.id = works.publication_id LEFT JOIN publishers ON publications.publisher_id = publishers.id LEFT JOIN work_types USING (type) LEFT JOIN LATERAL (select identifier from publications p2, JSONB_TO_RECORDSET(identifiers) as w(type text, identifier text) WHERE p2.id = publications.id AND type LIKE 'ISBN%' LIMIT 1) pi ON TRUE WHERE " + req.sqlfilters, function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
@@ -186,6 +186,7 @@ function renderWorksList (req, res) {
     filter_publisherworks: req.filter_publisherworks,
     total_works: req.total_works,
     works_list: req.works_list,
+    applied_filters: req.filters,
     limit: limit,
     page_count: page_count,
     cur_page: cur_page,

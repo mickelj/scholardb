@@ -16,6 +16,7 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'pug');
 app.set('db', massiveInstance);
 app.set('nconf', nconf);
+app.locals._ = require("underscore");
 
 // Routes
 const index = require('./routes/index');
