@@ -1,15 +1,15 @@
 p.headline Filters
 
-if applied_filters
-  div.filter-group
-    p: b Applied filters:
-    div.chips
-      each af, index in applied_filters
-        case af.type
-          when "publishers"
-            each id in af.ids
-              div.chip= _.findWhere(filter_publisherworks, {id: id}).fld
-                i.close.material-icons close
+//- if applied_filters
+//-   div.filter-group
+//-     p: b Applied filters:
+//-     div.chips
+//-       each af, index in applied_filters
+//-         case af.type
+//-           when "publishers"
+//-             each id in af.ids
+//-               div.chip= _.findWhere(filter_publisherworks, {id: id}).fld
+//-                 i.close.material-icons close
 
 div.filter-group
   div.collection.with-header
