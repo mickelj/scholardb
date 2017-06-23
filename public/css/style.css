@@ -231,6 +231,7 @@ input[type="search"] {
   font-weight: 700;
   letter-spacing: .01em;
   padding: .5rem 1rem;
+  border-bottom: none;
 }
 
 .filter-toggle {
