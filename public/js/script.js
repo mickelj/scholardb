@@ -83,10 +83,8 @@ $(document).ready(function() {
       if (_.contains(filters[filindex].ids, val)) {
         if (filters[filindex].ids.length > 1) {
           filters[filindex].ids.splice(_.indexOf(filters[filindex].ids, val), 1);
-          alert("removed piece: " + filters[filindex].ids);
         } else { // remove the entire object from the array
           filters.splice(filindex, 1);
-          alert("removed entire filter: " + filters);
         }
       }
     }

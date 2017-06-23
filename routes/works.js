@@ -3,6 +3,39 @@ const router = express.Router();
 const _ = require('underscore');
 const request = require('request');
 
+function processFilters (req, res, next) {
+  req.filters = req.query.filters ? JSON.parse(req.query.filters) : null;
+  var filterlist = [];
+
+  if (_.findWhere(req.filters, {type: 'worktypes'})) {
+    filterlist.push("works.type IN ('" + _.findWhere(req.filters, {type: 'worktypes'}).ids.join("','") + "')");
+  }
+
+  if (_.findWhere(req.filters, {type: 'people'})) {
+    var people = "works.contributors @> ANY(ARRAY[";
+    var idlist = [];
+    _.findWhere(req.filters, {type: 'people'}).ids.forEach(function (id) {
+      idlist.push("'[{\"person_id\" : " + id + "}]'");
+    });
+    people += idlist.join(",") + "]::jsonb[])";
+    filterlist.push(people);
+  }
+
+  if (_.findWhere(req.filters, {type: 'years'})) {
+    filterlist.push("works.publication_date_year IN (" + _.findWhere(req.filters, {type: 'years'}).ids.toString() + ")");
+  }
+
+  if (_.findWhere(req.filters, {type: 'publications'})) {
+    filterlist.push("works.publication_id IN (" + _.findWhere(req.filters, {type: 'publications'}).ids.toString() + ")");
+  }
+
+  if (_.findWhere(req.filters, {type: 'publishers'})) {
+    filterlist.push("publishers.id IN (" + _.findWhere(req.filters, {type: 'publishers'}).ids.toString() + ")");
+  }
+
+  req.sqlfilters = (filterlist.length) ? filterlist.join(" AND ") : "TRUE";
+}
+
 function getWorkTypeCount (req, res, next) {
   var db = req.app.get('db');
   var filters = req.sqlfilters ? req.sqlfilters : "TRUE";
@@ -91,36 +124,6 @@ function getWorksList(req, res, next) {
   var db = req.app.get('db');
   var limit = req.query.limit ? req.query.limit : 10;
   var offset = req.query.page ? (req.query.page - 1) * limit : 0;
-  req.filters = req.query.filters ? JSON.parse(req.query.filters) : null;
-  var filterlist = [];
-
-  if (_.findWhere(req.filters, {type: 'worktypes'})) {
-    filterlist.push("works.type IN ('" + _.findWhere(req.filters, {type: 'worktypes'}).ids.join("','") + "')");
-  }
-
-  if (_.findWhere(req.filters, {type: 'people'})) {
-    var people = "works.contributors @> ANY(ARRAY[";
-    var idlist = [];
-    _.findWhere(req.filters, {type: 'people'}).ids.forEach(function (id) {
-      idlist.push("'[{\"person_id\" : " + id + "}]'");
-    });
-    people += idlist.join(",") + "]::jsonb[])";
-    filterlist.push(people);
-  }
-
-  if (_.findWhere(req.filters, {type: 'years'})) {
-    filterlist.push("works.publication_date_year IN (" + _.findWhere(req.filters, {type: 'years'}).ids.toString() + ")");
-  }
-
-  if (_.findWhere(req.filters, {type: 'publications'})) {
-    filterlist.push("works.publication_id IN (" + _.findWhere(req.filters, {type: 'publications'}).ids.toString() + ")");
-  }
-
-  if (_.findWhere(req.filters, {type: 'publishers'})) {
-    filterlist.push("publishers.id IN (" + _.findWhere(req.filters, {type: 'publishers'}).ids.toString() + ")");
-  }
-
-  req.sqlfilters = (filterlist.length) ? filterlist.join(" AND ") : "TRUE";
 
   db.run("SELECT works.id, title_primary as work_title, title_secondary, title_tertiary, description as work_type, contributors, publications.name as publication, publications.id as pubid, pi.identifier, publication_date_year as year FROM works LEFT JOIN publications ON publications.id = works.publication_id LEFT JOIN publishers ON publications.publisher_id = publishers.id LEFT JOIN work_types USING (type) LEFT JOIN LATERAL (select identifier from publications p2, JSONB_TO_RECORDSET(identifiers) as w(type text, identifier text) WHERE p2.id = publications.id AND type LIKE 'ISBN%' LIMIT 1) pi ON TRUE WHERE " + req.sqlfilters + " ORDER BY publication_date_year DESC, works.id DESC LIMIT $1 OFFSET $2", [limit, offset], function(err, results) {
     if (err || !results.length) {
@@ -247,7 +250,7 @@ function renderWorkDetail(req, res) {
   });
 }
 
-router.get('/', getWorkTypeCount, getDeptWorkCount, getPeopleWorkCount, getYearWorkCount, getPublicationWorkCount, getPublisherWorkCount, getWorksList, getWorksCount, getWorksImages, renderWorksList);
+router.get('/', processFilters, getWorkTypeCount, getDeptWorkCount, getPeopleWorkCount, getYearWorkCount, getPublicationWorkCount, getPublisherWorkCount, getWorksList, getWorksCount, getWorksImages, renderWorksList);
 
 router.get('/:id', getWorkDetail, getSingleImage, renderWorkDetail);
 
