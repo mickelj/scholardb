@@ -120,9 +120,9 @@ function getWorksList(req, res, next) {
     filterlist.push("publishers.id IN (" + _.findWhere(filters, {type: 'publishers'}).ids.toString() + ")");
   }
 
-  filters = (filterlist.length) ? "WHERE " + filterlist.join(" AND ") : "";
+  filters = (filterlist.length) ? filterlist.join(" AND ") : "TRUE";
 
-  db.run("SELECT works.id, title_primary as work_title, title_secondary, title_tertiary, description as work_type, contributors, publications.name as publication, publications.id as pubid, pi.identifier, publication_date_year as year FROM works LEFT JOIN publications ON publications.id = works.publication_id LEFT JOIN publishers ON publications.publisher_id = publishers.id LEFT JOIN work_types USING (type) LEFT JOIN LATERAL (select identifier from publications p2, JSONB_TO_RECORDSET(identifiers) as w(type text, identifier text) WHERE p2.id = publications.id AND type LIKE 'ISBN%') pi ON TRUE $3 ORDER BY publication_date_year DESC, works.id DESC LIMIT $1 OFFSET $2", [limit, offset, filters], function(err, results) {
+  db.run("SELECT works.id, title_primary as work_title, title_secondary, title_tertiary, description as work_type, contributors, publications.name as publication, publications.id as pubid, pi.identifier, publication_date_year as year FROM works LEFT JOIN publications ON publications.id = works.publication_id LEFT JOIN publishers ON publications.publisher_id = publishers.id LEFT JOIN work_types USING (type) LEFT JOIN LATERAL (select identifier from publications p2, JSONB_TO_RECORDSET(identifiers) as w(type text, identifier text) WHERE p2.id = publications.id AND type LIKE 'ISBN%') pi ON TRUE WHERE $3 ORDER BY publication_date_year DESC, works.id DESC LIMIT $1 OFFSET $2", [limit, offset, filters], function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
