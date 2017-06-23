@@ -1,34 +1,66 @@
+var getUrlParameter = function getUrlParameter(sParam) {
+    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : sParameterName[1];
+        }
+    }
+};
+
 $(document).ready(function() {
-   $(".button-collapse").sideNav();
+  $(".button-collapse").sideNav();
 
-   $(".filter-toggle").on('click', function() {
-     $(this).nextAll().toggleClass('hide');
-     var txt = $(this).next().is(':visible') ? 'Show fewer filters...' : 'Show more filters...';
-     $(this).text(txt);
-     $(this).toggleClass('red').toggleClass('white-text');
-   });
+  $(".filter-toggle").on('click', function() {
+    $(this).nextAll().toggleClass('hide');
+    var txt = $(this).next().is(':visible') ? 'Show fewer filters...' : 'Show more filters...';
+    $(this).text(txt);
+    $(this).toggleClass('red').toggleClass('white-text');
+  });
 
-   $('.collapsible').collapsible();
+  $('.collapsible').collapsible();
 
-   $('.carousel.carousel-slider').carousel({fullWidth: true});
+  $('.carousel.carousel-slider').carousel({fullWidth: true});
 
-   $('select').material_select();
+  $('select').material_select();
 
-   $('.page-selector').on('change', function() {
-     $(this).parent().submit();
-   });
+  $('.page-selector').on('change', function() {
+    $(this).parent().submit();
+  });
 
-   $('.letter-selector').on('change', function() {
-     $(this).parent().submit();
-   });
+  $('.letter-selector').on('change', function() {
+    $(this).parent().submit();
+  });
 
-   $('#resultsPerPage').on('change', function() {
-     $(this).parent().submit();
-   });
+  $('#resultsPerPage').on('change', function() {
+    $(this).parent().submit();
+  });
 
-   $(".detail-works").css('max-height', ($(".detail-profile-sidebar").height()));
+  $(".detail-works").css('max-height', ($(".detail-profile-sidebar").height()));
 
-   $(".filter-group .collection-with-header .collection-item").on('click', function() {
-     console.log($(this).data('worktype-filter-id'));
-   })
+  $(".filter-group .collection-item").on('click', function() {
+    var filters = JSON.parse(getUrlParameter('filters'));
+    var filtype = $(this).data('filter-type');
+    var val = $(this).data('filter-id');
+
+    if (filters) {
+      var filindex = _.indexOf(_.findWhere(filters, {type: filtype}));
+      if (filindex > -1) {
+        if (!(val in filters[filindex].ids)) {
+          filters[filindex].ids.push(val);
+        }
+      } else {
+        filters.push({type: filtype, ids: [val]});
+      }
+    } else {  // this is the first filter applied
+      filters = [{type: filtype, ids: [val]}];
+    }
+
+    window.location.href = "/works?filters=" + JSON.stringify(filters);
+  });
 });

@@ -13,12 +13,12 @@ div.filter-group
     div.collection-header Work Types
     each wt, index in filter_worktypes
       if index < 5
-        a.collection-item(data-worktype-filter-id=wt.type) #{wt.fld} (#{wt.cnt})
+        a.collection-item(data-filter-type="worktype", data-filter-id=wt.type) #{wt.fld} (#{wt.cnt})
       else if index == 5
         a.btn-flat.waves-effect.waves-light.filter-toggle Show more filters...
-        a.collection-item.hide(data-worktype-filter-id=wt.type) #{wt.fld} (#{wt.cnt})
+        a.collection-item.hide(data-filter-type="worktype", data-filter-id=wt.type) #{wt.fld} (#{wt.cnt})
       else
-        a.collection-item.hide(data-worktype-filter-id=wt.type) #{wt.fld} (#{wt.cnt})
+        a.collection-item.hide(data-filter-type="worktype", data-filter-id=wt.type) #{wt.fld} (#{wt.cnt})
 div.filter-group
   ul.collection.with-header
     li.collection-header Departments &amp; Programs
