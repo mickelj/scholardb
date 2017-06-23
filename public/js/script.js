@@ -46,11 +46,12 @@ $(document).ready(function() {
   $(".detail-works").css('max-height', ($(".detail-profile-sidebar").height()));
 
   $(".filter-group .collection-item").on('click', function() {
+    var filtype = $(this).data('filter-type');
+    var val = $(this).data('filter-id');
+
     var filstr = getUrlParameter('filters');
     if (filstr) {
       var filters = JSON.parse(filstr);
-      var filtype = $(this).data('filter-type');
-      var val = $(this).data('filter-id');
 
       var filindex = _.indexOf(_.findWhere(filters, {type: filtype}));
       if (filindex > -1) {
@@ -61,7 +62,7 @@ $(document).ready(function() {
         filters.push({type: filtype, ids: [val]});
       }
     } else {  // this is the first filter applied
-      filters = [{type: filtype, ids: [val]}];
+      var filters = [{type: filtype, ids: [val]}];
     }
 
     window.location.href = "/works?filters=" + JSON.stringify(filters);
