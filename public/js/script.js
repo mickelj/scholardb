@@ -46,11 +46,12 @@ $(document).ready(function() {
   $(".detail-works").css('max-height', ($(".detail-profile-sidebar").height()));
 
   $(".filter-group .collection-item").on('click', function() {
-    var filters = JSON.parse(getUrlParameter('filters'));
-    var filtype = $(this).data('filter-type');
-    var val = $(this).data('filter-id');
+    var filstr = getUrlParameter('filters');
+    if (filstr) {
+      var filters = JSON.parse(filstr);
+      var filtype = $(this).data('filter-type');
+      var val = $(this).data('filter-id');
 
-    if (filters) {
       var filindex = _.indexOf(_.findWhere(filters, {type: filtype}));
       if (filindex > -1) {
         if (!(val in filters[filindex].ids)) {
