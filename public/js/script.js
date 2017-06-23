@@ -79,8 +79,9 @@ $(document).ready(function() {
     var filters = JSON.parse(filstr);
 
     var filindex = _.indexOf(filters, _.findWhere(filters, {type: filtype}));
+    alert("filindex: " + filindex);
     if (filindex > -1) {
-      if (val in filters[filindex].ids) {
+      if (_.contains(filters[filindex].ids, val)) {
         if (filter[filindex].ids.length > 1) {
           filters[filindex].ids.splice(_.indexOf(filters[filindex].ids, val), 1);
           alert("removed piece: " + filters[filindex].ids);
@@ -88,6 +89,8 @@ $(document).ready(function() {
           filters.splice(filindex, 1);
           alert("removed entire filter: " + filters);
         }
+      } else {
+        alert("where is it???");
       }
     }
 
