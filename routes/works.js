@@ -7,7 +7,7 @@ function getWorkTypeCount (req, res, next) {
   var db = req.app.get('db');
   var filters = req.sqlfilters ? req.sqlfilters : "TRUE";
 
-  db.run("SELECT type, description AS fld, COUNT(type) AS cnt FROM works LEFT JOIN publications ON publications.id = works.publication_id LEFT JOIN publishers ON publications.publisher_id = publishers.id LEFT JOIN work_types USING (type) LEFT JOIN LATERAL (select identifier from publications p2, JSONB_TO_RECORDSET(identifiers) as w(type text, identifier text) WHERE p2.id = publications.id AND type LIKE 'ISBN%' LIMIT 1) pi ON TRUE WHERE " + filters + " GROUP BY type, description ORDER BY count(description) DESC", function(err, results) {
+  db.run("SELECT type as id, description AS fld, COUNT(type) AS cnt FROM works LEFT JOIN publications ON publications.id = works.publication_id LEFT JOIN publishers ON publications.publisher_id = publishers.id LEFT JOIN work_types USING (type) LEFT JOIN LATERAL (select identifier from publications p2, JSONB_TO_RECORDSET(identifiers) as w(type text, identifier text) WHERE p2.id = publications.id AND type LIKE 'ISBN%' LIMIT 1) pi ON TRUE WHERE " + filters + " GROUP BY type, description ORDER BY count(description) DESC", function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
@@ -49,7 +49,7 @@ function getYearWorkCount (req, res, next) {
   var db = req.app.get('db');
   var filters = req.sqlfilters ? req.sqlfilters : "TRUE";
 
-  db.run("SELECT publication_date_year AS fld, COUNT(works.id) AS cnt FROM works LEFT JOIN publications ON publications.id = works.publication_id LEFT JOIN publishers ON publications.publisher_id = publishers.id LEFT JOIN work_types USING (type) LEFT JOIN LATERAL (select identifier from publications p2, JSONB_TO_RECORDSET(identifiers) as w(type text, identifier text) WHERE p2.id = publications.id AND type LIKE 'ISBN%' LIMIT 1) pi ON TRUE WHERE " + filters + " GROUP BY publication_date_year ORDER BY publication_date_year DESC", function(err, results) {
+  db.run("SELECT publication_date_year AS id, publication_date_year AS fld, COUNT(works.id) AS cnt FROM works LEFT JOIN publications ON publications.id = works.publication_id LEFT JOIN publishers ON publications.publisher_id = publishers.id LEFT JOIN work_types USING (type) LEFT JOIN LATERAL (select identifier from publications p2, JSONB_TO_RECORDSET(identifiers) as w(type text, identifier text) WHERE p2.id = publications.id AND type LIKE 'ISBN%' LIMIT 1) pi ON TRUE WHERE " + filters + " GROUP BY publication_date_year ORDER BY publication_date_year DESC", function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
