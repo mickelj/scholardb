@@ -73,6 +73,7 @@ $(document).ready(function() {
   $(".filter-group .chip .close").on('click', function() {
     var filtype = $(this).parent().data('filter-type');
     var val = $(this).parent().data('filter-id');
+    alert(filtype + ", " + val);
     var limit = getUrlParameter('limit') ? "&limit=" + getUrlParameter('limit') : "";
     var page = getUrlParameter('page') ? "&page=" + getUrlParameter('page') : "";
     var filstr = getUrlParameter('filters');
