@@ -50,14 +50,10 @@ $(document).ready(function() {
     var val = $(this).data('filter-id');
 
     var filstr = getUrlParameter('filters');
-    console.log(filstr);
     if (filstr) {
       var filters = JSON.parse(filstr);
 
-      var filindex = _.indexOf(_.findWhere(filters, {type: filtype}));
-      console.log(filters);
-      console.log(filtype);
-      console.log(filindex);
+      var filindex = _.indexOf(filters, _.findWhere(filters, {type: filtype}));
       if (filindex > -1) {
         if (!(val in filters[filindex].ids)) {
           filters[filindex].ids.push(val);
@@ -69,6 +65,6 @@ $(document).ready(function() {
       var filters = [{type: filtype, ids: [val]}];
     }
 
-    //window.location.href = "/works?filters=" + JSON.stringify(filters);
+    window.location.href = "/works?filters=" + JSON.stringify(filters);
   });
 });
