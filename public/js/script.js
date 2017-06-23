@@ -54,6 +54,9 @@ $(document).ready(function() {
       var filters = JSON.parse(filstr);
 
       var filindex = _.indexOf(_.findWhere(filters, {type: filtype}));
+      console.log(filters);
+      console.log(filtype);
+      console.log(filindex);
       if (filindex > -1) {
         if (!(val in filters[filindex].ids)) {
           filters[filindex].ids.push(val);
