@@ -92,7 +92,7 @@ function getWorksList(req, res, next) {
   var limit = req.query.limit ? req.query.limit : 10;
   var offset = req.query.page ? (req.query.page - 1) * limit : 0;
   var filters = req.query.filters ? JSON.parse(req.query.filters) : null;
-  var filterlist = ["TRUE"];
+  var filterlist = [];
 
   if (_.findWhere(filters, {type: 'worktype'})) {
     filterlist.push("works.type IN ('" + _.findWhere(filters, {type: 'worktype'}).ids.join("','") + "')");
@@ -120,7 +120,9 @@ function getWorksList(req, res, next) {
     filterlist.push("publishers.id IN (" + _.findWhere(filters, {type: 'publishers'}).ids.toString() + ")");
   }
 
-  db.run("SELECT works.id, title_primary as work_title, title_secondary, title_tertiary, description as work_type, contributors, publications.name as publication, publications.id as pubid, pi.identifier, publication_date_year as year FROM works LEFT JOIN publications ON publications.id = works.publication_id LEFT JOIN publishers ON publications.publisher_id = publishers.id LEFT JOIN work_types USING (type) LEFT JOIN LATERAL (select identifier from publications p2, JSONB_TO_RECORDSET(identifiers) as w(type text, identifier text) WHERE p2.id = publications.id AND type LIKE 'ISBN%') pi ON TRUE WHERE $3 ORDER BY publication_date_year DESC, works.id DESC LIMIT $1 OFFSET $2", [limit, offset, filterlist.join(" AND ")], function(err, results) {
+  filters = (filterlist.length) ? "WHERE " + filterlist.join(" AND ") : "";
+
+  db.run("SELECT works.id, title_primary as work_title, title_secondary, title_tertiary, description as work_type, contributors, publications.name as publication, publications.id as pubid, pi.identifier, publication_date_year as year FROM works LEFT JOIN publications ON publications.id = works.publication_id LEFT JOIN publishers ON publications.publisher_id = publishers.id LEFT JOIN work_types USING (type) LEFT JOIN LATERAL (select identifier from publications p2, JSONB_TO_RECORDSET(identifiers) as w(type text, identifier text) WHERE p2.id = publications.id AND type LIKE 'ISBN%') pi ON TRUE $3 ORDER BY publication_date_year DESC, works.id DESC LIMIT $1 OFFSET $2", [limit, offset, filters], function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
