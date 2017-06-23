@@ -209,6 +209,14 @@ input[type="search"] {
   letter-spacing: .01rem;
 }
 
+.collection a.collection-item {
+  color: #039be5;
+}
+
+.collection a.collection-item:hover {
+  color: #01579b;
+}
+
 .filter-group .collection.with-header .collection-item {
   padding: .25rem 2rem;
   font-size: .85rem;

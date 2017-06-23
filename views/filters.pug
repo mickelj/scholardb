@@ -13,15 +13,15 @@ div.filter-group
     div.collection-header Work Types
     each wt, index in filter_worktypes
       if index < 5
-        a.collection-item(data-filter-type="worktype", data-filter-id=wt.type) #{wt.fld} (#{wt.cnt})
+        a.collection-item(data-filter-type="worktypes", data-filter-id=wt.type) #{wt.fld} (#{wt.cnt})
       else if index == 5
         a.btn-flat.waves-effect.waves-light.filter-toggle Show more filters...
-        a.collection-item.hide(data-filter-type="worktype", data-filter-id=wt.type) #{wt.fld} (#{wt.cnt})
+        a.collection-item.hide(data-filter-type="worktypes", data-filter-id=wt.type) #{wt.fld} (#{wt.cnt})
       else
-        a.collection-item.hide(data-filter-type="worktype", data-filter-id=wt.type) #{wt.fld} (#{wt.cnt})
+        a.collection-item.hide(data-filter-type="worktypes", data-filter-id=wt.type) #{wt.fld} (#{wt.cnt})
 div.filter-group
-  ul.collection.with-header
-    li.collection-header Departments &amp; Programs
+  div.collection.with-header
+    div.collection-header Departments &amp; Programs
     each wt, index in filter_deptworks
       if index < 5
         li.collection-item #{wt.fld} (#{wt.cnt})
@@ -31,46 +31,46 @@ div.filter-group
       else
         li.collection-item.hide #{wt.fld} (#{wt.cnt})
 div.filter-group
-  ul.collection.with-header
-    li.collection-header People
+  div.collection.with-header
+    div.collection-header People
     each wt, index in filter_peopleworks
       if index < 5
-        li.collection-item #{wt.fld} (#{wt.cnt})
+        a.collection-item(data-filter-type="people", data-filter-id=wt.type) #{wt.fld} (#{wt.cnt})
       else if index == 5
-        li.btn-flat.waves-effect.waves-light.filter-toggle Show more filters...
-        li.collection-item.hide #{wt.fld} (#{wt.cnt})
+        a.btn-flat.waves-effect.waves-light.filter-toggle Show more filters...
+        a.collection-item.hide(data-filter-type="people", data-filter-id=wt.type) #{wt.fld} (#{wt.cnt})
       else
-        li.collection-item.hide #{wt.fld} (#{wt.cnt})
+        a.collection-item.hide(data-filter-type="people", data-filter-id=wt.type) #{wt.fld} (#{wt.cnt})
 div.filter-group
-  ul.collection.with-header
-    li.collection-header Years
+  div.collection.with-header
+    div.collection-header Years
     each wt, index in filter_yearworks
       if index < 5
-        li.collection-item #{wt.fld} (#{wt.cnt})
+        a.collection-item(data-filter-type="years", data-filter-id=wt.type) #{wt.fld} (#{wt.cnt})
       else if index == 5
-        li.btn-flat.waves-effect.waves-light.filter-toggle Show more filters...
-        li.collection-item.hide #{wt.fld} (#{wt.cnt})
+        a.btn-flat.waves-effect.waves-light.filter-toggle Show more filters...
+        a.collection-item.hide(data-filter-type="years", data-filter-id=wt.type) #{wt.fld} (#{wt.cnt})
       else
-        li.collection-item.hide #{wt.fld} (#{wt.cnt})
+        a.collection-item.hide(data-filter-type="years", data-filter-id=wt.type) #{wt.fld} (#{wt.cnt})
 div.filter-group
-  ul.collection.with-header
-    li.collection-header Publications
+  div.collection.with-header
+    div.collection-header Publications
     each wt, index in filter_publicationworks
       if index < 5
-        li.collection-item #{wt.fld} (#{wt.cnt})
+        a.collection-item(data-filter-type="publications", data-filter-id=wt.type) #{wt.fld} (#{wt.cnt})
       else if index == 5
-        li.btn-flat.waves-effect.waves-light.filter-toggle Show more filters...
-        li.collection-item.hide #{wt.fld} (#{wt.cnt})
+        a.btn-flat.waves-effect.waves-light.filter-toggle Show more filters...
+        a.collection-item.hide(data-filter-type="publications", data-filter-id=wt.type) #{wt.fld} (#{wt.cnt})
       else
-        li.collection-item.hide #{wt.fld} (#{wt.cnt})
+        a.collection-item.hide(data-filter-type="publications", data-filter-id=wt.type) #{wt.fld} (#{wt.cnt})
 div.filter-group
-  ul.collection.with-header
-    li.collection-header Publishers
+  div.collection.with-header
+    div.collection-header Publishers
     each wt, index in filter_publisherworks
       if index < 5
-        li.collection-item #{wt.fld} (#{wt.cnt})
+        a.collection-item(data-filter-type="publishers", data-filter-id=wt.type) #{wt.fld} (#{wt.cnt})
       else if index == 5
-        li.btn-flat.waves-effect.waves-light.filter-toggle Show more filters...
-        li.collection-item.hide #{wt.fld} (#{wt.cnt})
+        a.btn-flat.waves-effect.waves-light.filter-toggle Show more filters...
+        a.collection-item.hide(data-filter-type="publishers", data-filter-id=wt.type) #{wt.fld} (#{wt.cnt})
       else
-        li.collection-item.hide #{wt.fld} (#{wt.cnt})
+        a.collection-item.hide(data-filter-type="publishers", data-filter-id=wt.type) #{wt.fld} (#{wt.cnt})
