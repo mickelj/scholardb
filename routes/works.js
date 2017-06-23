@@ -34,6 +34,8 @@ function processFilters (req, res, next) {
   }
 
   req.sqlfilters = (filterlist.length) ? filterlist.join(" AND ") : "TRUE";
+
+  return next();
 }
 
 function getWorkTypeCount (req, res, next) {
