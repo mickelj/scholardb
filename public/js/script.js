@@ -57,7 +57,7 @@ $(document).ready(function() {
 
       var filindex = _.indexOf(filters, _.findWhere(filters, {type: filtype}));
       if (filindex > -1) {
-        if (!(_.contains(filters[filindex].ids, val)) {
+        if (!(_.contains(filters[filindex].ids, val))) {
           filters[filindex].ids.push(val);
         } else {
           return; // item already exists in filter so ignore it
