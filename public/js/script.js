@@ -69,6 +69,6 @@ $(document).ready(function() {
       var filters = [{type: filtype, ids: [val]}];
     }
 
-    window.location.href = "/works?filters=" + JSON.stringify(filters);
+    //window.location.href = "/works?filters=" + JSON.stringify(filters);
   });
 });
