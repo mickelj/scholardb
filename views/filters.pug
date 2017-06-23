@@ -33,17 +33,17 @@ div.filter-group
         li.collection-item.hide #{wt.fld} (#{wt.cnt})
       else
         li.collection-item.hide #{wt.fld} (#{wt.cnt})
-//- div.filter-group
-//-   div.collection.with-header
-//-     div.collection-header People
-//-     each wt, index in filter_peopleworks
-//-       if index < 5
-//-         a.collection-item(data-filter-type="people", data-filter-id=wt.id) #{wt.fld} (#{wt.cnt})
-//-       else if index == 5
-//-         a.btn-flat.waves-effect.waves-light.filter-toggle Show more filters...
-//-         a.collection-item.hide(data-filter-type="people", data-filter-id=wt.id) #{wt.fld} (#{wt.cnt})
-//-       else
-//-         a.collection-item.hide(data-filter-type="people", data-filter-id=wt.id) #{wt.fld} (#{wt.cnt})
+div.filter-group
+  div.collection.with-header
+    div.collection-header People
+    each wt, index in filter_peopleworks
+      if index < 5
+        a.collection-item(data-filter-type="people", data-filter-id=wt.id) #{wt.fld} (#{wt.cnt})
+      else if index == 5
+        a.btn-flat.waves-effect.waves-light.filter-toggle Show more filters...
+        a.collection-item.hide(data-filter-type="people", data-filter-id=wt.id) #{wt.fld} (#{wt.cnt})
+      else
+        a.collection-item.hide(data-filter-type="people", data-filter-id=wt.id) #{wt.fld} (#{wt.cnt})
 //- div.filter-group
 //-   div.collection.with-header
 //-     div.collection-header Years
