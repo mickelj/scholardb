@@ -73,7 +73,6 @@ $(document).ready(function() {
   $(".filter-group .chip .close").on('click', function() {
     var filtype = $(this).parent().data('filter-type');
     var val = $(this).parent().data('filter-id');
-    alert(filtype + ", " + val);
     var limit = getUrlParameter('limit') ? "&limit=" + getUrlParameter('limit') : "";
     var page = getUrlParameter('page') ? "&page=" + getUrlParameter('page') : "";
     var filstr = getUrlParameter('filters');
@@ -83,9 +82,11 @@ $(document).ready(function() {
     if (filindex > -1) {
       if (val in filters[filindex].ids) {
         if (filter[filindex].ids.length > 1) {
-          filters[filindex].ids.splice($.inArray(val, filters[filindex].ids), 1);
+          filters[filindex].ids.splice(_.indexOf(filters[filindex].ids, val), 1);
+          alert("removed piece: " + filters[filindex].ids);=;
         } else { // remove the entire object from the array
           filters.splice(filindex, 1);
+          alert("removed entire filter: " + filters);
         }
       }
     }
