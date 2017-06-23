@@ -95,7 +95,7 @@ function getWorksList(req, res, next) {
   var filterlist = ["TRUE"];
 
   if (_.findWhere(filters, {type: 'worktype'})) {
-    filterlist.push("works.type IN (" + _.findWhere(filters, {type: 'worktype'}).ids.toString() + ")");
+    filterlist.push("works.type IN ('" + _.findWhere(filters, {type: 'worktype'}).ids.join("','") + "')");
   }
 
   if (_.findWhere(filters, {type: 'people'})) {
