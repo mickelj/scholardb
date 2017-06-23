@@ -1,6 +1,6 @@
-mixin filter_chips(filter, af)
+mixin filter_chips(filter, af, keyfield)
   each id in af.ids
-    div.chip(data-filter-type=af.type, data-filter-id=id)= _.findWhere(filter, {id: id}).fld
+    div.chip(data-filter-type=af.type, data-filter-id=id)= _.findWhere(filter, {keyfield: id}).fld
       i.close.material-icons close
 
 p.headline Filters
@@ -13,15 +13,15 @@ if applied_filters
         each af, index in applied_filters
           case af.type
             when "worktypes"
-              +filter_chips(filter_worktypes, af)
+              +filter_chips(filter_worktypes, af, 'type')
             when "people"
-              +filter_chips(filter_peopleworks, af)
+              +filter_chips(filter_peopleworks, af, 'id')
             when "years"
-              +filter_chips(filter_yearworks, af)
+              +filter_chips(filter_yearworks, af, 'fld')
             when "publications"
-              +filter_chips(filter_publicationworks, af)
+              +filter_chips(filter_publicationworks, af, 'id')
             when "publishers"
-              +filter_chips(filter_publisherworks, af)
+              +filter_chips(filter_publisherworks, af, 'id')
 
 div.filter-group
   div.collection.with-header

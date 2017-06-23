@@ -240,6 +240,11 @@ input[type="search"] {
   width: 100%;
 }
 
+.filter-group .chip {
+  height: auto;
+  width: 100%;
+}
+
 .detail-works {
   min-height: 75vh !important;
   overflow-y: scroll;
