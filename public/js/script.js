@@ -57,10 +57,12 @@ $(document).ready(function() {
 
       var filindex = _.indexOf(filters, _.findWhere(filters, {type: filtype}));
       if (filindex > -1) {
-        if (!(val in filters[filindex].ids)) {
+        if (!(_.contains(filters[filindex].ids, val)) {
           filters[filindex].ids.push(val);
+        } else {
+          return; // item already exists in filter so ignore it
         }
-      } else {
+      } else {  // this is the first time this particular filter has been applied
         filters.push({type: filtype, ids: [val]});
       }
     } else {  // this is the first filter applied
