@@ -22,17 +22,17 @@ div.filter-group
         a.collection-item.hide(data-filter-type="worktypes", data-filter-id=wt.type) #{wt.fld} (#{wt.cnt})
       else
         a.collection-item.hide(data-filter-type="worktypes", data-filter-id=wt.type) #{wt.fld} (#{wt.cnt})
-//- /*div.filter-group
-//-   div.collection.with-header
-//-     div.collection-header Departments &amp; Programs
-//-     each wt, index in filter_deptworks
-//-       if index < 5
-//-         li.collection-item #{wt.fld} (#{wt.cnt})
-//-       else if index == 5
-//-         li.btn-flat.waves-effect.waves-light.filter-toggle Show more filters...
-//-         li.collection-item.hide #{wt.fld} (#{wt.cnt})
-//-       else
-//-         li.collection-item.hide #{wt.fld} (#{wt.cnt})
+div.filter-group
+  div.collection.with-header
+    div.collection-header Departments &amp; Programs
+    each wt, index in filter_deptworks
+      if index < 5
+        li.collection-item #{wt.fld} (#{wt.cnt})
+      else if index == 5
+        li.btn-flat.waves-effect.waves-light.filter-toggle Show more filters...
+        li.collection-item.hide #{wt.fld} (#{wt.cnt})
+      else
+        li.collection-item.hide #{wt.fld} (#{wt.cnt})
 //- div.filter-group
 //-   div.collection.with-header
 //-     div.collection-header People
