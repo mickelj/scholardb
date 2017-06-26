@@ -243,6 +243,7 @@ input[type="search"] {
 .filter-group .chip {
   height: auto;
   width: 100%;
+  font-size: .75em;
 }
 
 .detail-works {
