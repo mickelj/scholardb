@@ -13,6 +13,7 @@ function processFilters (req, res, next) {
 
   if (_.findWhere(req.filters, {type: 'departments'})) {
     req.deptfilter = "group_membership @> ARRAY[" + _.findWhere(req.filters, {type: 'departments'}).ids.toString() + "]";
+    console.log(req.deptfilter);
   }
 
   if (_.findWhere(req.filters, {type: 'people'})) {
