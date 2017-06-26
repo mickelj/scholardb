@@ -12,8 +12,7 @@ function processFilters (req, res, next) {
   }
 
   if (_.findWhere(req.filters, {type: 'departments'})) {
-    req.deptfilter = "group_membership @> ARRAY[" + _.findWhere(req.filters, {type: 'departments'}).ids.toString() + "]";
-    console.log(req.deptfilter);
+    filterlist.push("group_membership @> ARRAY[" + _.findWhere(req.filters, {type: 'departments'}).ids.toString() + "]");
   }
 
   if (_.findWhere(req.filters, {type: 'people'})) {
