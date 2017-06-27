@@ -100,7 +100,7 @@ function getPersonWorksList (req, res, next) {
   var limit = req.query.limit ? req.query.limit : 10;
   var offset = req.query.page ? (req.query.page - 1) * limit : 0;
 
-  db.run("SELECT DISTINCT works.id, title_primary as work_title, title_secondary, title_tertiary, description as work_type, contributors, name as publication, publications.authority_id as pubid, pi.identifier, publication_date_year as year FROM works JOIN publications ON publications.id = works.publication_id JOIN work_types USING (type) LEFT JOIN LATERAL (select identifier from publications p2, JSONB_TO_RECORDSET(identifiers) as w(type text, identifier text) WHERE p2.id = publications.id AND type LIKE 'ISBN%' LIMIT 1) pi ON TRUE, JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) WHERE person_id = $1 ORDER BY publication_date_year DESC, works.id DESC LIMIT $2 OFFSET $3", [person_id, limit, offset], function(err, results) {
+  db.run("SELECT DISTINCT works.id, title_primary as work_title, title_secondary, title_tertiary, description as work_type, contributors, name as publication, publications.authority_id as pubid, pi.type as pubtype, pi.identifier, publication_date_year as year FROM works JOIN publications ON publications.id = works.publication_id JOIN work_types USING (type) LEFT JOIN LATERAL (select identifier from publications p2, JSONB_TO_RECORDSET(identifiers) as w(type text, identifier text) WHERE p2.id = publications.id AND type LIKE 'ISBN%' LIMIT 1) pi ON TRUE, JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) WHERE person_id = $1 ORDER BY publication_date_year DESC, works.id DESC LIMIT $2 OFFSET $3", [person_id, limit, offset], function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
@@ -108,7 +108,7 @@ function getPersonWorksList (req, res, next) {
     req.person_works_list = results;
     req.works_count = results.length;
     var pubcount = results.reduce(function (allPubs, pub) {
-      if (pub.pubid in allPubs) {
+      if (pub.pubid in allPubs && pub.pubtype == 'ISSN') {
         allPubs[pub.pubid].count++;
       } else {
         allPubs[pub.pubid] = {count: 1};

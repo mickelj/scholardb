@@ -44,7 +44,7 @@ block content
               a(href="/people/" + ca.id)= ca.name
 
       div.col.s3.m12
-        p.person-profile-section.blue.darken-4.white-text Publications
+        p.person-profile-section.blue.darken-4.white-text Journals
         each detail in pub_count
           div.publication 
             a(href="/publications/" + detail.pubid) #{detail.name} (#{detail.count})
