@@ -56,7 +56,8 @@ function renderHomePage(req, res) {
     people: req.scholars,
     works_list: req.works,
     appconf: nconf.get('application'),
-    title: nconf.get('application:appname') + " - Home"
+    title: nconf.get('application:appname') + " - Home",
+    index: true
   });
 }
 

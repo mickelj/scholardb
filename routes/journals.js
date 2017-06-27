@@ -8,7 +8,7 @@ function getJournalList(req, res, next) {
   var db = req.app.get('db');
   var page = req.query.page ? req.query.page : "A";
 
-  db.run("SELECT DISTINCT ON (j.sort_name) j.id, j.name, publisher_id, p.name as publisher_name, identifier as issn, identifiers FROM publications j LEFT JOIN publishers p ON j.publisher_id = p.id, JSONB_TO_RECORDSET(identifiers) as w(type text, identifier text) WHERE identifiers @> '[{\"type\" : \"ISSN\"}]' AND j.sort_name LIKE $1 ORDER BY j.sort_name", [(page + "%").toLowerCase()], function(err, results) {
+  db.run("SELECT DISTINCT ON (j.sort_name) j.id, j.name, publisher_id, p.name as publisher_name, identifier as issn, identifiers FROM publications j LEFT JOIN publishers p ON j.publisher_id = p.id, JSONB_TO_RECORDSET(identifiers) as w(type text, identifier text) WHERE identifiers @> '[{\"type\" : \"ISSN\"}]' AND j.sort_name LIKE $1 AND j.active = true ORDER BY j.sort_name", [(page + "%").toLowerCase()], function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
@@ -22,7 +22,7 @@ function getJournalWorkCount (req, res, next) {
   var db = req.app.get('db');
   var page = req.query.page ? req.query.page : "A";
 
-  db.run("SELECT DISTINCT ON (j.id) j.id, (select COUNT(works.id) from works where works.publication_id = j.id) AS cnt FROM publications j, JSONB_TO_RECORDSET(identifiers) as w(type text, identifier text) WHERE j.identifiers @> '[{\"type\" : \"ISSN\"}]'", function(err, results) {
+  db.run("SELECT DISTINCT ON (j.id) j.id, (select COUNT(works.id) from works where works.publication_id = j.id) AS cnt FROM publications j, JSONB_TO_RECORDSET(identifiers) as w(type text, identifier text) WHERE j.active = true AND j.identifiers @> '[{\"type\" : \"ISSN\"}]'", function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
@@ -35,7 +35,7 @@ function getJournalWorkCount (req, res, next) {
 function getLetterPagerCounts (req, res, next) {
   var db = req.app.get('db');
 
-  db.run("SELECT DISTINCT ON (first_letter) UPPER(LEFT(sort_name, 1)) as first_letter, count(*) FROM publications, JSONB_TO_RECORDSET(identifiers) as w(type text, identifier text) WHERE identifiers @> '[{\"type\" : \"ISSN\"}]' GROUP BY first_letter ORDER BY first_letter", function(err, results) {
+  db.run("SELECT DISTINCT ON (first_letter) UPPER(LEFT(sort_name, 1)) as first_letter, count(*) FROM publications, JSONB_TO_RECORDSET(identifiers) as w(type text, identifier text) WHERE active = true AND identifiers @> '[{\"type\" : \"ISSN\"}]' GROUP BY first_letter ORDER BY first_letter", function(err, results) {
     if (err || !results.length) {
       return next(err);
     }

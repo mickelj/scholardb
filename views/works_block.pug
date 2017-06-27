@@ -3,8 +3,9 @@ mixin pagination
     div.col.s12.center-align
       include pagination.pug
 
-p.headline Works 
-  span.badge(data-badge-caption="Found")= total_works
+if (!index)
+  p.headline Works 
+    span.badge(data-badge-caption="Found")= total_works
 +pagination
 include works_list.pug
 +pagination

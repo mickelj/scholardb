@@ -102,7 +102,7 @@ function getPublicationWorkCount (req, res, next) {
   var db = req.app.get('db');
   var filters = req.sqlfilters ? req.sqlfilters : "TRUE";
 
-  db.run("SELECT publications.id, publications.name AS fld, COUNT(distinct works.id) AS cnt FROM works LEFT JOIN publications ON publications.id = works.publication_id LEFT JOIN publishers ON publications.publisher_id = publishers.id LEFT JOIN work_types USING (type), JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) LEFT JOIN people p on p.id = person_id WHERE " + filters + " AND publications.name <> 'Unknown' GROUP BY publications.id, publications.name ORDER BY cnt DESC", function(err, results) {
+  db.run("SELECT publications.id, publications.name AS fld, COUNT(distinct works.id) AS cnt FROM works LEFT JOIN publications ON publications.id = works.publication_id LEFT JOIN publishers ON publications.publisher_id = publishers.id LEFT JOIN work_types USING (type), JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) LEFT JOIN people p on p.id = person_id WHERE " + filters + " AND publications.name <> 'Unknown' AND publications.active = true GROUP BY publications.id, publications.name ORDER BY cnt DESC", function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
@@ -116,7 +116,7 @@ function getPublisherWorkCount (req, res, next) {
   var db = req.app.get('db');
   var filters = req.sqlfilters ? req.sqlfilters : "TRUE";
 
-  db.run("SELECT publishers.id, publishers.name AS fld, COUNT(distinct works.id) AS cnt FROM works LEFT JOIN publications ON publications.id = works.publication_id LEFT JOIN publishers ON publications.publisher_id = publishers.id LEFT JOIN work_types USING (type), JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) LEFT JOIN people p on p.id = person_id WHERE " + filters + " AND publishers.sort_name <> 'unknown' AND publications.sort_name <> 'unknown' GROUP BY publishers.id, publishers.name ORDER BY cnt DESC", function(err, results) {
+  db.run("SELECT publishers.id, publishers.name AS fld, COUNT(distinct works.id) AS cnt FROM works LEFT JOIN publications ON publications.id = works.publication_id LEFT JOIN publishers ON publications.publisher_id = publishers.id LEFT JOIN work_types USING (type), JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) LEFT JOIN people p on p.id = person_id WHERE " + filters + " AND publishers.sort_name <> 'unknown' AND publications.sort_name <> 'unknown' AND publications.active = true GROUP BY publishers.id, publishers.name ORDER BY cnt DESC", function(err, results) {
     if (err || !results.length) {
       return next(err);
     }

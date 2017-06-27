@@ -1,5 +1,5 @@
 div.col.s12.works
-  if works_list
+  if works_list && works_list.length
     each work in works_list
       div.card.horizontal.valign-wrapper
         div.card-image.center-align
@@ -39,22 +39,23 @@ div.col.s12.works
                 |  (!{work.title_tertiary})
 
           p.work-type= work.work_type
-          p.contributors
-            each contrib, index in work.contributors
-              case contrib.role
-                when "Author"
-                when "Performer"
-                when "Composer"
-                when "Creator"
-                when "Director"
-                when "Presenter"
-                  if contrib.person_id
-                    span
-                      a(href="/people/" + contrib.person_id)= contrib.display_name
-                  else
-                    span= contrib.display_name
-                  if index < work.contributors.length - 1
-                    | ; 
+          if work.contributors && work.contributors.length
+            p.contributors
+              each contrib, index in work.contributors
+                case contrib.role
+                  when "Author"
+                  when "Performer"
+                  when "Composer"
+                  when "Creator"
+                  when "Director"
+                  when "Presenter"
+                    if contrib.person_id
+                      span
+                        a(href="/people/" + contrib.person_id)= contrib.display_name
+                    else
+                      span= contrib.display_name
+                    if index < work.contributors.length - 1
+                      | ; 
           p.work-pub
             a(href="/journals/" + work.pubid)= work.publication
             span.work-date= work.year
