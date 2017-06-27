@@ -29,26 +29,26 @@ if filter_worktypes && filter_worktypes.length
   div.filter-group
     div.collection.with-header
       div.collection-header Work Types
-        each wt, index in filter_worktypes
-          if index < 5
-            a.collection-item(data-filter-type="worktypes", data-filter-id=wt.id) #{wt.fld} (#{wt.cnt})
-          else if index == 5
-            a.btn-flat.waves-effect.waves-light.filter-toggle Show more filters...
-            a.collection-item.hide(data-filter-type="worktypes", data-filter-id=wt.id) #{wt.fld} (#{wt.cnt})
-          else
-            a.collection-item.hide(data-filter-type="worktypes", data-filter-id=wt.id) #{wt.fld} (#{wt.cnt})
+      each wt, index in filter_worktypes
+        if index < 5
+          a.collection-item(data-filter-type="worktypes", data-filter-id=wt.id) #{wt.fld} (#{wt.cnt})
+        else if index == 5
+          a.btn-flat.waves-effect.waves-light.filter-toggle Show more filters...
+          a.collection-item.hide(data-filter-type="worktypes", data-filter-id=wt.id) #{wt.fld} (#{wt.cnt})
+        else
+          a.collection-item.hide(data-filter-type="worktypes", data-filter-id=wt.id) #{wt.fld} (#{wt.cnt})
 if filter_deptworks && filter_deptworks.length
   div.filter-group
     div.collection.with-header
       div.collection-header Departments &amp; Programs
-        each wt, index in filter_deptworks
-          if index < 5
-            a.collection-item(data-filter-type="departments", data-filter-id=wt.id) #{wt.fld} (#{wt.cnt})
-          else if index == 5
-            a.btn-flat.waves-effect.waves-light.filter-toggle Show more filters...
-            a.collection-item.hide(data-filter-type="departments", data-filter-id=wt.id) #{wt.fld} (#{wt.cnt})
-          else
-            a.collection-item.hide(data-filter-type="departments", data-filter-id=wt.id) #{wt.fld} (#{wt.cnt})
+      each wt, index in filter_deptworks
+        if index < 5
+          a.collection-item(data-filter-type="departments", data-filter-id=wt.id) #{wt.fld} (#{wt.cnt})
+        else if index == 5
+          a.btn-flat.waves-effect.waves-light.filter-toggle Show more filters...
+          a.collection-item.hide(data-filter-type="departments", data-filter-id=wt.id) #{wt.fld} (#{wt.cnt})
+        else
+          a.collection-item.hide(data-filter-type="departments", data-filter-id=wt.id) #{wt.fld} (#{wt.cnt})
 if filter_peopleworks && filter_peopleworks.length
   div.filter-group
     div.collection.with-header
