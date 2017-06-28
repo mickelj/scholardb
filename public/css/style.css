@@ -155,7 +155,7 @@ input[type="search"] {
 }
 
 .icon {
-  font-size: 15vh;
+  font-size: calc(15vmin - 100%);
 }
 
 .collapsible .icon {
