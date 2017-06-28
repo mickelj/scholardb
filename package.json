@@ -20,6 +20,8 @@
     "body-parser": "^1.17.1",
     "express": "^4.14.1",
     "massive": "^2.6.0",
+    "materialize": "^1.0.0",
+    "materialize-css": "^0.99.0",
     "nconf": "^0.8.4",
     "pug": "^2.0.0-beta.12",
     "request": "^2.81.0",

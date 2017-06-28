@@ -31,6 +31,7 @@ function loadAltImage() {
 $(document).ready(function() {
   $(".card-image img").on('error', loadAltImage);
   $(".people-list img").on('error', loadAltImage);
+  $(".person-profile-sidebar img").on('error', loadAltImage);
 
   $(".button-collapse").sideNav();
 
