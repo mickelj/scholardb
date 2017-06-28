@@ -17,7 +17,7 @@ function getRandomScholars(req, res, next) {
 
 function getRecentWorks(req, res, next) {
   var db = req.app.get('db');
-  db.run("SELECT works.id, description as work_type, title_primary as work_title, title_secondary, title_tertiary, contributors, publication_date_year as year, name as publication, publications.id as pubid FROM works JOIN publications ON publications.id = works.publication_id JOIN work_types USING (type) ORDER BY works.updated_at DESC LIMIT 3;", function(err, results) {
+  db.run("SELECT works.id, description as work_type, title_primary as work_title, title_secondary, title_tertiary, contributors, publication_date_year as year, name as publication, publications.id as pubid FROM works JOIN publications ON publications.id = works.publication_id JOIN work_types USING (type) ORDER BY works.id DESC LIMIT 4;", function(err, results) {
     if (err || !results.length) {
       return next(err);
     }

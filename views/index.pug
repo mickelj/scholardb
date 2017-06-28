@@ -5,7 +5,8 @@ block content
     div.col.s12.m6
       div.col.s12
         p.headline A Sample of #{appconf.orgshortname} Scholars
-      include scholar_cards.pug
+      div#indexcards
+        include scholar_cards.pug
     div.col.s12.m6
       p.headline Recent Contributions
       include works_block.pug
