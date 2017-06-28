@@ -16,6 +16,19 @@ function getUrlParameter(sParam) {
 }
 
 $(document).ready(function() {
+  $(".card-image img").on('error', function() {
+    switch ($(this).data('usertype')) {
+      case 'student':
+        this.src = "https://scholarsdb.omeka.wlu.edu/student.jpg";
+        break;
+      case 'faculty':
+        this.src = "https://scholarsdb.omeka.wlu.edu/faculty.jpg";
+        break;
+      default:
+        this.src = "https://scholarsdb.omeka.wlu.edu/staff.jpg";
+    }
+  });
+
   $(".button-collapse").sideNav();
 
   $(".filter-toggle").on('click', function() {

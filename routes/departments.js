@@ -80,7 +80,7 @@ function getDeptPeople (req, res, next) {
   var db = req.app.get('db');
   var dept_id = req.params.id;
 
-  db.run("SELECT person_id, first_name, last_name, lower(left(email, strpos(email, '@') - 1)) as image, count(works.id) FROM works, jsonb_to_recordset(works.contributors) AS w(person_id int) LEFT JOIN people p ON p.id = person_id LEFT JOIN LATERAL (select id, name, sort_name from groups where hidden = false AND groups.id = ANY(p.group_membership) order by sort_name) g ON TRUE WHERE g.id = $1 AND active = true GROUP BY person_id, first_name, last_name, email ORDER BY last_name, first_name", [dept_id], function(err, results) {
+  db.run("SELECT person_id, first_name, last_name, lower(left(email, strpos(email, '@') - 1)) as image, user_type, count(works.id) FROM works, jsonb_to_recordset(works.contributors) AS w(person_id int) LEFT JOIN people p ON p.id = person_id LEFT JOIN LATERAL (select id, name, sort_name from groups where hidden = false AND groups.id = ANY(p.group_membership) order by sort_name) g ON TRUE WHERE g.id = $1 AND active = true GROUP BY person_id, first_name, last_name, email ORDER BY last_name, first_name", [dept_id], function(err, results) {
     if (err || !results.length) {
       return next(err);
     }

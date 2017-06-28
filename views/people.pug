@@ -18,7 +18,7 @@ block content
               tr
                 td.center-align
                   a(href="/people/" + pers.person_id)
-                    img.responsive-img.circle(src=appconf.imgrootdir + pers.image + appconf.defimgext, alt=pers.first_name + " " + pers.last_name)
+                    img.responsive-img.circle(data-usertype=pers.user_type, src=appconf.imgrootdir + pers.image + appconf.defimgext, alt=pers.first_name + " " + pers.last_name)
                 td
                   a(href="/people/" + pers.person_id) #{pers.last_name}, #{pers.first_name} #{pers.middle_name}
                 td
