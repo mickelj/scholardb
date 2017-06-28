@@ -60,7 +60,7 @@ $(document).ready(function() {
     $(this).parent().submit();
   });
 
-  $(".works .card.horizontal").css('height', ($(".indexcards").height() * .333));
+  $(".works .horizontal").css('height', ($(".indexcards").height() * .333));
   $(".detail-works").css('max-height', ($(".detail-profile-sidebar").height()));
 
   $(".filter-group a.collection-item").on('click', function() {
