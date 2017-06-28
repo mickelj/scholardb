@@ -27,6 +27,8 @@ block content
             else
               option 100
           input(type="hidden", name="page", value="1")
+          if filter_string
+            input(type="hidden", name="filters", value=filter_string)
 
     div.row
       div.col.s0.m2.sidebar.z-depth-3
