@@ -6,10 +6,10 @@ ul.pagination
       i.material-icons skip_previous
   else
     li.waves-effect
-      a(href=cur_list + "?page=1&limit=" + limit)
+      a(href=cur_list + "?page=1&limit=" + limit + "&filters=" + applied_filters)
         i.material-icons(title="First Page (1)") fast_rewind
     li.waves-effect
-      a(href=cur_list + "?page="+ (cur_page - 1) + "&limit=" + limit)
+      a(href=cur_list + "?page="+ (cur_page - 1) + "&limit=" + limit + "&filters=" + applied_filters)
         i.material-icons(title="Previous Page (" + (cur_page - 1) + ")") skip_previous
 
   form(method="get", action=cur_list)
@@ -22,6 +22,7 @@ ul.pagination
           option(value=n) Page #{n}
         - n++
     input(type="hidden", name="limit", value=limit)
+    input(type="hidden", name="filters", value=applied_filters)
 
   if cur_page == page_count
     li.disabled.grey-text.lighten-1
@@ -30,8 +31,8 @@ ul.pagination
       i.material-icons fast_forward
   else
     li.waves-effect
-      a(href=cur_list + "?page=" + (Number(cur_page) + 1) + "&limit=" + limit)
+      a(href=cur_list + "?page=" + (Number(cur_page) + 1) + "&limit=" + limit + "&filters=" + applied_filters)
         i.material-icons(title="Next Page (" + (Number(cur_page) + 1) + ")") skip_next
     li.waves-effect
-      a(href=cur_list + "?page=" + page_count + "&limit=" + limit)
+      a(href=cur_list + "?page=" + page_count + "&limit=" + limit + "&filters=" + applied_filters)
         i.material-icons(title="Last Page (" + page_count + ")") fast_forward

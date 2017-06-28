@@ -91,7 +91,7 @@ function getPublisherPeople (req, res, next) {
   var db = req.app.get('db');
   var publisher_id = req.params.id;
 
-  db.run("SELECT person_id, first_name, last_name, lower(left(email, strpos(email, '@') - 1)) as image, user_type, count(works.id) FROM works LEFT JOIN publications j ON works.publication_id = j.id LEFT JOIN publishers pub ON j.publisher_id = pub.id, jsonb_to_recordset(works.contributors) AS w(person_id int) LEFT JOIN people p ON p.id = person_id WHERE pub.id = $1 AND active = true GROUP BY person_id, first_name, last_name, email, user_type ORDER BY last_name, first_name", [publisher_id], function(err, results) {
+  db.run("SELECT person_id, first_name, last_name, lower(left(email, strpos(email, '@') - 1)) as image, user_type, count(works.id) FROM works LEFT JOIN publications j ON works.publication_id = j.id LEFT JOIN publishers pub ON j.publisher_id = pub.id, jsonb_to_recordset(works.contributors) AS w(person_id int) LEFT JOIN people p ON p.id = person_id WHERE pub.id = $1 AND p.active = true GROUP BY person_id, first_name, last_name, email, user_type ORDER BY last_name, first_name", [publisher_id], function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
