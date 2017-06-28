@@ -15,20 +15,22 @@ function getUrlParameter(sParam) {
   return undefined;
 }
 
+function loadAltImage() {
+  switch ($(this).data('usertype')) {
+    case 'student':
+      $(this).attr('src', "https://scholarsdb.omeka.wlu.edu/student.jpg");
+      break;
+    case 'faculty':
+      $(this).attr('src', "https://scholarsdb.omeka.wlu.edu/faculty.jpg");
+      break;
+    default:
+      $(this).attr('src', "https://scholarsdb.omeka.wlu.edu/staff.jpg");
+  }
+}
+
 $(document).ready(function() {
-  $(".card-image img").on('error', function() {
-    console.log($(this).data('usertype'));
-    switch ($(this).data('usertype')) {
-      case 'student':
-        $(this).attr('src', "https://scholarsdb.omeka.wlu.edu/student.jpg");
-        break;
-      case 'faculty':
-        $(this).attr('src', "https://scholarsdb.omeka.wlu.edu/faculty.jpg");
-        break;
-      default:
-        $(this).attr('src', "https://scholarsdb.omeka.wlu.edu/staff.jpg");
-    }
-  });
+  $(".card-image img").on('error', loadAltImage);
+  $(".people-list img").on('error', loadAltImage);
 
   $(".button-collapse").sideNav();
 
