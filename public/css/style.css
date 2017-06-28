@@ -24,6 +24,10 @@ select.browser-default {
   margin-left: 10px;
 }
 
+#sidenav-overlay {
+  left: 300px;
+}
+
 .people-list img {
   max-height: 85px;
 }
