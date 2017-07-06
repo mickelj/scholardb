@@ -27,7 +27,8 @@ block content
           table
           each pn in pers.pen_names
             if pn
-              tr: td= pn
+              tr
+                td= pn
       
       if pers.memberships.length
         div.col.s3.m12
@@ -35,23 +36,26 @@ block content
           table.highlight
           each dept in pers.memberships
             if dept
-              tr: td
-                a(href="/departments/" + dept.id)= dept.name
+              tr
+                td
+                  a(href="/departments/" + dept.id)= dept.name
               
       if coauthors.length
         div.col.s3.m12
           p.person-profile-section.blue.darken-4.white-text #{appconf.orgshortname} Co-Authors
           table.highlight
           each ca in coauthors
-            tr: td.contributor
-              a(href="/people/" + ca.id)= ca.name
+            tr
+              td.contributor
+                a(href="/people/" + ca.id)= ca.name
 
       div.col.s3.m12
         p.person-profile-section.blue.darken-4.white-text Journals
         table.highlight
         each detail in pub_count
-          tr: td.publication 
-            a(href="/publications/" + detail.pubid) #{detail.name} (#{detail.count})
+          tr
+            td.publication 
+              a(href="/publications/" + detail.pubid) #{detail.name} (#{detail.count})
           
     div.col.s12.m9.detail-works
       include works_block.pug
