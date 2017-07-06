@@ -245,18 +245,15 @@ function getSingleImage (req, res, next) {
 function renderWorkDetail(req, res) {
   var nconf = req.app.get('nconf');
 
-  if (req.work_detail.url.match(/^10/)) {
-    var url = 'http://dx.doi.org/' + req.work_detail.url;
-  } else {
-    var url = req.work_detail.url;
+  if (req.work_detail.url && req.work_detail.url.match(/^10/)) {
+    req.work_detail.url = 'http://dx.doi.org/' + req.work_detail.url;
   }
 
   res.render('work_detail', {
     appconf: nconf.get('application'),
     title: nconf.get('application:appname') + " - Work: " + req.work_detail.work_title,
     work_detail: req.work_detail,
-    coverimage: req.coverimage,
-    url: url
+    coverimage: req.coverimage
   });
 }
 
