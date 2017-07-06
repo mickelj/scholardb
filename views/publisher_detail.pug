@@ -2,7 +2,7 @@ extends template
 
 mixin pubitem(pub)
   if pub.identifier && pub.identifier_type == "ISSN"
-    a.collection-item(href="/journals/" + pub.id)= pub.name
+    a.collection-item(href="/publications/" + pub.id)= pub.name
   else
     p.collection-item= pub.name
 

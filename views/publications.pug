@@ -26,7 +26,7 @@ block content
                   if journal.alt_identifier
                     div= journal.alt_identifier
                 td
-                  a(href="/journals/" + journal.id)= journal.name
+                  a(href="/publications/" + journal.id)= journal.name
                 td
                   a(href="/publishers/" + journal.publisher_id)= journal.publisher_name
                 if journal.cnt

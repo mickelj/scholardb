@@ -24,14 +24,14 @@ const index = require('./routes/index');
 const works = require('./routes/works');
 const people = require('./routes/people');
 const departments = require('./routes/departments');
-const journals = require('./routes/journals');
+const publications = require('./routes/publications');
 const publishers = require('./routes/publishers');
 const search = require('./routes/search');
 app.use('/', index);
 app.use('/works', works);
 app.use('/people', people);
 app.use('/departments', departments);
-app.use('/journals', journals);
+app.use('/publications', publications);
 app.use('/publishers', publishers);
 app.use('/search', search);
 

@@ -53,7 +53,7 @@ function renderJournalList(req, res) {
     return _.extend(journal, _.omit(_.findWhere(req.journal_works, {id: journal.id}), 'id'));
   });
 
-  res.render('journals', {
+  res.render('publications', {
     appconf: nconf.get('application'),
     title: nconf.get('application:appname') + " - Journals",
     journal_list: combJournals,
@@ -81,7 +81,7 @@ function getJournalPeople (req, res, next) {
   var db = req.app.get('db');
   var journal_id = req.params.id;
 
-  db.run("SELECT person_id, first_name, last_name, image_url as image, user_type, count(works.id) FROM works, jsonb_to_recordset(works.contributors) AS w(person_id int) LEFT JOIN people p ON p.id = person_id WHERE publication_id = $1 AND active = true GROUP BY person_id, first_name, last_name, email, user_type ORDER BY last_name, first_name, image_url, user_type", [journal_id], function(err, results) {
+  db.run("SELECT person_id, first_name, last_name, image_url as image, user_type, count(works.id) FROM works, jsonb_to_recordset(works.contributors) AS w(person_id int) LEFT JOIN people p ON p.id = person_id WHERE publication_id = $1 AND active = true GROUP BY person_id, first_name, last_name, email, image_url, user_type ORDER BY last_name, first_name, image_url, user_type", [journal_id], function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
@@ -184,7 +184,7 @@ function renderJournalDetail(req, res) {
   var cur_page = req.query.page ? req.query.page : 1;
   var offset = (cur_page - 1) * limit;
 
-  res.render('journal_detail', {
+  res.render('publication_detail', {
     appconf: nconf.get('application'),
     title: nconf.get('application:appname') + " - Journal: " + req.journal_detail.name,
     journal: req.journal_detail,
