@@ -8,33 +8,33 @@ function processFilters (req, res, next) {
   var filterlist = [];
 
   if (_.findWhere(req.filters, {type: 'worktypes'})) {
-    filterlist.push("works.type IN ('" + _.findWhere(req.filters, {type: 'worktypes'}).ids.join("','") + "')");
+    filterlist.push("works.type = '" + _.findWhere(req.filters, {type: 'worktypes'}).ids.join("','"));
   }
 
   if (_.findWhere(req.filters, {type: 'departments'})) {
-    filterlist.push("groups.id IN (" + _.findWhere(req.filters, {type: 'departments'}).ids.toString() + ")");
+    filterlist.push("groups.id = " + _.findWhere(req.filters, {type: 'departments'}).ids.toString());
   }
 
   if (_.findWhere(req.filters, {type: 'people'})) {
-    var people = "works.contributors @> ANY(ARRAY[";
+    var people = "works.contributors @> ARRAY[";
     var idlist = [];
     _.findWhere(req.filters, {type: 'people'}).ids.forEach(function (id) {
       idlist.push("'[{\"person_id\" : " + id + "}]'");
     });
-    people += idlist.join(",") + "]::jsonb[])";
+    people += idlist.join(",") + "]::jsonb[]";
     filterlist.push(people);
   }
 
   if (_.findWhere(req.filters, {type: 'years'})) {
-    filterlist.push("works.publication_date_year IN (" + _.findWhere(req.filters, {type: 'years'}).ids.toString() + ")");
+    filterlist.push("works.publication_date_year = " + _.findWhere(req.filters, {type: 'years'}).ids.toString());
   }
 
   if (_.findWhere(req.filters, {type: 'publications'})) {
-    filterlist.push("works.publication_id IN (" + _.findWhere(req.filters, {type: 'publications'}).ids.toString() + ")");
+    filterlist.push("works.publication_id = " + _.findWhere(req.filters, {type: 'publications'}).ids.toString());
   }
 
   if (_.findWhere(req.filters, {type: 'publishers'})) {
-    filterlist.push("publishers.id IN (" + _.findWhere(req.filters, {type: 'publishers'}).ids.toString() + ")");
+    filterlist.push("publishers.id = " + _.findWhere(req.filters, {type: 'publishers'}).ids.toString());
   }
 
   req.sqlfilters = (filterlist.length) ? filterlist.join(" AND ") : "TRUE";
