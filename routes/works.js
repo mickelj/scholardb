@@ -8,7 +8,7 @@ function processFilters (req, res, next) {
   var filterlist = [];
 
   if (_.findWhere(req.filters, {type: 'worktypes'})) {
-    filterlist.push("works.type = '" + _.findWhere(req.filters, {type: 'worktypes'}).ids.join("','"));
+    filterlist.push("works.type = '" + _.findWhere(req.filters, {type: 'worktypes'}).ids.join("','") + "'");
   }
 
   if (_.findWhere(req.filters, {type: 'departments'})) {
