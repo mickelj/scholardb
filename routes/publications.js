@@ -8,7 +8,7 @@ function getJournalList(req, res, next) {
   var db = req.app.get('db');
   var page = req.query.page ? req.query.page : "A";
 
-  db.run("SELECT j.id, j.name, publisher_id, p.name as publisher_name, identifier as issn FROM publications j LEFT JOIN publishers p ON j.publisher_id = p.id WHERE identifier_type = 'ISSN' AND j.sort_name LIKE $1 ORDER BY j.sort_name", [(page + "%").toLowerCase()], function(err, results) {
+  db.run("SELECT j.id, j.name, publisher_id, p.name as publisher_name, identifier, alt_identifier FROM publications j LEFT JOIN publishers p ON j.publisher_id = p.id WHERE identifier_type = 'ISSN' AND j.sort_name LIKE $1 ORDER BY j.sort_name", [(page + "%").toLowerCase()], function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
