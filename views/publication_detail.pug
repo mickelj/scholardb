@@ -27,7 +27,7 @@ block content
                 div= journal.identifier
                 if journal.alt_identifier
                   div= journal.alt_identifier
-          if romeo.numhits > 0
+          if romeo && romeo.numhits > 0
             include romeo.pug
           else
             if journal.identifier_type === "ISSN"
