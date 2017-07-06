@@ -34,7 +34,7 @@ function getPublisherWorkCount (req, res, next) {
 function getLetterPagerCounts (req, res, next) {
   var db = req.app.get('db');
 
-  db.run("SELECT DISTINCT ON (first_letter) UPPER(LEFT(sort_name, 1)) as first_letter, count(*) FROM publishers GROUP BY first_letter ORDER BY first_letter", function(err, results) {
+  db.run("SELECT UPPER(LEFT(sort_name, 1)) as first_letter, count(*) FROM publishers GROUP BY first_letter ORDER BY first_letter", function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
@@ -66,7 +66,7 @@ function getPublisherDetail (req, res, next) {
   var db = req.app.get('db');
   var publisher_id = req.params.id;
 
-  db.run("SELECT pub.id, pub.name, pub.url, array_to_json(array_agg(j)) as publications FROM publishers pub LEFT JOIN LATERAL (select id, name, identifiers from publications where publisher_id = pub.id order by sort_name) j ON TRUE WHERE pub.id = $1 GROUP BY pub.id, pub.name, pub.url", [publisher_id], function(err, results) {
+  db.run("SELECT pub.id, pub.name, pub.url, array_to_json(array_agg(j)) as publications FROM publishers pub LEFT JOIN LATERAL (select id, name, identifier, identifier_type, alt_identifier, alt_identifier_type from publications where publisher_id = pub.id order by sort_name) j ON TRUE WHERE pub.id = $1 GROUP BY pub.id, pub.name, pub.url", [publisher_id], function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
@@ -91,7 +91,7 @@ function getPublisherPeople (req, res, next) {
   var db = req.app.get('db');
   var publisher_id = req.params.id;
 
-  db.run("SELECT person_id, first_name, last_name, lower(left(email, strpos(email, '@') - 1)) as image, user_type, count(works.id) FROM works LEFT JOIN publications j ON works.publication_id = j.id LEFT JOIN publishers pub ON j.publisher_id = pub.id, jsonb_to_recordset(works.contributors) AS w(person_id int) LEFT JOIN people p ON p.id = person_id WHERE pub.id = $1 AND p.active = true GROUP BY person_id, first_name, last_name, email, user_type ORDER BY last_name, first_name", [publisher_id], function(err, results) {
+  db.run("SELECT person_id, first_name, last_name, image_url as image, user_type, count(works.id) FROM works LEFT JOIN publications j ON works.publication_id = j.id LEFT JOIN publishers pub ON j.publisher_id = pub.id, jsonb_to_recordset(works.contributors) AS w(person_id int) LEFT JOIN people p ON p.id = person_id WHERE pub.id = $1 AND p.active = true GROUP BY person_id, first_name, last_name, email, image_url, user_type ORDER BY last_name, first_name", [publisher_id], function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
@@ -121,7 +121,7 @@ function getPublisherWorksList (req, res, next) {
   var limit = req.query.limit ? req.query.limit : 10;
   var offset = req.query.page ? (req.query.page - 1) * limit : 0;
 
-  db.run("SELECT DISTINCT works.id, title_primary as work_title, title_secondary, title_tertiary, description as work_type, contributors, j.name as publication, j.id as pubid, publication_date_year as year, pi.identifier FROM works JOIN publications j ON j.id = works.publication_id JOIN publishers pub ON j.publisher_id = pub.id JOIN work_types USING (type) LEFT JOIN LATERAL (select w.identifier from publications j2, JSONB_TO_RECORDSET(j2.identifiers) as w(type text, identifier text) WHERE j2.id = j.id AND w.type LIKE 'ISBN%' LIMIT 1) pi ON TRUE, JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) LEFT JOIN people p ON person_id = p.id WHERE pub.id = $1 ORDER BY publication_date_year DESC, works.id DESC LIMIT $2 OFFSET $3", [publisher_id, limit, offset], function(err, results) {
+  db.run("SELECT works.id, title_primary as work_title, title_secondary, title_tertiary, description as work_type, contributors, j.name as publication, j.id as pubid, publication_date_year as year, identifier, identifier_type, alt_identifier, alt_identifier_type FROM works JOIN publications j ON j.id = works.publication_id JOIN publishers pub ON j.publisher_id = pub.id JOIN work_types USING (type), JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) LEFT JOIN people p ON person_id = p.id WHERE pub.id = $1 ORDER BY publication_date_year DESC, works.id DESC LIMIT $2 OFFSET $3", [publisher_id, limit, offset], function(err, results) {
     if (err || !results.length) {
       return next(err);
     }

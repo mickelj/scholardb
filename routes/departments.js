@@ -21,7 +21,7 @@ function getDeptMembersCount (req, res, next) {
   var db = req.app.get('db');
   var page = req.query.page ? req.query.page : "A";
 
-  db.run("SELECT g.id as group_id, count(p.id) as cnt FROM people p LEFT JOIN LATERAL (select id, name, sort_name from groups where hidden = false AND groups.id = ANY(p.group_membership) order by sort_name) g ON TRUE WHERE g.name <> '' and g.sort_name LIKE $1 GROUP BY g.id, g.sort_name ORDER BY g.sort_name", [(page + "%").toLowerCase()], function(err, results) {
+  db.run("SELECT g.id as group_id, count(p.id) as cnt FROM people p LEFT JOIN memberships m on p.id = m.people_id JOIN groups g on m.group_id = g.id WHERE g.name <> '' AND g.sort_name LIKE $1 AND g.hidden = false GROUP BY g.id, g.sort_name ORDER BY g.sort_name", [(page + "%").toLowerCase()], function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
@@ -80,7 +80,7 @@ function getDeptPeople (req, res, next) {
   var db = req.app.get('db');
   var dept_id = req.params.id;
 
-  db.run("SELECT person_id, first_name, last_name, lower(left(email, strpos(email, '@') - 1)) as image, user_type, count(works.id) FROM works, jsonb_to_recordset(works.contributors) AS w(person_id int) LEFT JOIN people p ON p.id = person_id LEFT JOIN LATERAL (select id, name, sort_name from groups where hidden = false AND groups.id = ANY(p.group_membership) order by sort_name) g ON TRUE WHERE g.id = $1 AND active = true GROUP BY person_id, first_name, last_name, email, user_type ORDER BY last_name, first_name", [dept_id], function(err, results) {
+  db.run("SELECT person_id, first_name, last_name, image_url as image, user_type, count(works.id) FROM works, jsonb_to_recordset(works.contributors) AS w(person_id int) LEFT JOIN people p ON p.id = person_id LEFT JOIN memberships m on p.id = m.people_id JOIN groups g on m.group_id = g.id WHERE g.hidden = false AND g.id = $1 AND active = true GROUP BY person_id, first_name, last_name, email, image_url, user_type ORDER BY last_name, first_name", [dept_id], function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
@@ -94,7 +94,7 @@ function getDeptWorksCount(req, res, next) {
   var db = req.app.get('db');
   var dept_id = req.params.id;
 
-  db.run("SELECT count(*) as total_works FROM works, JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) LEFT JOIN people p ON person_id = p.id LEFT JOIN LATERAL (select id, name, sort_name from groups where hidden = false AND groups.id = ANY(p.group_membership)) g ON TRUE WHERE g.id = $1", [dept_id], function(err, results) {
+  db.run("SELECT count(distinct works.id) as total_works FROM works, JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) LEFT JOIN people p ON person_id = p.id LEFT JOIN memberships m on p.id = m.people_id JOIN groups g on m.group_id = g.id WHERE g.hidden = false AND g.id = $1", [dept_id], function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
@@ -110,7 +110,7 @@ function getDeptWorksList (req, res, next) {
   var limit = req.query.limit ? req.query.limit : 10;
   var offset = req.query.page ? (req.query.page - 1) * limit : 0;
 
-  db.run("SELECT DISTINCT works.id, title_primary as work_title, title_secondary, title_tertiary, description as work_type, contributors, pi.identifier, publications.name as publication, publications.authority_id as pubid, publication_date_year as year FROM works JOIN publications ON publications.authority_id = works.publication_id JOIN work_types USING (type) LEFT JOIN LATERAL (select identifier from publications p2, JSONB_TO_RECORDSET(identifiers) as w(type text, identifier text) WHERE p2.id = publications.id AND type LIKE 'ISBN%' LIMIT 1) pi ON TRUE, JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) LEFT JOIN people p ON person_id = p.id LEFT JOIN LATERAL (select id, name, sort_name from groups where hidden = false AND groups.id = ANY(p.group_membership)) g ON TRUE WHERE g.id = $1 ORDER BY publication_date_year DESC, works.id DESC LIMIT $2 OFFSET $3", [dept_id, limit, offset], function(err, results) {
+  db.run("SELECT DISTINCT works.id, title_primary as work_title, title_secondary, title_tertiary, description as work_type, contributors, identifier, identifier_type, alt_identifier, alt_identifier_type, publications.name as publication, publications.authority_id as pubid, publication_date_year as year FROM works JOIN publications ON publications.id = works.publication_id JOIN work_types USING (type), JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) LEFT JOIN people p ON person_id = p.id LEFT JOIN memberships m on p.id = m.people_id JOIN groups g on m.group_id = g.id WHERE g.hidden = false AND g.id = $1 ORDER BY publication_date_year DESC, works.id DESC LIMIT $2 OFFSET $3", [dept_id, limit, offset], function(err, results) {
     if (err || !results.length) {
       return next(err);
     }

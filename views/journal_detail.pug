@@ -19,17 +19,18 @@ block content
                 b Publisher:
               div.col.s7 
                 a(href="/publishers/" + journal.publisher_id)= journal.publisher_name
-          if journal.identifiers
+          if journal.identifier
             li
               div.col.s5
-                b Identifiers:
+                b Identifier(s):
               div.col.s7
-                each ident in journal.identifiers
-                  div= ident.identifier
+                div= journal.identifier
+                if journal.alt_identifier
+                  div= journal.alt_identifier
           if romeo.numhits > 0
             include romeo.pug
           else
-            if journal.ident_type == "ISSN"
+            if journal.identifier_type === "ISSN"
               li
                 div
                   div.col.s5

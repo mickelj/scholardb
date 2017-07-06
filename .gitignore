@@ -1,5 +1,6 @@
 .env
 faculty
 getimages.js
-pix.csv
+*.csv
 node_modules/csv-parse
+*.txt

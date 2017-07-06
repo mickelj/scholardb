@@ -1,5 +1,4 @@
-id|authority_id|name|url|machine_name|sort_name
-1|3108|Unknown||unknown|unknown
+1|1|Unknown||unknown|unknown
 2|1184|De Gruyter||de gruyter|de gruyter
 4|573|Taylor & Francis||taylor francis|taylor francis
 5|5|Rowman & Littlefield|http://www.rowmanlittlefield.com/|rowman littlefield|rowman littlefield
@@ -1297,7 +1296,7 @@ id|authority_id|name|url|machine_name|sort_name
 1297|405|Entomological Society of America|http://www.entsoc.org/|entomological society of america|entomological society of america
 1298|1298|Entomological Society of Canada|http://www.esc-sec.ca/|entomological society of canada|entomological society of canada
 1299|1299|Enviro Research Publishers|http://www.enviropublishers.com/|enviro research publishers|enviro research publishers
-1300|1300|Eötvös Loránd Tudományegyetem, �?llatrendszertani és Ökológiai Tanszék|http://systzool.elte.hu/|e tv s lor nd tudom nyegyetem llatrendszertani s kol giai tansz k|e tv s lor nd tudom nyegyetem llatrendszertani s kol giai tansz k
+1300|1300|Eötvös Loránd Tudományegyetem, �?llatrendszertani és Ökológiai Tanszék|http://systzool.elte.hu/|e tv s lor nd tudom nyegyetem llatrendszertani s kol giai tansz k|e tv s lor nd tudom nyegyetem llatrendszertani s kol giai tansz k
 1301|1301|EPI SCP|http://www.elprofesionaldelainformacion.com/|epi scp|epi scp
 1302|1302|Epistemics in Science, Engineering and Technology|http://www.epistemicsgaia.webs.com/|epistemics in science engineering and technology|epistemics in science engineering and technology
 1303|1303|EPP Publications|http://www.epppublications.com/|epp publications|epp publications
@@ -1646,7 +1645,7 @@ id|authority_id|name|url|machine_name|sort_name
 1646|1646|Islamic Azad University, Shahreza Branch|http://www.iaush.ac.ir/portal/main/r/?lan=1|islamic azad university shahreza branch|islamic azad university shahreza branch
 1647|1647|Islamic Press|http://www.jcrs010.com/|islamic press|islamic press
 1648|1648|Istituto Italiano di Antropologia|http://www.isita-org.com/|istituto italiano di antropologia|istituto italiano di antropologia
-1649|1649|Istituto Superiore di Sanit�|http://www.iss.it/|istituto superiore di sanit|istituto superiore di sanit
+1649|1649|Istituto Superiore di Sanit�|http://www.iss.it/|istituto superiore di sanit|istituto superiore di sanit
 1650|1650|Ivyspring International Publisher|http://ivyspring.com/|ivyspring international publisher|ivyspring international publisher
 1651|1651|IWA Publishing|http://www.iwaponline.com/|iwa publishing|iwa publishing
 1652|1652|Jacob Rader Marcus Center of the American Jewish Archives|http://americanjewisharchives.org/|jacob rader marcus center of the american jewish archives|jacob rader marcus center of the american jewish archives
@@ -2334,10 +2333,10 @@ id|authority_id|name|url|machine_name|sort_name
 2334|2334|Suomen tieteen- ja teknologiantutkimuksen seura ry|http://www.fssts.fi/|suomen tieteen ja teknologiantutkimuksen seura ry|suomen tieteen ja teknologiantutkimuksen seura ry
 2335|2335|Suoseura|http://www.suoseura.fi/|suoseura|suoseura
 2336|2336|SureShotPOST Online Publishing|http://internationaljournalofresearch.com/|sureshotpost online publishing|sureshotpost online publishing
-2337|2337|Sveu�?ilište u Zadru, Odjel za informacijske znanosti|http://iz.unizd.hr/|sveu ili te u zadru odjel za informacijske znanosti|sveu ili te u zadru odjel za informacijske znanosti
-2338|2338|Sveu�?ilište u Zagrebu, Ekonomski fakultet|http://www.efzg.unizg.hr/|sveu ili te u zagrebu ekonomski fakultet|sveu ili te u zagrebu ekonomski fakultet
-2339|2339|Sveu�?ilište u Zagrebu, Fakultet strojarstva i brodogradnje|https://www.fsb.unizg.hr/|sveu ili te u zagrebu fakultet strojarstva i brodogradnje|sveu ili te u zagrebu fakultet strojarstva i brodogradnje
-2340|2340|Sveu�?ilište u Zagrebu, Rudarsko-geoloko-naftni fakultet|http://www.rgn.unizg.hr/hr/|sveu ili te u zagrebu rudarsko geolo ko naftni fakultet|sveu ili te u zagrebu rudarsko geolo ko naftni fakultet
+2337|2337|Sveu�?ilište u Zadru, Odjel za informacijske znanosti|http://iz.unizd.hr/|sveu ili te u zadru odjel za informacijske znanosti|sveu ili te u zadru odjel za informacijske znanosti
+2338|2338|Sveu�?ilište u Zagrebu, Ekonomski fakultet|http://www.efzg.unizg.hr/|sveu ili te u zagrebu ekonomski fakultet|sveu ili te u zagrebu ekonomski fakultet
+2339|2339|Sveu�?ilište u Zagrebu, Fakultet strojarstva i brodogradnje|https://www.fsb.unizg.hr/|sveu ili te u zagrebu fakultet strojarstva i brodogradnje|sveu ili te u zagrebu fakultet strojarstva i brodogradnje
+2340|2340|Sveu�?ilište u Zagrebu, Rudarsko-geoloko-naftni fakultet|http://www.rgn.unizg.hr/hr/|sveu ili te u zagrebu rudarsko geolo ko naftni fakultet|sveu ili te u zagrebu rudarsko geolo ko naftni fakultet
 2341|2341|Sweet and Maxwell|http://www.sweetandmaxwell.co.uk/|sweet and maxwell|sweet and maxwell
 2342|2342|Syddansk Universitet, Institut for Design og Kommunikation|http://www.sdu.dk/om_sdu/institutter_centre/idk|syddansk universitet institut for design og kommunikation|syddansk universitet institut for design og kommunikation
 2343|2343|Syddansk Universitetsforlag|http://www.universitypress.dk/shop/frontpage.html|syddansk universitetsforlag|syddansk universitetsforlag
@@ -2397,7 +2396,7 @@ id|authority_id|name|url|machine_name|sort_name
 2397|2397|Uludağ Üniversitesi, Mühendislik Fakültesi|http://mmf.uludag.edu.tr/en/|uluda niversitesi m hendislik fak ltesi|uluda niversitesi m hendislik fak ltesi
 2398|2398|Umeå Universitet|http://www.umu.se/|ume universitet|ume universitet
 2399|2399|UMF Gr. T Popa Iasi Publishing House|http://www.umfiasi.ro/EdituraUMF/Pages/default.aspx|umf gr t popa iasi publishing house|umf gr t popa iasi publishing house
-2400|2400|Umjetni�?ka akademija u Osijeku|http://www.uaos.unios.hr/|umjetni ka akademija u osijeku|umjetni ka akademija u osijeku
+2400|2400|Umjetni�?ka akademija u Osijeku|http://www.uaos.unios.hr/|umjetni ka akademija u osijeku|umjetni ka akademija u osijeku
 2401|2401|UniBrasil|http://www.unibrasil.com.br/|unibrasil|unibrasil
 2402|2402|Unidade de Investigação em Ciências da Saúde, Enfermagem da Escola Superior de Enfermagem de Coimbra|https://www.esenfc.pt/ui/|unidade de investiga o em ci ncias da sa de enfermagem da escola superior de enfermagem de coimbra|unidade de investiga o em ci ncias da sa de enfermagem da escola superior de enfermagem de coimbra
 2403|2403|Unidade de Investigação e Desenvolvimento em Enfermagem|http://www.esel.pt/ESEL/PT/UIDE/Apresentacao/apresentacao.htm|unidade de investiga o e desenvolvimento em enfermagem|unidade de investiga o e desenvolvimento em enfermagem
@@ -3011,7 +3010,7 @@ id|authority_id|name|url|machine_name|sort_name
 3011|3011|Finishing Line Press||finishing line press|finishing line press
 3012|3012|International Society for Gender Studies||international society for gender studies|international society for gender studies
 3013|3013|Elixir||elixir|elixir
-3014|3014|Association internationale Emile Zola et les e�?crivains naturalistes à travers le monde avec le concours des Nouvelles presses universitaires Weslof||association internationale emile zola et les e crivains naturalistes a travers le monde avec le concours des nouvelles presses universitaires weslof|association internationale emile zola et les e crivains naturalistes a travers le monde avec le concours des nouvelles presses universitaires weslof
+3014|3014|Association internationale Emile Zola et les e�?crivains naturalistes à travers le monde avec le concours des Nouvelles presses universitaires Weslof||association internationale emile zola et les e crivains naturalistes a travers le monde avec le concours des nouvelles presses universitaires weslof|association internationale emile zola et les e crivains naturalistes a travers le monde avec le concours des nouvelles presses universitaires weslof
 3015|3015|University Press of America||university press of america|university press of america
 3016|3016|East European Monographs||east european monographs|east european monographs
 3017|3017|Berliner Festspiele||berliner festspiele|berliner festspiele

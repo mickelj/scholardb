@@ -7,7 +7,7 @@ function getPeopleList(req, res, next) {
   var db = req.app.get('db');
   var page = req.query.page ? req.query.page : "A";
 
-  db.run("SELECT p.id as person_id, first_name, middle_name, last_name, UPPER(LEFT(last_name, 1)) as first_letter, lower(left(email, strpos(email, '@') - 1)) as image, user_type, jsonb_agg(g) as memberships FROM people p LEFT JOIN LATERAL (select id, name, sort_name from groups where hidden = false AND groups.id = ANY(p.group_membership) order by sort_name) g ON TRUE WHERE last_name LIKE $1 GROUP BY p.id, first_name, last_name, first_letter, image ORDER BY last_name, first_name", [page + "%"], function(err, results) {
+  db.run("SELECT p.id as person_id, first_name, middle_name, last_name, UPPER(LEFT(last_name, 1)) as first_letter, image_url as image, user_type, jsonb_agg(g) as memberships FROM people p LEFT JOIN LATERAL (select id, name, sort_name from groups join memberships m on groups.id = m.group_id where hidden = false AND m.people_id = p.id order by sort_name) g ON TRUE WHERE last_name LIKE $1 GROUP BY p.id, first_name, last_name, first_letter, image_url ORDER BY last_name, first_name", [page + "%"], function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
@@ -70,7 +70,7 @@ function getPersonDetail (req, res, next) {
   var db = req.app.get('db');
   var person_id = req.params.id;
 
-  db.run("SELECT p.id as person_id, first_name, middle_name, last_name, lower(left(email, strpos(email, '@') - 1)) as image, user_type, jsonb_agg(g) as memberships, p.pen_names FROM people p LEFT JOIN LATERAL (select id, name, sort_name from groups where hidden = false AND groups.id = ANY(p.group_membership) order by sort_name) g ON TRUE WHERE p.id = $1 GROUP BY p.id, first_name, last_name, image, user_type ORDER BY last_name, first_name", [person_id], function(err, results) {
+  db.run("SELECT p.id as person_id, first_name, middle_name, last_name, image_url as image, user_type, jsonb_agg(g) as memberships, pn.pen_names FROM people p LEFT JOIN LATERAL (select jsonb_agg(display_name) as pen_names from pennames where people_id = p.id) pn ON TRUE LEFT JOIN LATERAL (select id, name, sort_name from groups join memberships m on groups.id = m.group_id where hidden = false AND m.people_id = p.id order by sort_name) g ON TRUE WHERE p.id = $1 GROUP BY p.id, first_name, last_name, image_url, user_type, pn.pen_names ORDER BY last_name, first_name", [person_id], function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
@@ -100,7 +100,7 @@ function getPersonWorksList (req, res, next) {
   var limit = req.query.limit ? req.query.limit : 10;
   var offset = req.query.page ? (req.query.page - 1) * limit : 0;
 
-  db.run("SELECT DISTINCT works.id, title_primary as work_title, title_secondary, title_tertiary, description as work_type, contributors, name as publication, publications.authority_id as pubid, pi.type as pubtype, pi.identifier, publication_date_year as year FROM works JOIN publications ON publications.id = works.publication_id JOIN work_types USING (type) LEFT JOIN LATERAL (select type, identifier from publications p2, JSONB_TO_RECORDSET(identifiers) as w(type text, identifier text) WHERE p2.id = publications.id AND type LIKE 'ISBN%' LIMIT 1) pi ON TRUE, JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) WHERE person_id = $1 ORDER BY publication_date_year DESC, works.id DESC LIMIT $2 OFFSET $3", [person_id, limit, offset], function(err, results) {
+  db.run("SELECT works.id, title_primary as work_title, title_secondary, title_tertiary, description as work_type, contributors, name as publication, publications.id as pubid, identifier_type, identifier, alt_identifier_type, alt_identifier, publication_date_year as year FROM works LEFT JOIN publications ON publications.id = works.publication_id JOIN work_types USING (type), JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) WHERE person_id = $1 ORDER BY publication_date_year DESC, works.id DESC LIMIT $2 OFFSET $3", [person_id, limit, offset], function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
@@ -108,7 +108,7 @@ function getPersonWorksList (req, res, next) {
     req.person_works_list = results;
     req.works_count = results.length;
     var pubcount = results.reduce(function (allPubs, pub) {
-      if (pub.pubid in allPubs && pub.pubtype == 'ISSN') {
+      if (pub.pubid in allPubs && pub.identifier_type === 'ISSN') {
         allPubs[pub.pubid].count++;
       } else {
         allPubs[pub.pubid] = {count: 1};
