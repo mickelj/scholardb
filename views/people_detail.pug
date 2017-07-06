@@ -23,30 +23,34 @@ block content
         img.responsive-img.circle(data-usertype=pers.user_type, src=appconf.imgrootdir + pers.image + appconf.defimgext, alt=pers.first_name + " " + pers.last_name)
       if pers.pen_names.length
         div.col.s3.m12
-          p.person-profile-section.blue.darken-4.white-text Pen Names
+          p.person-profile-section.blue.darken-4.white-text Published As
+          table
           each pn in pers.pen_names
             if pn
-              div= pn    
+              tr: td= pn
       
       if pers.memberships.length
         div.col.s3.m12
           p.person-profile-section.blue.darken-4.white-text Departments &amp; Programs
+          table.highlight
           each dept in pers.memberships
             if dept
-              div
+              tr: td
                 a(href="/departments/" + dept.id)= dept.name
               
       if coauthors.length
         div.col.s3.m12
           p.person-profile-section.blue.darken-4.white-text #{appconf.orgshortname} Co-Authors
+          table.highlight
           each ca in coauthors
-            div.contributor
+            tr: td.contributor
               a(href="/people/" + ca.id)= ca.name
 
       div.col.s3.m12
         p.person-profile-section.blue.darken-4.white-text Journals
+        table.highlight
         each detail in pub_count
-          div.publication 
+          tr: td.publication 
             a(href="/publications/" + detail.pubid) #{detail.name} (#{detail.count})
           
     div.col.s12.m9.detail-works
