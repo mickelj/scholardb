@@ -16,12 +16,12 @@ function processFilters (req, res, next) {
   }
 
   if (_.findWhere(req.filters, {type: 'people'})) {
-    var people = "works.contributors @> ARRAY[";
+    var people = "works.contributors @> ";
     var idlist = [];
     _.findWhere(req.filters, {type: 'people'}).ids.forEach(function (id) {
       idlist.push("'[{\"person_id\" : " + id + "}]'");
     });
-    people += idlist.join(",") + "]::jsonb[]";
+    people += idlist.join(",");
     filterlist.push(people);
   }
 
