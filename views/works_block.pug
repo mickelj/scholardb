@@ -5,7 +5,7 @@ mixin pagination
 
 if (!index)
   p.headline Works 
-    span.badge(data-badge-caption="Found")= total_works
+    span.badge(data-badge-caption="Works Found")= total_works.toLocaleString()
 +pagination
 include works_list.pug
 +pagination

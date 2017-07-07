@@ -252,8 +252,8 @@ input[type="search"] {
 }
 
 .detail-works {
-  min-height: 75vh !important;
-  overflow-y: scroll;
+  /*min-height: 75vh !important;
+  overflow-y: scroll;*/
 }
 
 .person-profile-sidebar {

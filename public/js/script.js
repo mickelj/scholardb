@@ -61,7 +61,7 @@ $(document).ready(function() {
   });
 
   $(".works .horizontal").css('height', ($(".indexcards").height() * .333));
-  $(".detail-works").css('max-height', ($(".detail-profile-sidebar").height()));
+  // $(".detail-works").css('max-height', ($(".detail-profile-sidebar").height()));
 
   $(".filter-group a.collection-item").on('click', function() {
     var filtype = $(this).data('filter-type');

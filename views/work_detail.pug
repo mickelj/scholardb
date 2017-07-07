@@ -59,6 +59,14 @@ block content
             tr
               th.right-align Ending Page:
               td= work_detail.end_page
+          if work_detail.identifier_type && work_detail.identifier
+            tr
+              th.right-align= work_detail.identifier_type
+              td= work_detail.identifier
+          if work_detail.alt_identifier_type && work_detail.alt_identifier
+            tr
+              th.right-align= work_detail.alt_identifier_type
+              td= work_detail.alt_identifier
           if work_detail.url
             tr
               th.right-align URL:
