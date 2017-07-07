@@ -46,7 +46,7 @@ block content
           table.highlight
             each ca in coauthors
               tr
-                td.contributor
+                td
                   a(href="/people/" + ca.id)= ca.name
 
       div.col.s3.m12
@@ -54,7 +54,7 @@ block content
         table.highlight
           each detail in pub_count
             tr
-              td.publication 
+              td 
                 a(href="/publications/" + detail.pubid) #{detail.name} (#{detail.count})
           
     div.col.s12.m9.detail-works

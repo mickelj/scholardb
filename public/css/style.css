@@ -46,16 +46,16 @@ select.browser-default {
 
 .btn-floating.right-fab {
   position: absolute;
-  right: 3px;
-  bottom: -15%;
+  right: 5px;
+  bottom: -10%;
   cursor: pointer;
 }
 
 .btn-floating {
-  width: 30%;
-  height: 30%;
-  line-height: 30%;
-  font-size: 90%;
+  width: 25%;
+  height: 25%;
+  line-height: 25%;
+  font-size: .85rem;
 }
 
 #searchform .btn-floating {
@@ -272,6 +272,10 @@ input[type="search"] {
 .detail-profile-sidebar .publication {
   text-indent: -1.5em;
   margin-left: 1.5em;
+}
+
+.detail-profile-sidebar td {
+  padding: 1px 10px;
 }
 
 .moreinfo > ul > li {

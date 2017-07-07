@@ -2,12 +2,12 @@ extends template
 
 block content
   div.row
-    div.col.s12.m6
+    div.col.s12.m5
       div.row
         div.col.s12
           p.headline A Sample of #{appconf.orgshortname} Scholars
       div#indexcards.row
         include scholar_cards.pug
-    div.col.s12.m6
+    div.col.s12.m7
       p.headline Recent Contributions
       include works_block.pug
