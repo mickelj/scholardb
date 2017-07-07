@@ -180,7 +180,34 @@ function renderDeptDetail(req, res) {
   });
 }
 
+function getRssResults(req, res, next) {
+  var db = req.app.get('db');
+  var dept_id = req.params.id;
+  var limit = req.query.limit ? req.query.limit : 10;
+
+  db.run("SELECT DISTINCT works.id, title_primary as title, description as work_type, contributors, publications.name as pubname, publications.id as pubid, publication_date_year as year, works.updated_at FROM works JOIN publications ON publications.id = works.publication_id JOIN work_types USING (type), JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) LEFT JOIN people p ON person_id = p.id LEFT JOIN memberships m on p.id = m.people_id JOIN groups g on m.group_id = g.id WHERE g.hidden = false AND g.id = $1 ORDER BY works.created_at DESC, works.id DESC LIMIT $2", [dept_id, limit], function(err, results) {
+    if (err || !results.length) {
+      return next(err);
+    }
+
+    req.feed_detail = results;
+    return next();
+  });
+}
+
+function renderRssFeed(req, res) {
+  var nconf = req.app.get('nconf');
+
+  res.render('rss', {
+    appconf: nconf.get('application'),
+    title: nconf.get('application:appname') + ": " + req.dept_detail.group_name,
+    feed_link: nconf.get('application:appurl'),
+    feed_detail: req.feed_detail
+  });
+}
+
 router.get('/', getDeptList, getDeptMembersCount, getLetterPagerCounts, renderDeptList);
 router.get('/:id', getDeptDetail, getDeptPeople, getDeptWorksCount, getDeptWorksList, getWorksImages, renderDeptDetail);
+router.get('/:id/rss', getRssResults, renderRssFeed);
 
 module.exports = router;

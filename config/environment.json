@@ -4,6 +4,7 @@
     "orgshortname"  : "W&L",
     "orgurl"        : "http://library.wlu.edu",
     "appname"       : "W&L Scholar",
+    "appurl"        : "https://scholarsdb.herokuapp.com",
     "logo"          : "/images/wlupubs_logo_white.png",
     "tagline"       : "Original scholarly works from the Washington and Lee University community",
     "imgrootdir"    : "https://scholarsdb.omeka.wlu.edu/",

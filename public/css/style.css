@@ -44,14 +44,14 @@ select.browser-default {
   padding: 0 .5rem;
 }
 
-.btn-floating.right-fab {
+.card .btn-floating.right-fab {
   position: absolute;
   right: 5px;
   bottom: -10%;
   cursor: pointer;
 }
 
-.btn-floating {
+.card .btn-floating {
   width: 25%;
   height: 25%;
   line-height: 25%;
