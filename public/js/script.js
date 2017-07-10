@@ -67,7 +67,7 @@ $(document).ready(function() {
     var filtype = $(this).data('filter-type');
     var val = $(this).data('filter-id');
     var limit = getUrlParameter('limit') ? "&limit=" + getUrlParameter('limit') : "";
-    var page = getUrlParameter('page') ? "&page=" + getUrlParameter('page') : "";
+    //var page = getUrlParameter('page') ? "&page=" + getUrlParameter('page') : "";
 
     var filstr = getUrlParameter('filters');
     if (filstr) {
@@ -87,14 +87,14 @@ $(document).ready(function() {
       var filters = [{type: filtype, ids: [val]}];
     }
 
-    window.location.href = "/works?filters=" + JSON.stringify(filters) + limit + page;
+    window.location.href = "/works?filters=" + JSON.stringify(filters) + limit;
   });
 
   $(".filter-group .chip .close").on('click', function() {
     var filtype = $(this).parent().data('filter-type');
     var val = $(this).parent().data('filter-id');
     var limit = getUrlParameter('limit') ? "&limit=" + getUrlParameter('limit') : "";
-    var page = getUrlParameter('page') ? "&page=" + getUrlParameter('page') : "";
+    //var page = getUrlParameter('page') ? "&page=" + getUrlParameter('page') : "";
     var filstr = getUrlParameter('filters');
     var filters = JSON.parse(filstr);
 
@@ -110,7 +110,7 @@ $(document).ready(function() {
     }
 
     if (filters.length) {
-      window.location.href = "/works?filters=" + JSON.stringify(filters) + limit + page;
+      window.location.href = "/works?filters=" + JSON.stringify(filters) + limit;
     } else {
       window.location.href = "/works";
     }

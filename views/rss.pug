@@ -20,7 +20,7 @@ feed(xmlns='http://www.w3.org/2005/Atom')
           name= con.display_name
       summary(type='xhtml')
         div(xmlns="http://www.w3.org/1999/xhtml")
-          div: i= work.work_type
+          p: i= work.work_type
           p
             each con,idx in work.contributors
               if con.person_id
