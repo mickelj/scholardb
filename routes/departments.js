@@ -195,12 +195,26 @@ function getRssResults(req, res, next) {
   });
 }
 
+function getGroupName(req, res, next) {
+  var db = req.app.get('db');
+  var dept_id = req.params.id;
+
+  db.run("SELECT name FROM groups WHERE id = $1", [dept_id], function(err, results) {
+    if (err || !results.length) {
+      return next(err);
+    }
+
+    req.group_name = results[0];
+    return next();
+  })
+}
+
 function renderRssFeed(req, res) {
   var nconf = req.app.get('nconf');
 
   res.render('rss', {
     appconf: nconf.get('application'),
-    title: nconf.get('application:appname') + ": " + req.dept_detail.group_name,
+    title: nconf.get('application:appname') + ": " + req.group_name,
     feed_link: nconf.get('application:appurl'),
     feed_detail: req.feed_detail
   });
@@ -208,6 +222,6 @@ function renderRssFeed(req, res) {
 
 router.get('/', getDeptList, getDeptMembersCount, getLetterPagerCounts, renderDeptList);
 router.get('/:id', getDeptDetail, getDeptPeople, getDeptWorksCount, getDeptWorksList, getWorksImages, renderDeptDetail);
-router.get('/:id/rss', getRssResults, renderRssFeed);
+router.get('/:id/rss', getRssResults, getGroupName, renderRssFeed);
 
 module.exports = router;
