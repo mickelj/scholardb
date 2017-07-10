@@ -27,7 +27,7 @@ mixin buildOpenurl
       - openurl = null
 
 block content
-  - var openurl = '?ctx_ver=Z39.88-2004&rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3A'
+  - var openurl = appconf.linkresolver + '?ctx_ver=Z39.88-2004&rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3A'
   div.container
     div.row
       div.col.s12
@@ -37,14 +37,15 @@ block content
           if work_detail.title_tertiary
             |  (!{work_detail.title_tertiary})
         p.work-type= work_detail.work_type
-        +buildOpenurl
-        if openurl
-          p
-            a(href=openurl, target="_blank")
-              img(src=appconf.openurlimage, alt="Check for local availability")
     
     div.row
-      div.col.s12.m7.offset-m1
+      +buildOpenurl
+      if openurl
+        div.col.s12.m1
+          a.btn.waves-effect.hoverable.white(href=openurl, target="_blank")
+            img(src=appconf.openurlimage, alt="Check for local availability")
+
+      div.col.s12.m9.offset-m2
         table
           tr
             th.right-align Contributors:
