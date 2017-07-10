@@ -3,10 +3,13 @@ extends template
 block content
   div.row.s0.m12
     div.col.s12
-      h4 #{pers.first_name} 
+      h4.detail-title #{pers.first_name} 
         if pers.middle_name
           | #{pers.middle_name} 
-        | #{pers.last_name}
+        | #{pers.last_name} 
+        a.btn-floating.orange.darken-3.waves-effect.waves-light(href="/people/" + pers.person_id + "/rss")
+          span.icon.ion-social-rss
+
   div.row.s12.hide-on-med-and-up
     div.valign-wrapper
       div.col.s3

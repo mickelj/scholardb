@@ -260,8 +260,33 @@ function renderWorkDetail(req, res) {
   });
 }
 
-router.get('/', processFilters, getWorkTypeCount, getDeptWorkCount, getPeopleWorkCount, getYearWorkCount, getPublicationWorkCount, getPublisherWorkCount, getWorksList, getWorksCount, getWorksImages, renderWorksList);
+function getRssResults(req, res, next) {
+  var db = req.app.get('db');
+  var limit = req.query.limit ? req.query.limit : 10;
 
+  db.run("SELECT DISTINCT works.id, title_primary as title, description as work_type, contributors, publications.name as pubname, publications.id as pubid, publication_date_year as year, works.updated_at, works.created_at FROM works JOIN publications ON publications.id = works.publication_id JOIN work_types USING (type) ORDER BY works.created_at DESC, works.id DESC LIMIT $1", [limit], function(err, results) {
+    if (err || !results.length) {
+      return next(err);
+    }
+
+    req.feed_detail = results;
+    return next();
+  });
+}
+
+function renderRssFeed(req, res) {
+  var nconf = req.app.get('nconf');
+
+  res.render('rss', {
+    appconf: nconf.get('application'),
+    title: nconf.get('application:appname') + ": Latest Works",
+    feed_link: req.protocol + '://' + req.get('host') + req.originalUrl,
+    feed_detail: req.feed_detail
+  });
+}
+
+router.get('/', processFilters, getWorkTypeCount, getDeptWorkCount, getPeopleWorkCount, getYearWorkCount, getPublicationWorkCount, getPublisherWorkCount, getWorksList, getWorksCount, getWorksImages, renderWorksList);
 router.get('/:id', getWorkDetail, getSingleImage, renderWorkDetail);
+router.get('/rss', getRssResults, renderRssFeed)
 
 module.exports = router;

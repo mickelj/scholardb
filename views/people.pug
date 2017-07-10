@@ -10,7 +10,8 @@ block content
       div.col.s12
         table.striped.people-list
           tr
-            th(style="width: 10%")
+            th(style="width: 6%")
+            th(style="width: 4%")
             th(style="width: 20%") Contributor
             th(style="width: 20%") Departments/Programs
             th.center-align(style="width: 10%") Works in Database
@@ -19,6 +20,9 @@ block content
                 td.center-align
                   a(href="/people/" + pers.person_id)
                     img.responsive-img.circle(data-usertype=pers.user_type, src=appconf.imgrootdir + pers.image + appconf.defimgext, alt=pers.first_name + " " + pers.last_name)
+                td.center-align
+                  a(href="/people/" + pers.person_id + "/rss")
+                    span.icon.ion-social-rss
                 td
                   a(href="/people/" + pers.person_id) #{pers.last_name}, #{pers.first_name} #{pers.middle_name}
                 td

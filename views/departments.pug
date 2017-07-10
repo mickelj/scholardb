@@ -14,12 +14,16 @@ block content
       div.col.s12
         table.striped.dept-list
           tr
-            th(style="width: 25%") Department/Program
+            th(style="width: 4%")
+            th(style="width: 23%") Department/Program
             th(style="width: 25%") Department/Program URL
-            th(style="width: 25%") Parent Department/Program
+            th(style="width: 23%") Parent Department/Program
             th.center-align(style="width: 10%") Total Members
             each dept in dept_list
               tr
+                td.center-align
+                  a(href="departments/" + dept.group_id + "/rss")
+                    span.icon.ion-social-rss
                 td
                   a(href="/departments/" + dept.group_id)= dept.group_name
                 td
