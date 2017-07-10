@@ -58,15 +58,19 @@ select.browser-default {
   font-size: .85rem;
 }
 
-.detail-title .btn-floating {
+.detail-title .btn-floating,
+.people-list .btn-floating,
+.dept-list .btn-floating {
   width: 30px;
   height: 30px;
   line-height: 30px;
 }
 
-.detail-title .btn-floating .icon {
+.detail-title .btn-floating .icon,
+.people-list .btn-floating .icon,
+.dept-list .btn-floating .icon {
   font-size: 1rem;
-  padding-left: 10px;  
+  padding-left: 10px;
 }
 
 #searchform .btn-floating {
