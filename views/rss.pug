@@ -2,7 +2,7 @@ doctype xml
 feed(xmlns='http://www.w3.org/2005/Atom')
   id= feed_link
   title= title
-  link(href=feed_link)
+  link(href=feed_link, rel='self')
   author
     name= appconf.organization
   if feed_detail.length
@@ -13,19 +13,19 @@ feed(xmlns='http://www.w3.org/2005/Atom')
       id= worklink
       title !{work.title}
       updated= moment(work.updated_at).toISOString()
-      link(href=worklink, rel='self')
+      link(href=worklink, rel='alternate')
       category(term=work.work_type)
       each con in work.contributors
         contributor
           name= con.display_name
-      summary(type='xhtml')
-        div: i= work.work_type
+      summary(type='html')
+        p: i= work.work_type
         each con in work.contributors
-          div
+          p
             if con.person_id
               a(href=appconf.appurl + "/people/" + con.person_id)= con.display_name
             else
               = con.display_name
-        div
+        p
           a(href=appconf.appurl + "/publications/" + work.pubid)= work.pubname 
           span (#{work.year})
