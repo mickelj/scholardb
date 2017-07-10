@@ -61,16 +61,20 @@ select.browser-default {
 .detail-title .btn-floating,
 .people-list .btn-floating,
 .dept-list .btn-floating {
-  width: 30px;
-  height: 30px;
-  line-height: 30px;
+  width: 29px;
+  height: 29px;
+  line-height: 29px;
 }
 
-.detail-title .btn-floating .icon,
+.detail-title .btn-floating .icon {
+  font-size: 1rem;
+  padding-left: 10px;
+}
+
 .people-list .btn-floating .icon,
 .dept-list .btn-floating .icon {
   font-size: 1rem;
-  padding-left: 10px;
+  padding-left: 1px;
 }
 
 #searchform .btn-floating {

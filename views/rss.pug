@@ -21,12 +21,15 @@ feed(xmlns='http://www.w3.org/2005/Atom')
       summary(type='xhtml')
         div(xmlns="http://www.w3.org/1999/xhtml")
           div: i= work.work_type
-          each con in work.contributors
-            div
+          p
+            each con,idx in work.contributors
               if con.person_id
                 a(href=appconf.appurl + "/people/" + con.person_id)= con.display_name
               else
                 | #{con.display_name}
-          div
+              
+              if idx < work.contributors.length - 1
+                | ; 
+          p
             a(href=appconf.appurl + "/publications/" + work.pubid)= work.pubname
             |  (#{work.year})
