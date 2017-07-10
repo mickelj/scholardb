@@ -1,6 +1,5 @@
 extends template
 
-- var openurl = '?ctx_ver=Z39.88-2004&rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3A'
 mixin buildOpenurl
   case work_detail.work_type
     when "Book"
@@ -28,6 +27,7 @@ mixin buildOpenurl
       - openurl = null
 
 block content
+  - var openurl = '?ctx_ver=Z39.88-2004&rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3A'
   div.container
     div.row
       div.col.s12
