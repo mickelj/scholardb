@@ -42,7 +42,8 @@ block content
       +buildOpenurl
       if openurl
         div.col.s12.m1
-          a.btn.waves-effect.hoverable.white(href=encodeURI(openurl.replace(/%20/g, '+')), target="_blank")
+          - openurl = openurl.replace(/%20/g, '+')
+          a.btn.waves-effect.hoverable.white(href=encodeURI(openurl), target="_blank")
             img.local-avail(src=appconf.openurlimage, alt="Check for local availability")
 
       div.col.s12.m9.offset-m2
