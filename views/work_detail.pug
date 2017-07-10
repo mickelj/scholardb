@@ -37,7 +37,7 @@ block content
           if work_detail.title_tertiary
             |  (!{work_detail.title_tertiary})
         p.work-type= work_detail.work_type
-        +mixin buildOpenurl
+        +buildOpenurl
         if openurl
           p
             a(href=openurl, target="_blank")
