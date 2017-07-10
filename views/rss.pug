@@ -2,23 +2,23 @@ doctype xml
 feed(xmlns='http://www.w3.org/2005/Atom')
   id= feed_link
   title= title
-  link(href=feed_link)= feed_link
+  link(href=feed_link)
   author
     name= appconf.organization
   if feed_detail.length
-    updated= feed_detail[0].updated_at
+    updated= moment(feed_detail[0].updated_at).toISOString()
   each work in feed_detail
     entry
       - var worklink = appconf.appurl + "/works/" + work.id
       id= worklink
       title !{work.title}
-      updated= work.updated_at
-      link(href=worklink, rel='alternate')= worklink
+      updated= moment(work.updated_at).toISOString()
+      link(href=worklink, rel='self')
       category(term=work.work_type)
       each con in work.contributors
         contributor
           name= con.display_name
-      summary(type='html')
+      summary(type='xhtml')
         div: i= work.work_type
         each con in work.contributors
           div
