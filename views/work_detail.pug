@@ -1,20 +1,6 @@
 extends template
 
-mixin buildSearchUrl
-  case work_detail.work_type
-    when "Book"
-      include fulltext/books.pug
-    when "Book Section"
-      include fulltext/booksection.pug
-    when "Journal Article"
-      include fulltext/article.pug
-    when "Conference Paper"
-      include fulltext/conference.pug
-    default
-      - searchurl = null
-
 block content
-  - var searchurl
   div.container
     div.row
       div.col.s12
@@ -26,7 +12,7 @@ block content
         p.work-type= work_detail.work_type
     
     div.row
-      +buildSearchUrl
+      +buildSearchUrl(work_detail)
       if searchurl
         div.col.s12.m1
           a.hoverable.local-avail(href=searchurl, target="_blank")

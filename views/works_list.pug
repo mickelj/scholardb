@@ -30,32 +30,38 @@ div.col.s12.works
                 span.icon.ion-ios-list.blue-grey-text.text-lighten-1
               default
                 span.icon.ion-document.blue-grey-text.text-lighten-1
-        div.card-content
-          p.title.work-title
-            a(href="/works/"+ work.id) !{work.work_title}
-              if work.title_secondary
-                | : !{work.title_secondary}
-              if work.title_tertiary
-                |  (!{work.title_tertiary})
+        div.card-stacked
+          div.card-content
+            p.title.work-title
+              a(href="/works/"+ work.id) !{work.work_title}
+                if work.title_secondary
+                  | : !{work.title_secondary}
+                if work.title_tertiary
+                  |  (!{work.title_tertiary})
 
-          p.work-type= work.work_type
-          if work.contributors && work.contributors.length
-            p.contributors
-              each contrib, index in work.contributors
-                case contrib.role
-                  when "Author"
-                  when "Performer"
-                  when "Composer"
-                  when "Creator"
-                  when "Director"
-                  when "Presenter"
-                    if contrib.person_id
-                      span
-                        a(href="/people/" + contrib.person_id)= contrib.display_name
-                    else
-                      span= contrib.display_name
-                    if index < work.contributors.length - 1
-                      | ; 
-          p.work-pub
-            a(href="/publications/" + work.pubid)= work.publication
-            span.work-date= work.year
+            p.work-type= work.work_type
+            if work.contributors && work.contributors.length
+              p.contributors
+                each contrib, index in work.contributors
+                  case contrib.role
+                    when "Author"
+                    when "Performer"
+                    when "Composer"
+                    when "Creator"
+                    when "Director"
+                    when "Presenter"
+                      if contrib.person_id
+                        span
+                          a(href="/people/" + contrib.person_id)= contrib.display_name
+                      else
+                        span= contrib.display_name
+                      if index < work.contributors.length - 1
+                        | ; 
+            p.work-pub
+              a(href="/publications/" + work.pubid)= work.publication
+              span.work-date= work.year
+          +buildSearchUrl(work)
+          if searchurl
+            div.card-action.right-align
+              a.local-avail(href=searchurl, target="_blank")
+                img(src=appconf.fulltextimage, alt="Check for local availability")

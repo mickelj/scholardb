@@ -1,4 +1,20 @@
 doctype html
+
+mixin buildSearchUrl(work_detail)
+  case work_detail.work_type
+    when "Book"
+      include fulltext/books.pug
+    when "Book Section"
+      include fulltext/booksection.pug
+    when "Journal Article"
+      include fulltext/article.pug
+    when "Conference Paper"
+      include fulltext/conference.pug
+    default
+      - searchurl = null
+
+- var searchurl
+
 html
   head
     title= title
