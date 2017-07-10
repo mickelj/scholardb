@@ -18,14 +18,15 @@ feed(xmlns='http://www.w3.org/2005/Atom')
       each con in work.contributors
         contributor
           name= con.display_name
-      summary(type='html')
-        p: i= work.work_type
-        each con in work.contributors
-          p
-            if con.person_id
-              a(href=appconf.appurl + "/people/" + con.person_id)= con.display_name
-            else
-              = con.display_name
-        p
-          a(href=appconf.appurl + "/publications/" + work.pubid)= work.pubname 
-          span (#{work.year})
+      summary(type='xhtml')
+        div(xmlns="http://www.w3.org/1999/xhtml")
+          div: i= work.work_type
+          each con in work.contributors
+            div
+              if con.person_id
+                a(href=appconf.appurl + "/people/" + con.person_id)= con.display_name
+              else
+                = con.display_name
+          div
+            a(href=appconf.appurl + "/publications/" + work.pubid)= work.pubname 
+            span (#{work.year})

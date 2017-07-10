@@ -215,7 +215,7 @@ function renderRssFeed(req, res) {
   res.render('rss', {
     appconf: nconf.get('application'),
     title: nconf.get('application:appname') + ": " + req.group_name,
-    feed_link: nconf.get('application:appurl'),
+    feed_link: req.protocold + '://' + req.get('host') + req.originalUrl,
     feed_detail: req.feed_detail
   });
 }
