@@ -85,9 +85,8 @@ select.browser-default {
 }
 
 .local-avail {
-  position: relative;
-  top: 40%;
-  transform: translateY(-50%);
+  padding: 12px 5px 5px;
+  border-radius: 4px;
 }
 
 ::-webkit-input-placeholder {

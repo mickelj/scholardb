@@ -14,6 +14,9 @@
     "romeourl"      : "http://www.sherpa.ac.uk/romeo/api29.php?ak=",
     "romeoapikey"   : "bEi1YdbpB6Y",
     "linkresolver"  : "http://nw7pf8as2n.search.serialssolutions.com/",
-    "openurlimage"  : "/images/findit.png"
+    "fulltextimage" : "/images/findit.png",
+    "booksearchtype": "catalog",
+    "catalogtype"   : "iii",
+    "catalogurl"    : "http://annie.wlu.edu/"
   }
 }

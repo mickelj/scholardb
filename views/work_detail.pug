@@ -1,33 +1,20 @@
 extends template
 
-mixin buildOpenurl
+mixin buildSearchUrl
   case work_detail.work_type
     when "Book"
-      - openurl += 'book&rft.genre=book&rft.btitle=' + encodeURIComponent(work_detail.work_title).replace(/%20/g, '+') + '&rft.date=' + work_detail.year + '&rft.isbn=' + work_detail.identifier
-      each contrib in work_detail.contributors
-        - openurl += '&rft.au=' + encodeURIComponent(contrib.display_name)
+      include fulltext/books.pug
     when "Book Section"
-      - openurl += 'book&rft.genre=bookitem&rft.atitle=' + encodeURIComponent(work_detail.work_title).replace(/%20/g, '+') + '&rft.btitle=' + work_detail.publication.replace(/%20/g, '+') + '&rft.date=' + work_detail.year + '&rft.isbn=' + work_detail.identifier
-      each contrib in work_detail.contributors
-        - openurl += '&rft.au=' + encodeURIComponent(contrib.display_name)
+      include fulltext/booksection.pug
     when "Journal Article"
-      - openurl += 'journal&rft.genre=article&rft.atitle=' + encodeURIComponent(work_detail.work_title).replace(/%20/g, '+') + '&rft.jtitle=' + encodeURIComponent(work_detail.publication).replace(/%20/g, '+') + '&rft.date=' + work_detail.year + '&rft.issn=' + work_detail.identifier + '&rft.volume=' + (work_detail.volume ? work_detail.volume : '') + '&rft.issue=' +  (work_detail.issue ? work_detail.issue : '') + '&rft.spage=' + (work_detail.start_page ? work_detail.start_page : '') + '&rft.epage=' + (work_detail.end_page ? work_detail.end_page : '')
-      each contrib in work_detail.contributors
-        - openurl += '&rft.au=' + encodeURIComponent(contrib.display_name)
+      include fulltext/article.pug
     when "Conference Paper"
-      if work_detail.identifier_type == 'ISSN'
-        - openurl += 'journal&rft.genre=conference&rft.atitle=' + encodeURIComponent(work_detail.work_title).replace(/%20/g, '+') + '&rft.jtitle=' + encodeURIComponent(work_detail.publication).replace(/%20/g, '+') + '&rft.date=' + work_detail.year + '&rft.issn=' + work_detail.identifier + '&rft.volume=' + (work_detail.volume ? work_detail.volume : '') + '&rft.issue=' + (work_detail.issue ? work_detail.issue : '') + '&rft.spage=' + (work_detail.start_page ? work_detail.start_page : '') + '&rft.epage=' + (work_detail.end_page ? work_detail.end_page : '')
-        each contrib in work_detail.contributors
-          - openurl += '&rft.au=' + encodeURIComponent(contrib.display_name)
-      else
-        - openurl += 'book&rft.genre&rft.atitle=' + encodeURIComponent(work_detail.work_title).replace(/%20/g, '+') + '&rft.btitle=' + encodeURIComponent(work_detail.publication).replace(/%20/g, '+') + '&rft.date=' + work_detail.year + '&rft.isbn=' + work_detail.identifier
-        each contrib in work_detail.contributors
-          - openurl += '&rft.au=' + encodeURIComponent(contrib.display_name)
+      include fulltext/conference.pug
     default
-      - openurl = null
+      - searchurl = null
 
 block content
-  - var openurl = appconf.linkresolver + '?ctx_ver=Z39.88-2004&rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3A'
+  - var searchurl
   div.container
     div.row
       div.col.s12
@@ -39,13 +26,13 @@ block content
         p.work-type= work_detail.work_type
     
     div.row
-      +buildOpenurl
-      if openurl
+      +buildSearchUrl
+      if searchurl
         div.col.s12.m1
-          a.btn.waves-effect.hoverable.white(href=openurl, target="_blank")
-            img.local-avail(src=appconf.openurlimage, alt="Check for local availability")
+          a.hoverable.local-avail(href=searchurl, target="_blank")
+            img(src=appconf.fulltextimage, alt="Check for local availability")
 
-      div.col.s12.m9.offset-m2
+      div.col.s12.m7.offset-m2
         table
           tr
             th.right-align Contributors:
@@ -106,5 +93,5 @@ block content
               td
                 a(href=work_detail.url)= work_detail.url        
       if coverimage
-        div.col.s0.m4
+        div.col.s0.m2
           img.z-depth-4(src=coverimage, alt="Cover Image for " + work_detail.work_title)
