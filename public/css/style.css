@@ -168,6 +168,10 @@ input[type="search"] {
     max-width: 20%;
 }
 
+.card.horizontal .card-image img {
+  max-width: 60%;
+}
+
 .card .card-image img {
   display: inline-block;
   max-height: 194px;

@@ -12,6 +12,8 @@
     "searchdeftext" : "Search for works, contributors, or publications",
     "ccurlbase"     : "https://scholarsdb-coce.herokuapp.com/cover?provider=ol,gb&id=",
     "romeourl"      : "http://www.sherpa.ac.uk/romeo/api29.php?ak=",
-    "romeoapikey"   : "bEi1YdbpB6Y"
+    "romeoapikey"   : "bEi1YdbpB6Y",
+    "linkresolver"  : "http://nw7pf8as2n.search.serialssolutions.com/",
+    "openurlimage"  : "/images/findit.png"
   }
 }

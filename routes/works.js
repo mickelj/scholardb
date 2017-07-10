@@ -15,15 +15,6 @@ function processFilters (req, res, next) {
     filterlist.push("groups.id = " + _.findWhere(req.filters, {type: 'departments'}).ids.toString());
   }
 
-  // if (_.findWhere(req.filters, {type: 'people'})) {
-  //   var people = "works.contributors @> ";
-  //   var idlist = [];
-  //   _.findWhere(req.filters, {type: 'people'}).ids.forEach(function (id) {
-  //     idlist.push("'[{\"person_id\" : " + id + "}]'");
-  //   });
-  //   people += idlist.join(",");
-  //   filterlist.push(people);
-  // }
   if (_.findWhere(req.filters, {type: 'people'})) {
     filterlist.push("people.id = " + _.findWhere(req.filters, {type: 'people'}).ids.toString());
   }
