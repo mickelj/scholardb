@@ -5,24 +5,24 @@ mixin buildOpenurl
     when "Book"
       - openurl += 'book&rft.genre=book&rft.btitle=' + work_detail.work_title + '&rft.date=' + work_detail.year + '&rft.isbn=' + work_detail.identifier
       each contrib in work_detail.contributors
-        - openurl += '&au=' + contrib.display_name
+        - openurl += '&rft.au=' + contrib.display_name
     when "Book Section"
       - openurl += 'book&rft.genre=bookitem&rft.atitle=' + work_detail.work_title + '&rft.btitle=' + work_detail.publication + '&rft.date=' + work_detail.year + '&rft.isbn=' + work_detail.identifier
       each contrib in work_detail.contributors
-        - openurl += '&au=' + contrib.display_name
+        - openurl += '&rft.au=' + contrib.display_name
     when "Journal Article"
       - openurl += 'journal&rft.genre=article&rft.atitle=' + work_detail.work_title + '&rft.jtitle=' + work_detail.publication + '&rft.date=' + work_detail.year + '&rft.issn=' + work_detail.identifier + '&rft.volume=' + work_detail.volume + '&rft.issue=' + work_detail.issue
       each contrib in work_detail.contributors
-        - openurl += '&au=' + contrib.display_name
+        - openurl += '&rft.au=' + contrib.display_name
     when "Conference Paper"
       if work_detail.identifier_type == 'ISSN'
         - openurl += 'journal&rft.genre=conference&rft.atitle=' + work_detail.work_title + '&rft.jtitle=' + work_detail.publication + '&rft.date=' + work_detail.year + '&rft.issn=' + work_detail.identifier + '&rft.volume=' + work_detail.volume + '&rft.issue=' + work_detail.issue
         each contrib in work_detail.contributors
-          - openurl += '&au=' + contrib.display_name
+          - openurl += '&rft.au=' + contrib.display_name
       else
         - openurl += 'book&rft.genre&rft.atitle=' + work_detail.work_title + '&rft.btitle=' + work_detail.publication + '&rft.date=' + work_detail.year + '&rft.isbn=' + work_detail.identifier
         each contrib in work_detail.contributors
-          - openurl += '&au=' + contrib.display_name
+          - openurl += '&rft.au=' + contrib.display_name
     default
       - openurl = null
 
@@ -42,8 +42,8 @@ block content
       +buildOpenurl
       if openurl
         div.col.s12.m1
-          a.btn.waves-effect.hoverable.white(href=openurl, target="_blank")
-            img(src=appconf.openurlimage, alt="Check for local availability")
+          a.btn.waves-effect.hoverable.white(href=encodeURI(openurl.replace('%20','+')), target="_blank")
+            img.local-avail(src=appconf.openurlimage, alt="Check for local availability")
 
       div.col.s12.m9.offset-m2
         table

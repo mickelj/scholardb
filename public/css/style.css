@@ -84,6 +84,12 @@ select.browser-default {
   font-size: 1rem;
 }
 
+.local-avail {
+  position: relative;
+  top: 40%;
+  transform: translateY(-50%);
+}
+
 ::-webkit-input-placeholder {
   color: #999;
   font-style: italic;
