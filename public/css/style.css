@@ -64,9 +64,9 @@ select.browser-default {
   line-height: 30px;
 }
 
-.detail-title .btn-floating i {
-  font-size: 1.2rem;
-  line-height: 30px;
+.detail-title .btn-floating .icon {
+  font-size: 1rem;
+  padding-left: 10px;  
 }
 
 #searchform .btn-floating {
