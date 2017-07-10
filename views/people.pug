@@ -18,7 +18,7 @@ block content
             each pers in people_list
               tr
                 td.center-align
-                  a(href="/people/" + pers.person_id)
+                  a.btn-floating.orange.darken-3.waves-effect.waves-light(href="/people/" + pers.person_id)
                     img.responsive-img.circle(data-usertype=pers.user_type, src=appconf.imgrootdir + pers.image + appconf.defimgext, alt=pers.first_name + " " + pers.last_name)
                 td.center-align
                   a(href="/people/" + pers.person_id + "/rss")
