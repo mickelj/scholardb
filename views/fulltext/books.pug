@@ -3,7 +3,7 @@ case appconf.booksearchtype
     case appconf.catalogtype
       when "iii"
         - searchurl  = appconf.catalogurl + 'search/?searchtype=X&searcharg='
-        - searchurl += encodeURIComponent(work_detail.work_title).replace(/%20/g, '+')
+        - searchurl += encodeURIComponent(work_detail.work_title.split(':')[0].replace(/[.,\/!@#$%^&*()\-_+=:;?<>|]/g, '')).replace(/%20/g, '+')
       when "alma"
         - searchurl = null
   when "openurl"
