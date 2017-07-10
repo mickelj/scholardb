@@ -204,7 +204,7 @@ function getGroupName(req, res, next) {
       return next(err);
     }
 
-    req.group_name = results[0];
+    req.group_name = results[0].name;
     return next();
   })
 }
