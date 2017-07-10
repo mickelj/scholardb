@@ -1,4 +1,4 @@
-// App Dependencies
+// App-wide Dependencies
 const express = require('express');
 const app = express();
 const nconf = require('nconf');
@@ -17,7 +17,10 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'pug');
 app.set('db', massiveInstance);
 app.set('nconf', nconf);
+
+// Allow access to libraries in Pug templates
 app.locals._ = require("underscore");
+app.locals.moment = require("moment");
 
 // Routes
 const index = require('./routes/index');
