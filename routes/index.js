@@ -55,7 +55,7 @@ function renderHomePage(req, res) {
   res.render('index', {
     people: req.scholars,
     works_list: req.works,
-    appconf: nconf,
+    appconf: nconf.get(),
     title: nconf.get('customtext:appname') + " - Home",
     index: true
   });
