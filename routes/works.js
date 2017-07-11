@@ -236,6 +236,34 @@ function getSingleImage (req, res, next) {
   }
 }
 
+function getRomeoDetails (req, res, next) {
+  var nconf = req.app.get('nconf');
+  var romeourl = nconf.get('romeo:romeourl') + nconf.get('romeo:romeoapikey');
+
+  if (req.work_detail.identifier_type && req.work_detail.identifier_type === 'ISSN') {
+    request.get(romeourl + '&issn=' + req.work_detail.identifier, function(err, res, body) {
+      if (err) {
+        return next(err);
+      }
+
+      xml2js.parseString(body, function(err, result) {
+        if (err) {
+          return next(err);
+        }
+
+        req.romeo = {};
+        req.romeo.numhits = result.romeoapi.header[0].numhits[0];
+        if (req.romeo.numhits > 0) {
+          req.romeo.publisher = result.romeoapi.publishers[0].publisher[0];
+        }
+        return next();
+      });
+    });
+  } else {
+    return next();
+  }
+}
+
 function renderWorkDetail(req, res) {
   var nconf = req.app.get('nconf');
 
@@ -247,7 +275,8 @@ function renderWorkDetail(req, res) {
     appconf: nconf.get(),
     title: nconf.get('customtext:appname') + " - Work: " + req.work_detail.work_title,
     work_detail: req.work_detail,
-    coverimage: req.coverimage
+    coverimage: req.coverimage,
+    romeo: req.romeo
   });
 }
 

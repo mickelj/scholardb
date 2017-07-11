@@ -43,9 +43,8 @@ $(document).ready(function() {
   });
 
   $('.collapsible').collapsible();
-
+  $('.modal').modal();
   $('.carousel.carousel-slider').carousel({fullWidth: true});
-
   $('select').material_select();
 
   $('.page-selector').on('change', function() {

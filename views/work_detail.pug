@@ -9,20 +9,25 @@ block content
             | : !{work_detail.title_secondary}
           if work_detail.title_tertiary
             |  (!{work_detail.title_tertiary})
-        p.work-type= work_detail.work_type
+        p.work-type
+          +getMediaIcon(work_detail.work_type, 'black')
+          | #{work_detail.work_type}
     
     div.row
       +buildSearchUrl(work_detail)
       if searchurl || work_detail.archive_url
         div.col.s12.m3
-          if work_detail.archive_url
-            a.btn.waves-effect.waves-light.blue.darken-4.local-avail(href=work_detail.archive_url, target="_blank")
-              i.material-icons.left move_to_inbox
-              span= appconf.archive.buttontext
           if searchurl
             a.btn.waves-effect.waves-light.blue.darken-4.local-avail(href=searchurl, target="_blank")
               i.material-icons.left library_books
               span= appconf.fulltext.buttontext
+          if work_detail.archive_url
+            a.btn.waves-effect.waves-light.blue.darken-4.local-avail(href=work_detail.archive_url, target="_blank")
+              i.material-icons.left move_to_inbox
+              span= appconf.archive.buttontext
+      if romeo
+        +romeocolor(romeo.publisher.romeocolour[0])
+        a(class="btn waves-effect waves-light lighten-1 local-avail " + romeoClassColor, href=work_detail.archive_url, target="_blank") RoMEO: #{romeo.publisher.romeocolour[0]}
 
       div.col.s12.m7
         table
@@ -39,7 +44,7 @@ block content
                     span.contrib-role  (#{contrib.role})
           if work_detail.publication
             tr
-              th.right-align Publication Title:
+              th.right-align Publication:
               td.work-pub
                 a(href="/publications/" + work_detail.pubid)= work_detail.publication
           if work_detail.volume
@@ -87,3 +92,10 @@ block content
       if coverimage
         div.col.s0.m2
           img.z-depth-4(src=coverimage, alt="Cover Image for " + work_detail.work_title)
+  
+  if romeo      
+    div#romeo.modal
+      div.modal-content
+        include romeo.pug
+      div.modal-footer
+        a.modal-action.modal-close.waves-effect.waves-green.btn-flat(href="#!") OK

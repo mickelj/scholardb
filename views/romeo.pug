@@ -1,91 +1,58 @@
-mixin romeoicon(icontext)
-  case icontext
-    when "unclear"
-    when "unknown"
-      span.icon.ion-help-circled.blue-grey-text.text-lighten-1 
-      span Unclear/Unknown
-    when "can"
-      span.icon.ion-checkmark-circled.green-text.darken-1 
-      span Yes
-    when "restricted"
-      span.icon.ion-alert-circled.amber-text.text-accent-4 
-      span With Restrictions
-    when "cannot"
-      span.icon.ion-close-circled.red-text 
-      span No
-    default
-      span.icon.ion-minus-circled.blue-grey-text.text-lighten-1 
-      span No Data Available
-
-mixin romeocolor(rcolor)
-  case rcolor
-    when "gray"
-      div(class="col s7 lighten-1 grey")= rcolor
-    when "yellow"
-      div(class="col s7 lighten-1 amber")= rcolor
-    default
-      div(class="col s7 lighten-1 " + rcolor)= rcolor
-
-li
-  div.collapsible-header.active
-    div.col.s5: b RoMEO Color:
-    +romeocolor(romeo.publisher.romeocolour[0])
-
-  div.collapsible-body
-    table.striped
-      if romeo.publisher.preprints[0]
-        tr
-          th Can archive PRE-prints?
-          td
-            +romeoicon(romeo.publisher.preprints[0].prearchiving[0])
-            if romeo.publisher.preprints[0].prerestrictions[0]
-              ul.browser-default.restrictions
-                each pr in romeo.publisher.preprints[0].prerestrictions[0].prerestriction
-                  li !{pr}
-      if romeo.publisher.postprints[0]
-        tr
-          th Can archive POST-prints?
-          td
-            +romeoicon(romeo.publisher.postprints[0].postarchiving[0])
-            if romeo.publisher.postprints[0].postrestrictions[0]
-              ul.browser-default.restrictions
-                each pr in romeo.publisher.postprints[0].postrestrictions[0].postrestriction
-                  li !{pr}
-      if romeo.publisher.pdfversion[0]
-        tr
-          th Can archive publisher/PDF version?
-          td
-            +romeoicon(romeo.publisher.pdfversion[0].pdfarchiving[0])
-            if romeo.publisher.pdfversion[0].pdfrestrictions[0]
-              ul.browser-default.restrictions
-                each pr in romeo.publisher.pdfversion[0].pdfrestrictions[0].pdfrestriction
-                  li !{pr}
-      if romeo.publisher.conditions[0]
-        tr
-          th Conditions for ANY archiving:
-          td
-            ul.browser-default
-              each cond in romeo.publisher.conditions[0].condition
-                li !{cond}
-      if romeo.publisher.copyrightlinks[0]
-        tr
-          th Copyright links from publisher:
-          td
-            ul.browser-default
-              each cl in romeo.publisher.copyrightlinks[0].copyrightlink
-                li
-                 a(href=cl.copyrightlinkurl[0], target="_blank")= cl.copyrightlinktext[0]
-    
-    p.romeo-footnote.valign-wrapper
-      img(src="/images/romeosmall.gif", alt="SHERPA/RoMEO logo")
-      small This information is derived from the 
-        a(href="http://www.sherpa.ac.uk/romeo.php", target="_blank") RoMEO
-        |  database which is compiled by 
-        a(href="http://www.sherpa.ac.uk", target="_blank") SHERPA
-        |  and has been modified for use here. All SHERPA/RoMEO information is correct to the best of our knowledge but should not be relied upon for legal advice. SHERPA cannot be held responsible for the re-use of RoMEO data, or for alternative interpretations which are derived from this information.
-    p.romeo-footnote.valign-wrapper
-      a(rel="license", href="http://creativecommons.org/licenses/by-nc-sa/4.0/")
-        img(alt="Creative Commons License", style="border-width:0", src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png")
-      small This work is licensed under a 
-        a(rel="license", href="http://creativecommons.org/licenses/by-nc-sa/4.0/") Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License
-        | .
+div.collapsible-body
+  table.striped
+    if romeo.publisher.preprints[0]
+      tr
+        th Can archive PRE-prints?
+        td
+          +romeoicon(romeo.publisher.preprints[0].prearchiving[0])
+          if romeo.publisher.preprints[0].prerestrictions[0]
+            ul.browser-default.restrictions
+              each pr in romeo.publisher.preprints[0].prerestrictions[0].prerestriction
+                li !{pr}
+    if romeo.publisher.postprints[0]
+      tr
+        th Can archive POST-prints?
+        td
+          +romeoicon(romeo.publisher.postprints[0].postarchiving[0])
+          if romeo.publisher.postprints[0].postrestrictions[0]
+            ul.browser-default.restrictions
+              each pr in romeo.publisher.postprints[0].postrestrictions[0].postrestriction
+                li !{pr}
+    if romeo.publisher.pdfversion[0]
+      tr
+        th Can archive publisher/PDF version?
+        td
+          +romeoicon(romeo.publisher.pdfversion[0].pdfarchiving[0])
+          if romeo.publisher.pdfversion[0].pdfrestrictions[0]
+            ul.browser-default.restrictions
+              each pr in romeo.publisher.pdfversion[0].pdfrestrictions[0].pdfrestriction
+                li !{pr}
+    if romeo.publisher.conditions[0]
+      tr
+        th Conditions for ANY archiving:
+        td
+          ul.browser-default
+            each cond in romeo.publisher.conditions[0].condition
+              li !{cond}
+    if romeo.publisher.copyrightlinks[0]
+      tr
+        th Copyright links from publisher:
+        td
+          ul.browser-default
+            each cl in romeo.publisher.copyrightlinks[0].copyrightlink
+              li
+               a(href=cl.copyrightlinkurl[0], target="_blank")= cl.copyrightlinktext[0]
+  
+  p.romeo-footnote.valign-wrapper
+    img(src="/images/romeosmall.gif", alt="SHERPA/RoMEO logo")
+    small This information is derived from the 
+      a(href="http://www.sherpa.ac.uk/romeo.php", target="_blank") RoMEO
+      |  database which is compiled by 
+      a(href="http://www.sherpa.ac.uk", target="_blank") SHERPA
+      |  and has been modified for use here. All SHERPA/RoMEO information is correct to the best of our knowledge but should not be relied upon for legal advice. SHERPA cannot be held responsible for the re-use of RoMEO data, or for alternative interpretations which are derived from this information.
+  p.romeo-footnote.valign-wrapper
+    a(rel="license", href="http://creativecommons.org/licenses/by-nc-sa/4.0/")
+      img(alt="Creative Commons License", style="border-width:0", src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png")
+    small This work is licensed under a 
+      a(rel="license", href="http://creativecommons.org/licenses/by-nc-sa/4.0/") Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License
+      | .
