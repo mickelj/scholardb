@@ -93,8 +93,12 @@ select.browser-default {
   margin-left: 10px;
 }
 
-.local-avail .btn i {
+.local-avail .btn-flat i {
   font-size: 1.1rem;
+}
+
+.local-avail .btn-flat i.left {
+  margin-right: 10px;
 }
 
 ::-webkit-input-placeholder {
