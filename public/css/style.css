@@ -389,6 +389,11 @@ input[type="search"] {
   margin-top: 1em;
 }*/
 
+.moreinfo .row {
+  padding: 7px 0;
+  border-bottom: 1px #eee solid;
+}
+
 .moreinfo .carousel {
   height: 555px !important;
 }
