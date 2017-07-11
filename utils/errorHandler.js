@@ -2,20 +2,20 @@ const express = require('express');
 const app = express();
 
 module.exports = {
-  function logErrors (err, req, res, next) {
+  logErrors = function(err, req, res, next) {
     console.error(err.stack);
     next(err);
-  }
+  },
 
-  function clientErrorHandler (err, req, res, next) {
+  clientErrorHandler = function(err, req, res, next) {
     if (req.xhr) {
       res.status(500).send({ error: 'Error occurred'});
     } else {
       next(err);
     }
-  }
+  },
 
-  function errorHandler (err, req, res, next) {
+  errorHandler = function(err, req, res, next) {
     res.status(500);
     res.render('error', {error: err});
   }
