@@ -105,6 +105,8 @@ function getPersonWorksList (req, res, next) {
       return next(err);
     }
 
+// NEED TO FIX PAGING PROBLEM AND WHY IDS ARE COMING UP 'undefined' IN FINAL PAGE
+
     req.person_works_list = results;
     req.works_count = results.length;
     var pubcount = results.reduce(function (allPubs, pub) {
@@ -219,7 +221,7 @@ function renderRssFeed(req, res) {
 
   res.render('rss', {
     appconf: nconf.get(),
-    title: nconf.get('customtext.appname') + ": " + req.person_name,
+    title: nconf.get('customtext:appname') + ": " + req.person_name,
     feed_link: req.protocol + '://' + req.get('host') + req.originalUrl,
     feed_detail: req.feed_detail
   });
