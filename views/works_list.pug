@@ -61,7 +61,13 @@ div.col.s12.works
               a(href="/publications/" + work.pubid)= work.publication
               span.work-date= work.year
           +buildSearchUrl(work)
-          if searchurl
+          if searchurl || work.archive_url
             div.card-action.right-align
-              a.local-avail(href=searchurl, target="_blank")
-                img(src=appconf.images.fulltextimage, alt="Check for local availability")
+              if searchurl
+                a.btn.waves-effect.waves-light.blue.darken-4.local-avail(href=searchurl, target="_blank")
+                  i.material-icons.left library_books
+                  span= appconf.fulltext.buttontext
+              if work.archive_url
+                a.btn.waves-effect.waves-light.blue.darken-4.local-avail(href=work.archive_url, target="_blank")
+                  i.material-icons.left move_to_inbox
+                  span= appconf.archive.buttontext

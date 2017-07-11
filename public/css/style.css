@@ -85,8 +85,16 @@ select.browser-default {
 }
 
 .local-avail {
-  padding: 12px 5px 5px;
-  border-radius: 4px;
+  font-size: .8rem;
+  text-transform: unset;
+  padding: 0 1rem;
+  height: 28px;
+  line-height: 28px;
+  margin-left: 10px;
+}
+
+.local-avail .btn i {
+  font-size: 1.1rem;
 }
 
 ::-webkit-input-placeholder {

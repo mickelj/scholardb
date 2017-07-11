@@ -126,7 +126,7 @@ function getWorksList(req, res, next) {
   var offset = req.query.page ? (req.query.page - 1) * limit : 0;
   var filters = req.sqlfilters ? req.sqlfilters : "TRUE";
 
-  db.run("SELECT DISTINCT works.id, title_primary as work_title, title_secondary, title_tertiary, description as work_type, contributors, publications.name as publication, publications.id as pubid, identifier, identifier_type, alt_identifier, alt_identifier_type, publication_date_year as year, volume, issue, start_page, end_page FROM works LEFT JOIN publications ON publications.id = works.publication_id LEFT JOIN publishers ON publications.publisher_id = publishers.id LEFT JOIN work_types USING (type), JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) LEFT JOIN people on people.id = person_id LEFT JOIN memberships ON people.id = memberships.people_id LEFT JOIN groups ON memberships.group_id = groups.id WHERE " + filters + " ORDER BY publication_date_year DESC, works.id DESC LIMIT $1 OFFSET $2", [limit, offset], function(err, results) {
+  db.run("SELECT DISTINCT works.id, title_primary as work_title, title_secondary, title_tertiary, description as work_type, contributors, publications.name as publication, publications.id as pubid, identifier, identifier_type, alt_identifier, alt_identifier_type, publication_date_year as year, volume, issue, start_page, end_page, archive_url FROM works LEFT JOIN publications ON publications.id = works.publication_id LEFT JOIN publishers ON publications.publisher_id = publishers.id LEFT JOIN work_types USING (type), JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) LEFT JOIN people on people.id = person_id LEFT JOIN memberships ON people.id = memberships.people_id LEFT JOIN groups ON memberships.group_id = groups.id WHERE " + filters + " ORDER BY publication_date_year DESC, works.id DESC LIMIT $1 OFFSET $2", [limit, offset], function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
@@ -206,7 +206,7 @@ function getWorkDetail(req, res, next) {
   var db = req.app.get('db');
   var work_id = req.params.id;
 
-  db.run("SELECT works.id, title_primary as work_title, title_secondary, title_tertiary, description as work_type, contributors, publications.name as publication, publication_id as pubid, publishers.name as publisher, publishers.id as publisherid, publication_date_year as year, volume, issue, start_page, end_page, location, works.url, identifier, identifier_type, alt_identifier, alt_identifier_type FROM works LEFT JOIN publications ON publications.id = works.publication_id LEFT JOIN work_types USING (type) LEFT JOIN publishers ON publishers.id = publications.publisher_id WHERE works.id = $1", [work_id], function(err, results) {
+  db.run("SELECT works.id, title_primary as work_title, title_secondary, title_tertiary, description as work_type, contributors, publications.name as publication, publication_id as pubid, publishers.name as publisher, publishers.id as publisherid, publication_date_year as year, volume, issue, start_page, end_page, location, works.url, identifier, identifier_type, alt_identifier, alt_identifier_type, archive_url, archived_at FROM works LEFT JOIN publications ON publications.id = works.publication_id LEFT JOIN work_types USING (type) LEFT JOIN publishers ON publishers.id = publications.publisher_id WHERE works.id = $1", [work_id], function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
