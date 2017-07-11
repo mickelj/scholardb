@@ -12,7 +12,7 @@ block content
 
       div.row.moreinfo
         p.headline More Information
-        ul.collapsible(data-collapsible="accordion")
+        ul.romeo-detail
           if journal.publisher_id 
             li
               div.col.s5
@@ -29,7 +29,7 @@ block content
                   div= journal.alt_identifier
           if romeo && romeo.numhits > 0
             li
-              div.collapsible-header.active
+              div.header.active
                 div.col.s5: b RoMEO Color:
                 +romeocolor(romeo.publisher.romeocolour[0])
                 div(class="col s7 lighten-1 " + romeoClassColor)= romeo.publisher.romeocolour[0]

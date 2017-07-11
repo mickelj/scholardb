@@ -227,7 +227,7 @@ input[type="search"] {
   padding-left: 9px;
 }
 
-.collapsible .icon {
+.romeo-detail .icon {
   font-size: 1rem;
 }
 
@@ -349,43 +349,43 @@ input[type="search"] {
   padding: 1px 10px;
 }
 
-.moreinfo .collapsible {
+.moreinfo .romeo-detail {
   border-top: none;
   border-right: none;
   border-left: none;
   box-shadow: none;
 }
 
-.moreinfo .collapsible-header {
+.moreinfo .romeo-detail.header {
   line-height: inherit;
   padding: 0;
   border-bottom: none;
 }
 
-.moreinfo .collapsible-body {
+.moreinfo .romeo-detail .body {
   padding: 0;
   margin-top: 2.5em;
   line-height: initial;
 }
 
-.moreinfo .collapsible-body th {
+.moreinfo .romeo-detail .body th {
   width: 40%;
 }
 
-.moreinfo .collapsible-body th, .moreinfo .collapsible-body td {
+.moreinfo .romeo-detail .body th, .moreinfo .romeo-detail .body td {
   padding: .75rem;
 }
 
-.moreinfo .collapsible-body ul.browser-default {
+.moreinfo .romeo-detail .body ul.browser-default {
   padding-left: 1.15em;
   list-style-type: disc;
 }
 
-.moreinfo .collapsible-body ul.browser-default li {
+.moreinfo .romeo-detail .body ul.browser-default li {
   list-style-type: disc;
 }
 
-.moreinfo .collapsible-body ul.browser-default.restrictions {
+.moreinfo .romeo-detail .body ul.browser-default.restrictions {
   margin-top: 1em;
 }
 

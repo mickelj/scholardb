@@ -27,7 +27,7 @@ block content
               span= appconf.archive.buttontext
           if romeo
             +romeocolor(romeo.publisher.romeocolour[0])
-            a(class="btn waves-effect waves-light lighten-1 romeo-detail local-avail " + romeoClassColor, href="#romeo") RoMEO: #{romeo.publisher.romeocolour[0]}
+            a(class="btn waves-effect waves-light black-text lighten-1 romeo-detail local-avail " + romeoClassColor, href="#romeo") RoMEO: #{romeo.publisher.romeocolour[0]}
 
       div.col.s12.m7
         table
@@ -94,8 +94,10 @@ block content
           img.z-depth-4(src=coverimage, alt="Cover Image for " + work_detail.work_title)
   
   if romeo      
-    div#romeo.modal
+    div#romeo.modal.model-fixed-footer
       div.modal-content
+        h4 #{work_detail.publication} (#{work_detail.identifier})
+        h5 #{work_detail.publisher}
         include romeo.pug
       div.modal-footer
         a.modal-action.modal-close.waves-effect.waves-green.btn-flat(href="#!") OK
