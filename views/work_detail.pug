@@ -15,7 +15,7 @@ block content
     
     div.row
       +buildSearchUrl(work_detail)
-      if searchurl || work_detail.archive_url
+      if searchurl || work_detail.archive_url || romeo
         div.col.s12.m3
           if searchurl
             a.btn.waves-effect.waves-light.blue.darken-4.local-avail(href=searchurl, target="_blank")
@@ -25,9 +25,9 @@ block content
             a.btn.waves-effect.waves-light.blue.darken-4.local-avail(href=work_detail.archive_url, target="_blank")
               i.material-icons.left move_to_inbox
               span= appconf.archive.buttontext
-      if romeo
-        +romeocolor(romeo.publisher.romeocolour[0])
-        a(class="btn waves-effect waves-light lighten-1 romeo-detail local-avail " + romeoClassColor, href=work_detail.archive_url, target="_blank") RoMEO: #{romeo.publisher.romeocolour[0]}
+          if romeo
+            +romeocolor(romeo.publisher.romeocolour[0])
+            a(class="btn waves-effect waves-light lighten-1 romeo-detail local-avail " + romeoClassColor, href="#romeo") RoMEO: #{romeo.publisher.romeocolour[0]}
 
       div.col.s12.m7
         table
