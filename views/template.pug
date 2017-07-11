@@ -27,7 +27,7 @@ html
       nav.blue.darken-4
         div.nav-wrapper
           a.brand-logo(href="/")
-            img(src=appconf.logo, alt=appconf.appname)
+            img(src=appconf.images.logo, alt=appconf.appname)
           a.button-collapse(href="#", data-activates="mobile-menu")
             i.material-icons menu
           ul#nav-mobile.right.hide-on-med-and-down
@@ -53,11 +53,11 @@ html
 
     header.row
       div.col.s12.m7
-        p.tagline= appconf.tagline
+        p.tagline= appconf.customtext.tagline
       div.col.s12.m5(style="margin-top: 10px")
         form#searchform(method="get", action="/search")
           div.col.s10
-            input#search(type="search", required, placeholder=appconf.searchdeftext, name="terms")
+            input#search(type="search", required, placeholder=appconf.customtext.searchdeftext, name="terms")
           div.col.s1
             button.btn-floating.waves-effect.waves-light.blue.darken-4(type="submit")
               i.material-icons search
@@ -70,7 +70,7 @@ html
         p
           - var year = new Date().getFullYear()
           | &copy; #{year}, 
-          a.white-text(href=appconf.orgurl, target="_blank")= appconf.organization
+          a.white-text(href=appconf.appurls.orgurl, target="_blank")= appconf.customtext.organization
     
     script(type="text/javascript", src="/js/underscore-min.js")
     script(type="text/javascript", src="/js/script.js")

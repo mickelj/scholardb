@@ -4,6 +4,7 @@ const app = express();
 const nconf = require('nconf');
 const bodyparser = require('body-parser');
 const massive = require('massive');
+const errors = require('utils/errorHandler.js');
 
 // Initialize configuration
 nconf.file('env', 'config/environment.json');
@@ -37,6 +38,9 @@ app.use('/departments', departments);
 app.use('/publications', publications);
 app.use('/publishers', publishers);
 app.use('/search', search);
+app.use(errors.logErrors);
+app.use(errors.clientErrorHandler);
+app.use(errors.erroHandler);
 
 // Fire up the app
 app.listen(app.get('port'), function() {

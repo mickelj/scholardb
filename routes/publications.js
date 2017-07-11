@@ -54,8 +54,8 @@ function renderJournalList(req, res) {
   });
 
   res.render('publications', {
-    appconf: nconf.get('application'),
-    title: nconf.get('application:appname') + " - Journals",
+    appconf: nconf,
+    title: nconf.customtext.appname + " - Journals",
     journal_list: combJournals,
     cur_letter: cur_letter,
     letter_list: req.letter_list,
@@ -124,7 +124,7 @@ function getJournalWorksList (req, res, next) {
 
 function getRomeoDetails (req, res, next) {
   var nconf = req.app.get('nconf');
-  var romeourl = nconf.get('application:romeourl') + nconf.get('application:romeoapikey');
+  var romeourl = nconf.romeo.romeourl') + nconf.get('application:romeoapikey');
 
   if (req.journal_detail.identifier_type === 'ISSN') {
     request.get(romeourl + '&issn=' + req.journal_detail.identifier, function(err, res, body) {
@@ -158,7 +158,7 @@ function getWorksImages (req, res, next) {
       return work.identifier ? work.identifier.replace(/-/g, '') : 'null';
     });
 
-    request.get(nconf.get('application:ccurlbase') + idents.join(','), function(err, res, body) {
+    request.get(nconf.images.covimgsrv + idents.join(','), function(err, res, body) {
       if (err) {
         return next(err);
       }
@@ -185,8 +185,8 @@ function renderJournalDetail(req, res) {
   var offset = (cur_page - 1) * limit;
 
   res.render('publication_detail', {
-    appconf: nconf.get('application'),
-    title: nconf.get('application:appname') + " - Journal: " + req.journal_detail.name,
+    appconf: nconf,
+    title: nconf.customtext.appname + " - Journal: " + req.journal_detail.name,
     journal: req.journal_detail,
     people: req.journal_people,
     works_list: req.journal_works_list,

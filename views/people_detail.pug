@@ -13,7 +13,7 @@ block content
   div.row.s12.hide-on-med-and-up
     div.valign-wrapper
       div.col.s3
-        img.responsive-img.circle(data-usertype=pers.user_type, src=appconf.imgrootdir + pers.image + appconf.defimgext, alt=pers.first_name + " " + pers.last_name)
+        img.responsive-img.circle(data-usertype=pers.user_type, src=appconf.appurls.imgrootdir + pers.image + appconf.images.defimgext, alt=pers.first_name + " " + pers.last_name)
       div.col.s9
         h4 #{pers.first_name} 
           if pers.middle_name
@@ -23,7 +23,7 @@ block content
   div.row
     div.col.hide-on-small-only.m3.z-depth-2.detail-profile-sidebar.person-profile-sidebar
       div.col.s3.m12.center-align
-        img.responsive-img.circle(data-usertype=pers.user_type, src=appconf.imgrootdir + pers.image + appconf.defimgext, alt=pers.first_name + " " + pers.last_name)
+        img.responsive-img.circle(data-usertype=pers.user_type, src=appconf.appurls.imgrootdir + pers.image + appconf.images.defimgext, alt=pers.first_name + " " + pers.last_name)
       if pers.pen_names.length
         div.col.s3.m12
           p.person-profile-section.blue.darken-4.white-text Published As
@@ -45,7 +45,7 @@ block content
               
       if coauthors.length
         div.col.s3.m12
-          p.person-profile-section.blue.darken-4.white-text #{appconf.orgshortname} Co-Authors
+          p.person-profile-section.blue.darken-4.white-text #{appconf.customtext.orgshortname} Co-Authors
           table.highlight
             each ca in coauthors
               tr

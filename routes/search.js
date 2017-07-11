@@ -131,8 +131,8 @@ function renderSearchResults (req, res) {
     res.redirect('/');
   } else {
     res.render('search', {
-      appconf: nconf.get('application'),
-      title: nconf.get('application:appname') + " - Search" + (query ? " Results for Terms: " + query : ""),
+      appconf: nconf,
+      title: nconf.customtext.appname + " - Search" + (query ? " Results for Terms: " + query : ""),
       terms: query,
       works: req.works_results,
       people: req.people_results,

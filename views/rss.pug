@@ -4,12 +4,12 @@ feed(xmlns='http://www.w3.org/2005/Atom')
   title= title
   link(href=feed_link, rel='self')
   author
-    name= appconf.organization
+    name= appconf.customtext.organization
   if feed_detail.length
     updated= moment(feed_detail[0].updated_at).toISOString()
   each work in feed_detail
     entry
-      - var worklink = appconf.appurl + "/works/" + work.id
+      - var worklink = appconf.appurls.apphome + "/works/" + work.id
       id= worklink
       title !{work.title}
       updated= moment(work.updated_at).toISOString()
@@ -24,12 +24,12 @@ feed(xmlns='http://www.w3.org/2005/Atom')
           p
             each con,idx in work.contributors
               if con.person_id
-                a(href=appconf.appurl + "/people/" + con.person_id)= con.display_name
+                a(href=appconf.appurls.apphome + "/people/" + con.person_id)= con.display_name
               else
                 | #{con.display_name}
               
               if idx < work.contributors.length - 1
                 | ; 
           p
-            a(href=appconf.appurl + "/publications/" + work.pubid)= work.pubname
+            a(href=appconf.appurls.apphome + "/publications/" + work.pubid)= work.pubname
             |  (#{work.year})

@@ -1,22 +1,34 @@
 {
-  "application": {
+  "customtext": {
     "organization"  : "Washington and Lee University Library",
     "orgshortname"  : "W&L",
-    "orgurl"        : "http://library.wlu.edu",
     "appname"       : "W&L Scholar",
-    "appurl"        : "https://scholarsdb.herokuapp.com/",
-    "logo"          : "/images/wlupubs_logo_white.png",
     "tagline"       : "Original scholarly works from the Washington and Lee University community",
+    "searchdeftext" : "Search for works, contributors, or publications"
+  },
+
+  "appurls": {
+    "apphome"       : "https://scholarsdb.herokuapp.com/",
     "imgrootdir"    : "https://scholarsdb.omeka.wlu.edu/",
+    "orgurl"        : "http://library.wlu.edu",
+    "catalogurl"    : "http://annie.wlu.edu/",
+    "linkresolver"  : "http://nw7pf8as2n.search.serialssolutions.com/"
+  },
+
+  "images": {
+    "logo"          : "/images/wlupubs_logo_white.png",
     "defimgext"     : ".jpg",
-    "searchdeftext" : "Search for works, contributors, or publications",
-    "ccurlbase"     : "https://scholarsdb-coce.herokuapp.com/cover?provider=ol,gb&id=",
-    "romeourl"      : "http://www.sherpa.ac.uk/romeo/api29.php?ak=",
-    "romeoapikey"   : "bEi1YdbpB6Y",
-    "linkresolver"  : "http://nw7pf8as2n.search.serialssolutions.com/",
     "fulltextimage" : "/images/findit.png",
+    "covimgsrv"     : "https://scholarsdb-coce.herokuapp.com/cover?provider=ol,gb&id="
+  },
+
+  "romeo": {
+    "romeourl"      : "http://www.sherpa.ac.uk/romeo/api29.php?ak=",
+    "romeoapikey"   : "bEi1YdbpB6Y"
+  },
+
+  "fulltext": {
     "booksearchtype": "catalog",
-    "catalogtype"   : "iii",
-    "catalogurl"    : "http://annie.wlu.edu/"
+    "catalogtype"   : "iii"
   }
 }
