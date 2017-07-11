@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const _ = require('underscore');
 const request = require('request');
+const xml2js = require('xml2js');
 
 function processFilters (req, res, next) {
   req.filters = req.query.filters ? JSON.parse(req.query.filters) : null;
