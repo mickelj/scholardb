@@ -12,15 +12,14 @@ block content
 
       div.row.moreinfo
         p.headline More Information
-        ul.romeo-detail
-          if journal.publisher_id 
-            li
-              div.col.s5
-                b Publisher:
-              div.col.s7 
-                a(href="/publishers/" + journal.publisher_id)= journal.publisher_name
+        if journal.publisher_id 
+          div.row
+            div.col.s5
+              b Publisher:
+            div.col.s7 
+              a(href="/publishers/" + journal.publisher_id)= journal.publisher_name
           if journal.identifier
-            li
+            div.row
               div.col.s5
                 b Identifier(s):
               div.col.s7
@@ -28,20 +27,18 @@ block content
                 if journal.alt_identifier
                   div= journal.alt_identifier
           if romeo && romeo.numhits > 0
-            li
-              div.header.active
-                div.col.s5: b RoMEO Color:
-                +romeocolor(romeo.publisher.romeocolour[0])
-                div(class="col s7 lighten-1 " + romeoClassColor)= romeo.publisher.romeocolour[0]
-              include romeo.pug
+            div.row
+              div.col.s5: b RoMEO Color:
+              +romeocolor(romeo.publisher.romeocolour[0])
+              div(class="col s7 lighten-1 " + romeoClassColor)= romeo.publisher.romeocolour[0]
+            include romeo.pug
           else
             if journal.identifier_type === "ISSN"
-              li
-                div
-                  div.col.s5
-                    b Not found in RoMEO:
-                  div.col.s7
-                    a(href="http://www.sherpa.ac.uk/forms/new-journal.php?la=en&fIDnum=%7C&mode=simple&service-identifier=romeo&form-context-url=http%3A%2F%2Fwww.sherpa.ac.uk%2Fromeo%2Fsearch.php", target="_blank") Suggest addition to RoMEO database 
+              div.row
+                div.col.s5
+                  b Not found in RoMEO:
+                div.col.s7
+                  a(href="http://www.sherpa.ac.uk/forms/new-journal.php?la=en&fIDnum=%7C&mode=simple&service-identifier=romeo&form-context-url=http%3A%2F%2Fwww.sherpa.ac.uk%2Fromeo%2Fsearch.php", target="_blank") Suggest addition to RoMEO database 
 
 
     div.col.s12.m7.detail-works

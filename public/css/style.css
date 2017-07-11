@@ -349,14 +349,14 @@ input[type="search"] {
   padding: 1px 10px;
 }
 
-.moreinfo .romeo-detail {
+/*.moreinfo .romeo-detail {
   border-top: none;
   border-right: none;
   border-left: none;
   box-shadow: none;
 }
 
-.moreinfo .romeo-detail.header {
+.moreinfo .romeo-detail .header {
   line-height: inherit;
   padding: 0;
   border-bottom: none;
@@ -387,7 +387,7 @@ input[type="search"] {
 
 .moreinfo .romeo-detail .body ul.browser-default.restrictions {
   margin-top: 1em;
-}
+}*/
 
 .moreinfo .carousel {
   height: 555px !important;

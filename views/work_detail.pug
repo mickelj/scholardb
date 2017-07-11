@@ -94,10 +94,9 @@ block content
           img.z-depth-4(src=coverimage, alt="Cover Image for " + work_detail.work_title)
   
   if romeo      
-    div#romeo.modal.model-fixed-footer
+    div#romeo.modal.modal-fixed-footer
       div.modal-content
-        h4 #{work_detail.publication} (#{work_detail.identifier})
-        h5 #{work_detail.publisher}
+        p.headline #{work_detail.publication} (#{work_detail.publisher})
         include romeo.pug
       div.modal-footer
         a.modal-action.modal-close.waves-effect.waves-green.btn-flat(href="#!") OK
