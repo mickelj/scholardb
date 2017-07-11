@@ -4,7 +4,7 @@ const app = express();
 const nconf = require('nconf');
 const bodyparser = require('body-parser');
 const massive = require('massive');
-const errors = require('utils/errorHandler.js');
+const errors = require('./utils/errorHandler.js');
 
 // Initialize configuration
 nconf.file('env', 'config/environment.json');
