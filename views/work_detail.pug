@@ -14,17 +14,17 @@ block content
     div.row
       +buildSearchUrl(work_detail)
       if searchurl || work_detail.archive_url
-        div.col.s12.m1
+        div.col.s12.m3
           if work_detail.archive_url
-            a.btn-flat.waves-effect.waves-light.blue-text.text-darken-4.local-avail(href=work_detail.archive_url, target="_blank")
+            a.btn.waves-effect.waves-light.blue.darken-4.local-avail(href=work_detail.archive_url, target="_blank")
               i.material-icons.left move_to_inbox
               span= appconf.archive.buttontext
           if searchurl
-            a.btn-flat.waves-effect.waves-light.blue-text.text-darken-4.local-avail(href=searchurl, target="_blank")
+            a.btn.waves-effect.waves-light.blue.darken-4.local-avail(href=searchurl, target="_blank")
               i.material-icons.left library_books
               span= appconf.fulltext.buttontext
 
-      div.col.s12.m7.offset-m2
+      div.col.s12.m7
         table
           tr
             th.right-align Contributors:
