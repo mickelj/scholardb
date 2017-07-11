@@ -84,6 +84,10 @@ select.browser-default {
   font-size: 1rem;
 }
 
+.romeo-detail {
+  margin-top: 25px;
+}
+
 .local-avail.btn-flat {
   font-size: .8rem;
   text-transform: unset;
