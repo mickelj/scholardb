@@ -53,8 +53,8 @@ function renderPublisherList(req, res) {
   });
 
   res.render('publishers', {
-    appconf: nconf,
-    title: nconf.customtext.appname + " - Publishers",
+    appconf: nconf.get(),
+    title: nconf.get('customtext:appname') + " - Publishers",
     publisher_list: combPublishers,
     cur_letter: cur_letter,
     letter_list: req.letter_list,
@@ -139,7 +139,7 @@ function getWorksImages (req, res, next) {
     return work.identifier ? work.identifier.replace(/-/g, '') : 'null';
   });
 
-  request.get(nconf.images.covimgsrv + idents.join(','), function(err, res, body) {
+  request.get(nconf.get('images:covimgsrv') + idents.join(','), function(err, res, body) {
     if (err) {
       return next(err);
     }
@@ -163,8 +163,8 @@ function renderPublisherDetail(req, res) {
   var offset = (cur_page - 1) * limit;
 
   res.render('publisher_detail', {
-    appconf: nconf,
-    title: nconf.customtext.appname + " - Publisher: " + req.publisher_detail.name,
+    appconf: nconf.get(),
+    title: nconf.get('customtext:appname') + " - Publisher: " + req.publisher_detail.name,
     publisher: req.publisher_detail,
     pubsets: req.publication_sets,
     people: req.publisher_people,

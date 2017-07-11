@@ -157,7 +157,7 @@ function getWorksImages (req, res, next) {
     return work.identifier ? work.identifier.replace(/-/g, '') : 'null';
   });
 
-  request.get(nconf.images.covimgsrv + idents.join(','), function(err, res, body) {
+  request.get(nconf.get('images:covimgsrv') + idents.join(','), function(err, res, body) {
     if (err) {
       return next(err);
     }
@@ -182,8 +182,8 @@ function renderWorksList (req, res) {
   var offset = (cur_page - 1) * limit;
 
   res.render('works', {
-    appconf: nconf,
-    title: nconf.customtext.appname + " - Works",
+    appconf: nconf.get(),
+    title: nconf.get('customtext:appname') + " - Works",
     filter_worktypes: req.filter_worktypes,
     filter_deptworks: req.filter_deptworks,
     filter_peopleworks: req.filter_peopleworks,
@@ -221,7 +221,7 @@ function getSingleImage (req, res, next) {
   var wi = req.work_detail.identifier ? req.work_detail.identifier.replace(/-/g, '') : null;
 
   if (wi) {
-    request.get(nconf.images.covimgsrv + wi, function(err, res, body) {
+    request.get(nconf.get('images:covimgsrv') + wi, function(err, res, body) {
       if (err) {
         return next(err);
       }
@@ -244,8 +244,8 @@ function renderWorkDetail(req, res) {
   }
 
   res.render('work_detail', {
-    appconf: nconf,
-    title: nconf.customtext.appname + " - Work: " + req.work_detail.work_title,
+    appconf: nconf.get(),
+    title: nconf.get('customtext:appname') + " - Work: " + req.work_detail.work_title,
     work_detail: req.work_detail,
     coverimage: req.coverimage
   });
@@ -269,8 +269,8 @@ function renderRssFeed(req, res) {
   var nconf = req.app.get('nconf');
 
   res.render('rss', {
-    appconf: nconf,
-    title: nconf.customtext.appname + ": Latest Works",
+    appconf: nconf.get(),
+    title: nconf.get('customtext:appname') + ": Latest Works",
     feed_link: req.protocol + '://' + req.get('host') + req.originalUrl,
     feed_detail: req.feed_detail
   });

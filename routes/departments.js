@@ -53,8 +53,8 @@ function renderDeptList(req, res) {
   });
 
   res.render('departments', {
-    appconf: nconf,
-    title: nconf.customtext.appname + " - Departments",
+    appconf: nconf.get(),
+    title: nconf.get('customtext:appname') + " - Departments",
     dept_list: combDepts,
     cur_letter: cur_letter,
     letter_list: req.letter_list,
@@ -141,7 +141,7 @@ function getWorksImages (req, res, next) {
     return work.identifier ? work.identifier.replace(/-/g, '') : 'null';
   });
 
-  request.get(nconf.images.covimgsrv + idents.join(','), function(err, res, body) {
+  request.get(nconf.get('images:covimgsrv') + idents.join(','), function(err, res, body) {
     if (err) {
       return next(err);
     }
@@ -165,8 +165,8 @@ function renderDeptDetail(req, res) {
   var offset = (cur_page - 1) * limit;
 
   res.render('dept_detail', {
-    appconf: nconf,
-    title: nconf.customtext.appname + " - Department: " + req.dept_detail.group_name,
+    appconf: nconf.get(),
+    title: nconf.get('customtext:appname') + " - Department: " + req.dept_detail.group_name,
     dept: req.dept_detail,
     people: req.dept_people,
     works_list: req.dept_works_list,
@@ -213,8 +213,8 @@ function renderRssFeed(req, res) {
   var nconf = req.app.get('nconf');
 
   res.render('rss', {
-    appconf: nconf,
-    title: nconf.customtext.appname + ": " + req.group_name,
+    appconf: nconf.get(),
+    title: nconf.get('customtext:appname') + ": " + req.group_name,
     feed_link: req.protocol + '://' + req.get('host') + req.originalUrl,
     feed_detail: req.feed_detail
   });

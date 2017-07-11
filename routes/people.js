@@ -57,8 +57,8 @@ function renderPeopleList(req, res) {
   });
 
   res.render('people', {
-    appconf: nconf,
-    title: nconf.customtext.appname + " - People",
+    appconf: nconf.get(),
+    title: nconf.get('customtext:appname') + " - People",
     people_list: combPeople,
     cur_letter: cur_letter,
     letter_list: req.letter_list,
@@ -146,7 +146,7 @@ function getWorksImages (req, res, next) {
     return work.identifier ? work.identifier.replace(/-/g, '') : 'null';
   });
 
-  request.get(nconf.images.covimgsrv + idents.join(','), function(err, res, body) {
+  request.get(nconf.get('images:covimgsrv') + idents.join(','), function(err, res, body) {
     if (err) {
       return next(err);
     }
@@ -170,8 +170,8 @@ function renderPersonDetail(req, res) {
   var offset = (cur_page - 1) * limit;
 
   res.render('people_detail', {
-    appconf: nconf,
-    title: nconf.customtext.appname + " - Person: " + req.person_detail.last_name + ", " + req.person_detail.first_name + " " + req.person_detail.middle_name,
+    appconf: nconf.get(),
+    title: nconf.get('customtext:appname') + " - Person: " + req.person_detail.last_name + ", " + req.person_detail.first_name + " " + req.person_detail.middle_name,
     works_list: req.person_works_list,
     pers: req.person_detail,
     total_works: req.total_works,
@@ -218,8 +218,8 @@ function renderRssFeed(req, res) {
   var nconf = req.app.get('nconf');
 
   res.render('rss', {
-    appconf: nconf,
-    title: nconf.customtext.appname + ": " + req.person_name,
+    appconf: nconf.get(),
+    title: nconf.get('customtext.appname') + ": " + req.person_name,
     feed_link: req.protocol + '://' + req.get('host') + req.originalUrl,
     feed_detail: req.feed_detail
   });
