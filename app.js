@@ -40,7 +40,7 @@ app.use('/publishers', publishers);
 app.use('/search', search);
 app.use(errors.logErrors);
 app.use(errors.clientErrorHandler);
-app.use(errors.erroHandler);
+app.use(errors.errorHandler);
 
 // Fire up the app
 app.listen(app.get('port'), function() {
