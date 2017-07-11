@@ -307,6 +307,6 @@ function renderRssFeed(req, res) {
 
 router.get('/', processFilters, getWorkTypeCount, getDeptWorkCount, getPeopleWorkCount, getYearWorkCount, getPublicationWorkCount, getPublisherWorkCount, getWorksList, getWorksCount, getWorksImages, renderWorksList);
 router.get('/rss', getRssResults, renderRssFeed);
-router.get('/:id', getWorkDetail, getSingleImage, renderWorkDetail);
+router.get('/:id', getWorkDetail, getSingleImage, getRomeoDetails, renderWorkDetail);
 
 module.exports = router;
