@@ -25,7 +25,7 @@ block content
             a.btn.waves-effect.waves-light.blue.darken-4.local-avail(href=work_detail.archive_url, target="_blank")
               i.material-icons.left move_to_inbox
               span= appconf.archive.buttontext
-          if romeo
+          if romeo && romeo.numhits > 0
             +romeocolor(romeo.publisher.romeocolour[0])
             a(class="btn waves-effect waves-light black-text lighten-1 romeo-detail local-avail " + romeoClassColor, href="#romeo") RoMEO: #{romeo.publisher.romeocolour[0]}
 
@@ -93,9 +93,9 @@ block content
         div.col.s0.m2
           img.z-depth-4(src=coverimage, alt="Cover Image for " + work_detail.work_title)
   
-  if romeo      
+  if romeo && romeo.numhits > 0
     div#romeo.modal.modal-fixed-footer
-      div.modal-content
+      div.modal-content.moreinfo
         p.headline #{work_detail.publication} (#{work_detail.publisher})
         include romeo.pug
       div.modal-footer
