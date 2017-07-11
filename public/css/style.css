@@ -319,10 +319,6 @@ input[type="search"] {
   padding: 1px 10px;
 }
 
-.moreinfo > ul > li {
-  line-height: 2rem;
-}
-
 .moreinfo .collapsible {
   border-top: none;
   border-right: none;
@@ -338,7 +334,7 @@ input[type="search"] {
 
 .moreinfo .collapsible-body {
   padding: 0;
-  margin-top: 4em;
+  margin-top: 2.5em;
   line-height: initial;
 }
 
