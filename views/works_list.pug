@@ -63,11 +63,11 @@ div.col.s12.works
           +buildSearchUrl(work)
           if searchurl || work.archive_url
             div.card-action.right-align
-              if searchurl
-                a.btn-flat.waves-effect.waves-light.blue-text.text-darken-4.local-avail(href=searchurl, target="_blank")
-                  i.material-icons.left library_books
-                  span= appconf.fulltext.buttontext
               if work.archive_url
                 a.btn-flat.waves-effect.waves-light.blue-text.text-darken-4.local-avail(href=work.archive_url, target="_blank")
                   i.material-icons.left move_to_inbox
                   span= appconf.archive.buttontext
+              if searchurl
+                a.btn-flat.waves-effect.waves-light.blue-text.text-darken-4.local-avail(href=searchurl, target="_blank")
+                  i.material-icons.left library_books
+                  span= appconf.fulltext.buttontext

@@ -84,13 +84,6 @@ select.browser-default {
   font-size: 1rem;
 }
 
-.card .card-action a:not(.btn):not(.btn-large):not(.btn-large):not(.btn-floating):not(.btn-flat) {
-    color: #ffab40;
-    margin-right: 24px;
-    transition: color .3s ease;
-    text-transform: uppercase;
-}
-
 .local-avail {
   font-size: .8rem;
   text-transform: unset;
@@ -98,6 +91,7 @@ select.browser-default {
   height: 28px;
   line-height: 28px;
   margin-left: 10px;
+  margin-right: 0 !important;
 }
 
 .local-avail.btn-flat i {

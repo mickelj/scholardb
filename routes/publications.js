@@ -126,7 +126,7 @@ function getRomeoDetails (req, res, next) {
   var nconf = req.app.get('nconf');
   var romeourl = nconf.get('romeo:romeourl') + nconf.get('romeo:romeoapikey');
 
-  if (req.journal_detail.identifier_type === 'ISSN') {
+  if (req.journal_detail.identifier_type && req.journal_detail.identifier_type === 'ISSN') {
     request.get(romeourl + '&issn=' + req.journal_detail.identifier, function(err, res, body) {
       if (err) {
         return next(err);
@@ -153,7 +153,7 @@ function getRomeoDetails (req, res, next) {
 function getWorksImages (req, res, next) {
   var nconf = req.app.get('nconf');
 
-  if (req.journal_detail.identifier_type.startsWith('ISBN')) {
+  if (req.journal_detail.identifier_type && req.journal_detail.identifier_type.startsWith('ISBN')) {
     var idents = _.map(req.journal_works_list, function(work) {
       return work.identifier ? work.identifier.replace(/-/g, '') : 'null';
     });

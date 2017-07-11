@@ -30,7 +30,7 @@
   "fulltext": {
     "booksearchtype": "catalog",
     "catalogtype"   : "iii",
-    "buttontext"    : "Link to FULL TEXT"
+    "buttontext"    : "Check Library Holdings"
   },
 
   "archive": {
