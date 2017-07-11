@@ -34,7 +34,7 @@ function getWorksImages (req, res, next) {
     return work.identifier ? work.identifier.replace(/-/g, '') : 'null';
   });
 
-  request.get(nconf.images.covimgsrv + idents.join(','), function(err, res, body) {
+  request.get(nconf.get('images:covimgsrv') + idents.join(','), function(err, res, body) {
     if (err) {
       return next(err);
     }
@@ -56,7 +56,7 @@ function renderHomePage(req, res) {
     people: req.scholars,
     works_list: req.works,
     appconf: nconf,
-    title: nconf.customtext.appname + " - Home",
+    title: nconf.get('customtext:appname') + " - Home",
     index: true
   });
 }
