@@ -130,7 +130,7 @@ function getCoauthors(req, res, next) {
   var db = req.app.get('db');
   var person_id = req.params.id;
 
-  db.run("SELECT person_id as id, (last_name || ', ' || first_name) as name, count(works.id) FROM works, JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) JOIN people on person_id = people.id WHERE contributors @> '[{\"person_id\": $1}]' GROUP BY person_id, last_name, first_name ORDER BY last_name ASC, first_name ASC", [person_id], function(err, results) {
+  db.run("SELECT person_id as id, (last_name || ', ' || first_name) as name, count(works.id) FROM works, JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) JOIN people on person_id = people.id WHERE contributors @> '[{\"person_id\": " + person_id + "}]' GROUP BY person_id, last_name, first_name ORDER BY last_name ASC, first_name ASC", [person_id], function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
