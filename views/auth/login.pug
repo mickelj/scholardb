@@ -2,8 +2,11 @@ extends ../template
 
 block content
   if error
-    script(type='text/javascript').
-      $(document).ready(function() { Materialize.toast(#{error}, 4000) })
+    div#error.modal
+      div.modal-content
+        p= error
+      div.modal-footer
+        a.modal-action.modal-close.waves-effect.waves-light(href='#!') Close
   div.row
     div.col.s12.m7.l5.offset-m2.offset-l3
       p.headline Login to #{appconf.customtext.appname}
@@ -25,3 +28,5 @@ block content
         div.col.s6.right-align
           button.btn.blue.darken-4(type="submit") Login 
             i.material-icons.right check_circle
+  
+  script $('#error').modal('open')
