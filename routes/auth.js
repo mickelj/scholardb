@@ -6,7 +6,7 @@ const passport = require('../utils/passport-local');
 router.get('/login', (req, res) => {
   res.render('auth/login', {
     appconf: req.app.get('nconf').get(),
-    error: req.flash('message')
+    error: req.flash('error')
   });
 });
 
