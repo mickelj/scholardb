@@ -16,8 +16,9 @@ router.post('/login', authHelpers.loginRedirect, (req, res, next) => {
     if (err) res.status(500).send('Error in passort local authentication module');
     if (!user) res.redirect('/auth/login');
     if (user) {
-      req.logIn(user, function(err) {
-        console.log('made it to the login');
+      console.log('made it to BEFORE the login');
+
+      req.login(user, function(err) {
         if (err) res.status(500).send('Error logging in');
         req.session.save( (err) => {
           if (err) return next(err);
