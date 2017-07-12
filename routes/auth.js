@@ -4,6 +4,7 @@ const authHelpers = require('../utils/passport-helpers');
 const passport = require('../utils/passport-local');
 
 router.get('/login', (req, res) => {
+  console.log("Flash: " + req.flash('error'));
   res.render('auth/login', {
     appconf: req.app.get('nconf').get(),
     error: req.flash('error')

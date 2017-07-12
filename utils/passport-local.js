@@ -12,6 +12,7 @@ init();
 passport.use(new LocalStrategy(options, (username, password, done) => {
   //check to see if the username exists
   db.people.findOne({email : username}, function(err, user) {
+    console.log('User: ' + user);
     if (err) return done(err);
     if (!user) return done(null, false, {message: 'Username not found'});
     if (!authHelpers.comparePass(password, user.password)) {
