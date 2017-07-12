@@ -5,31 +5,25 @@ const passport = require('../utils/passport-local');
 
 router.get('/login', (req, res) => {
   res.render('auth/login', {
-    appconf: req.app.get('nconf').get()
+    appconf: req.app.get('nconf').get(),
+    user: req.user,
+    error: req.flash('error')
   });
 });
 
-router.post('/login', authHelpers.loginRedirect, (req, res, next) => {
-  passport.authenticate('local', (err, user, info) => {
-    if (err) { handleResponse(res, 500, 'error'); }
-    if (!user) { handleResponse(res, 404, 'User not found'); }
-    if (user) {
-      req.login(user, function(err) {
-        if (err) { handleResponse(res, 500, 'error'); }
-        handleResponse(res, 200, 'success');
-      });
-    }
-  })(req, res, next);
+router.post('/login', authHelpers.loginRedirect, passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }), (req, res, next) => {
+  req.session.save( (err) => {
+    if (err) return next(err);
+    res.redirect('/user');
+  });
 });
 
 router.get('/logout', authHelpers.loginRequired, (req, res, next) => {
   req.logout();
-  handleResponse(res, 200, 'success');
-  res.redirect('/');
+  req.session.save( (err) => {
+    if (err) return next(err);
+    res.redirect('/');
+  });
 });
-
-function handleResponse(res, code, statusMsg) {
-  res.status(code).json({status: statusMsg});
-}
 
 module.exports = router;
