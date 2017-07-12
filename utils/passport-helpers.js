@@ -1,4 +1,5 @@
 const express = require('express');
+const app = express();
 const bcrypt = require('bcryptjs');
 const db = app.get('db');
 

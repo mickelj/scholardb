@@ -1,4 +1,5 @@
 const express = require('express');
+const app = express();
 const passport = require('passport');
 const db = app.get('db');
 

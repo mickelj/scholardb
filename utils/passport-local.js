@@ -1,4 +1,5 @@
 const express = require('express');
+const app = express();
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const authHelpers = require('./passport-helpers');
