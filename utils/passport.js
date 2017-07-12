@@ -3,7 +3,7 @@ const app = express();
 const passport = require('passport');
 const db = app.get('db');
 
-module.export = () => {
+module.exports = () => {
   passport.serializeUser((user, done) => {
     done(null, user.id);
   });
@@ -13,6 +13,6 @@ module.export = () => {
       if (err) done(err, null);
 
       done(null, user);
-    })
-  })
+    });
+  });
 }
