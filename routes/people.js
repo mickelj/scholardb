@@ -117,7 +117,7 @@ function getPublicationsCount(req, res, next) {
   var person_id = req.params.id;
 
   db.run("SELECT count(works.id), name, publications.id as id FROM works LEFT JOIN publications ON publications.id = works.publication_id, JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) WHERE identifier_type = 'ISSN' AND person_id = $1 GROUP BY publications.id, name ORDER BY count(works.id) DESC, name ASC", [person_id], function(err, results) {
-    if (err || !results.length) {
+    if (err) {
       return next(err);
     }
 
@@ -130,8 +130,8 @@ function getCoauthors(req, res, next) {
   var db = req.app.get('db');
   var person_id = req.params.id;
 
-  db.run("SELECT person_id as id, (last_name || ', ' || first_name) as name, count(works.id) FROM works, JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) JOIN people on person_id = people.id WHERE contributors @> '[{\"person_id\": " + person_id + "}]' GROUP BY person_id, last_name, first_name ORDER BY last_name ASC, first_name ASC", [person_id], function(err, results) {
-    if (err || !results.length) {
+  db.run("SELECT person_id as id, (last_name || ', ' || first_name) as name, count(works.id) FROM works, JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) JOIN people on person_id = people.id WHERE contributors @> '[{\"person_id\": " + person_id + "}]' GROUP BY person_id, last_name, first_name ORDER BY last_name ASC, first_name ASC", function(err, results) {
+    if (err) {
       return next(err);
     }
 
