@@ -19,10 +19,10 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.17.1",
+    "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.3",
     "express": "^4.14.1",
     "express-session": "^1.15.3",
-    "flash": "^1.1.0",
     "massive": "^2.6.0",
     "materialize": "^1.0.0",
     "materialize-css": "^0.99.0",

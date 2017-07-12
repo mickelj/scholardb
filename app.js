@@ -8,7 +8,7 @@ const cookieParser = require('cookie-parser');
 const massive = require('massive');
 const errors = require('./utils/errorHandler.js');
 const passport = require('passport');
-const flash = require('flash');
+const flash = require('connect-flash');
 
 // Initialize configuration
 nconf.file('env', 'config/environment.json');
