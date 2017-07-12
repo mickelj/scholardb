@@ -2,16 +2,25 @@ extends ../template
 
 block content
   div.row
-    div.col.s12
+    div.col.s12.m7.l5.offset-m2.offset-l3
       h4 Login to #{appconf.customtext.appname}
   div.row
-    form.col.s12(method="post", action="/auth/login")
+    form.col.s12.m7.l5.offset-m2.offset-l3(method="post", action="/auth/login")
       div.row
         div.input-field.col.s12
+          i.material-icons.prefix account_circle
           input#username.validate(type="text")
           label(for="username") Email
       div.row
         div.input-field.col.s12
+          i.material-icons.prefix security
           input#password.validate(type="password")
           label(for="password") Password
-            
+      div.row
+        div.col.s4
+          a.btn.red.darken-4(href="/") Cancel
+        div.col.s4.center-align
+          button.btn.grey(type="reset") Clear Form
+        div.col.s4.right-align
+          button.btn.blue.darken-4(type="submit") Login 
+            i.material-icons.right check_circle
