@@ -1,11 +1,11 @@
-extends template
+extends ../template
 
 block content
   div.row
     div.col.s12
       h4 Login to #{appconf.customtext.appname}
   div.row
-    form.col.s12(method="post", action="/login")
+    form.col.s12(method="post", action="/auth/login")
       div.row
         div.input-field.col.s12
           input#username.validate(type="text")
