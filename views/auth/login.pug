@@ -2,16 +2,16 @@ extends ../template
 
 block content
   if error
-    div#error.modal
+    div#error.modal.modal-fixed-footer
       div.modal-content
-        p= error
+        h4= error
       div.modal-footer
-        a.modal-action.modal-close.waves-effect.waves-light(href='#!') Close
+        a.btn-flat.modal-action.modal-close.waves-effect.waves-red(href='#!') Close
   div.row
-    div.col.s12.m7.l5.offset-m2.offset-l3
+    div.col.s12.m8.l6.offset-m2.offset-l3
       p.headline Login to #{appconf.customtext.appname}
   div.row
-    form.col.s12.m7.l5.offset-m2.offset-l3(method="post", action="/auth/login")
+    form.col.s12.m8.l6.offset-m2.offset-l3(method="post", action="/auth/login")
       div.row
         div.input-field.col.s12
           i.material-icons.prefix account_circle
@@ -24,10 +24,10 @@ block content
           label(for="password") Password
       p.row
         div.col.s6
-          button.btn.grey(type="reset") Clear Form
+          button.btn-flat.waves-effect.waves-red(type="reset") Clear Form
         div.col.s6.right-align
-          button.btn.blue.darken-4(type="submit") Login 
+          button.btn.blue.darken-4.waves-effect.waves-light(type="submit") Login 
             i.material-icons.right check_circle
   
-  if error
+  if error !== ''
     script $('#error').modal('open')
