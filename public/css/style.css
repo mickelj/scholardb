@@ -335,6 +335,10 @@ input[type="search"] {
   max-width: 180px;
 }
 
+.person-profile-sidebar .badge {
+  min-width: 4.5rem;
+}
+
 .person-profile-section {
   padding: 5px;
   border-radius: 2px;
