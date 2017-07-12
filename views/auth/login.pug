@@ -6,7 +6,7 @@ block content
       $(document).ready(function() { Materialize.toast(#{error}, 4000) })
   div.row
     div.col.s12.m7.l5.offset-m2.offset-l3
-      h4 Login to #{appconf.customtext.appname}
+      p.headline Login to #{appconf.customtext.appname}
   div.row
     form.col.s12.m7.l5.offset-m2.offset-l3(method="post", action="/auth/login")
       div.row
@@ -19,7 +19,7 @@ block content
           i.material-icons.prefix security
           input#password.validate(type="password")
           label(for="password") Password
-      div.row
+      p.row
         div.col.s6
           button.btn.grey(type="reset") Clear Form
         div.col.s6.right-align
