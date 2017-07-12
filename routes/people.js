@@ -105,40 +105,37 @@ function getPersonWorksList (req, res, next) {
       return next(err);
     }
 
-// NEED TO FIX PAGING PROBLEM AND WHY IDS ARE COMING UP 'undefined' IN FINAL PAGE
-
     req.person_works_list = results;
     req.works_count = results.length;
-    var pubcount = results.reduce(function (allPubs, pub) {
-      if (pub.pubid in allPubs && pub.identifier_type === 'ISSN') {
-        allPubs[pub.pubid].count++;
-      } else {
-        allPubs[pub.pubid] = {count: 1};
-        allPubs[pub.pubid].name = pub.publication;
-        allPubs[pub.pubid].id = pub.pubid;
-      }
-      return allPubs;
-    }, {});
-
-    req.publications_count = _.sortBy(pubcount, 'name');
-
-    var coauth_ids = [req.person_detail.person_id];
-    var coauthors = [];
-    for (var i = 0 ; i < results.length ; i++) {
-      for (var j = 0 ; j < results[i].contributors.length ; j++) {
-        if (results[i].contributors[j].person_id) {
-          if (coauth_ids.indexOf(results[i].contributors[j].person_id) == -1) {
-            coauth_ids.push(results[i].contributors[j].person_id);
-            coauthors.push({id: results[i].contributors[j].person_id, name: results[i].contributors[j].display_name});
-          }
-        }
-      }
-    }
-
-    req.coauthors = _.sortBy(coauthors, 'name');
 
     return next();
   });
+}
+
+function getPublicationsCount(req, res, next) {
+  var db = req.app.get('db');
+  var person_id = req.params.id;
+
+  db.run("SELECT count(works.id), name, publications.id as id FROM works LEFT JOIN publications ON publications.id = works.publication_id, JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) WHERE identifier_type = 'ISSN' AND person_id = $1 GROUP BY publications.id, name ORDER BY count(works.id) DESC, name ASC", [person_id], function(err, results) {
+    if (err || !results.length) {
+      return next(err);
+    }
+
+  req.publications_count = results;
+  return next();
+}
+
+function getCoauthors(req, res, next) {
+  var db = req.app.get('db');
+  var person_id = req.params.id;
+
+  db.run("SELECT person_id as id, (last_name || ', ' || first_name) as name, count(works.id) FROM works, JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) JOIN people on person_id = people.id WHERE contributors @> '[{\"person_id\": $1}]' GROUP BY person_id, last_name, first_name ORDER BY last_name ASC, first_name ASC", [person_id], function(err, results) {
+    if (err || !results.length) {
+      return next(err);
+    }
+
+  req.coauthors = results;
+  return next();
 }
 
 function getWorksImages (req, res, next) {
@@ -228,7 +225,7 @@ function renderRssFeed(req, res) {
 }
 
 router.get('/', getPeopleList, getPeopleWorkCount, getLetterPagerCounts, renderPeopleList);
-router.get('/:id', getPersonDetail, getPersonWorksCount, getPersonWorksList, getWorksImages, renderPersonDetail);
+router.get('/:id', getPersonDetail, getPersonWorksCount, getPersonWorksList, getPublicationsCount, getCoauthors, getWorksImages, renderPersonDetail);
 router.get('/:id/rss', getRssResults, getPersonName, renderRssFeed);
 
 module.exports = router;
