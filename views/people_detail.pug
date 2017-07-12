@@ -43,7 +43,8 @@ block content
                   td
                     a(href="/departments/" + dept.id)= dept.name
               
-      if coauthors.length
+      //- Coauthors other than self
+      if coauthors.length > 1
         div.col.s3.m12
           p.person-profile-section.blue.darken-4.white-text #{appconf.customtext.orgshortname} Co-Authors
           table.highlight
@@ -52,7 +53,7 @@ block content
                 tr
                   td
                     a(href="/people/" + ca.id)= ca.name
-                      span.new.badge.blue.darken-4(data-badge-caption=(ca.count > 1 ? "works" : "work")) #{ca.count}
+                      span.new.badge.blue.darken-1(data-badge-caption=(ca.count > 1 ? "works" : "work")) #{ca.count}
 
       div.col.s3.m12
         p.person-profile-section.blue.darken-4.white-text Journals

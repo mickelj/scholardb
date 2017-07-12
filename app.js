@@ -1,10 +1,14 @@
 // App-wide Dependencies
 const express = require('express');
+const session = require('express-session');
 const app = express();
 const nconf = require('nconf');
-const bodyparser = require('body-parser');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const massive = require('massive');
 const errors = require('./utils/errorHandler.js');
+const passport = require('passport');
+const flash = require('flash');
 
 // Initialize configuration
 nconf.file('env', 'config/environment.json');
@@ -12,12 +16,27 @@ nconf.file('database', 'config/database.json');
 const connectionString = (process.env.DATABASE_URL || nconf.get('database:connectionString'));
 const massiveInstance = massive.connectSync({connectionString: connectionString});
 app.set('port', (process.env.PORT || 5000));
-app.use(express.static(__dirname + '/public'));
-app.use('/materialize', express.static(__dirname + '/node_modules/materialize-css/dist'));
 app.set('views', __dirname + '/views');
 app.set('view engine', 'pug');
 app.set('db', massiveInstance);
 app.set('nconf', nconf);
+
+app.use(cookieParser());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(session({
+  secret: process.env.SECRET_AUTH_KEY,
+  resave: false,
+  saveUninitialized: true
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
+app.use(express.static(__dirname + '/public'));
+app.use('/materialize', express.static(__dirname + '/node_modules/materialize-css/dist'));
+app.use(errors.logErrors);
+app.use(errors.clientErrorHandler);
+app.use(errors.errorHandler);
 
 // Allow access to libraries in Pug templates
 app.locals._ = require("underscore");
@@ -31,6 +50,9 @@ const departments = require('./routes/departments');
 const publications = require('./routes/publications');
 const publishers = require('./routes/publishers');
 const search = require('./routes/search');
+const auth = require('./routes/auth');
+const admin = require('./routes/admin');
+const user = require('./routes/user');
 app.use('/', index);
 app.use('/works', works);
 app.use('/people', people);
@@ -38,9 +60,9 @@ app.use('/departments', departments);
 app.use('/publications', publications);
 app.use('/publishers', publishers);
 app.use('/search', search);
-app.use(errors.logErrors);
-app.use(errors.clientErrorHandler);
-app.use(errors.errorHandler);
+app.use('/auth', auth);
+app.use('/admin', admin);
+app.use('/user', user);
 
 // Fire up the app
 app.listen(app.get('port'), function() {
