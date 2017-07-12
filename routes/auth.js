@@ -4,7 +4,9 @@ const authHelpers = require('../utils/passport-helpers');
 const passport = require('../utils/passport-local');
 
 router.get('/login', (req, res) => {
-  res.render('auth/login');
+  res.render('auth/login', {
+    appconf: req.app.get('nconf').get();
+  });
 });
 
 router.post('/login', authHelpers.loginRedirect, (req, res, next) => {
