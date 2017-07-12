@@ -3,7 +3,7 @@ extends ../template
 block content
   if error
     script(type='text/javascript').
-      $(document).ready(function() { Materialize.toast(error, 4000) })
+      $(document).ready(function() { Materialize.toast(#{error}, 4000) })
   div.row
     div.col.s12.m7.l5.offset-m2.offset-l3
       h4 Login to #{appconf.customtext.appname}
