@@ -121,8 +121,9 @@ function getPublicationsCount(req, res, next) {
       return next(err);
     }
 
-  req.publications_count = results;
-  return next();
+    req.publications_count = results;
+    return next();
+  });
 }
 
 function getCoauthors(req, res, next) {
@@ -134,8 +135,9 @@ function getCoauthors(req, res, next) {
       return next(err);
     }
 
-  req.coauthors = results;
-  return next();
+    req.coauthors = results;
+    return next();
+  });
 }
 
 function getWorksImages (req, res, next) {
