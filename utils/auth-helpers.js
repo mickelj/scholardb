@@ -9,7 +9,7 @@ function comparePass(userPassword, dbPassword) {
 
 function loginRequired(req, res, next) {
   if (!req.user) {
-    req.flash({'error': 'Login is required to access this page.'});
+    req.flash('error', 'Login is required to access this page.');
     return res.redirect('/auth/login');
   }
   return next();
@@ -29,7 +29,7 @@ function adminRequired(req, res, next) {
 
 function loginRedirect(req, res, next) {
   if (req.user) {
-    req.flash({'error': 'You are already logged in.'});
+    req.flash('error', 'You are already logged in.');
     return res.redirect('/user');
   }
   return next();
