@@ -156,14 +156,12 @@ function getWorksImages (req, res, next) {
 
 function renderPersonDetail(req, res) {
   const util = require('util');
-  console.log(util.inspect(req.session, false, null));
+  console.log(util.inspect(req.user, false, null));
   var nconf = req.app.get('nconf');
   var limit = req.query.limit ? req.query.limit : 10;
   var page_count = Math.ceil(req.total_works / limit);
   var cur_page = req.query.page ? req.query.page : 1;
   var offset = (cur_page - 1) * limit;
-  var user = req.session.passport && req.session.passport.user.id ? req.session.passport.user.id : null;
-  var admin = req.session.passport && req.session.passport.user.admin ? req.session.passport.user.admin : null;
 
   res.render('people_detail', {
     appconf: nconf.get(),
@@ -177,9 +175,7 @@ function renderPersonDetail(req, res) {
     page_count: page_count,
     cur_page: cur_page,
     offset: offset,
-    cur_list: req.baseUrl + "/" + req.params.id,
-    user: user,
-    admin: admin
+    cur_list: req.baseUrl + "/" + req.params.id
   });
 }
 

@@ -7,7 +7,7 @@ const db = require('./db');
 const options = {};
 
 passport.serializeUser((user, done) => {
-  done(null, {'id' : user.id, 'admin' : user.admin});
+  done(null, user.id);
 });
 
 passport.deserializeUser((id, done) => {
