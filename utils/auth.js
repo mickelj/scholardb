@@ -5,14 +5,15 @@ const db = app.get('db');
 
 module.exports = () => {
   passport.serializeUser((user, done) => {
+    console.log('In serialize');
     done(null, user.id);
   });
 
   passport.deserializeUser((id, done) => {
-    db.people.findOne(id, function(err, user) {
+    console.log('In deserialize');
+    db.run("SELECT * FROM people WHERE id = $1", [id], function(err, results) {
       if (err) done(err, null);
-
-      done(null, user);
+      done(null, results[0]);
     });
   });
 }
