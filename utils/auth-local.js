@@ -7,9 +7,7 @@ const init = require('./auth');
 const db = app.get('db');
 const options = { usernameField: 'email', passwordField: 'password' };
 
-console.log('before init');
 init();
-console.log('after init');
 
 passport.use(new LocalStrategy(options, (username, password, done) => {
   console.log('username: ' + username + " | password: " + password);

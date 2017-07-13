@@ -12,16 +12,23 @@ router.get('/login', (req, res) => {
 });
 
 router.post('/login',  (req, res, next) => {
-  passport.authenticate('local', (err, user, info) => {
-    if (err) res.status(500).send('Error in passport local authentication module');
-    if (!user) res.redirect('/auth/login');
-    if (user) {
-      req.session.save( (err) => {
-        if (err) return next(err);
-        res.redirect('/user');
-      });
-    }
-  });
+  passport.authenticate('local',
+    authHelpers.loginRedirect,
+    {
+      successRedirect: '/user'
+      failureRedirect: '/auth/login'
+      failureFlash: true
+    });
+  // passport.authenticate('local', (err, user, info) => {
+  //   if (err) res.status(500).send('Error in passport local authentication module');
+  //   if (!user) res.redirect('/auth/login');
+  //   if (user) {
+  //     req.session.save( (err) => {
+  //       if (err) return next(err);
+  //       res.redirect('/user');
+  //     });
+  //   }
+  // });
 });
 
 router.get('/logout', authHelpers.loginRequired, (req, res, next) => {
