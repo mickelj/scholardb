@@ -18,8 +18,6 @@ passport.deserializeUser((id, done) => {
 });
 
 passport.use(new LocalStrategy(options, (username, password, done) => {
-  console.log(db);
-
   //check to see if the username exists
   db.run('SELECT * FROM people WHERE email = $1', [username], function(err, results) {
     var user = results[0];

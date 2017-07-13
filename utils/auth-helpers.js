@@ -1,14 +1,17 @@
 const express = require('express');
 const app = express();
 const bcrypt = require('bcryptjs');
-const db = app.get('db');
+const db = require('./db');
 
 function comparePass(userPassword, dbPassword) {
   return bcrypt.compareSync(userPassword, dbPassword);
 }
 
 function loginRequired(req, res, next) {
-  if (!req.user) return res.redirect('/auth/login');
+  if (!req.user) {
+    req.flash({'error': 'Login is required to access this page.'});
+    return res.redirect('/auth/login');
+  }
   return next();
 }
 
@@ -25,7 +28,10 @@ function adminRequired(req, res, next) {
 }
 
 function loginRedirect(req, res, next) {
-  if (req.user) return res.status(401).json({status: 'You are already logged in.'});
+  if (req.user) {
+    req.flash({'error': 'You are already logged in.'});
+    return res.redirect('/user');
+  }
   return next();
 }
 
