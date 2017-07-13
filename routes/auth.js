@@ -2,10 +2,12 @@ const express = require('express');
 const router = express.Router();
 const authHelpers = require('../utils/auth-helpers');
 const passport = require('../utils/auth-local');
+const db = require('../utils/db');
+const nconf = require('../utils/nconf');
 
 router.get('/login', authHelpers.loginRedirect, (req, res) => {
   res.render('auth/login', {
-    appconf: req.app.get('nconf').get(),
+    appconf: nconf.get(),
     error: req.flash('error')
   });
 });
