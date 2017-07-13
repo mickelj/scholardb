@@ -42,6 +42,8 @@ function getLetterPagerCounts (req, res, next) {
 }
 
 function renderDeptList(req, res) {
+  var nconf = req.app.get('nconf');
+
   var cur_letter = req.query.page ? req.query.page : "A";
 
   var combDepts = _.map(req.dept_list, function(dept) {
@@ -49,8 +51,6 @@ function renderDeptList(req, res) {
   });
 
   res.render('departments', {
-    var nconf = req.app.get('nconf');
-
     appconf: nconf.get(),
     title: nconf.get('customtext:appname') + " - Departments",
     dept_list: combDepts,
