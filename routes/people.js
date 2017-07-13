@@ -162,6 +162,8 @@ function renderPersonDetail(req, res) {
   var page_count = Math.ceil(req.total_works / limit);
   var cur_page = req.query.page ? req.query.page : 1;
   var offset = (cur_page - 1) * limit;
+  var user = req.session.passport && req.session.passport.user.id ? req.session.passport.user.id : null;
+  var admin = req.session.passport && req.session.passport.user.admin ? req.session.passport.user.admin : null;
 
   res.render('people_detail', {
     appconf: nconf.get(),
@@ -175,7 +177,9 @@ function renderPersonDetail(req, res) {
     page_count: page_count,
     cur_page: cur_page,
     offset: offset,
-    cur_list: req.baseUrl + "/" + req.params.id
+    cur_list: req.baseUrl + "/" + req.params.id,
+    user: user,
+    admin: admin
   });
 }
 
