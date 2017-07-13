@@ -7,11 +7,13 @@ const cookieParser = require('cookie-parser');
 const errors = require('./utils/errorHandler');
 const passport = require('passport');
 const flash = require('connect-flash');
+const nconf = require('./utils/nconf');
 
 // Initialize configuration
 app.set('port', (process.env.PORT || 5000));
 app.set('views', __dirname + '/views');
 app.set('view engine', 'pug');
+app.set('nconf', nconf);
 
 app.use(cookieParser());
 app.use(bodyParser.json());
