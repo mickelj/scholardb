@@ -2,11 +2,11 @@ extends ../template
 
 block content
   if error.length
-    div#error.modal.modal-fixed-footer
+    div#error.modal.bottom-sheet
       div.modal-content
+        a.btn-floating.modal-action.modal-close.red.right(href='#!') 
+          i.material-icons close
         h4= error
-      div.modal-footer
-        a.btn-flat.modal-action.modal-close.waves-effect.waves-red(href='#!') Close
   div.row
     div.col.s12.m8.l6.offset-m2.offset-l3
       p.headline Login to #{appconf.customtext.appname}
@@ -30,5 +30,5 @@ block content
             i.material-icons.right check_circle
   
   if error.length
-    //- script $('#error').modal('open')
-    script console.log('#{error}')
+    script $('#error').modal('open')
+    //- script console.log('#{error}')

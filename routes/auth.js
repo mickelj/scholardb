@@ -29,6 +29,7 @@ router.post('/login', authHelpers.loginRedirect, (req, res, next) => {
 
 router.get('/logout', authHelpers.loginRequired, (req, res) => {
   req.logout();
+  req.session.flash = [];
   req.session.save( (err) => {
     if (err) return err;
     res.redirect('/');
