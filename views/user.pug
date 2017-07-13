@@ -2,4 +2,22 @@ extends template
 
 block content
   div.row
-    div.col.s12 #{user.first_name} #{user.last_name}
+    div.col.s12
+      h4 #{appconf.customtext.appname} Profile for: #{user.first_name}
+        if user.middle_name
+          |  #{user.middle_name}
+        |  #{user.last_name}
+  
+  div.row
+    div.col.s5
+      div.collection
+        a.collection-item(href="/user/work") Add/Update a Work
+        a.collection-item(href="/user/personal-info") Update Personal/Professional Information
+        a.collection-item(href="/user/penname") Add Pen Name
+        a.collection-item(href="/user/photo") Add/Update Photograph
+        a.collection-item(href="/user/departments") Update Department/Program Membership
+        a.collection-item(href="/people/" + user.id) View #{appconf.customtext.appname} Page
+        
+    div.col.s7
+      This is where the action will happen
+        
