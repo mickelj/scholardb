@@ -380,6 +380,11 @@ input[type="search"] {
   margin-right: 1em;
 }
 
+.modal.bottom-sheet {
+  min-height: 30%;
+  max-height: 50%;
+}
+
 @media screen and (min-width: 1201px) {
   .xl0 {
     display: none;
