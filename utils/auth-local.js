@@ -5,8 +5,6 @@ const LocalStrategy = require('passport-local').Strategy;
 const authHelpers = require('./auth-helpers');
 const options = {};
 
-console.log(db);
-
 passport.serializeUser((user, done) => {
   done(null, user.id);
 });
@@ -20,6 +18,8 @@ passport.deserializeUser((id, done) => {
 
 passport.use(new LocalStrategy(options, (username, password, done) => {
   var db = app.get('db');
+  console.log(db);
+
   //check to see if the username exists
   db.run('SELECT * FROM people WHERE email = $1', [username], function(err, results) {
     var user = results[0];
