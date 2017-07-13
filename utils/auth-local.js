@@ -5,7 +5,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const authHelpers = require('./auth-helpers');
 const init = require('./auth');
 const db = app.get('db');
-const options = { usernameField: 'email', passwordField: 'password' };
+const options = {};
 
 init();
 

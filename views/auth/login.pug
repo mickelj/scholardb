@@ -15,12 +15,12 @@ block content
       div.row
         div.input-field.col.s12
           i.material-icons.prefix account_circle
-          input#username.validate(type="text")
+          input#username.validate(type="text", name="username")
           label(for="username") Email
       div.row
         div.input-field.col.s12
           i.material-icons.prefix security
-          input#password.validate(type="password")
+          input#password.validate(type="password", name="password")
           label(for="password") Password
       p.row
         div.col.s6
@@ -31,4 +31,4 @@ block content
   
   if error
     //- script $('#error').modal('open')
-    script console.log(error)
+    script console.log(#{error})
