@@ -11,19 +11,10 @@ router.get('/login', authHelpers.loginRedirect, (req, res) => {
   });
 });
 
-router.post('/login',
-  authHelpers.loginRedirect,
-  passport.authenticate('local',
-    {
-      failureRedirect:  '/auth/login',
-      failureFlash:     true
-    }
-  ),
-  (req, res) => {
-    req.session.save( (err) => {
-      if (err) return err;
-      res.redirect('/user');
-    });
+router.post('/login', authHelpers.loginRedirect, passport.authenticate('local', { failureRedirect:  '/auth/login', failureFlash:     true }), (req, res) => {
+  req.session.save( (err) => {
+    if (err) return err;
+    res.redirect('/user');
   });
 });
 
