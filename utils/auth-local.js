@@ -3,18 +3,15 @@ const app = express();
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const authHelpers = require('./auth-helpers');
-const db = app.get('db');
 const options = {};
 
 console.log(db);
 
 passport.serializeUser((user, done) => {
-  console.log('In serialize');
   done(null, user.id);
 });
 
 passport.deserializeUser((id, done) => {
-  console.log('In deserialize');
   db.run("SELECT * FROM people WHERE id = $1", [id], function(err, results) {
     if (err) done(err, null);
     done(null, results[0]);
@@ -22,7 +19,7 @@ passport.deserializeUser((id, done) => {
 });
 
 passport.use(new LocalStrategy(options, (username, password, done) => {
-  console.log('username: ' + username + " | password: " + password);
+  var db = app.get('db');
   //check to see if the username exists
   db.run('SELECT * FROM people WHERE email = $1', [username], function(err, results) {
     var user = results[0];
