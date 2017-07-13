@@ -7,7 +7,20 @@ const init = require('./auth');
 const db = app.get('db');
 const options = {};
 
-init();
+console.log(db);
+
+passport.serializeUser((user, done) => {
+  console.log('In serialize');
+  done(null, user.id);
+});
+
+passport.deserializeUser((id, done) => {
+  console.log('In deserialize');
+  db.run("SELECT * FROM people WHERE id = $1", [id], function(err, results) {
+    if (err) done(err, null);
+    done(null, results[0]);
+  });
+});
 
 passport.use(new LocalStrategy(options, (username, password, done) => {
   console.log('username: ' + username + " | password: " + password);

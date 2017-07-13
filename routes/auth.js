@@ -3,7 +3,7 @@ const router = express.Router();
 const authHelpers = require('../utils/auth-helpers');
 const passport = require('../utils/auth-local');
 
-router.get('/login', authHelpers.loginRedirect, (req, res, next) => {
+router.get('/login', authHelpers.loginRedirect, (req, res) => {
   console.log("Flash: " + req.flash('error'));
   res.render('auth/login', {
     appconf: req.app.get('nconf').get(),
@@ -13,24 +13,24 @@ router.get('/login', authHelpers.loginRedirect, (req, res, next) => {
 
 router.post('/login',
   authHelpers.loginRedirect,
-  (req, res, next) => {
-    passport.authenticate('local',
-      {
-        failureRedirect:  '/auth/login',
-        failureFlash:     true
-      },
-      (err, user, info) => {
-        req.session.save( (err) => {
-          if (err) return next(err);
-          res.redirect('/user');
-        });
-      });
+  passport.authenticate('local',
+    {
+      failureRedirect:  '/auth/login',
+      failureFlash:     true
+    }
+  ),
+  (req, res) => {
+    req.session.save( (err) => {
+      if (err) return err;
+      res.redirect('/user');
+    });
+  });
 });
 
-router.get('/logout', authHelpers.loginRequired, (req, res, next) => {
+router.get('/logout', authHelpers.loginRequired, (req, res) => {
   req.logout();
   req.session.save( (err) => {
-    if (err) return next(err);
+    if (err) return err;
     res.redirect('/');
   });
 });
