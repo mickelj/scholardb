@@ -2,9 +2,10 @@ const express = require('express');
 const _ = require('underscore');
 const router = express.Router();
 const request = require('request');
+const db = require('../utils/db');
+const nconf = require('../utils/nconf');
 
 function getPeopleList(req, res, next) {
-  var db = req.app.get('db');
   var page = req.query.page ? req.query.page : "A";
 
   db.run("SELECT p.id as person_id, first_name, middle_name, last_name, UPPER(LEFT(last_name, 1)) as first_letter, image_url as image, user_type, jsonb_agg(g) as memberships FROM people p LEFT JOIN LATERAL (select id, name, sort_name from groups join memberships m on groups.id = m.group_id where hidden = false AND m.people_id = p.id order by sort_name) g ON TRUE WHERE last_name LIKE $1 GROUP BY p.id, first_name, last_name, first_letter, image_url ORDER BY last_name, first_name", [page + "%"], function(err, results) {
@@ -22,7 +23,6 @@ function getPeopleList(req, res, next) {
 }
 
 function getPeopleWorkCount (req, res, next) {
-  var db = req.app.get('db');
   var page = req.query.page ? req.query.page : "A";
 
   db.run("SELECT person_id, COUNT(works.id) AS cnt FROM works, JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) LEFT JOIN people p on person_id = p.id GROUP BY person_id", function(err, results) {
@@ -36,8 +36,6 @@ function getPeopleWorkCount (req, res, next) {
 }
 
 function getLetterPagerCounts (req, res, next) {
-  var db = req.app.get('db');
-
   db.run("SELECT UPPER(LEFT(last_name, 1)) as first_letter, count(*) FROM people p GROUP BY first_letter ORDER BY first_letter", function(err, results) {
     if (err || !results.length) {
       return next(err);
@@ -49,7 +47,6 @@ function getLetterPagerCounts (req, res, next) {
 }
 
 function renderPeopleList(req, res) {
-  var nconf = req.app.get('nconf');
   var cur_letter = req.query.page ? req.query.page : "A";
 
   var combPeople = _.map(req.people_list, function(person) {
@@ -67,7 +64,6 @@ function renderPeopleList(req, res) {
 }
 
 function getPersonDetail (req, res, next) {
-  var db = req.app.get('db');
   var person_id = req.params.id;
 
   db.run("SELECT p.id as person_id, first_name, middle_name, last_name, image_url as image, user_type, jsonb_agg(g) as memberships, pn.pen_names FROM people p LEFT JOIN LATERAL (select jsonb_agg(display_name) as pen_names from pennames where people_id = p.id) pn ON TRUE LEFT JOIN LATERAL (select id, name, sort_name from groups join memberships m on groups.id = m.group_id where hidden = false AND m.people_id = p.id order by sort_name) g ON TRUE WHERE p.id = $1 GROUP BY p.id, first_name, last_name, image_url, user_type, pn.pen_names ORDER BY last_name, first_name", [person_id], function(err, results) {
@@ -81,7 +77,6 @@ function getPersonDetail (req, res, next) {
 }
 
 function getPersonWorksCount(req, res, next) {
-  var db = req.app.get('db');
   var person_id = req.params.id;
 
   db.run("SELECT count(*) as total_works FROM works, JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) WHERE person_id = $1", [person_id], function(err, results) {
@@ -95,7 +90,6 @@ function getPersonWorksCount(req, res, next) {
 }
 
 function getPersonWorksList (req, res, next) {
-  var db = req.app.get('db');
   var person_id = req.params.id;
   var limit = req.query.limit ? req.query.limit : 10;
   var offset = req.query.page ? (req.query.page - 1) * limit : 0;
@@ -113,7 +107,6 @@ function getPersonWorksList (req, res, next) {
 }
 
 function getPublicationsCount(req, res, next) {
-  var db = req.app.get('db');
   var person_id = req.params.id;
 
   db.run("SELECT count(works.id), name, publications.id as id FROM works LEFT JOIN publications ON publications.id = works.publication_id, JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) WHERE identifier_type = 'ISSN' AND person_id = $1 GROUP BY publications.id, name ORDER BY count(works.id) DESC, name ASC", [person_id], function(err, results) {
@@ -127,7 +120,6 @@ function getPublicationsCount(req, res, next) {
 }
 
 function getCoauthors(req, res, next) {
-  var db = req.app.get('db');
   var person_id = req.params.id;
 
   db.run("SELECT person_id as id, (last_name || ', ' || first_name) as name, count(works.id) FROM works, JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) JOIN people on person_id = people.id WHERE contributors @> '[{\"person_id\": " + person_id + "}]' GROUP BY person_id, last_name, first_name ORDER BY last_name ASC, first_name ASC", function(err, results) {
@@ -141,8 +133,6 @@ function getCoauthors(req, res, next) {
 }
 
 function getWorksImages (req, res, next) {
-  var nconf = req.app.get('nconf');
-
   var idents = _.map(req.person_works_list, function(work) {
     return work.identifier ? work.identifier.replace(/-/g, '') : 'null';
   });
@@ -164,7 +154,6 @@ function getWorksImages (req, res, next) {
 }
 
 function renderPersonDetail(req, res) {
-  var nconf = req.app.get('nconf');
   var limit = req.query.limit ? req.query.limit : 10;
   var page_count = Math.ceil(req.total_works / limit);
   var cur_page = req.query.page ? req.query.page : 1;
@@ -187,7 +176,6 @@ function renderPersonDetail(req, res) {
 }
 
 function getRssResults(req, res, next) {
-  var db = req.app.get('db');
   var person_id = req.params.id;
   var limit = req.query.limit ? req.query.limit : 10;
 
@@ -202,7 +190,6 @@ function getRssResults(req, res, next) {
 }
 
 function getPersonName(req, res, next) {
-  var db = req.app.get('db');
   var person_id = req.params.id;
 
   db.run("SELECT (coalesce(first_name,'') || ' ' || coalesce(middle_name,'') || ' ' || coalesce(last_name,'')) as name FROM people WHERE id = $1", [person_id], function(err, results) {
@@ -216,8 +203,6 @@ function getPersonName(req, res, next) {
 }
 
 function renderRssFeed(req, res) {
-  var nconf = req.app.get('nconf');
-
   res.render('rss', {
     appconf: nconf.get(),
     title: nconf.get('customtext:appname') + ": " + req.person_name,

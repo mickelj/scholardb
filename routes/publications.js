@@ -3,9 +3,10 @@ const _ = require('underscore');
 const router = express.Router();
 const request = require('request');
 const xml2js = require('xml2js');
+const db = require('../utils/db');
+const nconf = require('../utils/nconf');
 
 function getJournalList(req, res, next) {
-  var db = req.app.get('db');
   var page = req.query.page ? req.query.page : "A";
 
   db.run("SELECT j.id, j.name, publisher_id, p.name as publisher_name, identifier, alt_identifier FROM publications j LEFT JOIN publishers p ON j.publisher_id = p.id WHERE identifier_type = 'ISSN' AND j.sort_name LIKE $1 ORDER BY j.sort_name", [(page + "%").toLowerCase()], function(err, results) {
@@ -19,7 +20,6 @@ function getJournalList(req, res, next) {
 }
 
 function getJournalWorkCount (req, res, next) {
-  var db = req.app.get('db');
   var page = req.query.page ? req.query.page : "A";
 
   db.run("SELECT j.id, (select COUNT(works.id) from works where works.publication_id = j.id) AS cnt FROM publications j WHERE j.identifier_type = 'ISSN' AND j.sort_name LIKE $1", [(page + "%").toLowerCase()], function(err, results) {
@@ -33,8 +33,6 @@ function getJournalWorkCount (req, res, next) {
 }
 
 function getLetterPagerCounts (req, res, next) {
-  var db = req.app.get('db');
-
   db.run("SELECT UPPER(LEFT(sort_name, 1)) as first_letter, count(*) FROM publications WHERE identifier_type = 'ISSN' GROUP BY first_letter ORDER BY first_letter", function(err, results) {
     if (err || !results.length) {
       return next(err);
@@ -46,7 +44,6 @@ function getLetterPagerCounts (req, res, next) {
 }
 
 function renderJournalList(req, res) {
-  var nconf = req.app.get('nconf');
   var cur_letter = req.query.page ? req.query.page : "A";
 
   var combJournals = _.map(req.journal_list, function(journal) {
@@ -64,7 +61,6 @@ function renderJournalList(req, res) {
 }
 
 function getJournalDetail (req, res, next) {
-  var db = req.app.get('db');
   var journal_id = req.params.id;
 
   db.run("SELECT j.id, j.name, publisher_id, p.name as publisher_name, identifier_type, identifier, alt_identifier_type, alt_identifier FROM publications j LEFT JOIN publishers p ON j.publisher_id = p.id WHERE j.id = $1;", [journal_id], function(err, results) {
@@ -78,7 +74,6 @@ function getJournalDetail (req, res, next) {
 }
 
 function getJournalPeople (req, res, next) {
-  var db = req.app.get('db');
   var journal_id = req.params.id;
 
   db.run("SELECT person_id, first_name, last_name, image_url as image, user_type, count(works.id) FROM works, jsonb_to_recordset(works.contributors) AS w(person_id int) LEFT JOIN people p ON p.id = person_id WHERE publication_id = $1 AND active = true GROUP BY person_id, first_name, last_name, email, image_url, user_type ORDER BY last_name, first_name, image_url, user_type", [journal_id], function(err, results) {
@@ -92,7 +87,6 @@ function getJournalPeople (req, res, next) {
 }
 
 function getJournalAllWorkCount (req, res, next) {
-  var db = req.app.get('db');
   var journal_id = req.params.id;
 
   db.run("SELECT j.id, COUNT(works.id) AS cnt FROM publications j JOIN works ON j.id = works.publication_id WHERE j.id = $1 GROUP BY j.id", [journal_id], function(err, results) {
@@ -106,7 +100,6 @@ function getJournalAllWorkCount (req, res, next) {
 }
 
 function getJournalWorksList (req, res, next) {
-  var db = req.app.get('db');
   var journal_id = req.params.id;
   var limit = req.query.limit ? req.query.limit : 10;
   var offset = req.query.page ? (req.query.page - 1) * limit : 0;
@@ -123,7 +116,6 @@ function getJournalWorksList (req, res, next) {
 }
 
 function getRomeoDetails (req, res, next) {
-  var nconf = req.app.get('nconf');
   var romeourl = nconf.get('romeo:romeourl') + nconf.get('romeo:romeoapikey');
 
   if (req.journal_detail.identifier_type && req.journal_detail.identifier_type === 'ISSN') {
@@ -151,8 +143,6 @@ function getRomeoDetails (req, res, next) {
 }
 
 function getWorksImages (req, res, next) {
-  var nconf = req.app.get('nconf');
-
   if (req.journal_detail.identifier_type && req.journal_detail.identifier_type.startsWith('ISBN')) {
     var idents = _.map(req.journal_works_list, function(work) {
       return work.identifier ? work.identifier.replace(/-/g, '') : 'null';
@@ -178,7 +168,6 @@ function getWorksImages (req, res, next) {
 }
 
 function renderJournalDetail(req, res) {
-  var nconf = req.app.get('nconf');
   var limit = req.query.limit ? req.query.limit : 10;
   var page_count = Math.ceil(req.total_works / limit);
   var cur_page = req.query.page ? req.query.page : 1;

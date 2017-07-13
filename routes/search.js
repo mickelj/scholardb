@@ -2,9 +2,10 @@ const express = require('express');
 const _ = require('underscore');
 const router = express.Router();
 const request = require('request');
+const db = require('../utils/db');
+const nconf = require('../utils/nconf');
 
 function searchWorks(req, res, next) {
-  var db = req.app.get('db');
   var query = req.query.terms ? req.query.terms : null;
 
   if (query) {
@@ -28,7 +29,6 @@ function searchWorks(req, res, next) {
 }
 
 function searchPeople(req, res, next) {
-  var db = req.app.get('db');
   var query = req.query.terms ? req.query.terms : null;
 
   if (query) {
@@ -52,7 +52,6 @@ function searchPeople(req, res, next) {
 }
 
 function searchDepts(req, res, next) {
-  var db = req.app.get('db');
   var query = req.query.terms ? req.query.terms : null;
 
   if (query) {
@@ -76,7 +75,6 @@ function searchDepts(req, res, next) {
 }
 
 function searchPublications(req, res, next) {
-  var db = req.app.get('db');
   var query = req.query.terms ? req.query.terms : null;
 
   if (query) {
@@ -100,7 +98,6 @@ function searchPublications(req, res, next) {
 }
 
 function searchPublishers(req, res, next) {
-  var db = req.app.get('db');
   var query = req.query.terms ? req.query.terms : null;
 
   if (query) {
@@ -124,7 +121,6 @@ function searchPublishers(req, res, next) {
 }
 
 function renderSearchResults (req, res) {
-  var nconf = req.app.get('nconf');
   var query = req.query.terms ? req.query.terms : null;
 
   if (!query) {

@@ -2,9 +2,10 @@ const express = require('express');
 const _ = require('underscore');
 const router = express.Router();
 const request = require('request');
+const db = require('../utils/db');
+const nconf = require('../utils/nconf');
 
-function getDeptList(req, res, next) {
-  var db = req.app.get('db');
+functio../utils/../utils/n getDeptList(req, res, next) {
   var page = req.query.page ? req.query.page : "A";
 
   db.run("SELECT g.id as group_id, g.name as group_name, g.url, g.parent_id as parent_id, g2.name as parent_name FROM groups g LEFT JOIN groups g2 ON g.parent_id = g2.id WHERE g.sort_name LIKE $1 AND g.hidden = false ORDER BY g.sort_name", [(page + "%").toLowerCase()], function(err, results) {
@@ -18,7 +19,6 @@ function getDeptList(req, res, next) {
 }
 
 function getDeptMembersCount (req, res, next) {
-  var db = req.app.get('db');
   var page = req.query.page ? req.query.page : "A";
 
   db.run("SELECT g.id as group_id, count(p.id) as cnt FROM people p LEFT JOIN memberships m on p.id = m.people_id JOIN groups g on m.group_id = g.id WHERE g.name <> '' AND g.sort_name LIKE $1 AND g.hidden = false GROUP BY g.id, g.sort_name ORDER BY g.sort_name", [(page + "%").toLowerCase()], function(err, results) {
@@ -32,8 +32,6 @@ function getDeptMembersCount (req, res, next) {
 }
 
 function getLetterPagerCounts (req, res, next) {
-  var db = req.app.get('db');
-
   db.run("SELECT UPPER(LEFT(sort_name, 1)) as first_letter, count(*) FROM groups WHERE hidden = false GROUP BY first_letter ORDER BY first_letter", function(err, results) {
     if (err || !results.length) {
       return next(err);
@@ -45,7 +43,6 @@ function getLetterPagerCounts (req, res, next) {
 }
 
 function renderDeptList(req, res) {
-  var nconf = req.app.get('nconf');
   var cur_letter = req.query.page ? req.query.page : "A";
 
   var combDepts = _.map(req.dept_list, function(dept) {
@@ -63,7 +60,6 @@ function renderDeptList(req, res) {
 }
 
 function getDeptDetail (req, res, next) {
-  var db = req.app.get('db');
   var dept_id = req.params.id;
 
   db.run("SELECT g.id as group_id, g.name as group_name, g.url, g.parent_id as parent_id, g2.name as parent_name FROM groups g LEFT JOIN groups g2 ON g.parent_id = g2.id WHERE g.id = $1", [dept_id], function(err, results) {
@@ -77,7 +73,6 @@ function getDeptDetail (req, res, next) {
 }
 
 function getDeptPeople (req, res, next) {
-  var db = req.app.get('db');
   var dept_id = req.params.id;
 
   db.run("SELECT person_id, first_name, last_name, image_url as image, user_type, count(works.id) FROM works, jsonb_to_recordset(works.contributors) AS w(person_id int) LEFT JOIN people p ON p.id = person_id LEFT JOIN memberships m on p.id = m.people_id JOIN groups g on m.group_id = g.id WHERE g.hidden = false AND g.id = $1 AND active = true GROUP BY person_id, first_name, last_name, email, image_url, user_type ORDER BY last_name, first_name", [dept_id], function(err, results) {
@@ -91,7 +86,6 @@ function getDeptPeople (req, res, next) {
 }
 
 function getDeptWorksCount(req, res, next) {
-  var db = req.app.get('db');
   var dept_id = req.params.id;
 
   db.run("SELECT count(distinct works.id) as total_works FROM works, JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) LEFT JOIN people p ON person_id = p.id LEFT JOIN memberships m on p.id = m.people_id JOIN groups g on m.group_id = g.id WHERE g.hidden = false AND g.id = $1", [dept_id], function(err, results) {
@@ -105,7 +99,6 @@ function getDeptWorksCount(req, res, next) {
 }
 
 function getDeptWorksList (req, res, next) {
-  var db = req.app.get('db');
   var dept_id = req.params.id;
   var limit = req.query.limit ? req.query.limit : 10;
   var offset = req.query.page ? (req.query.page - 1) * limit : 0;
@@ -135,8 +128,6 @@ function getDeptWorksList (req, res, next) {
 }
 
 function getWorksImages (req, res, next) {
-  var nconf = req.app.get('nconf');
-
   var idents = _.map(req.dept_works_list, function(work) {
     return work.identifier ? work.identifier.replace(/-/g, '') : 'null';
   });
@@ -158,7 +149,6 @@ function getWorksImages (req, res, next) {
 }
 
 function renderDeptDetail(req, res) {
-  var nconf = req.app.get('nconf');
   var limit = req.query.limit ? req.query.limit : 10;
   var page_count = Math.ceil(req.total_works / limit);
   var cur_page = req.query.page ? req.query.page : 1;
@@ -181,7 +171,6 @@ function renderDeptDetail(req, res) {
 }
 
 function getRssResults(req, res, next) {
-  var db = req.app.get('db');
   var dept_id = req.params.id;
   var limit = req.query.limit ? req.query.limit : 10;
 
@@ -196,7 +185,6 @@ function getRssResults(req, res, next) {
 }
 
 function getGroupName(req, res, next) {
-  var db = req.app.get('db');
   var dept_id = req.params.id;
 
   db.run("SELECT name FROM groups WHERE id = $1", [dept_id], function(err, results) {
@@ -210,8 +198,6 @@ function getGroupName(req, res, next) {
 }
 
 function renderRssFeed(req, res) {
-  var nconf = req.app.get('nconf');
-
   res.render('rss', {
     appconf: nconf.get(),
     title: nconf.get('customtext:appname') + ": " + req.group_name,

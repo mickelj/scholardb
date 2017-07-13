@@ -2,9 +2,10 @@ const express = require('express');
 const _ = require('underscore');
 const router = express.Router();
 const request = require('request');
+const db = require('../utils/db');
+const nconf = require('../utils/nconf');
 
 function getRandomScholars(req, res, next) {
-  var db = req.app.get('db');
   db.run("SELECT person_id, first_name, last_name, image_url as image, user_type, count(works.id) FROM works, jsonb_to_recordset(works.contributors) AS w(person_id int) LEFT JOIN people p ON p.id = person_id WHERE active = true GROUP BY person_id, first_name, last_name, email, image_url, user_type HAVING count(works.id) > 2 ORDER BY random() LIMIT 12", function(err, results) {
     if (err || !results.length) {
       return next(err);
@@ -16,7 +17,6 @@ function getRandomScholars(req, res, next) {
 }
 
 function getRecentWorks(req, res, next) {
-  var db = req.app.get('db');
   db.run("SELECT works.id, description as work_type, title_primary as work_title, title_secondary, title_tertiary, contributors, publication_date_year as year, name as publication, publications.id as pubid, identifier, volume, issue, start_page, end_page FROM works JOIN publications ON publications.id = works.publication_id JOIN work_types USING (type) ORDER BY works.id DESC LIMIT 3;", function(err, results) {
     if (err || !results.length) {
       return next(err);
@@ -28,8 +28,6 @@ function getRecentWorks(req, res, next) {
 }
 
 function getWorksImages (req, res, next) {
-  var nconf = req.app.get('nconf');
-
   var idents = _.map(req.works, function(work) {
     return work.identifier ? work.identifier.replace(/-/g, '') : 'null';
   });
@@ -51,7 +49,6 @@ function getWorksImages (req, res, next) {
 }
 
 function renderHomePage(req, res) {
-  var nconf = req.app.get('nconf');
   res.render('index', {
     people: req.scholars,
     works_list: req.works,

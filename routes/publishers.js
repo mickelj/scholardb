@@ -2,9 +2,10 @@ const express = require('express');
 const _ = require('underscore');
 const router = express.Router();
 const request = require('request');
+const db = require('../utils/db');
+const nconf = require('../utils/nconf');
 
 function getPublisherList (req, res, next) {
-  var db = req.app.get('db');
   var page = req.query.page ? req.query.page : "A";
 
   db.run("SELECT id, name, url FROM publishers WHERE sort_name LIKE $1 ORDER BY sort_name", [page.toLowerCase() + "%"], function(err, results) {
@@ -18,7 +19,6 @@ function getPublisherList (req, res, next) {
 }
 
 function getPublisherWorkCount (req, res, next) {
-  var db = req.app.get('db');
   var page = req.query.page ? req.query.page : "A";
 
   db.run("SELECT pub.id, COUNT(works.id) as cnt FROM works LEFT JOIN publications j ON works.publication_id = j.id LEFT JOIN publishers pub ON j.publisher_id = pub.id WHERE pub.sort_name LIKE $1 GROUP BY pub.id ORDER BY pub.sort_name", [page.toLowerCase() + "%"], function (err, results) {
@@ -32,8 +32,6 @@ function getPublisherWorkCount (req, res, next) {
 }
 
 function getLetterPagerCounts (req, res, next) {
-  var db = req.app.get('db');
-
   db.run("SELECT UPPER(LEFT(sort_name, 1)) as first_letter, count(*) FROM publishers GROUP BY first_letter ORDER BY first_letter", function(err, results) {
     if (err || !results.length) {
       return next(err);
@@ -45,7 +43,6 @@ function getLetterPagerCounts (req, res, next) {
 }
 
 function renderPublisherList(req, res) {
-  var nconf = req.app.get('nconf');
   var cur_letter = req.query.page ? req.query.page : "A";
 
   var combPublishers = _.map(req.publisher_list, function(publisher) {
@@ -63,7 +60,6 @@ function renderPublisherList(req, res) {
 }
 
 function getPublisherDetail (req, res, next) {
-  var db = req.app.get('db');
   var publisher_id = req.params.id;
 
   db.run("SELECT pub.id, pub.name, pub.url, array_to_json(array_agg(j)) as publications FROM publishers pub LEFT JOIN LATERAL (select id, name, identifier, identifier_type, alt_identifier, alt_identifier_type from publications where publisher_id = pub.id order by sort_name) j ON TRUE WHERE pub.id = $1 GROUP BY pub.id, pub.name, pub.url", [publisher_id], function(err, results) {
@@ -88,7 +84,6 @@ function getPublisherDetail (req, res, next) {
 }
 
 function getPublisherPeople (req, res, next) {
-  var db = req.app.get('db');
   var publisher_id = req.params.id;
 
   db.run("SELECT person_id, first_name, last_name, image_url as image, user_type, count(works.id) FROM works LEFT JOIN publications j ON works.publication_id = j.id LEFT JOIN publishers pub ON j.publisher_id = pub.id, jsonb_to_recordset(works.contributors) AS w(person_id int) LEFT JOIN people p ON p.id = person_id WHERE pub.id = $1 AND p.active = true GROUP BY person_id, first_name, last_name, email, image_url, user_type ORDER BY last_name, first_name", [publisher_id], function(err, results) {
@@ -102,7 +97,6 @@ function getPublisherPeople (req, res, next) {
 }
 
 function getPublisherAllWorkCount (req, res, next) {
-  var db = req.app.get('db');
   var publisher_id = req.params.id;
 
   db.run("SELECT pub.id, COUNT(works.id) AS cnt FROM publishers pub JOIN publications j ON pub.id = j.publisher_id JOIN works ON j.id = works.publication_id WHERE pub.id = $1 GROUP BY pub.id", [publisher_id], function(err, results) {
@@ -116,7 +110,6 @@ function getPublisherAllWorkCount (req, res, next) {
 }
 
 function getPublisherWorksList (req, res, next) {
-  var db = req.app.get('db');
   var publisher_id = req.params.id;
   var limit = req.query.limit ? req.query.limit : 10;
   var offset = req.query.page ? (req.query.page - 1) * limit : 0;
@@ -133,8 +126,6 @@ function getPublisherWorksList (req, res, next) {
 }
 
 function getWorksImages (req, res, next) {
-  var nconf = req.app.get('nconf');
-
   var idents = _.map(req.publisher_works_list, function(work) {
     return work.identifier ? work.identifier.replace(/-/g, '') : 'null';
   });
@@ -156,7 +147,6 @@ function getWorksImages (req, res, next) {
 }
 
 function renderPublisherDetail(req, res) {
-  var nconf = req.app.get('nconf');
   var limit = req.query.limit ? req.query.limit : 10;
   var page_count = Math.ceil(req.total_works / limit);
   var cur_page = req.query.page ? req.query.page : 1;

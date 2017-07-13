@@ -3,6 +3,8 @@ const router = express.Router();
 const _ = require('underscore');
 const request = require('request');
 const xml2js = require('xml2js');
+const db = require('../utils/db');
+const nconf = require('../utils/nconf');
 
 function processFilters (req, res, next) {
   req.filters = req.query.filters ? JSON.parse(req.query.filters) : null;
@@ -38,7 +40,6 @@ function processFilters (req, res, next) {
 }
 
 function getWorkTypeCount (req, res, next) {
-  var db = req.app.get('db');
   var filters = req.sqlfilters ? req.sqlfilters : "TRUE";
 
   db.run("SELECT works.type as id, work_types.description AS fld, COUNT(distinct works.id) AS cnt FROM works LEFT JOIN publications ON publications.id = works.publication_id LEFT JOIN publishers ON publications.publisher_id = publishers.id LEFT JOIN work_types USING (type), JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) LEFT JOIN people on people.id = person_id LEFT JOIN memberships ON people.id = memberships.people_id LEFT JOIN groups ON memberships.group_id = groups.id WHERE " + filters + " GROUP BY works.type, work_types.description ORDER BY cnt DESC", function(err, results) {
@@ -52,7 +53,6 @@ function getWorkTypeCount (req, res, next) {
 }
 
 function getDeptWorkCount (req, res, next) {
-  var db = req.app.get('db');
   var filters = req.sqlfilters ? req.sqlfilters : "TRUE";
 
   db.run("SELECT groups.id, groups.name AS fld, COUNT(distinct works.id) AS cnt FROM works LEFT JOIN publications ON publications.id = works.publication_id LEFT JOIN publishers ON publications.publisher_id = publishers.id LEFT JOIN work_types USING (type), JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) JOIN people ON people.id = person_id LEFT JOIN memberships ON people.id = memberships.people_id LEFT JOIN groups ON memberships.group_id = groups.id WHERE " + filters + " AND groups.hidden = false GROUP BY groups.id, groups.name ORDER BY cnt DESC", function(err, results) {
@@ -66,7 +66,6 @@ function getDeptWorkCount (req, res, next) {
 }
 
 function getPeopleWorkCount (req, res, next) {
-  var db = req.app.get('db');
   var filters = req.sqlfilters ? req.sqlfilters : "TRUE";
 
   db.run("SELECT people.id, CONCAT_WS(', ', last_name, first_name) AS fld, COUNT(distinct works.id) AS cnt FROM works LEFT JOIN publications ON publications.id = works.publication_id LEFT JOIN publishers ON publications.publisher_id = publishers.id LEFT JOIN work_types USING (type), JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) JOIN people on people.id = person_id LEFT JOIN memberships ON people.id = memberships.people_id LEFT JOIN groups ON memberships.group_id = groups.id WHERE " + filters + " GROUP BY people.id, fld ORDER BY cnt DESC", function(err, results) {
@@ -80,7 +79,6 @@ function getPeopleWorkCount (req, res, next) {
 }
 
 function getYearWorkCount (req, res, next) {
-  var db = req.app.get('db');
   var filters = req.sqlfilters ? req.sqlfilters : "TRUE";
 
   db.run("SELECT publication_date_year AS id, publication_date_year AS fld, COUNT(distinct works.id) AS cnt FROM works LEFT JOIN publications ON publications.id = works.publication_id LEFT JOIN publishers ON publications.publisher_id = publishers.id LEFT JOIN work_types USING (type), JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) LEFT JOIN people on people.id = person_id LEFT JOIN memberships ON people.id = memberships.people_id LEFT JOIN groups ON memberships.group_id = groups.id WHERE " + filters + " GROUP BY publication_date_year ORDER BY publication_date_year DESC", function(err, results) {
@@ -94,7 +92,6 @@ function getYearWorkCount (req, res, next) {
 }
 
 function getPublicationWorkCount (req, res, next) {
-  var db = req.app.get('db');
   var filters = req.sqlfilters ? req.sqlfilters : "TRUE";
 
   db.run("SELECT publications.id, publications.name AS fld, COUNT(distinct works.id) AS cnt FROM works LEFT JOIN publications ON publications.id = works.publication_id LEFT JOIN publishers ON publications.publisher_id = publishers.id LEFT JOIN work_types USING (type), JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) LEFT JOIN people on people.id = person_id LEFT JOIN memberships ON people.id = memberships.people_id LEFT JOIN groups ON memberships.group_id = groups.id WHERE " + filters + " AND publications.name <> 'Unknown' GROUP BY publications.id, publications.name ORDER BY cnt DESC", function(err, results) {
@@ -108,7 +105,6 @@ function getPublicationWorkCount (req, res, next) {
 }
 
 function getPublisherWorkCount (req, res, next) {
-  var db = req.app.get('db');
   var filters = req.sqlfilters ? req.sqlfilters : "TRUE";
 
   db.run("SELECT publishers.id, publishers.name AS fld, COUNT(distinct works.id) AS cnt FROM works LEFT JOIN publications ON publications.id = works.publication_id LEFT JOIN publishers ON publications.publisher_id = publishers.id LEFT JOIN work_types USING (type), JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) LEFT JOIN people on people.id = person_id LEFT JOIN memberships ON people.id = memberships.people_id LEFT JOIN groups ON memberships.group_id = groups.id WHERE " + filters + " AND publishers.sort_name <> 'unknown' AND publications.sort_name <> 'unknown' GROUP BY publishers.id, publishers.name ORDER BY cnt DESC", function(err, results) {
@@ -122,7 +118,6 @@ function getPublisherWorkCount (req, res, next) {
 }
 
 function getWorksList(req, res, next) {
-  var db = req.app.get('db');
   var limit = req.query.limit ? req.query.limit : 10;
   var offset = req.query.page ? (req.query.page - 1) * limit : 0;
   var filters = req.sqlfilters ? req.sqlfilters : "TRUE";
@@ -138,7 +133,6 @@ function getWorksList(req, res, next) {
 }
 
 function getWorksCount(req, res, next) {
-  var db = req.app.get('db');
   var filters = req.sqlfilters ? req.sqlfilters : "TRUE";
 
   db.run("SELECT COUNT(DISTINCT works.id) as total_works FROM works LEFT JOIN publications ON publications.id = works.publication_id LEFT JOIN publishers ON publications.publisher_id = publishers.id LEFT JOIN work_types USING (type), JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) LEFT JOIN people on people.id = person_id LEFT JOIN memberships ON people.id = memberships.people_id LEFT JOIN groups ON memberships.group_id = groups.id WHERE " + filters, function(err, results) {
@@ -152,8 +146,6 @@ function getWorksCount(req, res, next) {
 }
 
 function getWorksImages (req, res, next) {
-  var nconf = req.app.get('nconf');
-
   var idents = _.map(req.works_list, function(work) {
     return work.identifier ? work.identifier.replace(/-/g, '') : 'null';
   });
@@ -175,8 +167,6 @@ function getWorksImages (req, res, next) {
 }
 
 function renderWorksList (req, res) {
-  var nconf = req.app.get('nconf');
-
   var limit = req.query.limit ? req.query.limit : 10;
   var page_count = Math.ceil(req.total_works / limit);
   var cur_page = req.query.page ? req.query.page : 1;
@@ -204,7 +194,6 @@ function renderWorksList (req, res) {
 }
 
 function getWorkDetail(req, res, next) {
-  var db = req.app.get('db');
   var work_id = req.params.id;
 
   db.run("SELECT works.id, title_primary as work_title, title_secondary, title_tertiary, description as work_type, contributors, publications.name as publication, publication_id as pubid, publishers.name as publisher, publishers.id as publisherid, publication_date_year as year, volume, issue, start_page, end_page, location, works.url, identifier, identifier_type, alt_identifier, alt_identifier_type, archive_url, archived_at FROM works LEFT JOIN publications ON publications.id = works.publication_id LEFT JOIN work_types USING (type) LEFT JOIN publishers ON publishers.id = publications.publisher_id WHERE works.id = $1", [work_id], function(err, results) {
@@ -218,7 +207,6 @@ function getWorkDetail(req, res, next) {
 }
 
 function getSingleImage (req, res, next) {
-  var nconf = req.app.get('nconf');
   var wi = req.work_detail.identifier ? req.work_detail.identifier.replace(/-/g, '') : null;
 
   if (wi) {
@@ -238,7 +226,6 @@ function getSingleImage (req, res, next) {
 }
 
 function getRomeoDetails (req, res, next) {
-  var nconf = req.app.get('nconf');
   var romeourl = nconf.get('romeo:romeourl') + nconf.get('romeo:romeoapikey');
 
   if (req.work_detail.identifier_type && req.work_detail.identifier_type === 'ISSN') {
@@ -266,8 +253,6 @@ function getRomeoDetails (req, res, next) {
 }
 
 function renderWorkDetail(req, res) {
-  var nconf = req.app.get('nconf');
-
   if (req.work_detail.url && req.work_detail.url.match(/^10/)) {
     req.work_detail.url = 'http://dx.doi.org/' + req.work_detail.url;
   }
@@ -282,7 +267,6 @@ function renderWorkDetail(req, res) {
 }
 
 function getRssResults(req, res, next) {
-  var db = req.app.get('db');
   var limit = req.query.limit ? req.query.limit : 10;
 
   db.run("SELECT DISTINCT works.id, title_primary as title, description as work_type, contributors, publications.name as pubname, publications.id as pubid, publication_date_year as year, works.updated_at, works.created_at FROM works JOIN publications ON publications.id = works.publication_id JOIN work_types USING (type) ORDER BY works.created_at DESC, works.id DESC LIMIT $1", [limit], function(err, results) {
@@ -296,8 +280,6 @@ function getRssResults(req, res, next) {
 }
 
 function renderRssFeed(req, res) {
-  var nconf = req.app.get('nconf');
-
   res.render('rss', {
     appconf: nconf.get(),
     title: nconf.get('customtext:appname') + ": Latest Works",

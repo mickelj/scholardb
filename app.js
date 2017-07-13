@@ -2,21 +2,16 @@
 const express = require('express');
 const session = require('express-session');
 const app = express();
-const nconf = require('nconf');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const errors = require('./utils/errorHandler');
 const passport = require('passport');
 const flash = require('connect-flash');
-const db = require('./utils/db');
 
 // Initialize configuration
-nconf.file('env', 'config/environment.json');
 app.set('port', (process.env.PORT || 5000));
 app.set('views', __dirname + '/views');
 app.set('view engine', 'pug');
-app.set('db', db);
-app.set('nconf', nconf);
 
 app.use(cookieParser());
 app.use(bodyParser.json());
