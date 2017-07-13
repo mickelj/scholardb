@@ -10,6 +10,8 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((id, done) => {
+  var db = req.app.get('db');
+
   db.run("SELECT * FROM people WHERE id = $1", [id], function(err, results) {
     if (err) done(err, null);
     done(null, results[0]);

@@ -11,11 +11,18 @@ router.get('/login', authHelpers.loginRedirect, (req, res) => {
   });
 });
 
-router.post('/login', authHelpers.loginRedirect, passport.authenticate('local', { failureRedirect:  '/auth/login', failureFlash:     true }), (req, res) => {
-  req.session.save( (err) => {
-    if (err) return err;
-    res.redirect('/user');
-  });
+router.post('/login', authHelpers.loginRedirect, (req, res, next) => {
+  passport.authenticate('local', (err, user, info) => {
+    if (err) return next(err);
+    if (!user) return res.redirect('/auth/login');
+    req.login(user, (err) => {
+      if (err) return next(err);
+      req.session.save( (err) => {
+        if (err) return next(err);
+        res.redirect('/user');
+      });
+    });
+  })(req, res, next);
 });
 
 router.get('/logout', authHelpers.loginRequired, (req, res) => {
