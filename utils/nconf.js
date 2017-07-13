@@ -1,4 +1,11 @@
 const nconf = require('nconf');
-nconf.file('env', '../config/environment.json');
 
-module.exports = nconf.get();
+function Config() {
+  nconf.file('env', '../config/environment.json');
+}
+
+Config.prototype.get = function(key) {
+  return nconf.get(key);
+}
+
+module.exports = new Config();
