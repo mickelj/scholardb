@@ -4,6 +4,9 @@ const router = express.Router();
 const request = require('request');
 const db = require('../utils/db');
 const nconf = require('../utils/nconf');
+const util = require('util');
+
+console.log(util.inspect(nconf, false, null));
 
 function getRandomScholars(req, res, next) {
   db.run("SELECT person_id, first_name, last_name, image_url as image, user_type, count(works.id) FROM works, jsonb_to_recordset(works.contributors) AS w(person_id int) LEFT JOIN people p ON p.id = person_id WHERE active = true GROUP BY person_id, first_name, last_name, email, image_url, user_type HAVING count(works.id) > 2 ORDER BY random() LIMIT 12", function(err, results) {
