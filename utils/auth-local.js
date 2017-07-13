@@ -17,7 +17,7 @@ passport.deserializeUser((id, done) => {
 });
 
 passport.use(new LocalStrategy(options, (username, password, done) => {
-  var db = app.get('db');
+  var db = req.app.get('db');
   console.log(db);
 
   //check to see if the username exists
