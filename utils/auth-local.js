@@ -12,7 +12,7 @@ init();
 console.log('after init');
 
 passport.use(new LocalStrategy(options, (username, password, done) => {
-  console.log('username: ' + username " | password: " + password);
+  console.log('username: ' + username + " | password: " + password);
   //check to see if the username exists
   db.run('SELECT * FROM people WHERE email = $1', [username], function(err, results) {
     var user = results[0];
