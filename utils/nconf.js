@@ -1,7 +1,7 @@
 const nconf = require('nconf');
 
 function Config() {
-  nconf.file('env', '../config/environment.json');
+  return nconf.file('env', '../config/environment.json');
 }
 
 Config.prototype.get = function(key) {
