@@ -4,10 +4,7 @@ block content
   div.container
     div.row
       div.col.s12
-        p.headline #{user.first_name}
-          if user.middle_name
-            |  #{user.middle_name}
-          |  #{user.last_name}'s Profile
+        p.headline #{appconf.customtext.appname} Adminstration Console
     
     div.row
       div.col.s3

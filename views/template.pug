@@ -96,6 +96,12 @@ html
               a(href="/publications") Journals
             li
               a(href="/publishers") Publishers
+            if user
+              li
+                a.btn.white.blue-text.text-darken-4(href="/user") My Profile
+            if admin
+              li
+                a.btn.red.white-text.darken-4(href="/admin") Admin
           div#mobile-menu.side-nav.collection
             a.collection-item(href="/") Home
             a.collection-item(href="/works") Works
@@ -103,6 +109,10 @@ html
             a.collection-item(href="/people") People
             a.collection-item(href="/publications") Journals
             a.collection-item(href="/publishers") Publishers
+            if user
+              a.collection-item.btn.blue.darken-4.white-text(href='/user') My Profile
+            if admin
+              a.collection-item.btn.red.darken-4(href="/admin") Admin
 
     header.row
       div.col.s12.m7
