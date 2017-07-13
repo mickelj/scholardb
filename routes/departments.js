@@ -5,7 +5,7 @@ const request = require('request');
 const db = require('../utils/db');
 const nconf = require('../utils/nconf');
 
-functio../utils/../utils/n getDeptList(req, res, next) {
+function getDeptList(req, res, next) {
   var page = req.query.page ? req.query.page : "A";
 
   db.run("SELECT g.id as group_id, g.name as group_name, g.url, g.parent_id as parent_id, g2.name as parent_name FROM groups g LEFT JOIN groups g2 ON g.parent_id = g2.id WHERE g.sort_name LIKE $1 AND g.hidden = false ORDER BY g.sort_name", [(page + "%").toLowerCase()], function(err, results) {
