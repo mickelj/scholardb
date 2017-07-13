@@ -29,5 +29,6 @@ block content
           button.btn.blue.darken-4.waves-effect.waves-light(type="submit") Login 
             i.material-icons.right check_circle
   
-  if error !== ''
-    script $('#error').modal('open')
+  if error
+    //- script $('#error').modal('open')
+    script console.log(error)
