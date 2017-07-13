@@ -7,9 +7,10 @@ const cookieParser = require('cookie-parser');
 const errors = require('./utils/errorHandler');
 const passport = require('passport');
 const flash = require('connect-flash');
-const nconf = require('./utils/nconf');
+const nconf = require('nconf');
 
 // Initialize configuration
+nconf.file('env', './config/environment.json');
 app.set('port', (process.env.PORT || 5000));
 app.set('views', __dirname + '/views');
 app.set('view engine', 'pug');

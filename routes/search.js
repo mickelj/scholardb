@@ -3,7 +3,6 @@ const _ = require('underscore');
 const router = express.Router();
 const request = require('request');
 const db = require('../utils/db');
-const nconf = require('../utils/nconf');
 
 function searchWorks(req, res, next) {
   var query = req.query.terms ? req.query.terms : null;
@@ -121,6 +120,7 @@ function searchPublishers(req, res, next) {
 }
 
 function renderSearchResults (req, res) {
+  var nconf = req.app.get('nconf');
   var query = req.query.terms ? req.query.terms : null;
 
   if (!query) {

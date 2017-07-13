@@ -3,7 +3,6 @@ const _ = require('underscore');
 const router = express.Router();
 const request = require('request');
 const db = require('../utils/db');
-const nconf = require('../utils/nconf');
 
 function getDeptList(req, res, next) {
   var page = req.query.page ? req.query.page : "A";
@@ -50,6 +49,8 @@ function renderDeptList(req, res) {
   });
 
   res.render('departments', {
+    var nconf = req.app.get('nconf');
+
     appconf: nconf.get(),
     title: nconf.get('customtext:appname') + " - Departments",
     dept_list: combDepts,
@@ -128,6 +129,8 @@ function getDeptWorksList (req, res, next) {
 }
 
 function getWorksImages (req, res, next) {
+  var nconf = req.app.get('nconf');
+
   var idents = _.map(req.dept_works_list, function(work) {
     return work.identifier ? work.identifier.replace(/-/g, '') : 'null';
   });
@@ -149,6 +152,7 @@ function getWorksImages (req, res, next) {
 }
 
 function renderDeptDetail(req, res) {
+  var nconf = req.app.get('nconf');
   var limit = req.query.limit ? req.query.limit : 10;
   var page_count = Math.ceil(req.total_works / limit);
   var cur_page = req.query.page ? req.query.page : 1;
@@ -198,6 +202,8 @@ function getGroupName(req, res, next) {
 }
 
 function renderRssFeed(req, res) {
+  var nconf = req.app.get('nconf');
+
   res.render('rss', {
     appconf: nconf.get(),
     title: nconf.get('customtext:appname') + ": " + req.group_name,

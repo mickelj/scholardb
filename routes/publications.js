@@ -4,7 +4,6 @@ const router = express.Router();
 const request = require('request');
 const xml2js = require('xml2js');
 const db = require('../utils/db');
-const nconf = require('../utils/nconf');
 
 function getJournalList(req, res, next) {
   var page = req.query.page ? req.query.page : "A";
@@ -44,6 +43,7 @@ function getLetterPagerCounts (req, res, next) {
 }
 
 function renderJournalList(req, res) {
+  var nconf = req.app.get('nconf');
   var cur_letter = req.query.page ? req.query.page : "A";
 
   var combJournals = _.map(req.journal_list, function(journal) {
@@ -116,6 +116,7 @@ function getJournalWorksList (req, res, next) {
 }
 
 function getRomeoDetails (req, res, next) {
+  var nconf = req.app.get('nconf');
   var romeourl = nconf.get('romeo:romeourl') + nconf.get('romeo:romeoapikey');
 
   if (req.journal_detail.identifier_type && req.journal_detail.identifier_type === 'ISSN') {
@@ -143,6 +144,8 @@ function getRomeoDetails (req, res, next) {
 }
 
 function getWorksImages (req, res, next) {
+  var nconf = req.app.get('nconf');
+
   if (req.journal_detail.identifier_type && req.journal_detail.identifier_type.startsWith('ISBN')) {
     var idents = _.map(req.journal_works_list, function(work) {
       return work.identifier ? work.identifier.replace(/-/g, '') : 'null';
@@ -168,6 +171,7 @@ function getWorksImages (req, res, next) {
 }
 
 function renderJournalDetail(req, res) {
+  var nconf = req.app.get('nconf');
   var limit = req.query.limit ? req.query.limit : 10;
   var page_count = Math.ceil(req.total_works / limit);
   var cur_page = req.query.page ? req.query.page : 1;

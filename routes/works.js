@@ -4,7 +4,6 @@ const _ = require('underscore');
 const request = require('request');
 const xml2js = require('xml2js');
 const db = require('../utils/db');
-const nconf = require('../utils/nconf');
 
 function processFilters (req, res, next) {
   req.filters = req.query.filters ? JSON.parse(req.query.filters) : null;
@@ -146,6 +145,8 @@ function getWorksCount(req, res, next) {
 }
 
 function getWorksImages (req, res, next) {
+  var nconf = req.app.get('nconf');
+
   var idents = _.map(req.works_list, function(work) {
     return work.identifier ? work.identifier.replace(/-/g, '') : 'null';
   });
@@ -167,6 +168,7 @@ function getWorksImages (req, res, next) {
 }
 
 function renderWorksList (req, res) {
+  var nconf = req.app.get('nconf');
   var limit = req.query.limit ? req.query.limit : 10;
   var page_count = Math.ceil(req.total_works / limit);
   var cur_page = req.query.page ? req.query.page : 1;
@@ -207,6 +209,7 @@ function getWorkDetail(req, res, next) {
 }
 
 function getSingleImage (req, res, next) {
+  var nconf = req.app.get('nconf');
   var wi = req.work_detail.identifier ? req.work_detail.identifier.replace(/-/g, '') : null;
 
   if (wi) {
@@ -226,6 +229,7 @@ function getSingleImage (req, res, next) {
 }
 
 function getRomeoDetails (req, res, next) {
+  var nconf = req.app.get('nconf');
   var romeourl = nconf.get('romeo:romeourl') + nconf.get('romeo:romeoapikey');
 
   if (req.work_detail.identifier_type && req.work_detail.identifier_type === 'ISSN') {
@@ -253,6 +257,8 @@ function getRomeoDetails (req, res, next) {
 }
 
 function renderWorkDetail(req, res) {
+  var nconf = req.app.get('nconf');
+
   if (req.work_detail.url && req.work_detail.url.match(/^10/)) {
     req.work_detail.url = 'http://dx.doi.org/' + req.work_detail.url;
   }
@@ -280,6 +286,8 @@ function getRssResults(req, res, next) {
 }
 
 function renderRssFeed(req, res) {
+  var nconf = req.app.get('nconf');
+
   res.render('rss', {
     appconf: nconf.get(),
     title: nconf.get('customtext:appname') + ": Latest Works",

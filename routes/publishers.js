@@ -3,7 +3,6 @@ const _ = require('underscore');
 const router = express.Router();
 const request = require('request');
 const db = require('../utils/db');
-const nconf = require('../utils/nconf');
 
 function getPublisherList (req, res, next) {
   var page = req.query.page ? req.query.page : "A";
@@ -43,6 +42,7 @@ function getLetterPagerCounts (req, res, next) {
 }
 
 function renderPublisherList(req, res) {
+  var nconf = req.app.get('nconf');
   var cur_letter = req.query.page ? req.query.page : "A";
 
   var combPublishers = _.map(req.publisher_list, function(publisher) {
@@ -126,6 +126,7 @@ function getPublisherWorksList (req, res, next) {
 }
 
 function getWorksImages (req, res, next) {
+  var nconf = req.app.get('nconf');
   var idents = _.map(req.publisher_works_list, function(work) {
     return work.identifier ? work.identifier.replace(/-/g, '') : 'null';
   });
@@ -147,6 +148,7 @@ function getWorksImages (req, res, next) {
 }
 
 function renderPublisherDetail(req, res) {
+  var nconf = req.app.get('nconf');
   var limit = req.query.limit ? req.query.limit : 10;
   var page_count = Math.ceil(req.total_works / limit);
   var cur_page = req.query.page ? req.query.page : 1;
