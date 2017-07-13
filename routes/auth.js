@@ -15,9 +15,14 @@ router.post('/login',  (req, res, next) => {
   passport.authenticate('local',
     authHelpers.loginRedirect,
     {
-      successRedirect: '/user',
-      failureRedirect: '/auth/login',
-      failureFlash: true
+      failureRedirect:  '/auth/login',
+      failureFlash:     true
+    },
+    (err, user, info) => {
+      req.session.save( (err) => {
+        if (err) return next(err);
+        res.redirect('/user');
+      });
     });
   // passport.authenticate('local', (err, user, info) => {
   //   if (err) res.status(500).send('Error in passport local authentication module');
