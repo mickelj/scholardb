@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const authHelpers = require('../utils/passport-helpers');
+const authHelpers = require('../utils/auth-helpers');
 
 router.get('/', authHelpers.loginRequired, (req, res, next) => {
   handleResponse(res, 200, 'success');

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const authHelpers = require('../utils/passport-helpers');
-const passport = require('../utils/passport-local');
+const authHelpers = require('../utils/auth-helpers');
+const passport = require('../utils/auth-local');
 
 router.get('/login', (req, res) => {
   console.log("Flash: " + req.flash('error'));
@@ -16,14 +16,9 @@ router.post('/login', authHelpers.loginRedirect, (req, res, next) => {
     if (err) res.status(500).send('Error in passort local authentication module');
     if (!user) res.redirect('/auth/login');
     if (user) {
-      console.log('made it to BEFORE the login');
-
-      req.login(user, function(err) {
-        if (err) res.status(500).send('Error logging in');
-        req.session.save( (err) => {
-          if (err) return next(err);
-          res.redirect('/user');
-        });
+      req.session.save( (err) => {
+        if (err) return next(err);
+        res.redirect('/user');
       });
     }
   });
