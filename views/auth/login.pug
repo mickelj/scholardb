@@ -1,7 +1,7 @@
 extends ../template
 
 block content
-  if error
+  if error.length
     div#error.modal.modal-fixed-footer
       div.modal-content
         h4= error
@@ -29,6 +29,6 @@ block content
           button.btn.blue.darken-4.waves-effect.waves-light(type="submit") Login 
             i.material-icons.right check_circle
   
-  if error
+  if error.length
     //- script $('#error').modal('open')
-    script console.log(#{error})
+    script console.log('#{error}')
