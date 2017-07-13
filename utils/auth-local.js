@@ -3,7 +3,6 @@ const app = express();
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const authHelpers = require('./auth-helpers');
-const init = require('./auth');
 const db = app.get('db');
 const options = {};
 
