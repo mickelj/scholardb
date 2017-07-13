@@ -3,11 +3,9 @@ const router = express.Router();
 const authHelpers = require('../utils/auth-helpers');
 
 router.get('/', authHelpers.loginRequired, (req, res, next) => {
-  handleResponse(res, 200, 'success');
+  res.render('user', {
+    user: req.user
+  });
 });
-
-function handleResponse(res, code, statusMsg) {
-  res.status(code).json({status: statusMsg});
-}
 
 module.exports = router;
