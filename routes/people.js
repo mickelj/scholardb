@@ -59,7 +59,7 @@ function renderPeopleList(req, res) {
     people_list: combPeople,
     cur_letter: cur_letter,
     letter_list: req.letter_list,
-    cur_list: req.baseUrl
+    cur_list: req.baseUrl,
   });
 }
 
@@ -155,6 +155,8 @@ function getWorksImages (req, res, next) {
 }
 
 function renderPersonDetail(req, res) {
+  const util = require('util');
+  console.log(util.inspect(req.session, false, null));
   var nconf = req.app.get('nconf');
   var limit = req.query.limit ? req.query.limit : 10;
   var page_count = Math.ceil(req.total_works / limit);
