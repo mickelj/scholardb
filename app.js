@@ -3,7 +3,7 @@ const express = require('express');
 const session = require('express-session');
 const app = express();
 const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
+//const cookieParser = require('cookie-parser');
 const errors = require('./utils/errorHandler');
 const passport = require('passport');
 const flash = require('connect-flash');
@@ -16,14 +16,17 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'pug');
 app.set('nconf', nconf);
 
-app.use(cookieParser());
+//app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(session({
+  store:  new (require('connect-pg-simple')(session))(),
   secret: process.env.SECRET_AUTH_KEY,
   resave: false,
-  saveUninitialized: true,
-  cookie: { maxAge: 60000 }
+  cookie: {
+    maxAge: 1800000,      // 30 minutes
+    secure: true
+  }
 }));
 app.use(passport.initialize());
 app.use(passport.session());
