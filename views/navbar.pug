@@ -1,11 +1,12 @@
-ul#profile-menu.dropdown-content
-  li
-    a(href="/people/" + user.id) My Works
-  li
-    a(href="/user") My Profile
-  li.divider
-  li
-    a(href="/auth/logout") Logout
+if user
+  ul#profile-menu.dropdown-content
+    li
+      a(href="/people/" + user.id) My Works
+    li
+      a(href="/user") My Profile
+    li.divider
+    li
+      a(href="/auth/logout") Logout
 
 div.navbar-fixed
   nav.blue.darken-4
