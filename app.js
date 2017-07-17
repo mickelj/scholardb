@@ -21,13 +21,12 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(session({
-  store:  new RedisStore({url: 'redis://h:p3da31289bfddb264579854c6476e4a4ac55174b6f9492b902d66202a38616555@ec2-54-86-77-126.compute-1.amazonaws.com:51659'}),
+  store:  new RedisStore({url: process.env.REDIS_URL}),
   secret: process.env.SECRET_AUTH_KEY,
   resave: false,
   saveUninitialized: true,
   cookie: {
-    maxAge: 1800000,      // 30 minutes
-    secure: true
+    maxAge: 1800000      // 30 minutes
   }
 }));
 app.use(passport.initialize());
