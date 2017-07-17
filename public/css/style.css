@@ -24,6 +24,11 @@ select.browser-default {
   margin-left: 10px;
 }
 
+nav ul a.btn {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
 #sidenav-overlay {
   left: 300px;
 }

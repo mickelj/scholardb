@@ -191,7 +191,8 @@ function renderWorksList (req, res) {
     page_count: page_count,
     cur_page: cur_page,
     offset: offset,
-    cur_list: req.baseUrl
+    cur_list: req.baseUrl,
+    user: req.user
   });
 }
 
@@ -268,7 +269,8 @@ function renderWorkDetail(req, res) {
     title: nconf.get('customtext:appname') + " - Work: " + req.work_detail.work_title,
     work_detail: req.work_detail,
     coverimage: req.coverimage,
-    romeo: req.romeo
+    romeo: req.romeo,
+    user: req.user
   });
 }
 

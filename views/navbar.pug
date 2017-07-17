@@ -1,0 +1,52 @@
+ul#profile-menu.dropdown-content
+  li
+    a(href="/people/" + user.id) My Works
+  li
+    a(href="/user") My Profile
+  li.divider
+  li
+    a(href="/auth/logout") Logout
+
+div.navbar-fixed
+  nav.blue.darken-4
+    div.nav-wrapper
+      a.brand-logo(href="/")
+        img(src=appconf.images.logo, alt=appconf.appname)
+      a.button-collapse(href="#", data-activates="mobile-menu")
+        i.material-icons menu
+      ul#nav-mobile.right.hide-on-med-and-down
+        li
+          a(href="/") Home
+        li
+          a(href="/works") Works
+        li
+          a(href="/departments") Departments &amp; Programs
+        li
+          a(href="/people") People
+        li
+          a(href="/publications") Journals
+        li
+          a(href="/publishers") Publishers
+        if user
+          li
+            a.btn.white.blue-text.text-darken-4.dropdown-button(href="#!", data-activates="profile-menu")   #{user.first_name} #{user.last_name}
+              i.material-icons.right arrow_drop_down
+          if user.admin
+            li
+              a.btn.red.white-text.darken-4.tooltipped(href="/admin", data-position="bottom" data-delay="50", data-tooltip="Admin Console")
+                i.material-icons security
+
+      div#mobile-menu.side-nav.collection
+        a.collection-item(href="/") Home
+        a.collection-item(href="/works") Works
+        a.collection-item(href="/departments") Departments &amp; Programs
+        a.collection-item(href="/people") People
+        a.collection-item(href="/publications") Journals
+        a.collection-item(href="/publishers") Publishers
+        if user
+          div.collection-item.divider
+          a.collection-item(href="/people/" + user.id) My Works
+          a.collection-item(href='/user') My Profile
+          if user.admin
+            a.collection-item.btn.red.darken-4(href="/admin") Admin Console
+              i.material-icons.right security

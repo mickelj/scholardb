@@ -1,71 +1,6 @@
 doctype html
 
-mixin buildSearchUrl(work_detail)
-  case work_detail.work_type
-    when "Book"
-      include fulltext/books.pug
-    when "Book Section"
-      include fulltext/booksection.pug
-    when "Journal Article"
-      include fulltext/article.pug
-    when "Conference Paper"
-      include fulltext/conference.pug
-    default
-      - searchurl = null
-mixin getMediaIcon(worktype, color)
-  case worktype
-    when "Book"
-    when "Book Section"
-      span(class="icon ion-ios-book text-lighten-1 " + color + "-text")
-    when "Journal Article"
-      span(class="icon ion-document-text text-lighten-1 " + color + "-text")
-    when "Conference Paper"
-    when "Presentation/Lecture"
-    when "Conference Poster"
-      span(class="icon ion-ios-people text-lighten-1 " + color + "-text")
-    when "Webpage"
-      span(class="icon ion-earth text-lighten-1 " + color + "-text")
-    when "Blog Post"
-      span(class="icon ion-social-rss text-lighten-1 " + color + "-text")
-    when "Sound Recording"
-      span(class="icon ion-volume-medium text-lighten-1 " + color + "-text")
-    when "Video Recording"
-      span(class="icon ion-videocamera text-lighten-1 " + color + "-text")
-    when "Book Review"
-      span(class="icon ion-ios-bookmarks text-lighten-1 " + color + "-text")
-    when "Working Paper/Whitepaper/Report"
-      span(class="icon ion-ios-list text-lighten-1 " + color + "-text")
-    default
-      span(class="icon ion-document text-lighten-1 " + color + "-text")
-mixin romeoicon(icontext)
-  case icontext
-    when "unclear"
-    when "unknown"
-      span.icon.ion-help-circled.blue-grey-text.text-lighten-1 
-      span Unclear/Unknown
-    when "can"
-      span.icon.ion-checkmark-circled.green-text.darken-1 
-      span Yes
-    when "restricted"
-      span.icon.ion-alert-circled.amber-text.text-accent-4 
-      span With Restrictions
-    when "cannot"
-      span.icon.ion-close-circled.red-text 
-      span No
-    default
-      span.icon.ion-minus-circled.blue-grey-text.text-lighten-1 
-      span No Data Available
-mixin romeocolor(rcolor)
-  case rcolor
-    when "gray"
-      - romeoClassColor = "grey"
-    when "yellow"
-      - romeoClassColor = "amber"
-    default
-      - romeoClassColor = rcolor
-
-- var searchurl
-- var romeoClassColor
+include mixins.pug
 
 html
   head
@@ -76,43 +11,7 @@ html
     link(rel='stylesheet', href='https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css')
     link(rel='stylesheet', href='/css/style.css')
   body
-    div.navbar-fixed
-      nav.blue.darken-4
-        div.nav-wrapper
-          a.brand-logo(href="/")
-            img(src=appconf.images.logo, alt=appconf.appname)
-          a.button-collapse(href="#", data-activates="mobile-menu")
-            i.material-icons menu
-          ul#nav-mobile.right.hide-on-med-and-down
-            li
-              a(href="/") Home
-            li
-              a(href="/works") Works
-            li
-              a(href="/departments") Departments &amp; Programs
-            li
-              a(href="/people") People
-            li
-              a(href="/publications") Journals
-            li
-              a(href="/publishers") Publishers
-            if user 
-              li
-                a.btn.white.blue-text.text-darken-4(href="/user") My Profile
-              if user.admin
-                li
-                  a.btn.red.white-text.darken-4(href="/admin") Admin
-          div#mobile-menu.side-nav.collection
-            a.collection-item(href="/") Home
-            a.collection-item(href="/works") Works
-            a.collection-item(href="/departments") Departments &amp; Programs
-            a.collection-item(href="/people") People
-            a.collection-item(href="/publications") Journals
-            a.collection-item(href="/publishers") Publishers
-            if user
-              a.collection-item.btn.blue.darken-4.white-text(href='/user') My Profile
-              if user.admin
-                a.collection-item.btn.red.darken-4(href="/admin") Admin
+    include navbar.pug
 
     header.row
       div.col.s12.m7

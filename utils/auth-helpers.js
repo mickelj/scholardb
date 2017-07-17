@@ -18,9 +18,9 @@ function loginRequired(req, res, next) {
 function adminRequired(req, res, next) {
   if (!req.user) return res.status(401).json({status: 'Please log in'});
 
-  return db.people.findOne({email: req.user.username}, function (err, user) {
+  return db.people.findOne({email: req.user.email}, function (err, user) {
     if (err) res.status(500).json({status: 'Uh oh, Spaghettios!'});
-    if (!user.admin) {
+    if (!req.user.admin) {
       res.status(401).json({status: 'You are not authorized.'});
       return next();
     }

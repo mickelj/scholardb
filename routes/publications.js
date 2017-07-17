@@ -56,7 +56,8 @@ function renderJournalList(req, res) {
     journal_list: combJournals,
     cur_letter: cur_letter,
     letter_list: req.letter_list,
-    cur_list: req.baseUrl
+    cur_list: req.baseUrl,
+    user: req.user
   });
 }
 
@@ -189,7 +190,8 @@ function renderJournalDetail(req, res) {
     page_count: page_count,
     cur_page: cur_page,
     offset: offset,
-    cur_list: req.baseUrl + "/" + req.params.id
+    cur_list: req.baseUrl + "/" + req.params.id,
+    user: req.user
   });
 }
 

@@ -56,7 +56,8 @@ function renderHomePage(req, res) {
     works_list: req.works,
     appconf: nconf.get(),
     title: nconf.get('customtext:appname') + " - Home",
-    index: true
+    index: true,
+    user: req.user
   });
 }
 

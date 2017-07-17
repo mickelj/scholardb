@@ -134,7 +134,8 @@ function renderSearchResults (req, res) {
       people: req.people_results,
       depts: req.dept_results,
       publications: req.publication_results,
-      publishers: req.publisher_results
+      publishers: req.publisher_results,
+      user: req.user
     });
   }
 }

@@ -157,7 +157,6 @@ function getWorksImages (req, res, next) {
 
 function renderPersonDetail(req, res) {
   const util = require('util');
-  console.log(util.inspect(req.user, false, null));
   var nconf = req.app.get('nconf');
   var limit = req.query.limit ? req.query.limit : 10;
   var page_count = Math.ceil(req.total_works / limit);
