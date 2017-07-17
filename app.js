@@ -23,6 +23,7 @@ app.use(session({
   store:  new (require('connect-pg-simple')(session))(),
   secret: process.env.SECRET_AUTH_KEY,
   resave: false,
+  saveUninitialized: true,
   cookie: {
     maxAge: 1800000,      // 30 minutes
     secure: true
