@@ -1,9 +1,10 @@
 // App-wide Dependencies
 const express = require('express');
 const session = require('express-session');
+const RedisStore = require('connect-redis')(session);
 const app = express();
 const bodyParser = require('body-parser');
-//const cookieParser = require('cookie-parser');
+const cookieParser = require('cookie-parser');
 const errors = require('./utils/errorHandler');
 const passport = require('passport');
 const flash = require('connect-flash');
@@ -16,11 +17,11 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'pug');
 app.set('nconf', nconf);
 
-//app.use(cookieParser());
+app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(session({
-  store:  new (require('connect-pg-simple')(session))(),
+  store:  new RedisStore({url: 'redis://h:p3da31289bfddb264579854c6476e4a4ac55174b6f9492b902d66202a38616555@ec2-54-86-77-126.compute-1.amazonaws.com:51659'}),
   secret: process.env.SECRET_AUTH_KEY,
   resave: false,
   saveUninitialized: true,
