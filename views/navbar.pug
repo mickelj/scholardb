@@ -36,6 +36,10 @@ div.navbar-fixed
             li
               a.btn-floating.red.white-text.darken-4.tooltipped(href="/admin", data-position="bottom" data-delay="50", data-tooltip="Admin Console")
                 i.material-icons security
+        else
+          li
+            a.btn-floating.green.white-text.darken-4.tooltipped(href="/auth/login", data-position="bottom", data-delay="50", data-tooltip="Login")
+              i.material-icons input
 
       div#mobile-menu.side-nav.collection
         a.collection-item(href="/") Home
@@ -45,9 +49,8 @@ div.navbar-fixed
         a.collection-item(href="/publications") Journals
         a.collection-item(href="/publishers") Publishers
         if user
-          div.collection-item.divider
           a.collection-item(href="/people/" + user.id) My Works
           a.collection-item(href='/user') My Profile
           if user.admin
-            a.collection-item.btn.red.darken-4(href="/admin") Admin Console
-              i.material-icons.right security
+            a.collection-item.red.darken-4.white-text(href="/admin") Admin Console
+              i.material-icons.left security

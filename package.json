@@ -24,6 +24,7 @@
     "cookie-parser": "^1.4.3",
     "express": "^4.14.1",
     "express-session": "^1.15.3",
+    "freecite": "0.0.1",
     "massive": "^2.6.0",
     "materialize": "^1.0.0",
     "materialize-css": "^0.99.0",

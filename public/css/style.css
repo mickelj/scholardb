@@ -27,8 +27,16 @@ select.browser-default {
 nav ul a.btn, nav ul a.btn-floating {
   margin-left: 5px;
   margin-right: 5px;
+}
+
+nav ul a.btn {
   padding: 0 0.4rem 0 1rem;
   text-transform: unset;
+}
+
+nav .side-nav.collection .collection-item i.material-icons.left {
+  line-height: inherit;
+  margin-right: 10px;
 }
 
 .dropdown-content li > a {
