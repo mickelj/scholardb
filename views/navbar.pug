@@ -34,11 +34,11 @@ div.navbar-fixed
               i.material-icons.right arrow_drop_down
           if user.admin
             li
-              a.btn.red.white-text.darken-4.tooltipped(href="/admin") Admin
+              a.btn.red.white-text.darken-4(href="/admin") Admin
                 i.material-icons.right security
         else
           li
-            a.btn.white.blue-text.text-darken-4.dropdown-button(href="/auth/login") Login
+            a.btn.white.blue-text.text-darken-4(href="/auth/login") Login
               i.material-icons.right input
 
       div#mobile-menu.side-nav.collection
@@ -54,3 +54,6 @@ div.navbar-fixed
           if user.admin
             a.collection-item.red.darken-4.white-text(href="/admin") Admin Console
               i.material-icons.left security
+        else
+          a.btn.white.blue.darken-4.white-text(href="/auth/login") Login
+            i.material-icons.right input

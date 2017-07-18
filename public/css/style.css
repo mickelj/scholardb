@@ -34,12 +34,12 @@ nav ul a.btn {
   text-transform: unset;
 }
 
-nav .side-nav.collection .collection-item i.material-icons.left {
+nav i.material-icons.left {
   line-height: inherit;
   margin-right: 10px;
 }
 
-nav .side-nav.collection .collection-item i.material-icons.right {
+nav i.material-icons.right {
   margin-left: 10px;
 }
 
