@@ -39,6 +39,11 @@ nav .side-nav.collection .collection-item i.material-icons.left {
   margin-right: 10px;
 }
 
+nav .side-nav.collection .collection-item i.material-icons.right {
+  margin-left: 10px;
+}
+
+
 .dropdown-content li > a {
   color: #039be5;
 }
