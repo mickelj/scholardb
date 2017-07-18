@@ -30,15 +30,15 @@ div.navbar-fixed
           a(href="/publishers") Publishers
         if user
           li
-            a.btn.white.blue-text.text-darken-4.dropdown-button(href="#!", data-activates="profile-menu")   #{user.first_name} #{user.last_name}
+            a.btn.white.blue-text.text-darken-4.dropdown-button(href="#!", data-activates="profile-menu") #{user.first_name} #{user.last_name}
               i.material-icons.right arrow_drop_down
           if user.admin
             li
-              a.btn-floating.red.white-text.darken-4.tooltipped(href="/admin", data-position="bottom" data-delay="50", data-tooltip="Admin Console")
-                i.material-icons security
+              a.btn.white.blue-text.text-darken-4.dropdown-button(href="/auth/login") Login
+                i.material-icons.right security
         else
           li
-            a.btn-floating.green.white-text.darken-4.tooltipped(href="/auth/login", data-position="bottom", data-delay="50", data-tooltip="Login")
+            a.btn-floating.green.white-text.darken-1.tooltipped(href="/auth/login", data-position="bottom", data-delay="50", data-tooltip="Login")
               i.material-icons input
 
       div#mobile-menu.side-nav.collection
