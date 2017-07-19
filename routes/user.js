@@ -8,7 +8,7 @@ function getInfo(req, res, next) {
   db.run("SELECT prefix, suffix, phone, office_location FROM people WHERE id = $1", [req.user.id], (err, results) => {
     if (err) return next(err);
 
-    req.info = results;
+    req.info = results[0];
     return next();
   });
 }
@@ -28,7 +28,7 @@ function getPenNames(req, res, next) {
   db.run("SELECT display_name FROM pennames WHERE people_id = $1 ORDER BY machine_name", [req.user.id], (err, results) => {
     if (err) return next(err);
 
-    req.pennames = results[0];
+    req.pennames = results;
     return next();
   });
 }
