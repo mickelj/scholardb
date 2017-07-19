@@ -69,7 +69,7 @@ function savePenName(req, res, next) {
 }
 
 function getAllDepts(req, res, next) {
-  db.run("SELECT name FROM groups WHERE hidden = false ORDER BY name", (err, results) => {
+  db.run("SELECT id, name FROM groups WHERE hidden = false ORDER BY name", (err, results) => {
     if (err) return next(err);
     req.alldepts = results;
     return next();
