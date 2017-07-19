@@ -14,8 +14,8 @@ function getPenNames(req, res, next) {
 }
 
 function checkPenName(req, res, next) {
-  var req.pn = req.body.last_name + ", " + req.body.first_name + (req.body.middle_name ? " " + req.body.middle_name : "");
-  var req.mn = gn.genMachineName(pn);
+  req.pn = req.body.last_name + ", " + req.body.first_name + (req.body.middle_name ? " " + req.body.middle_name : "");
+  req.mn = gn.genMachineName(pn);
 
   db.run("SELECT id FROM pennames WHERE machine_name ILIKE $1", ['%' + mn + '%'], (err, results) => {
     if (err) return next(err);
