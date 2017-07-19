@@ -32,21 +32,21 @@ function savePenName(req, res) {
 
   if (req.dberr) {
     req.flash('error', req.dberr);
-    res.redirect('/user/penname');
+    return res.redirect('/user/penname');
   }
 
   if (!req.pn) {
     req.flash('error', 'Pen name was empty');
-    res.redirect('/user/penname');
+    return res.redirect('/user/penname');
   }
 
   db.pennames.insert({people_id: req.user.id, display_name: req.pn, machine_name: req.mn}, (err, results) => {
     if (err) {
       req.flash('error', 'Error adding pen name to database: ' + err);
-      res.redirect('/user/penname');
+      return res.redirect('/user/penname');
     }
     req.flash('success', 'Pen name added successfully');
-    res.redirect('/user/penname');
+    return res.redirect('/user/penname');
   })
 }
 
