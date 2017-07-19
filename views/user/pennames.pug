@@ -1,24 +1,28 @@
-p:b Pen Names
+p: b Pen Names
 p These are names under which you have published works. Storing pen names helps #{appconf.customtext.appname} match a work to your profile and the profiles of other #{appconf.customtext.orgshortname} contributors.
 
 ul.collection
   each pn in pennames
-    li.collection-item= pn
+    li.collection-item= pn.display_name
     
-p:b Add New Pen Name
 div.row
-  form.col.s12.m8.l6.offset-m2.offset-l3(method="post", action="/user/penname")
-    div.input-field
-      input#first_name.validate(name="first_name", type="text")
-      label(for="first_name") Given/First Name
-    div.input-field
-      input#middle_name.validate(name="middle_name", type="text")
-      label(for="middle_name") Middle Name
-    div.input-field
-      input#last_name.validate(name="last_name", type="text")
-      label(for="last_name") Surname/Last Name
-    div.input-field
-      button.btn.blue.darken-4.waves-effect.waves-light(type="submit") Add
+  form.col.s12(method="post", action="/user/penname")
+    div.row
+      div.col.s12
+        b Add New Pen Name
+    div.row
+      div.input-field.col.s4
+        input#first_name.validate(name="first_name", type="text", required)
+        label(for="first_name") Given/First Name
+      div.input-field.col.s4
+        input#middle_name.validate(name="middle_name", type="text")
+        label(for="middle_name") Middle Name
+      div.input-field.col.s4
+        input#last_name.validate(name="last_name", type="text", required)
+        label(for="last_name") Surname/Last Name
+    div.row
+      div.input-field.col.s12
+        button.btn.blue.darken-4.waves-effect.waves-light.right(type="submit") Add
 
 if success.length
   script Materialize.toast(#{success}, 3000, 'green darken-1 white-text');
