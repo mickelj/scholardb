@@ -44,7 +44,7 @@ router.get('/penname', authHelpers.loginRequired, getPenNames, (req, res, next) 
   var nconf = req.app.get('nconf');
 
   res.render('user', {
-    appconf: nconf.get();
+    appconf: nconf.get(),
     user: req.user,
     page: 'pennames',
     pennames: req.pennames,
