@@ -3,7 +3,7 @@ p: b Department/Program Membership
 ul.collection.col.s10.offset-s1.m8.offset-m1.l6.offset-l1
   each dept in departments
     li.collection-item
-      div dept.name
+      div= dept.name
         a.secondary-content.tooltipped.red-text.text-darken-4(href="#!", data-position="bottom", data-delay="50", data-tooltip="Remove department")
           i.material-icons remove_circle
 
@@ -19,14 +19,16 @@ div.row
 include ../popups.pug
 
 script
-  | $('#deptlist').autocomplete({
-  |   data: {
+  | $(document).ready(function() {
+  |   $('#deptlist').autocomplete({
+  |     data: {
   each d in alldepts
     | '#{d.name}' : null,  
-  |   },
-  |   limit: 20,
-  |   onAutocomplete: function(val) {
-  |     // Callback function when value is autocompleted.
-  |   },
-  |   minLength: 1
+  |     },
+  |     limit: 20,
+  |     onAutocomplete: function(val) {
+  |       // Callback function when value is autocompleted.
+  |     },
+  |     minLength: 1
+  |   });
   | });
