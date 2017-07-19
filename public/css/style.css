@@ -409,6 +409,19 @@ input[type="search"] {
   max-height: 50%;
 }
 
+#toast-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+}
+
+.toast {
+  top: unset;
+  margin-top: unset;
+  float: none;
+}
+
 @media screen and (min-width: 1201px) {
   .xl0 {
     display: none;
