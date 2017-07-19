@@ -14,7 +14,7 @@ block content
         div.collection.with-header.z-depth-2
           div.collection-header Actions
           a.collection-item(href="/user/work") Add/Update a Work
-          a.collection-item(href="/user/info") Update Personal/Professional Information
+          a.collection-item(href="/user/info") Update Personal Information
           a.collection-item(href="/user/penname") Add Pen Name
           a.collection-item(href="/user/photo") Add/Update Photograph
           a.collection-item(href="/user/departments") Update Department/Program Membership
@@ -24,6 +24,8 @@ block content
         case page
           when "pennames"
             include user/pennames.pug
+          when "info"
+            include user/info.pug
           default
             p Please choose an option from the menu
         
