@@ -29,8 +29,6 @@ function checkPenName(req, res, next) {
 }
 
 function savePenName(req, res) {
-  req.session.flash = [];
-
   if (req.dberr) {
     req.flash('error', req.dberr);
     return res.redirect('/user/penname');
