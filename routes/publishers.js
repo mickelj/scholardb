@@ -5,7 +5,7 @@ const request = require('request');
 const db = require('../utils/db');
 
 function getPublisherList (req, res, next) {
-  var page = req.query.page ? req.query.page : "A";
+  var page = req.query.page || "A";
 
   db.run("SELECT id, name, url FROM publishers WHERE sort_name LIKE $1 ORDER BY sort_name", [page.toLowerCase() + "%"], function(err, results) {
     if (err || !results.length) {
@@ -18,7 +18,7 @@ function getPublisherList (req, res, next) {
 }
 
 function getPublisherWorkCount (req, res, next) {
-  var page = req.query.page ? req.query.page : "A";
+  var page = req.query.page || "A";
 
   db.run("SELECT pub.id, COUNT(works.id) as cnt FROM works LEFT JOIN publications j ON works.publication_id = j.id LEFT JOIN publishers pub ON j.publisher_id = pub.id WHERE pub.sort_name LIKE $1 GROUP BY pub.id ORDER BY pub.sort_name", [page.toLowerCase() + "%"], function (err, results) {
     if (err || !results.length) {
@@ -43,7 +43,7 @@ function getLetterPagerCounts (req, res, next) {
 
 function renderPublisherList(req, res) {
   var nconf = req.app.get('nconf');
-  var cur_letter = req.query.page ? req.query.page : "A";
+  var cur_letter = req.query.page || "A";
 
   var combPublishers = _.map(req.publisher_list, function(publisher) {
     return _.extend(publisher, _.omit(_.findWhere(req.publisher_work_count, {id: publisher.id}), 'id'));
@@ -112,7 +112,7 @@ function getPublisherAllWorkCount (req, res, next) {
 
 function getPublisherWorksList (req, res, next) {
   var publisher_id = req.params.id;
-  var limit = req.query.limit ? req.query.limit : 10;
+  var limit = req.query.limit || 10;
   var offset = req.query.page ? (req.query.page - 1) * limit : 0;
 
   db.run("SELECT DISTINCT works.id, title_primary as work_title, title_secondary, title_tertiary, description as work_type, contributors, j.name as publication, j.id as pubid, publication_date_year as year, identifier, identifier_type, alt_identifier, alt_identifier_type, volume, issue, start_page, end_page, archive_url FROM works JOIN publications j ON j.id = works.publication_id JOIN publishers pub ON j.publisher_id = pub.id JOIN work_types USING (type), JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) LEFT JOIN people p ON person_id = p.id WHERE pub.id = $1 ORDER BY publication_date_year DESC, works.id DESC LIMIT $2 OFFSET $3", [publisher_id, limit, offset], function(err, results) {
@@ -150,9 +150,9 @@ function getWorksImages (req, res, next) {
 
 function renderPublisherDetail(req, res) {
   var nconf = req.app.get('nconf');
-  var limit = req.query.limit ? req.query.limit : 10;
+  var limit = req.query.limit || 10;
   var page_count = Math.ceil(req.total_works / limit);
-  var cur_page = req.query.page ? req.query.page : 1;
+  var cur_page = req.query.page || 1;
   var offset = (cur_page - 1) * limit;
 
   res.render('publisher_detail', {

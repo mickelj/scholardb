@@ -5,7 +5,7 @@ const request = require('request');
 const db = require('../utils/db');
 
 function getDeptList(req, res, next) {
-  var page = req.query.page ? req.query.page : "A";
+  var page = req.query.page || "A";
 
   db.run("SELECT g.id as group_id, g.name as group_name, g.url, g.parent_id as parent_id, g2.name as parent_name FROM groups g LEFT JOIN groups g2 ON g.parent_id = g2.id WHERE g.sort_name LIKE $1 AND g.hidden = false ORDER BY g.sort_name", [(page + "%").toLowerCase()], function(err, results) {
     if (err || !results.length) {
@@ -18,7 +18,7 @@ function getDeptList(req, res, next) {
 }
 
 function getDeptMembersCount (req, res, next) {
-  var page = req.query.page ? req.query.page : "A";
+  var page = req.query.page || "A";
 
   db.run("SELECT g.id as group_id, count(p.id) as cnt FROM people p LEFT JOIN memberships m on p.id = m.people_id JOIN groups g on m.group_id = g.id WHERE g.name <> '' AND g.sort_name LIKE $1 AND g.hidden = false GROUP BY g.id, g.sort_name ORDER BY g.sort_name", [(page + "%").toLowerCase()], function(err, results) {
     if (err || !results.length) {
@@ -44,7 +44,7 @@ function getLetterPagerCounts (req, res, next) {
 function renderDeptList(req, res) {
   var nconf = req.app.get('nconf');
 
-  var cur_letter = req.query.page ? req.query.page : "A";
+  var cur_letter = req.query.page || "A";
 
   var combDepts = _.map(req.dept_list, function(dept) {
     return _.extend(dept, _.omit(_.findWhere(req.members, {group_id: dept.group_id}), 'group_id'));
@@ -102,7 +102,7 @@ function getDeptWorksCount(req, res, next) {
 
 function getDeptWorksList (req, res, next) {
   var dept_id = req.params.id;
-  var limit = req.query.limit ? req.query.limit : 10;
+  var limit = req.query.limit || 10;
   var offset = req.query.page ? (req.query.page - 1) * limit : 0;
 
   db.run("SELECT DISTINCT works.id, title_primary as work_title, title_secondary, title_tertiary, description as work_type, contributors, identifier, identifier_type, alt_identifier, alt_identifier_type, publications.name as publication, publications.authority_id as pubid, publication_date_year as year, volume, issue, start_page, end_page, archive_url FROM works JOIN publications ON publications.id = works.publication_id JOIN work_types USING (type), JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) LEFT JOIN people p ON person_id = p.id LEFT JOIN memberships m on p.id = m.people_id JOIN groups g on m.group_id = g.id WHERE g.hidden = false AND g.id = $1 ORDER BY publication_date_year DESC, works.id DESC LIMIT $2 OFFSET $3", [dept_id, limit, offset], function(err, results) {
@@ -154,9 +154,9 @@ function getWorksImages (req, res, next) {
 
 function renderDeptDetail(req, res) {
   var nconf = req.app.get('nconf');
-  var limit = req.query.limit ? req.query.limit : 10;
+  var limit = req.query.limit || 10;
   var page_count = Math.ceil(req.total_works / limit);
-  var cur_page = req.query.page ? req.query.page : 1;
+  var cur_page = req.query.page || 1;
   var offset = (cur_page - 1) * limit;
 
   res.render('dept_detail', {
@@ -178,7 +178,7 @@ function renderDeptDetail(req, res) {
 
 function getRssResults(req, res, next) {
   var dept_id = req.params.id;
-  var limit = req.query.limit ? req.query.limit : 10;
+  var limit = req.query.limit || 10;
 
   db.run("SELECT DISTINCT works.id, title_primary as title, description as work_type, contributors, publications.name as pubname, publications.id as pubid, publication_date_year as year, works.updated_at, works.created_at FROM works JOIN publications ON publications.id = works.publication_id JOIN work_types USING (type), JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) LEFT JOIN people p ON person_id = p.id LEFT JOIN memberships m on p.id = m.people_id JOIN groups g on m.group_id = g.id WHERE g.hidden = false AND g.id = $1 ORDER BY works.created_at DESC, works.id DESC LIMIT $2", [dept_id, limit], function(err, results) {
     if (err || !results.length) {

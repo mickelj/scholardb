@@ -5,7 +5,7 @@ const request = require('request');
 const db = require('../utils/db');
 
 function getPeopleList(req, res, next) {
-  var page = req.query.page ? req.query.page : "A";
+  var page = req.query.page || "A";
 
   db.run("SELECT p.id as person_id, first_name, middle_name, last_name, UPPER(LEFT(last_name, 1)) as first_letter, image_url as image, user_type, jsonb_agg(g) as memberships FROM people p LEFT JOIN LATERAL (select id, name, sort_name from groups join memberships m on groups.id = m.group_id where hidden = false AND m.people_id = p.id order by sort_name) g ON TRUE WHERE last_name LIKE $1 GROUP BY p.id, first_name, last_name, first_letter, image_url ORDER BY last_name, first_name", [page + "%"], function(err, results) {
     if (err || !results.length) {
@@ -22,7 +22,7 @@ function getPeopleList(req, res, next) {
 }
 
 function getPeopleWorkCount (req, res, next) {
-  var page = req.query.page ? req.query.page : "A";
+  var page = req.query.page || "A";
 
   db.run("SELECT person_id, COUNT(works.id) AS cnt FROM works, JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) LEFT JOIN people p on person_id = p.id GROUP BY person_id", function(err, results) {
     if (err || !results.length) {
@@ -47,7 +47,7 @@ function getLetterPagerCounts (req, res, next) {
 
 function renderPeopleList(req, res) {
   var nconf = req.app.get('nconf');
-  var cur_letter = req.query.page ? req.query.page : "A";
+  var cur_letter = req.query.page || "A";
 
   var combPeople = _.map(req.people_list, function(person) {
     return _.extend(person, _.omit(_.findWhere(req.people_works, {person_id: person.person_id}), 'person_id'));
@@ -92,7 +92,7 @@ function getPersonWorksCount(req, res, next) {
 
 function getPersonWorksList (req, res, next) {
   var person_id = req.params.id;
-  var limit = req.query.limit ? req.query.limit : 10;
+  var limit = req.query.limit || 10;
   var offset = req.query.page ? (req.query.page - 1) * limit : 0;
 
   db.run("SELECT works.id, title_primary as work_title, title_secondary, title_tertiary, description as work_type, contributors, name as publication, publications.id as pubid, identifier_type, identifier, alt_identifier_type, alt_identifier, publication_date_year as year, volume, issue, start_page, end_page, archive_url FROM works LEFT JOIN publications ON publications.id = works.publication_id JOIN work_types USING (type), JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) WHERE person_id = $1 ORDER BY publication_date_year DESC, works.id DESC LIMIT $2 OFFSET $3", [person_id, limit, offset], function(err, results) {
@@ -158,9 +158,9 @@ function getWorksImages (req, res, next) {
 function renderPersonDetail(req, res) {
   const util = require('util');
   var nconf = req.app.get('nconf');
-  var limit = req.query.limit ? req.query.limit : 10;
+  var limit = req.query.limit || 10;
   var page_count = Math.ceil(req.total_works / limit);
-  var cur_page = req.query.page ? req.query.page : 1;
+  var cur_page = req.query.page || 1;
   var offset = (cur_page - 1) * limit;
 
   res.render('people_detail', {
@@ -182,7 +182,7 @@ function renderPersonDetail(req, res) {
 
 function getRssResults(req, res, next) {
   var person_id = req.params.id;
-  var limit = req.query.limit ? req.query.limit : 10;
+  var limit = req.query.limit || 10;
 
   db.run("SELECT DISTINCT works.id, title_primary as title, description as work_type, contributors, publications.name as pubname, publications.id as pubid, publication_date_year as year, works.updated_at, works.created_at FROM works JOIN publications ON publications.id = works.publication_id JOIN work_types USING (type), JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) LEFT JOIN people p ON person_id = p.id WHERE p.id = $1 ORDER BY works.created_at DESC, works.id DESC LIMIT $2", [person_id, limit], function(err, results) {
     if (err || !results.length) {

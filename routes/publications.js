@@ -6,7 +6,7 @@ const xml2js = require('xml2js');
 const db = require('../utils/db');
 
 function getJournalList(req, res, next) {
-  var page = req.query.page ? req.query.page : "A";
+  var page = req.query.page || "A";
 
   db.run("SELECT j.id, j.name, publisher_id, p.name as publisher_name, identifier, alt_identifier FROM publications j LEFT JOIN publishers p ON j.publisher_id = p.id WHERE identifier_type = 'ISSN' AND j.sort_name LIKE $1 ORDER BY j.sort_name", [(page + "%").toLowerCase()], function(err, results) {
     if (err || !results.length) {
@@ -19,7 +19,7 @@ function getJournalList(req, res, next) {
 }
 
 function getJournalWorkCount (req, res, next) {
-  var page = req.query.page ? req.query.page : "A";
+  var page = req.query.page || "A";
 
   db.run("SELECT j.id, (select COUNT(works.id) from works where works.publication_id = j.id) AS cnt FROM publications j WHERE j.identifier_type = 'ISSN' AND j.sort_name LIKE $1", [(page + "%").toLowerCase()], function(err, results) {
     if (err || !results.length) {
@@ -44,7 +44,7 @@ function getLetterPagerCounts (req, res, next) {
 
 function renderJournalList(req, res) {
   var nconf = req.app.get('nconf');
-  var cur_letter = req.query.page ? req.query.page : "A";
+  var cur_letter = req.query.page || "A";
 
   var combJournals = _.map(req.journal_list, function(journal) {
     return _.extend(journal, _.omit(_.findWhere(req.journal_works, {id: journal.id}), 'id'));
@@ -102,7 +102,7 @@ function getJournalAllWorkCount (req, res, next) {
 
 function getJournalWorksList (req, res, next) {
   var journal_id = req.params.id;
-  var limit = req.query.limit ? req.query.limit : 10;
+  var limit = req.query.limit || 10;
   var offset = req.query.page ? (req.query.page - 1) * limit : 0;
 
   db.run("SELECT DISTINCT works.id, title_primary as work_title, title_secondary, title_tertiary, description as work_type, contributors, j.name as publication, j.id as pubid, publication_date_year as year, identifier, identifier_type, alt_identifier, alt_identifier_type, volume, issue, start_page, end_page, archive_url FROM works JOIN publications j ON j.id = works.publication_id JOIN work_types USING (type), JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) LEFT JOIN people p ON person_id = p.id WHERE j.id = $1 ORDER BY publication_date_year DESC, works.id DESC LIMIT $2 OFFSET $3", [journal_id, limit, offset], function(err, results) {
@@ -173,9 +173,9 @@ function getWorksImages (req, res, next) {
 
 function renderJournalDetail(req, res) {
   var nconf = req.app.get('nconf');
-  var limit = req.query.limit ? req.query.limit : 10;
+  var limit = req.query.limit || 10;
   var page_count = Math.ceil(req.total_works / limit);
-  var cur_page = req.query.page ? req.query.page : 1;
+  var cur_page = req.query.page || 1;
   var offset = (cur_page - 1) * limit;
 
   res.render('publication_detail', {

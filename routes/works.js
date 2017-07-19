@@ -117,7 +117,7 @@ function getPublisherWorkCount (req, res, next) {
 }
 
 function getWorksList(req, res, next) {
-  var limit = req.query.limit ? req.query.limit : 10;
+  var limit = req.query.limit || 10;
   var offset = req.query.page ? (req.query.page - 1) * limit : 0;
   var filters = req.sqlfilters ? req.sqlfilters : "TRUE";
 
@@ -169,9 +169,9 @@ function getWorksImages (req, res, next) {
 
 function renderWorksList (req, res) {
   var nconf = req.app.get('nconf');
-  var limit = req.query.limit ? req.query.limit : 10;
+  var limit = req.query.limit || 10;
   var page_count = Math.ceil(req.total_works / limit);
-  var cur_page = req.query.page ? req.query.page : 1;
+  var cur_page = req.query.page || 1;
   var offset = (cur_page - 1) * limit;
 
   res.render('works', {
@@ -275,7 +275,7 @@ function renderWorkDetail(req, res) {
 }
 
 function getRssResults(req, res, next) {
-  var limit = req.query.limit ? req.query.limit : 10;
+  var limit = req.query.limit || 10;
 
   db.run("SELECT DISTINCT works.id, title_primary as title, description as work_type, contributors, publications.name as pubname, publications.id as pubid, publication_date_year as year, works.updated_at, works.created_at FROM works JOIN publications ON publications.id = works.publication_id JOIN work_types USING (type) ORDER BY works.created_at DESC, works.id DESC LIMIT $1", [limit], function(err, results) {
     if (err || !results.length) {
