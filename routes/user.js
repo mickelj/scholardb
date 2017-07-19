@@ -28,11 +28,9 @@ function checkPenName(req, res, next) {
 }
 
 function savePenName(req, res, next) {
-  req.session.flash = [];
-
   if (req.dberr) {
-    console.log(req.dberr);
     req.flash('error', req.dberr);
+    console.log("flash error (duplicate): " + require('util').inspect(req.session.flash, false, null));
     return res.redirect('/user/penname');
   }
 
@@ -63,7 +61,7 @@ router.get('/', authHelpers.loginRequired, (req, res) => {
 router.get('/penname', authHelpers.loginRequired, getPenNames, (req, res) => {
   var nconf = req.app.get('nconf');
 
-  console.log("flash messages: " + require('util').inspect(req.flash('error'), false, null) + " | " + require('util').inspect(req.flash('success'), false, null) );
+  console.log("flash messages: " + require('util').inspect(req.session.flash, false, null));
 
   res.render('user', {
     appconf: nconf.get(),
