@@ -5,7 +5,7 @@ const db = require('../utils/db');
 const gn = require('../utils/genNames');
 
 function getPenNames(req, res, next) {
-  db.run("SELECT display_name as penname FROM pennames WHERE people_id = $1 ORDER BY machine_name", [req.user.id], function(err, results) {
+  db.run("SELECT display_name FROM pennames WHERE people_id = $1 ORDER BY machine_name", [req.user.id], function(err, results) {
     if (err) return next(err);
 
     req.pennames = results;
