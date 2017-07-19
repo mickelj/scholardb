@@ -50,7 +50,7 @@ function savePenName(req, res, next) {
   })
 }
 
-router.get('/', authHelpers.loginRequired, (req, res, next) => {
+router.get('/', authHelpers.loginRequired, (req, res) => {
   var nconf = req.app.get('nconf');
 
   res.render('user', {
@@ -59,7 +59,7 @@ router.get('/', authHelpers.loginRequired, (req, res, next) => {
   });
 });
 
-router.get('/penname', authHelpers.loginRequired, getPenNames, (req, res, next) => {
+router.get('/penname', authHelpers.loginRequired, getPenNames, (req, res) => {
   var nconf = req.app.get('nconf');
 
   console.log("flash messages: " + require('util').inspect(req.flash('error'), false, null) + " | " + require('util').inspect(req.flash('success'), false, null) );
