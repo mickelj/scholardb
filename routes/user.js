@@ -47,7 +47,7 @@ function savePenName(req, res, next) {
     }
     req.flash('success', 'Pen name added successfully');
     return res.redirect('/user/penname');
-  })
+  })(req,res,next);
 }
 
 router.get('/', authHelpers.loginRequired, (req, res) => {
