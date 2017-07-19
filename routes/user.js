@@ -21,7 +21,6 @@ function checkPenName(req, res, next) {
     if (err) return next(err);
     if (results.length) {
       req.dberr = 'Pen name is already in database.';
-      console.log('Pen name is already in database.')
       return next();
     }
     return next();
@@ -63,7 +62,7 @@ router.get('/', authHelpers.loginRequired, (req, res, next) => {
 router.get('/penname', authHelpers.loginRequired, getPenNames, (req, res, next) => {
   var nconf = req.app.get('nconf');
 
-  console.log("flash messages: " + require('util').inspect(req.flash, false, null));
+  console.log("flash messages: " + require('util').inspect(req.flash('error'), false, null) + " | " + require('util').inspect(req.flash('success'), false, null) );
 
   res.render('user', {
     appconf: nconf.get(),
