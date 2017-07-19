@@ -24,6 +24,10 @@ div.row
       div.input-field.col.s12
         button.btn.blue.darken-4.waves-effect.waves-light.right(type="submit") Add
 
+script.
+  console.log('#{success}');
+  console.log('#{error}');
+
 if success.length
   script Materialize.toast('#{success}', 3000, 'green darken-1 white-text');
 
