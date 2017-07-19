@@ -1,0 +1,22 @@
+p: b Current Personal Information
+
+div.row
+  form.col.s12(method="post", action="/user/info")
+    div.input-field
+      input#prefix.validate(type="text", name="prefix", value=(info.prefix || ""))
+      label.active(for="prefix") Prefix
+    div.input-field
+      input#suffix.validate(type="text", name="suffix", value=(info.suffix || ""))
+      label.active(for="suffix") Suffix
+    div.input-field
+      input#phone.validate(type="tel", name="phone", value=(info.phone || ""))
+      label.active(for="phone", data-error="Please enter a valid phone number") Phone #
+    div.input-field
+      input#office.validate(type="text", name="office" value=(info.office_location || ""))
+      label.active(for="office") Office Location
+
+    div.row
+      div.input-field.col.s12
+        button.btn.blue.darken-4.waves-effect.waves-light.right(type="submit") Update
+
+include ../popups.pug

@@ -4,8 +4,28 @@ const authHelpers = require('../utils/auth-helpers');
 const db = require('../utils/db');
 const gn = require('../utils/genNames');
 
+function getInfo(req, res, next) {
+  db.run("SELECT prefix, suffix, phone, office_location FROM people WHERE id = $1", [req.user.id], (err, results) => {
+    if (err) return next(err);
+
+    req.info = results;
+    return next();
+  });
+}
+
+function saveInfo(req, res, next) {
+  db.people.update({id: req.user.id, prefix: req.body.prefix, suffix: req.body.suffix, phone: req.body.phone, office_location: req.body.office}, (err, results) => {
+    if (err) {
+      req.flash('error', 'Error updating information: ' + err);
+      return res.redirect('/user/info');
+    }
+    req.flash('success', 'Information updated successfully');
+    return res.redirect('/user/info');
+  });
+}
+
 function getPenNames(req, res, next) {
-  db.run("SELECT display_name FROM pennames WHERE people_id = $1 ORDER BY machine_name", [req.user.id], function(err, results) {
+  db.run("SELECT display_name FROM pennames WHERE people_id = $1 ORDER BY machine_name", [req.user.id], (err, results) => {
     if (err) return next(err);
 
     req.pennames = results;
@@ -30,7 +50,6 @@ function checkPenName(req, res, next) {
 function savePenName(req, res, next) {
   if (req.dberr) {
     req.flash('error', req.dberr);
-    console.log("flash error (duplicate): " + require('util').inspect(req.session.flash, false, null));
     return res.redirect('/user/penname');
   }
 
@@ -58,10 +77,21 @@ router.get('/', authHelpers.loginRequired, (req, res) => {
   });
 });
 
-router.get('/penname', authHelpers.loginRequired, getPenNames, (req, res) => {
+router.get('/info', authHelpers.loginRequired, getInfo, (req, res) => {
   var nconf = req.app.get('nconf');
 
-  console.log("flash messages: " + require('util').inspect(req.session.flash, false, null));
+  res.render('user', {
+    appconf: nconf.get(),
+    user: req.user,
+    page: 'info',
+    info: req.info,
+    error: req.flash('error'),
+    success: req.flash('success')
+  })
+});
+
+router.get('/penname', authHelpers.loginRequired, getPenNames, (req, res) => {
+  var nconf = req.app.get('nconf');
 
   res.render('user', {
     appconf: nconf.get(),
@@ -74,5 +104,6 @@ router.get('/penname', authHelpers.loginRequired, getPenNames, (req, res) => {
 });
 
 router.post('/penname', authHelpers.loginRequired, checkPenName, savePenName);
+router.post('/info', authHelpers.loginRequired, saveInfo);
 
 module.exports = router;
