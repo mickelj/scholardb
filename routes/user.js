@@ -68,6 +68,23 @@ function savePenName(req, res, next) {
   });
 }
 
+function getAllDepts(req, res, next) {
+  db.run("SELECT name FROM groups WHERE hidden = false ORDER BY name", (err, results) => {
+    if (err) return next(err);
+    req.alldepts = results;
+    return next();
+  });
+}
+
+function getDepartments(req, res, next) {
+  db.run("SELECT group_id, name FROM memberships JOIN groups ON group_id = id WHERE hidden = false AND people_id = $1 ORDER BY name", [req.user.id], (err, results) => {
+    if (err) return next(err);
+
+    req.departments = results;
+    return next();
+  });
+}
+
 router.get('/', authHelpers.loginRequired, (req, res) => {
   var nconf = req.app.get('nconf');
 
@@ -98,6 +115,20 @@ router.get('/penname', authHelpers.loginRequired, getPenNames, (req, res) => {
     user: req.user,
     page: 'pennames',
     pennames: req.pennames,
+    error: req.flash('error'),
+    success: req.flash('success')
+  });
+});
+
+router.get('/departments', authHelpers.loginRequired, getAllDepts, getDepartments, (req, res) => {
+  var nconf = req.app.get('nconf');
+
+  res.render('user', {
+    appconf: nconf.get(),
+    user: req.user,
+    page: 'departments',
+    departments: req.departments,
+    alldepts: req.alldepts,
     error: req.flash('error'),
     success: req.flash('success')
   });

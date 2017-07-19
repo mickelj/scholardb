@@ -1,0 +1,32 @@
+p: b Department/Program Membership
+
+ul.collection.col.s10.offset-s1.m8.offset-m1.l6.offset-l1
+  each dept in departments
+    li.collection-item
+      div dept.name
+        a.secondary-content.tooltipped.red-text.text-darken-4(href="#!", data-position="bottom", data-delay="50", data-tooltip="Remove department")
+          i.material-icons remove_circle
+
+div.row
+  form.col.s10.offset-s1(method="post", action="/user/departments")
+    div.input-field
+      input#deptlist.autocomplete(type="text", name="deptlist")
+      label(for="deptlist") Begin typing a department name: 
+    div.row
+      div.input-field
+        button.btn.blue.darken-4.waves-effect.waves-light.right(type="submit") Update
+
+include ../popups.pug
+
+script
+  | $('#deptlist').autocomplete({
+  |   data: {
+  each d in alldepts
+    | '#{d.name}' : null,  
+  |   },
+  |   limit: 20,
+  |   onAutocomplete: function(val) {
+        // Callback function when value is autocompleted.
+  |   },
+  |   minLength: 1
+  | });
