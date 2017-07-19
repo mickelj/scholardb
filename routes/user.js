@@ -74,6 +74,6 @@ router.get('/penname', authHelpers.loginRequired, getPenNames, (req, res, next) 
   });
 });
 
-router.post('/penname', authHelpers.loginRequired, checkPenName, savePenName);
+router.post('/penname', authHelpers.loginRequired, checkPenName, savePenName)(req, res, next);
 
 module.exports = router;
