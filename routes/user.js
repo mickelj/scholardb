@@ -27,7 +27,7 @@ function checkPenName(req, res, next) {
   })
 }
 
-function savePenName(req, res) {
+function savePenName(req, res, next) {
   req.session.flash = [];
 
   if (req.dberr) {
@@ -74,6 +74,6 @@ router.get('/penname', authHelpers.loginRequired, getPenNames, (req, res, next) 
   });
 });
 
-router.post('/penname', authHelpers.loginRequired, checkPenName, savePenName)(req, res, next);
+router.post('/penname', authHelpers.loginRequired, checkPenName, savePenName);
 
 module.exports = router;
