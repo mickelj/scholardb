@@ -31,6 +31,7 @@ function savePenName(req, res, next) {
   req.session.flash = [];
 
   if (req.dberr) {
+    console.log(req.dberr);
     req.flash('error', req.dberr);
     return res.redirect('/user/penname');
   }
@@ -47,7 +48,7 @@ function savePenName(req, res, next) {
     }
     req.flash('success', 'Pen name added successfully');
     return res.redirect('/user/penname');
-  })(req,res,next);
+  });
 }
 
 router.get('/', authHelpers.loginRequired, (req, res) => {
