@@ -17,10 +17,11 @@ function checkPenName(req, res, next) {
   req.pn = req.body.last_name + ", " + req.body.first_name + (req.body.middle_name ? " " + req.body.middle_name : "");
   req.mn = gn.genMachineName(req.pn);
 
-  db.run("SELECT id FROM pennames WHERE machine_name ILIKE $1", ['%' + req.mn + '%'], (err, results) => {
+  db.run("SELECT id FROM pennames WHERE people_id = $1 AND machine_name ILIKE $2", [req.user.id, '%' + req.mn + '%'], (err, results) => {
     if (err) return next(err);
     if (results.length) {
       req.dberr = 'Pen name is already in database.';
+      console.log('Pen name is already in database.')
       return next();
     }
     return next();
