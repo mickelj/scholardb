@@ -48,8 +48,8 @@ router.get('/penname', authHelpers.loginRequired, getPenNames, (req, res, next) 
     user: req.user,
     page: 'pennames',
     pennames: req.pennames,
-    error: req.flash('error');
-    success: req.flash('success');
+    error: req.flash('error'),
+    success: req.flash('success')
   });
 });
 
