@@ -23,8 +23,7 @@
   },
 
   "romeo": {
-    "romeourl"      : "http://www.sherpa.ac.uk/romeo/api29.php?ak=",
-    "romeoapikey"   : "bEi1YdbpB6Y"
+    "romeourl"      : "http://www.sherpa.ac.uk/romeo/api29.php?ak="
   },
 
   "fulltext": {

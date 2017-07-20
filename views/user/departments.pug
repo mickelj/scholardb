@@ -1,22 +1,47 @@
+script(type="text/javascript", src="/js/userdepts.js")
+
+- var currDepts = []
+
 p: b Department/Program Membership
 
-ul.collection.col.s10.offset-s1.m8.offset-m1.l6.offset-l1
-  each dept in departments
-    li.collection-item
-      div= dept.name
-        a.secondary-content.tooltipped.red-text.text-darken-4(href="#!", data-position="bottom", data-delay="50", data-tooltip="Remove " + dept.name)
-          i.material-icons remove_circle
+div.row
+  div.col.s10.offset-s1
+    b Current Departments:
 
+div.row
+  ul.collection.col.s10.offset-s1.m8.offset-m1.l6.offset-l1
+    each dept in departments
+      - currDepts.push({group_id: dept.id, name: dept.name})
+      li.collection-item
+        div= dept.name
+          a.secondary-content.tooltipped.red-text.text-darken-4.deldept(href="#!", data-position="bottom", data-delay="50", data-tooltip="Remove " + dept.name, data-deptid=dept.group_id, data-deptname=dept.name)
+            i.material-icons remove_circle
+
+div#newdeptheader.row.hide
+  div.col.s10.offset-s1
+    b Departments to be Added:
+
+div#newdeptlist.row.hide
+  ul.collection.col.s10.offset-s1.m8.offset-m1.l6.offset-l1
+
+div.row
+  div.col.s10.offset-s1
+    div
+      label(for="deptlist") Add a Department: 
+      select#deptlist.browser-default(name="deptlist")
+        option(value="", disabled, selected) Choose from:
+        each d in alldepts
+          if _.findWhere(currDepts, {id: d.id})
+            - disabled = true
+          else
+            - disabled = false
+          option(value=d.id, disabled=disabled)= d.name
+        
 div.row
   form.col.s10.offset-s1(method="post", action="/user/departments")
     div.input-field
-      select#deptlist.browser-default(name="deptlist")
-        option(value="", disabled, selected) Choose a Department
-        each d in alldepts
-          option(value=d.id)= d.name
-      label(for="deptlist") Add: 
-    div.row
-      div.input-field
-        button.btn.blue.darken-4.waves-effect.waves-light.right(type="submit") Update
+      input#inDepts(type="hidden", name="inDepts")
+      input#outDepts(type="hidden", name="outDepts")
+      button.btn.blue.darken-4.waves-effect.waves-light.right(type="submit") Update
 
 include ../popups.pug
