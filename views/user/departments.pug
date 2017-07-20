@@ -14,7 +14,7 @@ div.row
       - currDepts.push({group_id: dept.id, name: dept.name})
       li.collection-item
         div= dept.name
-          a.secondary-content.tooltipped.red-text.text-darken-4.deldept(href="#!", data-position="bottom", data-delay="50", data-tooltip="Remove " + dept.name, data-deptid=dept.group_id, data-deptname=dept.name)
+          a.secondary-content.tooltipped.red-text.text-darken-4.deldept(href="#!", data-deptid=dept.group_id, data-deptname=dept.name)
             i.material-icons remove_circle
 
 div#newdeptheader.row.hide
