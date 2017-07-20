@@ -7,7 +7,7 @@ $(document).ready(function() {
     var indepts = $("#inDepts").val();
     if (indepts) {
       $("#inDepts").val(indepts + ",{id: " + $(this).val() + ", name: " + $(this).text() + "}");
-    else {
+    } else {
       $("#inDepts").val("{id: " + $(this).val() + ", name: " + $(this).text() + "}");
     }
 
@@ -23,7 +23,7 @@ $(document).ready(function() {
     var outdepts = $("#outDepts").val();
     if (outdepts) {
       $("#outDepts").val(outdepts + ",{id: " + gid + ", name: " + gname + "}");
-    else {
+    } else {
       $("#outDepts").val("{id: " + gid + ", name: " + gname + "}");
     }
 
