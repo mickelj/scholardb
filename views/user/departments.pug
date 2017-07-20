@@ -8,20 +8,20 @@ div.row
   div.col.s10.offset-s1
     b Current Departments:
 
-div.row
+div.row.departments
   ul.collection.col.s10.offset-s1.m8.offset-m1.l6.offset-l1
     each dept in departments
       - currDepts.push({group_id: dept.id, name: dept.name})
       li.collection-item
         div= dept.name
-          a.secondary-content.tooltipped.red-text.text-darken-4.deldept(href="#!", data-deptid=dept.group_id, data-deptname=dept.name)
+          a.secondary-content.red-text.text-darken-4.deldept(href="#!", data-deptid=dept.group_id, data-deptname=dept.name)
             i.material-icons remove_circle
 
 div#newdeptheader.row.hide
   div.col.s10.offset-s1
     b Departments to be Added:
 
-div#newdeptlist.row.hide
+div#newdeptlist.row.hide.departments
   ul.collection.col.s10.offset-s1.m8.offset-m1.l6.offset-l1
 
 div.row

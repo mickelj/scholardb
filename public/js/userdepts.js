@@ -17,7 +17,7 @@ $(document).ready(function() {
     // REMOVE THIS FROM outDepts IF FOUND THERE
   });
 
-  $(".deldept").on('click', function(e) {
+  $(document).on('click', ".departments a.deldept", function(e) {
     e.preventDefault();
 
     var gid = $(this).data('deptid');
