@@ -7,6 +7,9 @@ function removeFromArray(item, arrayToEdit) {
 }
 
 $(document).ready(function() {
+  var indepts = $("#inDepts").val();
+  var outdepts = $("#outDepts").val();
+
   $("#deptlist").on('change', function() {
     var seltext = $("#deptlist option:selected").text();
     var selval = $("#deptlist").val();
@@ -15,14 +18,13 @@ $(document).ready(function() {
 
     $("#newdeptheader").removeClass('hide');
     $("#newdeptlist").removeClass('hide');
-    var indepts = $("#inDepts").val();
     if (indepts) {
       $("#inDepts").val(indepts + ",{id: " + selval + ", name: '" + seltext + "'}");
     } else {
       $("#inDepts").val("{id: " + selval + ", name: '" + seltext + "'}");
     }
 
-    removeFromArray("{id: " + selval + "}", "outDepts");
+    removeFromArray("{id: " + selval + "}", outDepts);
     console.log("After add selection (in) : " + JSON.parse($("#inDepts").val()));
     console.log("After add selection (out): " + JSON.parse($("#outDepts").val()));
   });
@@ -33,7 +35,6 @@ $(document).ready(function() {
     var gid = $(this).data('deptid');
     var gname = $(this).data('deptname');
 
-    var outdepts = $("#outDepts").val();
     if (outdepts) {
       $("#outDepts").val(outdepts + ",{id: " + gid + ", name: '" + gname + "'}");
     } else {
@@ -42,7 +43,7 @@ $(document).ready(function() {
 
     $(this).parent().parent().remove();
 
-    removeFromArray("{id: " + gid + "}", "inDepts");
+    removeFromArray("{id: " + gid + "}", inDepts);
     console.log("After removal click (in) : " + JSON.parse($("#inDepts").val()));
     console.log("After removal click (out): " + JSON.parse($("#outDepts").val()));
   });
