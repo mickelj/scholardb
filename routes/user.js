@@ -85,6 +85,17 @@ function getDepartments(req, res, next) {
   });
 }
 
+function addDepartment(req, res, next) {
+  var deptid = req.body.deptid || null;
+
+  if (deptid) {
+    db.memberships.insert({group_id: deptid, people_id: req.user.id}, (err, results) => {
+      if (err) return res.json({"err": err});
+      return res.json({success: true});
+    });
+  }
+}
+
 function deleteDepartment(req, res, next) {
   var deptid = req.body.deptid || null;
 
@@ -147,6 +158,7 @@ router.get('/departments', authHelpers.loginRequired, getAllDepts, getDepartment
 
 router.post('/penname', authHelpers.loginRequired, checkPenName, savePenName);
 router.post('/info', authHelpers.loginRequired, saveInfo);
+router.post('/departments/add', authHelpers.loginRequired, addDepartment);
 router.post('/departments/delete', authHelpers.loginRequired, deleteDepartment);
 
 module.exports = router;

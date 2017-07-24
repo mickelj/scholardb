@@ -1,10 +1,21 @@
 $(document).ready(function() {
-  $("#deptlist").on('change', function() {
+  $("#deptadd").on('click', function() {
+    var deptid = $("#deptlist").val();
+    $.ajax({
+      method: "POST",
+      url: "/user/departments/add",
+      data: {"deptid": deptid},
+      success: function(result) {
+        if(result) {
+          location.reload();
+        }
+      }
+    });
   });
 
   $(document).on('click', ".departments a.deldept", function(e) {
     e.preventDefault();
-    if (confirm("Are you sure you want to remove " + $(this).data('deptname')) + "?") {
+    if (confirm("Are you sure you want to remove " + $(this).data('deptname') + "?")) {
       var deptid = $(this).data('deptid');
       $.ajax({
         method: "POST",

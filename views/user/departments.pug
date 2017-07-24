@@ -9,25 +9,29 @@ div.row
     b Current Departments:
 
 div.row.departments
-  ul.collection.col.s10.offset-s1.m8.offset-m1.l6.offset-l1
-    each dept in departments
-      - currDepts.push({group_id: dept.id, name: dept.name})
-      li.collection-item
-        div= dept.name
-          a.secondary-content.red-text.text-darken-4.deldept(href="#!", data-deptid=dept.group_id, data-deptname=dept.name)
-            i.material-icons remove_circle
+  if departments.length
+    ul.collection.col.s10.offset-s1.m8.offset-m1.l6.offset-l1
+      each dept in departments
+        - currDepts.push({group_id: dept.id, name: dept.name})
+        li.collection-item
+          div= dept.name
+            a.secondary-content.red-text.text-darken-4.deldept(href="#!", data-deptid=dept.group_id, data-deptname=dept.name)
+              i.material-icons remove_circle
+  else
+    p Not currently a member of any departments or programs
 
 div.row
+  p.col.s10.offset-s1 Add a Department:
+div.row
   form.col.s10.offset-s1(method="post", action="/user/departments")
-    div
-      label(for="deptlist") Add a Department: 
+    div.row
       select#deptlist.browser-default(name="deptlist")
         option(value="", disabled, selected) Choose from:
         each d in alldepts
-          if _.findWhere(currDepts, {id: d.id})
+          if _.findWhere(currDepts, {group_id: d.id})
             option(value=d.id, disabled)= d.name
           else
             option(value=d.id)= d.name
-      button.btn.blue.darken-4.waves-effect.waves-light.right(type="submit") Add
+      button#deptadd.btn.blue.darken-4.waves-effect.waves-light(style="margin-left: 10px") Add
 
 include ../popups.pug
