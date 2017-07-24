@@ -68,6 +68,10 @@ function savePenName(req, res, next) {
   });
 }
 
+function getPhoto(req, res, next) {
+  return next();
+}
+
 function getAllDepts(req, res, next) {
   db.run("SELECT id, name FROM groups WHERE hidden = false ORDER BY name", (err, results) => {
     if (err) return next(err);
