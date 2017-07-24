@@ -92,7 +92,7 @@ function addDepartment(req, res, next) {
     db.memberships.insert({group_id: deptid, people_id: req.user.id}, (err, results) => {
       if (err) {
         req.flash('error', 'Error adding department to database: ' + err);
-        return res.json(success: false);
+        return res.json({success: false});
       }
 
       req.flash('success', 'Department added successfully');
