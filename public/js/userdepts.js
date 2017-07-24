@@ -2,7 +2,7 @@ function removeFromArray(item, arrayToEdit) {
   var arr = JSON.parse("[" + JSON.stringify(arrayToEdit.value) + "]");
   var index = _.indexOf(arrayToEdit, _.findWhere(arr, item));
   if (index) arr.splice(index, 1);
-  var arrstr = JSON.stringify(arr);
+  var arrstr = (JSON.stringify(arr)).substring(1, arr.length-1);
   arrayToEdit.value = arrstr;
 }
 
@@ -18,7 +18,7 @@ $(document).ready(function() {
 
     $("#newdeptheader").removeClass('hide');
     $("#newdeptlist").removeClass('hide');
-    if (indepts) {
+    if (indepts.val()) {
       indepts.val(indepts.val() + ",{id: " + selval + ", name: '" + seltext + "'}");
     } else {
       indepts.val("{id: " + selval + ", name: '" + seltext + "'}");
@@ -35,7 +35,7 @@ $(document).ready(function() {
     var gid = $(this).data('deptid');
     var gname = $(this).data('deptname');
 
-    if (outdepts) {
+    if (outdepts.val()) {
       outdepts.val(outdepts.val() + ",{id: " + gid + ", name: '" + gname + "'}");
     } else {
       outdepts.val("{id: " + gid + ", name: '" + gname + "'}");
