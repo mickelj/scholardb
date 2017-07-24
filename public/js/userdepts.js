@@ -1,3 +1,10 @@
+function removeFromArray(item, arrayToEdit) {
+  var arr = JSON.parse(JSON.stringify("[" + arrayToEdit + "]"));
+  var index = _.indexOf(arr, _.findWhere(arr, item));
+  arr.splice(index, 1);
+  var arrstr = JSON.stringify(arr.substring(1, arr.length-1));
+}
+
 $(document).ready(function() {
   $("#deptlist").on('change', function() {
     var seltext = $("#deptlist option:selected").text();
@@ -9,12 +16,14 @@ $(document).ready(function() {
     $("#newdeptlist").removeClass('hide');
     var indepts = $("#inDepts").val();
     if (indepts) {
-      $("#inDepts").val(indepts + ",{id: " + selval + ", name: " + seltext + "}");
+      $("#inDepts").val(indepts + ",{id: " + selval + ", name: '" + seltext + "'}");
     } else {
-      $("#inDepts").val("{id: " + selval + ", name: " + seltext + "}");
+      $("#inDepts").val("{id: " + selval + ", name: '" + seltext + "'}");
     }
 
-    // REMOVE THIS FROM outDepts IF FOUND THERE
+    removeFromArray("{id: " + selval + "}", "outDepts");
+    console.log("After add selection (in) : " + JSON.parse($("#inDepts").val()));
+    console.log("After add selection (out): " + JSON.parse($("#outDepts").val()));
   });
 
   $(document).on('click', ".departments a.deldept", function(e) {
@@ -25,13 +34,15 @@ $(document).ready(function() {
 
     var outdepts = $("#outDepts").val();
     if (outdepts) {
-      $("#outDepts").val(outdepts + ",{id: " + gid + ", name: " + gname + "}");
+      $("#outDepts").val(outdepts + ",{id: " + gid + ", name: '" + gname + "'}");
     } else {
-      $("#outDepts").val("{id: " + gid + ", name: " + gname + "}");
+      $("#outDepts").val("{id: " + gid + ", name: '" + gname + "'}");
     }
 
     $(this).parent().parent().remove();
 
-    // REMOVE THIS FROM inDepts IF FOUND THERE
+    removeFromArray("{id: " + gid + "}", "inDepts");
+    console.log("After removal click (in) : " + JSON.parse($("#inDepts").val()));
+    console.log("After removal click (out): " + JSON.parse($("#outDepts").val()));
   });
 });
