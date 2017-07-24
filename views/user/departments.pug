@@ -17,31 +17,17 @@ div.row.departments
           a.secondary-content.red-text.text-darken-4.deldept(href="#!", data-deptid=dept.group_id, data-deptname=dept.name)
             i.material-icons remove_circle
 
-div#newdeptheader.row.hide
-  div.col.s10.offset-s1
-    b Departments to be Added:
-
-div#newdeptlist.row.hide.departments
-  ul.collection.col.s10.offset-s1.m8.offset-m1.l6.offset-l1
-
 div.row
-  div.col.s10.offset-s1
+  form.col.s10.offset-s1(method="post", action="/user/departments")
     div
       label(for="deptlist") Add a Department: 
       select#deptlist.browser-default(name="deptlist")
         option(value="", disabled, selected) Choose from:
         each d in alldepts
           if _.findWhere(currDepts, {id: d.id})
-            - disabled = true
+            option(value=d.id, disabled)= d.name
           else
-            - disabled = false
-          option(value=d.id, disabled=disabled)= d.name
-        
-div.row
-  form.col.s10.offset-s1(method="post", action="/user/departments")
-    div.input-field
-      input#inDepts(type="hidden", name="inDepts")
-      input#outDepts(type="hidden", name="outDepts")
-      button.btn.blue.darken-4.waves-effect.waves-light.right(type="submit") Update
+            option(value=d.id)= d.name
+      button.btn.blue.darken-4.waves-effect.waves-light.right(type="submit") Add
 
 include ../popups.pug
