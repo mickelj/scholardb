@@ -1,9 +1,8 @@
 function removeFromArray(item, arrayToEdit) {
   var arr = JSON.parse("[" + JSON.stringify(arrayToEdit) + "]");
   var index = _.indexOf(arrayToEdit, _.findWhere(arr, item));
-  console.log(arr + " | Type: " + typeof(arr));
   if (index) arr.splice(index, 1);
-  var arrstr = JSON.stringify(arr.substring(1, arr.length-1));
+  var arrstr = JSON.stringify(arr).substring(1, arr.length-1);
 }
 
 $(document).ready(function() {
