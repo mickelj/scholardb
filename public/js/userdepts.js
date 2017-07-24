@@ -20,7 +20,7 @@ $(document).ready(function() {
         url: "/user/departments/delete",
         data: {"deptid": deptid},
         success: function(result) {
-          location.reload();
+          location.reload(); 
         }
       });
     }
