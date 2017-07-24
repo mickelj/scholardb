@@ -1,13 +1,14 @@
 function removeFromArray(item, arrayToEdit) {
-  var arr = JSON.parse("[" + JSON.stringify(arrayToEdit) + "]");
+  var arr = JSON.parse("[" + JSON.stringify(arrayToEdit.val() + "]");
   var index = _.indexOf(arrayToEdit, _.findWhere(arr, item));
   if (index) arr.splice(index, 1);
   var arrstr = JSON.stringify(arr).substring(1, arr.length-1);
+  arrayToEdit.val(arrstr);
 }
 
 $(document).ready(function() {
-  var indepts = $("#inDepts").val();
-  var outdepts = $("#outDepts").val();
+  var indepts = $("#inDepts");
+  var outdepts = $("#outDepts");
 
   $("#deptlist").on('change', function() {
     var seltext = $("#deptlist option:selected").text();
@@ -18,14 +19,14 @@ $(document).ready(function() {
     $("#newdeptheader").removeClass('hide');
     $("#newdeptlist").removeClass('hide');
     if (indepts) {
-      $("#inDepts").val(indepts + ",{id: " + selval + ", name: '" + seltext + "'}");
+      indepts.val(indepts.val() + ",{id: " + selval + ", name: '" + seltext + "'}");
     } else {
-      $("#inDepts").val("{id: " + selval + ", name: '" + seltext + "'}");
+      indepts.val("{id: " + selval + ", name: '" + seltext + "'}");
     }
 
     removeFromArray("{id: " + selval + "}", outDepts);
-    console.log("After add selection (in) : " + JSON.parse($("#inDepts").val()));
-    console.log("After add selection (out): " + JSON.parse($("#outDepts").val()));
+    console.log("After add selection (in) : " + indepts.val());
+    console.log("After add selection (out): " + outdepts.val());
   });
 
   $(document).on('click', ".departments a.deldept", function(e) {
@@ -35,15 +36,15 @@ $(document).ready(function() {
     var gname = $(this).data('deptname');
 
     if (outdepts) {
-      $("#outDepts").val(outdepts + ",{id: " + gid + ", name: '" + gname + "'}");
+      outdepts.val(outdepts.val() + ",{id: " + gid + ", name: '" + gname + "'}");
     } else {
-      $("#outDepts").val("{id: " + gid + ", name: '" + gname + "'}");
+      outdepts.val("{id: " + gid + ", name: '" + gname + "'}");
     }
 
     $(this).parent().parent().remove();
 
     removeFromArray("{id: " + gid + "}", inDepts);
-    console.log("After removal click (in) : " + JSON.parse($("#inDepts").val()));
-    console.log("After removal click (out): " + JSON.parse($("#outDepts").val()));
+    console.log("After removal click (in) : " + indepts.val());
+    console.log("After removal click (out): " + outdepts.val());
   });
 });
