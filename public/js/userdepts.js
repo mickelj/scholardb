@@ -6,9 +6,7 @@ $(document).ready(function() {
       url: "/user/departments/add",
       data: {"deptid": deptid},
       success: function(result) {
-        if(result) {
-          location.reload();
-        }
+        location.reload();
       }
     });
   });
@@ -22,9 +20,7 @@ $(document).ready(function() {
         url: "/user/departments/delete",
         data: {"deptid": deptid},
         success: function(result) {
-          if(result) {
-            location.reload();
-          }
+          location.reload();
         }
       });
     }

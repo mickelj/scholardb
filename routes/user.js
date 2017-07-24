@@ -90,7 +90,12 @@ function addDepartment(req, res, next) {
 
   if (deptid) {
     db.memberships.insert({group_id: deptid, people_id: req.user.id}, (err, results) => {
-      if (err) return res.json({"err": err});
+      if (err) {
+        req.flash('error', 'Error adding department to database: ' + err);
+        return res.json(success: false);
+      }
+
+      req.flash('success', 'Department added successfully');
       return res.json({success: true});
     });
   }
@@ -101,7 +106,11 @@ function deleteDepartment(req, res, next) {
 
   if (deptid) {
     db.memberships.destroy({group_id: deptid, people_id: req.user.id}, (err, results) => {
-      if (err) return res.json({"err": err});
+      if (err) {
+        req.flash('error', 'Error removing department from database: ' + err);
+        return res.json({success: false});
+      }
+      req.flash('success', 'Department removed successfully');
       return res.json({success: true});
     });
   }
@@ -137,6 +146,19 @@ router.get('/penname', authHelpers.loginRequired, getPenNames, (req, res) => {
     user: req.user,
     page: 'pennames',
     pennames: req.pennames,
+    error: req.flash('error'),
+    success: req.flash('success')
+  });
+});
+
+router.get('/photo', authHelpers.loginRequired, getPhoto, (req, res) => {
+  var nconf = req.app.get('nconf');
+
+  res.render('user', {
+    appconf: nconf.get(),
+    user: req.user,
+    page: 'photo',
+    photo: req.photo,
     error: req.flash('error'),
     success: req.flash('success')
   });
