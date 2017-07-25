@@ -1,1 +1,16 @@
-p: b Current Profile Photograph  
+p: b Current Profile Photograph
+
+if (photo.image)
+  img.responsive-img(src=appconf.appurls.imgrootdir + photo.image + appconf.images.defimgext, alt="Current Profile Image")
+else
+  p No photo has been uploaded
+  
+p: b Upload a New Photograph (PNG or JPEG format only)
+
+form(method="post", action="/user/photo")
+  div.file-field.input-field
+    div.btn
+      span Choose Photo
+      input(type="file", name="newphoto")
+    div.file-path-wrapper
+      input.file-path.validate(type="text")

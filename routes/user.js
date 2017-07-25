@@ -3,6 +3,7 @@ const router = express.Router();
 const authHelpers = require('../utils/auth-helpers');
 const db = require('../utils/db');
 const gn = require('../utils/genNames');
+const jimp = require('jimp');
 
 function getInfo(req, res, next) {
   db.run("SELECT prefix, suffix, phone, office_location FROM people WHERE id = $1", [req.user.id], (err, results) => {
@@ -69,7 +70,27 @@ function savePenName(req, res, next) {
 }
 
 function getPhoto(req, res, next) {
-  return next();
+  db.run("SELECT id, image_url as image FROM people WHERE id = $1", [req.user.id], (err, results) => {
+    if (err) return next(err);
+    req.photo = results;
+    return next();
+  });
+}
+
+function processPhoto(req, res, next) {
+  var nconf = req.app.get('nconf');
+  jimp.read(req.body.newphoto.buffer, (err, image) => {
+    if (err) {
+      req.flash('error', 'Error processing photo: ' + err);
+      return res.redirect('/user/photo');
+    }
+
+    image.cover(400, 400, jimp.HORIZONTAL_ALIGN_LEFT | jimp.VERTICAL_ALIGN_TOP);
+    var file = "/images/test." + image.getExtension();
+    image.write(file);
+    req.flash('success', 'Photo successfully updated');
+    return res.redirect('/user/photo');
+  });
 }
 
 function getAllDepts(req, res, next) {
@@ -184,6 +205,7 @@ router.get('/departments', authHelpers.loginRequired, getAllDepts, getDepartment
 
 router.post('/penname', authHelpers.loginRequired, checkPenName, savePenName);
 router.post('/info', authHelpers.loginRequired, saveInfo);
+router.post('/photo', authHelpers.loginRequired, processPhoto);
 router.post('/departments/add', authHelpers.loginRequired, addDepartment);
 router.post('/departments/delete', authHelpers.loginRequired, deleteDepartment);
 
