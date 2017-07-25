@@ -102,7 +102,7 @@ function processPhoto(req, res, next) {
       var formData = {
         filename: "test.jpg",
         submit: true,
-        newphoto: result
+        //newphoto: result
       };
       request.post({url: nconf.get('appurls:imgrootdir') + "upload.php", formData: formData}, (err, res, body) => {
         if (err) {
