@@ -4,8 +4,7 @@ const authHelpers = require('../utils/auth-helpers');
 const db = require('../utils/db');
 const gn = require('../utils/genNames');
 const jimp = require('jimp');
-const http = require('http');
-http.post = require('http-post');
+const request = require('request');
 
 function getInfo(req, res, next) {
   db.run("SELECT prefix, suffix, phone, office_location FROM people WHERE id = $1", [req.user.id], (err, results) => {
@@ -100,27 +99,21 @@ function processPhoto(req, res, next) {
         return res.redirect('/user/photo');
       }
 
-      var data = {
-        filename: "test.jpg",
-        submit: true
-      };
-
-      var files = {
-        newphoto: result
-      };
-
-      var url = 'http://scholarsdb.omeka.wlu.edu/' + "upload.php";
-      http.post(url, data, files, (response) => {
-        response.on('data', function (chunk) {
-          console.log(chunk);
-        });
-        if (response.err) {
-          req.flash('error', 'Error saving photo: ' + response.err);
+      var url = 'https://scholarsdb.omeka.wlu.edu/' + "upload.php";
+      var r = request.post(url, (err, response, body) => {
+        if (err) {
+          req.flash('error', 'Error saving photo: ' + err);
           return res.redirect('/user/photo');
         }
 
         req.flash('success', 'Photo successfully updated');
         return res.redirect('/user/photo');
+      });
+
+      var form = r.form();
+      form.append('file', result, {
+        filename: 'test.jpg',
+        contentType: 'image/jpeg'
       });
     });
   });
