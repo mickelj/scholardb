@@ -96,7 +96,7 @@ function processPhoto(req, res, next) {
     image.cover(400, 400, jimp.HORIZONTAL_ALIGN_LEFT | jimp.VERTICAL_ALIGN_TOP);
     image.getBuffer(jimp.AUTO, (err, result) => {
       if (err) {
-        req.flash('error', 'Error saving photo: ' + err);
+        req.flash('error', 'Error buffering photo: ' + err);
         return res.redirect('/user/photo');
       }
 
