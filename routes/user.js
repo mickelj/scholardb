@@ -104,7 +104,11 @@ function processPhoto(req, res, next) {
         submit: true,
         newphoto: result
       };
-      request.post({url: nconf.get('appurls:imgrootdir') + "upload.php", formData: formData}, (err, httpResponse, body) => {
+
+      var url = nconf.get('appurls:imgrootdir') + "upload.php";
+      console.log(url);
+      console.log(formData);
+      request.post({url: url, formData: formData}, (err, httpResponse, body) => {
         if (err) {
           // req.flash('error', 'Error saving photo: ' + err);
           // return res.redirect('/user/photo');
