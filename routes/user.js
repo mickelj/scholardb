@@ -4,6 +4,7 @@ const authHelpers = require('../utils/auth-helpers');
 const db = require('../utils/db');
 const gn = require('../utils/genNames');
 const jimp = require('jimp');
+const request = require('request');
 
 function getInfo(req, res, next) {
   db.run("SELECT prefix, suffix, phone, office_location FROM people WHERE id = $1", [req.user.id], (err, results) => {
@@ -78,6 +79,8 @@ function getPhoto(req, res, next) {
 }
 
 function processPhoto(req, res, next) {
+  var nconf = req.app.get('nconf');
+
   if (!req.files) {
     req.flash('error', 'No photo was uploaded');
     return res.redirect('/user/photo');
@@ -92,11 +95,24 @@ function processPhoto(req, res, next) {
     image.cover(400, 400, jimp.HORIZONTAL_ALIGN_LEFT | jimp.VERTICAL_ALIGN_TOP);
     image.getBuffer(jimp.AUTO, (err, result) => {
       if (err) {
-        req.flash('error', 'Error in buffer save: ' + err);
+        req.flash('error', 'Error saving photo: ' + err);
         return res.redirect('/user/photo');
       }
-      req.flash('success', 'Photo successfully updated: ' + result);
-      return res.redirect('/user/photo');
+
+      var formData = {
+        filename: "test.jpg",
+        submit: true,
+        newphoto: result
+      };
+      request.post({url: nconf.get('appurls:imgrootdir') + "upload.php", formData: formData}, (err, res, body) => {
+        if (err) {
+          req.flash('error', 'Error saving photo: ' + err);
+          return res.redirect('/user/photo');
+        }
+
+        req.flash('success', 'Photo successfully updated: ' + body);
+        return res.redirect('/user/photo');
+      });
     });
   });
 }
