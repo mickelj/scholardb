@@ -59,6 +59,10 @@ $(document).ready(function() {
     $(this).parent().submit();
   });
 
+  $('#newphoto').on('change', function() {
+    $(this).parent().submit();
+  }
+
   $(".works .horizontal").css('height', ($(".indexcards").height() * .333));
   // $(".detail-works").css('max-height', ($(".detail-profile-sidebar").height()));
 
