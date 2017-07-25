@@ -72,7 +72,7 @@ function savePenName(req, res, next) {
 function getPhoto(req, res, next) {
   db.run("SELECT id, image_url as image FROM people WHERE id = $1", [req.user.id], (err, results) => {
     if (err) return next(err);
-    req.photo = results;
+    req.photo = results[0];
     return next();
   });
 }
