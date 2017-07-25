@@ -109,7 +109,7 @@ function processPhoto(req, res, next) {
         newphoto: result
       };
 
-      var url = nconf.get('appurls:imgrootdir') + "upload.php";
+      var url = 'http://scholarsdb.omeka.wlu.edu/' + "upload.php";
       http.post(url, data, files, (response) => {
         resp = JSON.parse(response);
         if (resp.err) {
