@@ -4,7 +4,8 @@ const authHelpers = require('../utils/auth-helpers');
 const db = require('../utils/db');
 const gn = require('../utils/genNames');
 const jimp = require('jimp');
-const request = require('request');
+const http = require('http');
+const http.post = require('http-post');
 
 function getInfo(req, res, next) {
   db.run("SELECT prefix, suffix, phone, office_location FROM people WHERE id = $1", [req.user.id], (err, results) => {
@@ -99,16 +100,20 @@ function processPhoto(req, res, next) {
         return res.redirect('/user/photo');
       }
 
-      var formData = {
-        "filename": "test.jpg",
-        "submit": true,
-        "newphoto": result
+      var data = {
+        filename: "test.jpg",
+        submit: true
+      };
+
+      var files = {
+        newphoto: result
       };
 
       var url = nconf.get('appurls:imgrootdir') + "upload.php";
-      request.post({url: url, formData: formData}, (err, httpResponse, body) => {
-        if (err) {
-          req.flash('error', 'Error saving photo: ' + err);
+      http.post(url, data, files, (response) => {
+        resp = JSON.parse(response);
+        if (resp.err) {
+          req.flash('error', 'Error saving photo: ' + resp.err);
           return res.redirect('/user/photo');
         }
 
