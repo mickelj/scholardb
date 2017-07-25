@@ -99,13 +99,12 @@ function processPhoto(req, res, next) {
         return res.redirect('/user/photo');
       }
 
-      // var formData = {
-      //   filename: "test.jpg",
-      //   submit: true,
-      //   newphoto: result
-      // };
-
-      var r = request.post(nconf.get('appurls:imgrootdir') + "upload.php", (err, res, body) => {
+      var formData = {
+        filename: "test.jpg",
+        submit: true,
+        newphoto: result
+      };
+      request.post({url: nconf.get('appurls:imgrootdir') + "upload.php", formData: formData}, (err, httpResponse, body) => {
         if (err) {
           req.flash('error', 'Error saving photo: ' + err);
           return res.redirect('/user/photo');
@@ -114,11 +113,6 @@ function processPhoto(req, res, next) {
         req.flash('success', 'Photo successfully updated');
         return res.redirect('/user/photo');
       });
-
-      var form = r.form();
-      form.append('filename', 'test.jpg');
-      form.append('submit', true);
-      form.append('newphoto', result);
     });
   });
 }
