@@ -90,10 +90,14 @@ function processPhoto(req, res, next) {
     }
 
     image.cover(400, 400, jimp.HORIZONTAL_ALIGN_LEFT | jimp.VERTICAL_ALIGN_TOP);
-    var file = "/images/test." + image.getExtension();
-    image.write(file);
-    req.flash('success', 'Photo successfully updated');
-    return res.redirect('/user/photo');
+    image.getBuffer(jimp.AUTO, (err, result) => {
+      if (err) {
+        req.flash('error', 'Error in buffer save: ' + err);
+        return res.redirect('/user/photo');
+      }
+      req.flash('success', 'Photo successfully updated: ' + result);
+      return res.redirect('/user/photo');
+    });
   });
 }
 
