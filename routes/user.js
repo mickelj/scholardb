@@ -78,8 +78,12 @@ function getPhoto(req, res, next) {
 }
 
 function processPhoto(req, res, next) {
-  var nconf = req.app.get('nconf');
-  jimp.read(req.body.newphoto.buffer, (err, image) => {
+  if (!req.files) {
+    req.flash('error', 'No photo was uploaded');
+    return res.redirect('/user/photo');
+  }
+
+  jimp.read(req.files.newphoto.data, (err, image) => {
     if (err) {
       req.flash('error', 'Error processing photo: ' + err);
       return res.redirect('/user/photo');

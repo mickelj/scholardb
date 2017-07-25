@@ -7,7 +7,7 @@ else
   
 p: b Upload a New Photograph (PNG or JPEG format only)
 
-form(method="post", action="/user/photo")
+form(method="post", action="/user/photo", encType="multipart/form-data")
   div.file-field.input-field
     div.btn
       span Choose Photo

@@ -2,13 +2,14 @@
 const express = require('express');
 const session = require('express-session');
 const RedisStore = require('connect-redis')(session);
-const app = express();
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const errors = require('./utils/errorHandler');
 const passport = require('passport');
 const flash = require('connect-flash');
 const nconf = require('nconf');
+const fileUpload = require('express-fileupload');
+const app = express();
 
 // Initialize configuration
 nconf.file('env', './config/environment.json');
@@ -32,6 +33,9 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
+app.use(fileUpload({
+  limits: { fileSize: 5 * 1024 * 1024 },
+}));
 app.use(express.static(__dirname + '/public'));
 app.use('/materialize', express.static(__dirname + '/node_modules/materialize-css/dist'));
 app.use(errors.logErrors);
