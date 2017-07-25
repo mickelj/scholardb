@@ -5,7 +5,7 @@ const db = require('../utils/db');
 const gn = require('../utils/genNames');
 const jimp = require('jimp');
 const http = require('http');
-const http.post = require('http-post');
+http.post = require('http-post');
 
 function getInfo(req, res, next) {
   db.run("SELECT prefix, suffix, phone, office_location FROM people WHERE id = $1", [req.user.id], (err, results) => {
