@@ -101,6 +101,7 @@ function processPhoto(req, res, next) {
 
       var url = 'https://scholarsdb.omeka.wlu.edu/' + "upload.php";
       var r = request.post(url, (err, response, body) => {
+        console.log(body);
         if (err) {
           req.flash('error', 'Error saving photo: ' + err);
           return res.redirect('/user/photo');
