@@ -80,7 +80,6 @@ function getPhoto(req, res, next) {
 
 function processPhoto(req, res, next) {
   var nconf = req.app.get('nconf');
-  console.log(req.body.fname);
 
   if (!req.files) {
     req.flash('error', 'No photo was uploaded');
@@ -121,7 +120,7 @@ function processPhoto(req, res, next) {
       form.append('file', result, {
         contentType: 'image/jpeg'
       });
-      form.append('filename', req.body.fname + nconf.get('images:defimgext'));
+      form.append('filename', req.body.fname);
     });
   });
 }
