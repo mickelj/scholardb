@@ -118,6 +118,7 @@ function processPhoto(req, res, next) {
 
       var form = r.form();
       form.append('file', result, {
+        filename:    'temp.jpg',
         contentType: 'image/jpeg'
       });
       form.append('filename', req.body.fname);
