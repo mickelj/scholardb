@@ -423,6 +423,14 @@ input[type="search"] {
   float: none;
 }
 
+[type="radio"]:checked + label::after, .with-gap[type="radio"]:checked + label::after {
+  background-color: #039be5;
+}
+
+[type="radio"]:checked + label::after, .with-gap[type="radio"]:checked + label::before, .with-gap[type="radio"]:checked + label::after {
+  border: 2px solid #039be5;
+}
+
 @media screen and (min-width: 1201px) {
   .xl0 {
     display: none;
