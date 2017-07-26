@@ -92,8 +92,8 @@ function processPhoto(req, res, next) {
       return res.redirect('/user/photo');
     }
 
-    if (image.bitmap.width < 400 || image.bitmap.height < 400) {
-      req.flash('error', 'Please choose a photo that is at least 400 pixels wide OR 400 pixels tall');
+    if (image.bitmap.width < 350 || image.bitmap.height < 350) {
+      req.flash('error', 'Please choose a photo that is at least 350 pixels wide OR 350 pixels tall');
       return res.redirect('/user/photo');
     }
 
