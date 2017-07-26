@@ -83,25 +83,25 @@ function processPhoto(req, res, next) {
 
   if (!req.files) {
     req.flash('error', 'No photo was uploaded');
-    return res.redirect('/user/photo');
+    return res.redirect('back');
   }
 
   jimp.read(req.files.newphoto.data, (err, image) => {
     if (err) {
       req.flash('error', 'Error processing photo: ' + err);
-      return res.redirect('/user/photo');
+      return res.redirect('back');
     }
 
     if (image.bitmap.width < 350 || image.bitmap.height < 350) {
       req.flash('error', 'Please choose a photo that is at least 350 pixels wide OR 350 pixels tall');
-      return res.redirect('/user/photo');
+      return res.redirect('back');
     }
 
-    image.cover(400, 400, jimp.HORIZONTAL_ALIGN_LEFT | jimp.VERTICAL_ALIGN_TOP);
+    image.cover(400, 400, jimp.HORIZONTAL_ALIGN_CENTER | jimp.VERTICAL_ALIGN_TOP);
     image.getBuffer(jimp.AUTO, (err, result) => {
       if (err) {
         req.flash('error', 'Error buffering photo: ' + err);
-        return res.redirect('/user/photo');
+        return res.redirect('back');
       }
 
       var url = nconf.get('appurls:imgrootdir') + 'upload.php';
@@ -109,11 +109,11 @@ function processPhoto(req, res, next) {
         resp = JSON.parse(body);
         if (resp.err) {
           req.flash('error', 'Error saving photo: ' + resp.err);
-          return res.redirect('/user/photo');
+          return res.redirect('back');
         }
 
         req.flash('success', resp.success);
-        return res.redirect('/user/photo');
+        return res.redirect('back');
       });
 
       var form = r.form();
