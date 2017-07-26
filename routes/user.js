@@ -87,44 +87,49 @@ function processPhoto(req, res, next) {
     return res.redirect('back');
   }
 
-  jimp.read(req.files.newphoto.data, (err, image) => {
-    if (err) {
-      req.flash('error', 'Error processing photo: ' + err);
-      return res.redirect('back');
-    }
-
-    if (image.bitmap.width < 350 || image.bitmap.height < 350) {
-      req.flash('error', 'Please choose a photo that is at least 350 pixels wide OR 350 pixels tall');
-      return res.redirect('back');
-    }
-
-    image.cover(400, 400, jimp.HORIZONTAL_ALIGN_CENTER | jimp.VERTICAL_ALIGN_TOP);
-    image.getBuffer(jimp.AUTO, (err, result) => {
+  if (req.files.newphoto.mimetype == 'image/jpeg' || req.files.newphoto.mimetype == 'image/png') {
+    jimp.read(req.files.newphoto.data, (err, image) => {
       if (err) {
-        req.flash('error', 'Error buffering photo: ' + err);
+        req.flash('error', 'Error processing photo: ' + err);
         return res.redirect('back');
       }
 
-      var url = nconf.get('appurls:imgrootdir') + 'upload.php';
-      var r = request.post(url, (err, response, body) => {
-        resp = JSON.parse(body);
-        if (resp.err) {
-          req.flash('error', 'Error saving photo: ' + resp.err);
+      if (image.bitmap.width < 350 || image.bitmap.height < 350) {
+        req.flash('error', 'Please choose a photo that is at least 350 pixels wide OR 350 pixels tall');
+        return res.redirect('back');
+      }
+
+      image.cover(400, 400, jimp.HORIZONTAL_ALIGN_CENTER | jimp.VERTICAL_ALIGN_TOP);
+      image.getBuffer(jimp.AUTO, (err, result) => {
+        if (err) {
+          req.flash('error', 'Error buffering photo: ' + err);
           return res.redirect('back');
         }
 
-        req.flash('success', resp.success);
-        return res.redirect('back');
-      });
+        var url = nconf.get('appurls:imgrootdir') + 'upload.php';
+        var r = request.post(url, (err, response, body) => {
+          resp = JSON.parse(body);
+          if (resp.err) {
+            req.flash('error', 'Error saving photo: ' + resp.err);
+            return res.redirect('back');
+          }
 
-      var form = r.form();
-      form.append('file', result, {
-        filename:    'temp.jpg',
-        contentType: 'image/jpeg'
+          req.flash('success', resp.success);
+          return res.redirect('back');
+        });
+
+        var form = r.form();
+        form.append('file', result, {
+          filename:    'temp-' + new Date().getTime() + '.jpg',
+          contentType: req.files.newphoto.mimetype
+        });
+        form.append('filename', req.body.fname);
       });
-      form.append('filename', req.body.fname);
     });
-  });
+  } else {
+    req.flash('error', 'Please choose a JPEG or PNG file.');
+    return res.redirect('back');
+  }
 }
 
 function getAllDepts(req, res, next) {
