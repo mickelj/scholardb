@@ -119,7 +119,7 @@ function processPhoto(req, res, next) {
 
       var form = r.form();
       form.append('file', result, {
-        filename: req.body.filename + '.jpg',
+        filename: req.body.fname + '.jpg',
         contentType: 'image/jpeg'
       });
     });

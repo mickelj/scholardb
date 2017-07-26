@@ -9,6 +9,6 @@ p: b Upload a New Photograph (PNG or JPEG format only)
 
 form(method="post", action="/user/photo", encType="multipart/form-data")
   input#newphoto(type="file", name="newphoto")
-  input#filename(type="hidden", name="filename", value=photo.image)
+  input#fname(type="hidden", name="fname", value=photo.image)
 
 include ../popups.pug
