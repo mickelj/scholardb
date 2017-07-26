@@ -10,6 +10,7 @@
   "appurls": {
     "apphome"       : "https://scholarsdb.herokuapp.com/",
     "imgrootdir"    : "https://scholarsdb.omeka.wlu.edu/",
+    "imguploader"   : "https://scholarsdb.omeka.wlu.edu/upload.php",
     "orgurl"        : "http://library.wlu.edu",
     "catalogurl"    : "http://annie.wlu.edu/",
     "linkresolver"  : "http://nw7pf8as2n.search.serialssolutions.com/"

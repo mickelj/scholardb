@@ -106,8 +106,15 @@ function processPhoto(req, res, next) {
           return res.redirect('back');
         }
 
-        var url = nconf.get('appurls:imgrootdir') + 'upload.php';
-        var r = request.post(url, (err, response, body) => {
+        var url = nconf.get('appurls:imguploader');
+        var options = {
+          headers: {
+            'Referer': nconf.get('appurls:apphome')
+          },
+          uri: url,
+          method: 'POST'
+        };
+        var r = request(options, (err, response, body) => {
           resp = JSON.parse(body);
           if (resp.err) {
             req.flash('error', 'Error saving photo: ' + resp.err);
