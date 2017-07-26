@@ -22,6 +22,8 @@ block content
           
       div.col.s9
         case page
+          when "work"
+            include user/work.pug
           when "pennames"
             include user/pennames.pug
           when "info"

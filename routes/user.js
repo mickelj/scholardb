@@ -196,6 +196,18 @@ router.get('/', authHelpers.loginRequired, (req, res) => {
   });
 });
 
+router.get('/work', authHelpers.loginRequired, (req, res) => {
+  var nconf = req.app.get('nconf');
+
+  res.render('user', {
+    appconf: nconf.get(),
+    user: req.user,
+    page: 'work',
+    error: req.flash('error'),
+    success: req.flash('success')
+  });
+});
+
 router.get('/info', authHelpers.loginRequired, getInfo, (req, res) => {
   var nconf = req.app.get('nconf');
 
@@ -206,7 +218,7 @@ router.get('/info', authHelpers.loginRequired, getInfo, (req, res) => {
     info: req.info,
     error: req.flash('error'),
     success: req.flash('success')
-  })
+  });
 });
 
 router.get('/penname', authHelpers.loginRequired, getPenNames, (req, res) => {
