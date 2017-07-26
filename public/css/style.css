@@ -431,6 +431,10 @@ input[type="search"] {
   border: 2px solid #039be5;
 }
 
+#bycitation ~ label, #byform ~ label {
+  color: #000;
+}
+
 @media screen and (min-width: 1201px) {
   .xl0 {
     display: none;

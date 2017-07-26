@@ -208,6 +208,30 @@ router.get('/work', authHelpers.loginRequired, (req, res) => {
   });
 });
 
+router.get('/work/citation', authHelpers.loginRequired, (req, res) => {
+  var nconf = req.app.get('nconf');
+
+  res.render('user', {
+    appconf: nconf.get(),
+    user: req.user,
+    page: 'workcitation',
+    error: req.flash('error'),
+    success: req.flash('success')
+  });
+});
+
+router.get('/work/form', authHelpers.loginRequired, (req, res) => {
+  var nconf = req.app.get('nconf');
+
+  res.render('user', {
+    appconf: nconf.get(),
+    user: req.user,
+    page: 'workform',
+    error: req.flash('error'),
+    success: req.flash('success')
+  });
+});
+
 router.get('/info', authHelpers.loginRequired, getInfo, (req, res) => {
   var nconf = req.app.get('nconf');
 

@@ -1,11 +1,20 @@
 p: b How would you like to add a work?
 
 p
-  input#method1.with-gap(name="addwork", type="radio")
-  label(for="method1") By Citation
+  input#bycitation.with-gap(name="addwork", type="radio")
+  label(for="bycitation") By Citation
   
 p
-  input#method2.with-gap(name="addwork", type="radio")
-  label(for="method2") By Form
+  input#byform.with-gap(name="addwork", type="radio")
+  label(for="byform") By Form
 
-include ../popups.pug
+script.
+  $(document).ready(function() {
+    $("#bycitation").on("click", function() {
+      window.location('/user/work/citation');
+    });
+    
+    $("#byform").on("click", function() {
+      window.location('/user/work/form');
+    });
+  });
