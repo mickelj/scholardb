@@ -5,6 +5,7 @@ const db = require('../utils/db');
 const gn = require('../utils/genNames');
 const jimp = require('jimp');
 const request = require('request');
+const nocache = require('node-nocache');
 
 function getInfo(req, res, next) {
   db.run("SELECT prefix, suffix, phone, office_location FROM people WHERE id = $1", [req.user.id], (err, results) => {
@@ -113,7 +114,7 @@ function processPhoto(req, res, next) {
         }
 
         req.flash('success', resp.success);
-        setTimeout(function(){ return res.redirect('back')}, 5000);
+        return res.redirect('back');
       });
 
       var form = r.form();
@@ -209,7 +210,7 @@ router.get('/penname', authHelpers.loginRequired, getPenNames, (req, res) => {
   });
 });
 
-router.get('/photo', authHelpers.loginRequired, getPhoto, (req, res) => {
+router.get('/photo', authHelpers.loginRequired, getPhoto, nocache, (req, res) => {
   var nconf = req.app.get('nconf');
 
   res.render('user', {
