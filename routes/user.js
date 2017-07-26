@@ -113,7 +113,7 @@ function processPhoto(req, res, next) {
         }
 
         req.flash('success', resp.success);
-        setTimeout(function(){ return res.redirect('back')}, 1500);
+        setTimeout(function(){ return res.redirect('back')}, 5000);
       });
 
       var form = r.form();
