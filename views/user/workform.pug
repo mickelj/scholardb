@@ -5,7 +5,7 @@ form(method="post", action="/work/add")
     select#work_type(name="work_type", required)
       option(value="", disabled, selected) Choose from below:
       each wt in worktypes
-        option(value=wt.type) wt.description
+        option(value=wt.type)= wt.description
     label(for="work_type") Type of Work
   div.input-field
     input#title_primary.validate(name="title_primary", type="text", required)
