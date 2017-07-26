@@ -108,7 +108,7 @@ function processPhoto(req, res, next) {
           return res.redirect('/user/photo');
         }
 
-        req.flash('success', 'Photo successfully updated');
+        req.flash('success', resp.success);
         return res.redirect('/user/photo');
       });
 
