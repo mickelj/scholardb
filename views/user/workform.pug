@@ -2,7 +2,7 @@ p: b Add Work by Form
 
 form(method="post", action="/work/add")
   div.input-field
-    select#work_type(name="work_type", required)
+    select#work_type.browser-default(name="work_type", required)
       option(value="", disabled, selected) Choose from below:
       each wt in worktypes
         option(value=wt.type)= wt.description
