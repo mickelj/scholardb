@@ -71,7 +71,7 @@ function savePenName(req, res, next) {
 }
 
 function getPhoto(req, res, next) {
-  db.run("SELECT id, image_url as image FROM people WHERE id = $1", [req.user.id], (err, results) => {
+  db.run("SELECT id, image_url AS image FROM people WHERE id = $1", [req.user.id], (err, results) => {
     if (err) return next(err);
     req.photo = results[0];
     return next();
@@ -92,6 +92,11 @@ function processPhoto(req, res, next) {
       return res.redirect('/user/photo');
     }
 
+    if (image.bitmap.width < 400 || image.bitmap.height < 400) {
+      req.flash('error', 'Please choose a photo that is at least 400 pixels wide OR 400 pixels tall');
+      return res.redirect('/user/photo');
+    }
+
     image.cover(400, 400, jimp.HORIZONTAL_ALIGN_LEFT | jimp.VERTICAL_ALIGN_TOP);
     image.getBuffer(jimp.AUTO, (err, result) => {
       if (err) {
@@ -99,7 +104,7 @@ function processPhoto(req, res, next) {
         return res.redirect('/user/photo');
       }
 
-      var url = 'https://scholarsdb.omeka.wlu.edu/' + "upload.php";
+      var url = nconf.get('appurls:imgrootdir') + 'upload.php';
       var r = request.post(url, (err, response, body) => {
         resp = JSON.parse(body);
         console.log(resp);
@@ -114,7 +119,7 @@ function processPhoto(req, res, next) {
 
       var form = r.form();
       form.append('file', result, {
-        filename: 'test.jpg',
+        filename: req.body.filename + '.jpg',
         contentType: 'image/jpeg'
       });
     });
