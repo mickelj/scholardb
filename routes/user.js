@@ -118,7 +118,7 @@ function processPhoto(req, res, next) {
       });
 
       var form = r.form();
-      form.append('file', result, {,
+      form.append('file', result, {
         contentType: 'image/jpeg'
       });
       form.append('filename', req.body.fname + nconf.get('images:defimgext'));
