@@ -80,6 +80,7 @@ function getPhoto(req, res, next) {
 
 function processPhoto(req, res, next) {
   var nconf = req.app.get('nconf');
+  console.log(req.body.fname);
 
   if (!req.files) {
     req.flash('error', 'No photo was uploaded');
@@ -107,7 +108,6 @@ function processPhoto(req, res, next) {
       var url = nconf.get('appurls:imgrootdir') + 'upload.php';
       var r = request.post(url, (err, response, body) => {
         resp = JSON.parse(body);
-        console.log(resp);
         if (resp.err) {
           req.flash('error', 'Error saving photo: ' + resp.err);
           return res.redirect('/user/photo');
@@ -118,10 +118,10 @@ function processPhoto(req, res, next) {
       });
 
       var form = r.form();
-      form.append('file', result, {
-        filename: req.body.fname + '.jpg',
+      form.append('file', result, {,
         contentType: 'image/jpeg'
       });
+      form.append('filename', req.body.fname + nconf.get('images:defimgext'));
     });
   });
 }
