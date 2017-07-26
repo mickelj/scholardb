@@ -11,10 +11,12 @@ p
 script.
   $(document).ready(function() {
     $("#bycitation").on("click", function() {
-      window.location('/user/work/citation');
+      window.location = '/user/work/citation';
     });
     
     $("#byform").on("click", function() {
-      window.location('/user/work/form');
+      window.location = '/user/work/form';
     });
   });
+
+include ../popups.pug
