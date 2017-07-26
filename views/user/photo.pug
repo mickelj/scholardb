@@ -1,7 +1,7 @@
 p: b Current Profile Photograph
 
 if (photo.image)
-  img.responsive-img(src=appconf.appurls.imgrootdir + photo.image + appconf.images.defimgext, alt="Current Profile Image", width="200")
+  img.responsive-img(src=appconf.appurls.imgrootdir + photo.image + appconf.images.defimgext + "?" + new Date().getTime(), alt="Current Profile Image", width="200")
 else
   p No photo has been uploaded
   
