@@ -7,6 +7,15 @@ const jimp = require('jimp');
 const request = require('request');
 const nocache = require('node-nocache');
 
+function getWorkTypes(req, res, next) {
+  db.run("SELECT type, description FROM work_types ORDER BY description", (err, results) => {
+    if (err) return next(err);
+
+    req.worktypes = results;
+    return next();
+  })
+}
+
 function getInfo(req, res, next) {
   db.run("SELECT prefix, suffix, phone, office_location FROM people WHERE id = $1", [req.user.id], (err, results) => {
     if (err) return next(err);
@@ -220,13 +229,14 @@ router.get('/work/citation', authHelpers.loginRequired, (req, res) => {
   });
 });
 
-router.get('/work/form', authHelpers.loginRequired, (req, res) => {
+router.get('/work/form', authHelpers.loginRequired, getWorkTypes, (req, res) => {
   var nconf = req.app.get('nconf');
 
   res.render('user', {
     appconf: nconf.get(),
     user: req.user,
     page: 'workform',
+    worktypes: req.worktypes,
     error: req.flash('error'),
     success: req.flash('success')
   });

@@ -1,3 +1,21 @@
 p: b Add Work by Form
 
+form(method="post", action="/work/add")
+  div.input-field
+    select#work_type(name="work_type", required)
+      option(value="", disabled, selected) Choose from below:
+      each wt in worktypes
+        option(value=wt.type) wt.description
+    label(for="work_type") Type of Work
+  div.input-field
+    input#title_primary.validate(name="title_primary", type="text", required)
+    label(for="title_primary") Title of Work
+  div.input-field
+    input#title_secondary(name="title_secondary", type="text")
+    label(for="title_secondary") Subtitle
+  div.input-field
+    input#title_tertiary(name="title_tertiary", type="text")
+    label(for="title_tertiary") Additional Title
+  
+
 include ../popups.pug
