@@ -1,5 +1,5 @@
 // App-wide Dependencies
-const express = require('express');
+const express = require('express'); 
 const session = require('express-session');
 const RedisStore = require('connect-redis')(session);
 const bodyParser = require('body-parser');
