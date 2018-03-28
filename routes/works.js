@@ -231,7 +231,7 @@ function getSingleImage (req, res, next) {
 
 function getRomeoDetails (req, res, next) {
   var nconf = req.app.get('nconf');
-  var romeourl = nconf.get('romeo:romeourl') + ROMEO_API_KEY;
+  var romeourl = nconf.get('romeo:romeourl') + process.env.ROMEO_API_KEY;
 
   if (req.work_detail.identifier_type && req.work_detail.identifier_type === 'ISSN') {
     request.get(romeourl + '&issn=' + req.work_detail.identifier, function(err, res, body) {
