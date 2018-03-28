@@ -105,6 +105,8 @@ block content
     div#searchurl.modal.modal-fixed-footer
       div.modal-content.moreinfo
         p.headline= appconf.fulltext.buttontext
-        iframe(src=searchurl, frameborder="0")
+        div.framewrap
+          div.frame-container
+            iframe(src=searchurl, frameborder="0")
       div.modal-footer
         a.modal-action.modal-close.waves-effect.waves-green.btn-flat(href="#!") OK
