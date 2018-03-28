@@ -28,8 +28,8 @@
   },
 
   "fulltext": {
-    "booksearchtype": "catalog",
-    "catalogtype"   : "iii",
+    "booksearchtype": "openurl",
+    "catalogtype"   : "alma",
     "buttontext"    : "Check Library Holdings"
   },
 
