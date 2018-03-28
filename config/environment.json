@@ -28,8 +28,9 @@
   },
 
   "fulltext": {
-    "booksearchtype": "openurl",
-    "catalogtype"   : "alma",
+    "booksearchtype": "catalog",
+    "catalogtype"   : "primo",
+    "primoinstance" : "01WLU_INST:01WLU",
     "buttontext"    : "Check Library Holdings"
   },
 
