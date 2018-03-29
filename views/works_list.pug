@@ -1,6 +1,6 @@
 div.col.s12.works
   if works_list && works_list.length
-    each work in works_list
+    each work, index in works_list
       div.card.horizontal.valign-wrapper
         div.card-image.center-align
           if work.coverimage
@@ -49,7 +49,7 @@ div.col.s12.works
                   - var surl = searchurl
                 else
                   - var surl = "#searchurl"
-                  +holdings(searchurl, work.work_title)
+                  +holdings(searchurl, work.work_title, index)
                 a.btn-flat.waves-effect.waves-light.blue-text.text-darken-4.local-avail(href=surl, target="_blank")
                   i.material-icons.left library_books
                   span= appconf.fulltext.buttontext

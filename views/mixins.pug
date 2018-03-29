@@ -62,8 +62,9 @@ mixin romeocolor(rcolor)
     default
       - romeoClassColor = rcolor
 
-mixin holdings(url, title)
-  div#searchurl.modal.modal-fixed-footer
+mixin holdings(url, title, i)
+  -var divid = "searchurl" + i
+  div#divid.modal.modal-fixed-footer
     div.modal-content.moreinfo
       p.headline #{appconf.fulltext.buttontext} for #{title}
       div.framewrap
