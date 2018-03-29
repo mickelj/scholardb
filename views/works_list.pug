@@ -48,7 +48,7 @@ div.col.s12.works
                 if work.work_type == "Book" || work.work_type == "Book Section"
                   - var surl = searchurl
                 else
-                  - var surl = "#searchurl"
+                  - var surl = "#searchurl" + index
                   +holdings(searchurl, work.work_title, index)
                 a.btn-flat.waves-effect.waves-light.blue-text.text-darken-4.local-avail(href=surl, target="_blank")
                   i.material-icons.left library_books

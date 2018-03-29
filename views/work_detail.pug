@@ -21,7 +21,7 @@ block content
             if work_detail.work_type == "Book" || work_detail.work_type == "Book Section"
               - var surl = searchurl
             else
-              - var surl = "#searchurl"
+              - var surl = "#searchurl1"
               +holdings(searchurl, work_detail.work_title, 1)
             a.btn.waves-effect.waves-light.blue.darken-4.local-avail(href=surl, target="_blank")
               i.material-icons.left library_books
