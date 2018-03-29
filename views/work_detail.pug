@@ -18,7 +18,11 @@ block content
       if searchurl || work_detail.archive_url || romeo
         div.col.s12.m3
           if searchurl
-            a.btn.waves-effect.waves-light.blue.darken-4.local-avail(href="#searchurl")
+            if work_detail.work_type == "Book" || work_detail.work_type == "Book Section"
+              - var surl = searchurl
+            else
+              - var surl = "#searchurl"
+            a.btn.waves-effect.waves-light.blue.darken-4.local-avail(href=surl)
               i.material-icons.left library_books
               span= appconf.fulltext.buttontext
           if work_detail.archive_url
