@@ -45,7 +45,7 @@ div.col.s12.works
                   i.material-icons.left move_to_inbox
                   span= appconf.archive.buttontext
               if searchurl
-                if work_detail.work_type == "Book" || work_detail.work_type == "Book Section"
+                if work.work_type == "Book" || work.work_type == "Book Section"
                   - var surl = searchurl
                 else
                   - var surl = "#searchurl"
