@@ -45,6 +45,20 @@ div.col.s12.works
                   i.material-icons.left move_to_inbox
                   span= appconf.archive.buttontext
               if searchurl
-                a.btn-flat.waves-effect.waves-light.blue-text.text-darken-4.local-avail(href=searchurl, target="_blank")
+                if work_detail.work_type == "Book" || work_detail.work_type == "Book Section"
+                  - var surl = searchurl
+                else
+                  - var surl = "#searchurl"
+                a.btn-flat.waves-effect.waves-light.blue-text.text-darken-4.local-avail(href=surl, target="_blank")
                   i.material-icons.left library_books
                   span= appconf.fulltext.buttontext
+
+if searchurl
+    div#searchurl.modal.modal-fixed-footer
+      div.modal-content.moreinfo
+        p.headline= appconf.fulltext.buttontext
+        div.framewrap
+          div.frame-container
+            iframe(src=searchurl, frameborder="0")
+      div.modal-footer
+        a.modal-action.modal-close.waves-effect.waves-green.btn-flat(href="#!") OK

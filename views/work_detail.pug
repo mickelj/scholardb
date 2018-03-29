@@ -22,7 +22,7 @@ block content
               - var surl = searchurl
             else
               - var surl = "#searchurl"
-            a.btn.waves-effect.waves-light.blue.darken-4.local-avail(href=surl)
+            a.btn.waves-effect.waves-light.blue.darken-4.local-avail(href=surl, target="_blank")
               i.material-icons.left library_books
               span= appconf.fulltext.buttontext
           if work_detail.archive_url
