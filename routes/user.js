@@ -148,6 +148,36 @@ function processPhoto(req, res, next) {
   }
 }
 
+function processCitation(req, res, next) {
+  var nconf = req.app.get('nconf');
+  var anystyleApi = process.env.ANYSTYLE_API_KEY;
+  var url = nconf.get('anystyle:anystyleurl');
+
+  var options = {
+    headers: {
+      'Content-Type': 'charset=UTF-8'
+    },
+    uri: url,
+    method: 'POST',
+    json: {
+      "access_token": anystyleApi,
+      "references": [req.body.citation]
+    }
+  };
+
+  var r = request(options, (err, response, body) => {
+    resp = JSON.parse(body);
+    if (resp.err) {
+      req.flash('error', 'Error parsing citation: ' + resp.err);
+      return res.redirect('back');
+    }
+
+    console.log(resp);
+    req.flash('success', resp.success);
+    return res.redirect('back');
+  });
+}
+
 function getAllDepts(req, res, next) {
   db.run("SELECT id, name FROM groups WHERE hidden = false ORDER BY name", (err, results) => {
     if (err) return next(err);
@@ -300,5 +330,6 @@ router.post('/info', authHelpers.loginRequired, saveInfo);
 router.post('/photo', authHelpers.loginRequired, processPhoto);
 router.post('/departments/add', authHelpers.loginRequired, addDepartment);
 router.post('/departments/delete', authHelpers.loginRequired, deleteDepartment);
+router.post('/work/citation', authHelpers.loginRequired, processCitation);
 
 module.exports = router;

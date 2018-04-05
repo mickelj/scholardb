@@ -36,5 +36,9 @@
 
   "archive": {
     "buttontext"    : "View in Digital Archive"
+  },
+
+  "anystyle" : {
+    "anystyleurl"   : "https://anystyle.io/parse/references"
   }
 }
