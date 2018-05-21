@@ -176,7 +176,7 @@ function processCitation(req, res, next) {
     req.citorig = req.body.citation;
     req.citation = body;
     req.flash('success', resp.success);
-    return res.redirect('/user/work/citation/check');
+    return next();
   });
 }
 
@@ -358,7 +358,6 @@ router.post('/info', authHelpers.loginRequired, saveInfo);
 router.post('/photo', authHelpers.loginRequired, processPhoto);
 router.post('/departments/add', authHelpers.loginRequired, addDepartment);
 router.post('/departments/delete', authHelpers.loginRequired, deleteDepartment);
-router.post('/work/citation', authHelpers.loginRequired, processCitation);
-router.get('/work/citation/check', authHelpers.loginRequired, checkCitation);
+router.post('/work/citation', authHelpers.loginRequired, processCitation, checkCitation);
 
 module.exports = router;
