@@ -5,7 +5,7 @@ div.row
 		b Enter or paste a citation in any format (APA, MLA, Chicago, etc.):
 
 div.row
-	form.col.s10.offset-s1(method="post", action="/user/work/citation/check")
+	form.col.s10.offset-s1(method="post", action="/user/work/citation")
 		div.input-field
 			textarea#citation.materialize-textarea.validate(name="citation",autofocus)
 			label.active(for="citation") Citation
