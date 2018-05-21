@@ -166,7 +166,8 @@ function processCitation(req, res, next) {
   };
 
   var r = request(options, (err, response, body) => {
-    resp = JSON.parse(body);
+    //resp = JSON.parse(body);
+    resp = body;
     if (resp.err) {
       req.flash('error', 'Error parsing citation: ' + resp.err);
       return res.redirect('back');
