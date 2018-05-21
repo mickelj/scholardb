@@ -4,7 +4,7 @@ form(method="post", action="/work/add")
   div.row
     label.col.s12(for="work_type") Type of Work
   div.row
-    select#work_type.browser-default.col.s12(name="work_type", required)
+    select#work_type.browser-default.col.s12(name="work_type", required, autofocus)
       option(value="", disabled, selected) Choose from below:
       each wt in worktypes
         option(value=wt.type)= wt.description
