@@ -176,24 +176,22 @@ function processCitation(req, res, next) {
     req.citorig = req.body.citation;
     req.citation = body;
     req.flash('success', resp.success);
-    return next();
+    return res.redirect('/user/work/citation/check');
   });
 }
 
-function checkCitation(req, res, next) {
+function checkCitation(req, res) {
   var nconf = req.app.get('nconf');
 
-  console.log(req.citorig + " | " + req.citation);
-  return next();
-  // res.render('user', {
-  //   appconf: nconf.get(),
-  //   user: req.user,
-  //   page: 'citcheck',
-  //   citorig: req.citorig,
-  //   citation: req.citation,
-  //   error: req.flash('error'),
-  //   success: req.flash('success')
-  // });
+  res.render('user', {
+    appconf: nconf.get(),
+    user: req.user,
+    page: 'citcheck',
+    citorig: req.citorig,
+    citation: req.citation,
+    error: req.flash('error'),
+    success: req.flash('success')
+  });
 }
 
 function getAllDepts(req, res, next) {
@@ -360,6 +358,7 @@ router.post('/info', authHelpers.loginRequired, saveInfo);
 router.post('/photo', authHelpers.loginRequired, processPhoto);
 router.post('/departments/add', authHelpers.loginRequired, addDepartment);
 router.post('/departments/delete', authHelpers.loginRequired, deleteDepartment);
-router.post('/work/citation', authHelpers.loginRequired, processCitation, checkCitation);
+router.post('/work/citation', authHelpers.loginRequired, processCitation);
+router.get('/work/citation/check', authHelpers.loginRequired, checkCitation);
 
 module.exports = router;
