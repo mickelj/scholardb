@@ -172,7 +172,7 @@ function processCitation(req, res, next) {
       return res.redirect('back');
     }
 
-    console.log(JSON.stringify(resp));
+    console.log(body);
     req.flash('success', resp.success);
     return next();
   });
