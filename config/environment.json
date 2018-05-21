@@ -40,6 +40,6 @@
   },
 
   "anystyle" : {
-    "anystyleurl"   : "https://anystyle.io/parse/references.json"
+    "anystyleurl"   : "https://anystyle.io/parse/references.citeproc"
   }
 }

@@ -160,7 +160,6 @@ function processCitation(req, res, next) {
     uri: url,
     method: 'POST',
     json: {
-      "format": "citeproc",
       "access_token": anystyleApi,
       "references": [req.body.citation]
     }
@@ -176,7 +175,7 @@ function processCitation(req, res, next) {
 
     console.log(body);
     req.flash('success', resp.success);
-    return next();
+    return res.redirect('back');
   });
 }
 
