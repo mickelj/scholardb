@@ -176,7 +176,7 @@ function processCitation(req, res, next) {
     req.citorig = req.body.citation;
     req.citation = body;
     req.flash('success', resp.success);
-    return res.next();
+    return next();
   });
 }
 
