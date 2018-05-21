@@ -188,7 +188,7 @@ function checkCitation(req, res) {
     user: req.user,
     page: 'citcheck',
     citorig: req.citorig,
-    citation: req.citation,
+    citation: JSON.stringify(req.citation),
     error: req.flash('error'),
     success: req.flash('success')
   });
