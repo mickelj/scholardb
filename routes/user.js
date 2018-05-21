@@ -183,10 +183,10 @@ function processCitation(req, res, next) {
 function checkCitation(req, res, next) {
   var nconf = req.app.get('nconf');
 
-  res.render('citcheck', {
+  res.render('user', {
     appconf: nconf.get(),
     user: req.user,
-    page: 'citation',
+    page: 'citcheck',
     citorig: req.citorig,
     citation: req.citation,
     error: req.flash('error'),
