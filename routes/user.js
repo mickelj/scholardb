@@ -166,8 +166,8 @@ function processCitation(req, res, next) {
   };
 
   var r = request(options, (err, response, body) => {
-    resp = JSON.parse(body);
-    if (resp.err) {
+    resp = body;
+    if (resp === "Not Authorized" || resp === "Bad Request") {
       console.log("in error condition");
       req.flash('error', 'Error parsing citation: ' + resp.err);
       return res.redirect('back');
@@ -180,7 +180,7 @@ function processCitation(req, res, next) {
   });
 }
 
-function checkCitation(req, res, next) {
+function checkCitation(req, res) {
   var nconf = req.app.get('nconf');
 
   res.render('user', {
