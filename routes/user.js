@@ -358,6 +358,7 @@ router.post('/info', authHelpers.loginRequired, saveInfo);
 router.post('/photo', authHelpers.loginRequired, processPhoto);
 router.post('/departments/add', authHelpers.loginRequired, addDepartment);
 router.post('/departments/delete', authHelpers.loginRequired, deleteDepartment);
-router.post('/work/citation', authHelpers.loginRequired, processCitation, checkCitation);
+router.post('/work/citation', authHelpers.loginRequired, processCitation);
+router.post('/work/citation/check', authHelpers.loginRequired, checkCitation);
 
 module.exports = router;
