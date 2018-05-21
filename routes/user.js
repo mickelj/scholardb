@@ -155,7 +155,7 @@ function processCitation(req, res, next) {
 
   var options = {
     headers: {
-      'Content-Type': 'charset=UTF-8'
+      'Content-Type': 'application/json;charset=UTF-8'
     },
     uri: url,
     method: 'POST',
@@ -242,6 +242,18 @@ router.get('/work', authHelpers.loginRequired, (req, res) => {
     appconf: nconf.get(),
     user: req.user,
     page: 'work',
+    error: req.flash('error'),
+    success: req.flash('success')
+  });
+});
+
+router.get('/work/identifer', authHelpers.loginRequired, (req, res) => {
+  var nconf = req.app.get('nconf');
+
+  res.render('user', {
+    appconf: nconf.get(),
+    user: req.user,
+    page: 'workidentifier',
     error: req.flash('error'),
     success: req.flash('success')
   });
