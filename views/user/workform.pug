@@ -1,22 +1,23 @@
-p: b Add Work by Form
+p: b Add Work Manually
 
-form(method="post", action="/work/add")
-  div.row
-    label.col.s12(for="work_type") Type of Work
-  div.row
-    select#work_type.browser-default.col.s12(name="work_type", required, autofocus)
-      option(value="", disabled, selected) Choose from below:
-      each wt in worktypes
-        option(value=wt.type)= wt.description
-  div.input-field
-    input#title_primary.validate(name="title_primary", type="text", required)
-    label(for="title_primary") Title of Work
-  div.input-field
-    input#title_secondary(name="title_secondary", type="text")
-    label(for="title_secondary") Subtitle
-  div.input-field
-    input#title_tertiary(name="title_tertiary", type="text")
-    label(for="title_tertiary") Additional Title
-  
+div#main
+  div#cjs-in
+  div#cjs-out
+
+script(type='text/javascript', src='https://cdn.rawgit.com/larsgw/citation.js/archive/citation.js/citation-0.4.0-3.min.js')
+script(type='text/javascript')
+  var Cite = require('citation-js');
+script(type='text/javascript', src='/js/jquery.citation.js')
+script(type='text/javascript')
+  $(function main() {
+    var form = new jQueryCite({ lang: 'en', saveInCookies: true });
+    
+    form.insertInputForm($('#cjs-in'));
+    form.insertOutputForm($('#cjs-out')) ;
+    
+    $(window).on('beforeunload', function finish() {
+      form.terminate();
+    });
+  });
 
 include ../popups.pug

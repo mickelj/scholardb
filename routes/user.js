@@ -3,6 +3,7 @@ const router = express.Router();
 const authHelpers = require('../utils/auth-helpers');
 const db = require('../utils/db');
 const gn = require('../utils/genNames');
+const czo = require('../utils/convertZoteroOutput');
 const jimp = require('jimp');
 const request = require('request');
 const nocache = require('node-nocache');
@@ -166,16 +167,14 @@ function processCitation(req, res, next) {
   };
 
   var r = request(options, (err, response, body) => {
-    resp = body;
-    if (resp === "Not Authorized" || resp === "Bad Request") {
-      console.log("in error condition");
-      req.flash('error', 'Error parsing citation: ' + resp.err);
+    if (response.statusCode !== 200) {
+      req.flash('error', 'Error parsing citation: ' + body);
       return res.redirect('back');
     }
 
     req.citorig = req.body.citation;
     req.citation = body;
-    req.flash('success', resp.success);
+    req.flash('success', 'Citation successfully parsed');
     return next();
   });
 }
@@ -191,6 +190,67 @@ function checkCitation(req, res) {
     citation: JSON.stringify(req.citation),
     error: req.flash('error'),
     success: req.flash('success')
+  });
+}
+
+function processIdentifier(req, res, next) {
+  var nconf = req.app.get('nconf');
+  var url = nconf.get('zotero:tsurl') + "/search";
+  var options = {
+    headers: {
+      'Content-Type': 'text/plain'
+    },
+    uri: url,
+    method: 'POST',
+    body: req.body.identifier
+  };
+  var r = request(options, (err, response, body) => {
+    if (response.statusCode !== 200) {
+      req.flash('error', 'Error processing identifier: ' + body);
+      return res.redirect('back');
+    }
+
+    resp = czo.convert(body);
+    if (resp.err !== 200) {
+      req.flash('error', resp.msg);
+      return res.redirect('back');
+    }
+
+    req.flash('success', 'Successfully processed identifier');
+    return next();
+  });
+}
+
+function processUrl(req, res, next) {
+  var nconf = req.app.get('nconf');
+  var url = nconf.get('zotero:tsurl') + "/web";
+
+  var options = {
+    headers : {
+      'Content-Type' : 'application/json'
+    },
+    uri: url,
+    method: 'POST',
+    json: {
+      "url" : req.body.url,
+      "sessionid" : "scholarsdb"
+    }
+  };
+
+  var r = request(option, (err, response, body) => {
+    if (response.statusCode !== 200) {
+      req.flash('error', "Error processing URL: " + body);
+      return res.redirect('back');
+    }
+
+    resp = czo.convert(body);
+    if (resp.err !== 200) {
+      req.flash('error', resp.msg);
+      return res.redirect('back');
+    }
+
+    req.flash('success', 'Successfully processed URL');
+    return next();
   });
 }
 
@@ -270,6 +330,18 @@ router.get('/work/identifier', authHelpers.loginRequired, (req, res) => {
     appconf: nconf.get(),
     user: req.user,
     page: 'workidentifier',
+    error: req.flash('error'),
+    success: req.flash('success')
+  });
+});
+
+router.get('/work/url', authHelpers.loginRequired, (req, res) => {
+  var nconf = req.app.get('nconf');
+
+  res.render('user', {
+    appconf: nconf.get(),
+    user: req.user,
+    page: 'workurl',
     error: req.flash('error'),
     success: req.flash('success')
   });
@@ -359,5 +431,7 @@ router.post('/photo', authHelpers.loginRequired, processPhoto);
 router.post('/departments/add', authHelpers.loginRequired, addDepartment);
 router.post('/departments/delete', authHelpers.loginRequired, deleteDepartment);
 router.post('/work/citation', authHelpers.loginRequired, processCitation, checkCitation);
+router.post('/work/identifier', authHelpers.loginRequired, processIdentifier, checkIdentifier);
+router.post('/work/url', authHelpers.loginRequired, processUrl, checkUrl);
 
 module.exports = router;

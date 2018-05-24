@@ -41,5 +41,9 @@
 
   "anystyle" : {
     "anystyleurl"   : "https://anystyle.io/parse/references.citeproc"
+  },
+
+  "zotero" : {
+    "tsurl"         : "https://scholarsdb-zotero.herokuapp.com"
   }
 }

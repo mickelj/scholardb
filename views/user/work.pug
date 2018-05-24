@@ -5,12 +5,16 @@ p
   label(for="byidentifier") By Identifier
 
 p
+  input#byurl.with-gap(name="addwork", type="radio")
+  label(for="byurl") By URL
+
+p
   input#bycitation.with-gap(name="addwork", type="radio")
   label(for="bycitation") By Citation
   
 p
   input#byform.with-gap(name="addwork", type="radio")
-  label(for="byform") By Form
+  label(for="byform") By Manual Entry
 
 script.
   $(document).ready(function() {
@@ -24,6 +28,10 @@ script.
     
     $("#byform").on("click", function() {
       window.location = '/user/work/form';
+    });
+
+    $("#byurl").on("click", function() {
+      window.location = '/user/work/url';
     });
   });
 
