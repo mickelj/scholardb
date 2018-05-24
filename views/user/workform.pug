@@ -5,10 +5,10 @@ div#main
   div#cjs-out
 
 script(type='text/javascript', src='https://cdn.rawgit.com/larsgw/citation.js/archive/citation.js/citation-0.4.0-3.min.js')
-script(type='text/javascript')
+script(type='text/javascript').
   var Cite = require('citation-js');
 script(type='text/javascript', src='/js/jquery.citation.js')
-script(type='text/javascript')
+script(type='text/javascript').
   $(function main() {
     var form = new jQueryCite({ lang: 'en', saveInCookies: true });
     
