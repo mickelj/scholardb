@@ -221,6 +221,10 @@ function processIdentifier(req, res, next) {
   });
 }
 
+function checkIdentifier() {
+
+}
+
 function processUrl(req, res, next) {
   var nconf = req.app.get('nconf');
   var url = nconf.get('zotero:tsurl') + "/web";
@@ -252,6 +256,10 @@ function processUrl(req, res, next) {
     req.flash('success', 'Successfully processed URL');
     return next();
   });
+}
+
+function checkUrl() {
+  
 }
 
 function getAllDepts(req, res, next) {
