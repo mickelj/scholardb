@@ -202,7 +202,7 @@ var jQueryCite = (function(){
     rValue = [
       date.getFullYear()
     , date.getMonth   () + 1
-    , date.getDate    () + 1
+    , date.getDate    ()
     ]
     
     return [ { 'date-parts': rValue } ]
@@ -322,6 +322,21 @@ var jQueryCite = (function(){
    * @return {Object} CSL date
    */
   var parseDateField = function ( i ) { return parseDate( i.val() ) }
+
+  /**
+   * Fix then parse a jQuery date field
+   * 
+   * @access private
+   * @method fixThenParseDateField
+   * 
+   * @param {jQuery} i - jQuery element
+   * 
+   * @return {Object} CSL date
+   */
+  var fixThenParseDateField = function ( i ) {
+    var d = i.val() + "-01-01 00:00:00"
+    return parseDate( d ) 
+  }
   
   /**
    * Get a list of names from CSL names
@@ -388,7 +403,7 @@ var jQueryCite = (function(){
   , { propName: 'ISBN' }
   , { propName: 'ISSN' }
   
-  , { propName: 'issued', prepFunc: parseDateField }
+  , { propName: 'issued', prepFunc: fixThenParseDateField }
   , { propName: 'accessed', prepFunc: parseDateField }
   ]
   
