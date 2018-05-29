@@ -13,7 +13,7 @@ $(function main() {
 		form.terminate();
 	});
 
-	$("input[data-cjs-field='container-title'].autocomplete").autocomplete({
+	$("input#journal-title").autocomplete({
 		data: {
 			"Apple": null,
 			"Microsoft": null,
