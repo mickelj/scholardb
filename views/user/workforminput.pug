@@ -1,16 +1,14 @@
 div.cjs-in
   section.cjs-piece.cjs-input
     fieldset
-      label
-        select(data-cjs-field="type")
-          option(value="book") Book
-          option(value="incollection") Chapter
-          option(value="paper-conference") Paper
-          option(value="article-journal") Article
-          option(value="article-magazine") Magazine article
-          option(value="article-newspaper") Newspaper article
-          option(value="webpage") Webpage
-        legend Work type
+      select(data-cjs-field="type")
+        option(value="book") Book
+        option(value="incollection") Chapter
+        option(value="paper-conference") Paper
+        option(value="article-journal") Article
+        option(value="article-magazine") Magazine article
+        option(value="article-newspaper") Newspaper article
+        option(value="webpage") Webpage
     fieldset(data-cjs-field-type="incollection")
       label
         input(data-cjs-field="title", type="text")

@@ -95,12 +95,15 @@
   border-bottom: 2px solid #2196F3;
 }
 
+label, input {
+  color: #222 !important;
+}
+
 .cjs label {
   display: inline-block;
   position: relative;
   height: 32px;
   margin-right: 16px;
-  
   white-space: nowrap;
 }
 
@@ -172,8 +175,7 @@
   
   opacity: .5;
   
-  /* color: inherit; */
-  color: #222 !important;
+  color: inherit;
   font-size: 16px;
   font-weight: 400;
   
