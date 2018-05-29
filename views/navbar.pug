@@ -14,9 +14,9 @@ div.navbar-fixed
     div.nav-wrapper
       a.brand-logo(href="/")
         img(src=appconf.images.logo, alt=appconf.appname)
-      a.button-collapse(href="#", data-activates="mobile-menu")
+      a.sidenav-trigger(href="#", data-target="mobile-menu")
         i.material-icons menu
-      ul#nav-mobile.right.hide-on-med-and-down
+      ul.right.hide-on-med-and-down
         li
           a(href="/") Home
         li
