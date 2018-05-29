@@ -6,13 +6,18 @@ div#main
   div#cjs-in
   div#cjs-out
 
+script(type='text/javascript', src="https://code.jquery.com/jquery-2.2.4.min.js", integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=", crossorigin="anonymous")
 script(type='text/javascript', src='https://cdn.rawgit.com/larsgw/citation.js/archive/citation.js/citation-0.4.0-3.min.js')
 script(type='text/javascript').
   var Cite = require('citation-js');
 script(type='text/javascript', src='/js/jquery.citation.js')
 script(type='text/javascript').
   $(function main() {
-    var form = new jQueryCite({ lang: 'en', saveInCookies: true });
+    var form = new jQueryCite({ lang: 'en', 
+                                saveInCookies: true, 
+                                add: function() {console.log(JSON.stringify(form._data.data[0])); },
+                                inputForm: #{include workforminput.pug}
+                              });
     
     form.insertInputForm($('#cjs-in'));
     form.insertOutputForm($('#cjs-out')) ;
