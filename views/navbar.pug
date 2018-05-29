@@ -31,7 +31,7 @@ div.navbar-fixed
           a(href="/publishers") Publishers
         if user
           li
-            a.btn.white.blue-text.text-darken-4.dropdown-button(href="#!", data-activates="profile-menu")   #{user.first_name} #{user.last_name}
+            a.btn.white.blue-text.text-darken-4.dropdown-trigger(href="#!", data-target="profile-menu")   #{user.first_name} #{user.last_name}
               i.material-icons.right arrow_drop_down
           if user.admin
             li
@@ -42,7 +42,7 @@ div.navbar-fixed
             a.btn.white.blue-text.text-darken-4(href="/auth/login") Login
               i.material-icons.right input
 
-      div#mobile-menu.side-nav.collection
+      div#mobile-menu.sidenav.collection
         a.collection-item(href="/") Home
         a.collection-item(href="/works") Works
         a.collection-item(href="/departments") Departments &amp; Programs

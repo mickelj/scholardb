@@ -33,7 +33,7 @@ $(document).ready(function() {
   $(".people-list img").on('error', loadAltImage);
   $(".person-profile-sidebar img").on('error', loadAltImage);
 
-  $(".button-collapse").sideNav();
+  $(".sidenav").sidenav();
 
   $(".filter-toggle").on('click', function() {
     $(this).nextAll().toggleClass('hide');
@@ -46,6 +46,7 @@ $(document).ready(function() {
   $('.modal').modal();
   $('.carousel.carousel-slider').carousel({fullWidth: true});
   $('select').material_select();
+  $(".dropdown-trigger").dropdown();
 
   $('.page-selector').on('change', function() {
     $(this).parent().submit();
