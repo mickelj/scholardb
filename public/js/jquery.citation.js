@@ -202,7 +202,7 @@ var jQueryCite = (function(){
     rValue = [
       date.getFullYear()
     , date.getMonth   () + 1
-    , date.getDate    ()
+    , date.getDate    () + 1
     ]
     
     return [ { 'date-parts': rValue } ]

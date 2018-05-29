@@ -77,8 +77,8 @@
 
 .cjs select {
   display: inline-block;
-  height: 26px;
-  width: 200px;
+  height: 32px;
+  width: 250px;
   
   background: none;
   border: none;
@@ -98,7 +98,7 @@
 .cjs label {
   display: inline-block;
   position: relative;
-  height: 26px;
+  height: 32px;
   margin-right: 16px;
   
   white-space: nowrap;
@@ -109,8 +109,8 @@
 .cjs label input {
   display: inline-block;
   padding: 4px 0;
-  height: 26px;
-  width: 200px;
+  height: 32px;
+  width: 250px !important;
 }
 
 .cjs textarea {
@@ -167,7 +167,7 @@
   position: absolute;
   left: 0;
   bottom: 0;
-  height: 26px;
+  height: 32px;
   padding: 4px 0;
   
   opacity: .5;
@@ -187,7 +187,7 @@
 .cjs label input[type="date"] ~ legend,
 .cjs label input:focus ~ legend,
 .cjs label input:valid ~ legend {
-  bottom: 26px;
+  bottom: 32px;
   height: 16px;
   padding: 0;
   
