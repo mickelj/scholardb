@@ -16,7 +16,7 @@ script(type='text/javascript').
     var form = new jQueryCite({ lang: 'en', 
                                 saveInCookies: true, 
                                 add: function() {console.log(JSON.stringify(form._data.data[0])); },
-                                inputForm: #{include workforminput.pug}
+                                inputForm: #[include workforminput.pug]
                               });
     
     form.insertInputForm($('#cjs-in'));
