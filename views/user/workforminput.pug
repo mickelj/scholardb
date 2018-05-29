@@ -1,108 +1,108 @@
 div.cjs-in
   section.cjs-piece.cjs-input
-		fieldset
-			select(data-cjs-field="type")
-				option(value="book") Book
-				option(value="incollection") Chapter
-				option(value="paper-conference") Paper
-				option(value="article-journal") Article
-				option(value="article-magazine") Magazine article
-				option(value="article-newspaper") Newspaper article
-				option(value="webpage") Webpage
-		fieldset(data-cjs-field-type="incollection")
-			label
-				input(data-cjs-field="title", type="text")
-				legend Chapter title
-		fieldset(data-cjs-field-type="incollection")
-			label
-				input(data-cjs-field="container-title", type="text")
-				legend Book title
-		fieldset(data-cjs-field-type="book paper-conference article-journal article-magazine article-newspaper webpage")
-			label
-				input(data-cjs-field="title", type="text")
-				legend Title
-		fieldset(data-cjs-field-type="article-journal")
-			label
-				input(data-cjs-field="container-title", type="text")
-				legend Journal
-		fieldset(data-cjs-field-type="article-magazine")
-			label
-				input(data-cjs-field="container-title", type="text")
-				legend Magazine
-		fieldset(data-cjs-field-type="article-newspaper")
-			label
-				input(data-cjs-field="container-title", type="text")
-				legend Newspaper
-		fieldset(data-cjs-field-type="webpage")
-			label
-				input(data-cjs-field="container-title", type="text")
-				legend Website
-		fieldset(data-cjs-field-type="incollection")
-			label
-				input(data-cjs-field="author", type="text")
-				legend Chapter author
+    fieldset
+      select(data-cjs-field="type")
+        option(value="book") Book
+        option(value="incollection") Chapter
+        option(value="paper-conference") Paper
+        option(value="article-journal") Article
+        option(value="article-magazine") Magazine article
+        option(value="article-newspaper") Newspaper article
+        option(value="webpage") Webpage
     fieldset(data-cjs-field-type="incollection")
-			label
-				input(data-cjs-field="container-author", type="text")
-				legend Author
-		fieldset(data-cjs-field-type="book paper-conference article-journal article-magazine article-newspaper webpage")
-			label
-				input(data-cjs-field="author", type="text")
-				legend Author
-		fieldset(data-cjs-field-type="book incollection paper-conference article-journal article-magazine article-newspaper")
-			label
-				input(data-cjs-field="editor", type="text")
-				legend Editor
-		fieldset(data-cjs-field-type="book incollection article-newspaper")
-			label
-				input(data-cjs-field="edition", type="number", min="1")
-				legend Edition
-		fieldset(data-cjs-field-type="paper-conference article-journal")
-			label
-				input(data-cjs-field="issue", type="number", min="1")
-				legend Issue
-		fieldset(data-cjs-field-type="book incollection paper-conference article-journal article-magazine")
-			label
-				input(data-cjs-field="volume", type="number", min="1")
-				legend Volume
-		fieldset(data-cjs-field-type="incollection article-journal article-magazine article-newspaper")
-			label
-				input(data-cjs-field="page", type="number", min="1") 
-				input(data-cjs-field="page", type="number", min="1")
-				legend Pages
-		fieldset(data-cjs-field-type="paper-conference")
-			label
-				input(data-cjs-field="event", type="text")
-				legend Conference
-		fieldset(data-cjs-field-type="book incollection paper-conference")
-			label
-				input(data-cjs-field="publisher", type="text")
-				legend Publisher
+      label
+        input(data-cjs-field="title", type="text")
+        legend Chapter title
+    fieldset(data-cjs-field-type="incollection")
+      label
+        input(data-cjs-field="container-title", type="text")
+        legend Book title
+    fieldset(data-cjs-field-type="book paper-conference article-journal article-magazine article-newspaper webpage")
+      label
+        input(data-cjs-field="title", type="text")
+        legend Title
+    fieldset(data-cjs-field-type="article-journal")
+      label
+        input(data-cjs-field="container-title", type="text")
+        legend Journal
+    fieldset(data-cjs-field-type="article-magazine")
+      label
+        input(data-cjs-field="container-title", type="text")
+        legend Magazine
+    fieldset(data-cjs-field-type="article-newspaper")
+      label
+        input(data-cjs-field="container-title", type="text")
+        legend Newspaper
+    fieldset(data-cjs-field-type="webpage")
+      label
+        input(data-cjs-field="container-title", type="text")
+        legend Website
+    fieldset(data-cjs-field-type="incollection")
+      label
+        input(data-cjs-field="author", type="text")
+        legend Chapter author
+    fieldset(data-cjs-field-type="incollection")
+      label
+        input(data-cjs-field="container-author", type="text")
+        legend Author
+    fieldset(data-cjs-field-type="book paper-conference article-journal article-magazine article-newspaper webpage")
+      label
+        input(data-cjs-field="author", type="text")
+        legend Author
+    fieldset(data-cjs-field-type="book incollection paper-conference article-journal article-magazine article-newspaper")
+      label
+        input(data-cjs-field="editor", type="text")
+        legend Editor
     fieldset(data-cjs-field-type="book incollection article-newspaper")
-			label
-				input(data-cjs-field="publisher-place", type="text")
-				legend Place
-		fieldset
-			label
-				input(data-cjs-field="URL", type="url")
-				legend URL
-		fieldset(data-cjs-field-type="paper-conference article-journal")
-			label
-				input(data-cjs-field="DOI", type="text")
-				legend DOI
-		fieldset(data-cjs-field-type="book incollection paper-conference")
-			label
-				input(data-cjs-field="ISBN", type="text")
-				legend ISBN
-		fieldset(data-cjs-field-type="article-journal article-magazine article-newspaper")
-			label
-				input(data-cjs-field="ISSN", type="text")
-				legend ISSN
-		fieldset
-			label
-				input(data-cjs-field="issued", type="text" pattern="[0-9]{4}")
-				legend Issued Year
+      label
+        input(data-cjs-field="edition", type="number", min="1")
+        legend Edition
+    fieldset(data-cjs-field-type="paper-conference article-journal")
+      label
+        input(data-cjs-field="issue", type="number", min="1")
+        legend Issue
+    fieldset(data-cjs-field-type="book incollection paper-conference article-journal article-magazine")
+      label
+        input(data-cjs-field="volume", type="number", min="1")
+        legend Volume
+    fieldset(data-cjs-field-type="incollection article-journal article-magazine article-newspaper")
+      label
+        input(data-cjs-field="page", type="number", min="1") 
+        input(data-cjs-field="page", type="number", min="1")
+        legend Pages
+    fieldset(data-cjs-field-type="paper-conference")
+      label
+        input(data-cjs-field="event", type="text")
+        legend Conference
+    fieldset(data-cjs-field-type="book incollection paper-conference")
+      label
+        input(data-cjs-field="publisher", type="text")
+        legend Publisher
+    fieldset(data-cjs-field-type="book incollection article-newspaper")
+      label
+        input(data-cjs-field="publisher-place", type="text")
+        legend Place
+    fieldset
+      label
+        input(data-cjs-field="URL", type="url")
+        legend URL
+    fieldset(data-cjs-field-type="paper-conference article-journal")
+      label
+        input(data-cjs-field="DOI", type="text")
+        legend DOI
+    fieldset(data-cjs-field-type="book incollection paper-conference")
+      label
+        input(data-cjs-field="ISBN", type="text")
+        legend ISBN
+    fieldset(data-cjs-field-type="article-journal article-magazine article-newspaper")
+      label
+        input(data-cjs-field="ISSN", type="text")
+        legend ISSN
+    fieldset
+      label
+        input(data-cjs-field="issued", type="text" pattern="[0-9]{4}")
+        legend Issued Year
 
-	section.cjs-piece.cjs-preview
-		input.cjs-add(type="submit", value="Add")
-		input.cjs-delete(type="reset", value="Start Over")
+  section.cjs-piece.cjs-preview
+    input.cjs-add(type="submit", value="Add")
+    input.cjs-delete(type="reset", value="Start Over")
