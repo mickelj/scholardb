@@ -64,6 +64,15 @@ $(document).ready(function() {
     $(this).parent().submit();
   });
 
+  $("input[data-cjs-field='container-title'].autocomplete").autocomplete({
+		data: {
+			"Apple": null,
+			"Microsoft": null,
+			"Google": 'https://placehold.it/250x250'
+    },
+    minLength: 3
+	});
+
   $(".works .horizontal").css('height', ($(".indexcards").height() * .333));
   // $(".detail-works").css('max-height', ($(".detail-profile-sidebar").height()));
 

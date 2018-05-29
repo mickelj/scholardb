@@ -13,7 +13,7 @@ $(document).ready(function() {
 		form.terminate();
 	});
 
-	$('input.autocomplete').autocomplete({
+	$("input.autocomplete").autocomplete({
 		data: {
 			"Apple": null,
 			"Microsoft": null,
