@@ -45,8 +45,8 @@ $(document).ready(function() {
   $('.collapsible').collapsible();
   $('.modal').modal();
   $('.carousel.carousel-slider').carousel({fullWidth: true});
-  $('select').material_select();
-  $(".dropdown-trigger").dropdown();
+  $('select').formSelect();
+  $('.dropdown-trigger').dropdown();
 
   $('.page-selector').on('change', function() {
     $(this).parent().submit();
