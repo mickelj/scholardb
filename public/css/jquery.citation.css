@@ -172,7 +172,8 @@
   
   opacity: .5;
   
-  color: inherit;
+  /* color: inherit; */
+  color: #222 !important;
   font-size: 16px;
   font-weight: 400;
   
