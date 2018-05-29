@@ -262,6 +262,10 @@ function checkUrl() {
   
 }
 
+function checkForm() {
+  
+}
+
 function getAllDepts(req, res, next) {
   db.run("SELECT id, name FROM groups WHERE hidden = false ORDER BY name", (err, results) => {
     if (err) return next(err);
@@ -441,5 +445,6 @@ router.post('/departments/delete', authHelpers.loginRequired, deleteDepartment);
 router.post('/work/citation', authHelpers.loginRequired, processCitation, checkCitation);
 router.post('/work/identifier', authHelpers.loginRequired, processIdentifier, checkIdentifier);
 router.post('/work/url', authHelpers.loginRequired, processUrl, checkUrl);
+router.post('/work/form', authHelpers.loginRequired, checkForm);
 
 module.exports = router;

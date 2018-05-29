@@ -23,15 +23,15 @@ div.cjs-in
         legend Title
     fieldset(data-cjs-field-type="article-journal")
       label
-        input(data-cjs-field="container-title", type="text")
+        input.autocomplete(data-cjs-field="container-title", type="text")
         legend Journal
     fieldset(data-cjs-field-type="article-magazine")
       label
-        input(data-cjs-field="container-title", type="text")
+        input.autocomplete(data-cjs-field="container-title", type="text")
         legend Magazine
     fieldset(data-cjs-field-type="article-newspaper")
       label
-        input(data-cjs-field="container-title", type="text")
+        input.autocomplete(data-cjs-field="container-title", type="text")
         legend Newspaper
     fieldset(data-cjs-field-type="webpage")
       label
@@ -44,15 +44,15 @@ div.cjs-in
     fieldset(data-cjs-field-type="incollection")
       label
         input(data-cjs-field="container-author", type="text")
-        legend Author
+        legend Author (First Middle Last)
     fieldset(data-cjs-field-type="book paper-conference article-journal article-magazine article-newspaper webpage")
       label
         input(data-cjs-field="author", type="text")
-        legend Author
+        legend Author (First Middle Last)
     fieldset(data-cjs-field-type="book incollection paper-conference article-journal article-magazine article-newspaper")
       label
         input(data-cjs-field="editor", type="text")
-        legend Editor
+        legend Editor (First Middle Last)
     fieldset(data-cjs-field-type="book incollection article-newspaper")
       label
         input(data-cjs-field="edition", type="number", min="1")
@@ -69,11 +69,11 @@ div.cjs-in
       label
         input(data-cjs-field="page", type="number", min="1") 
         input(data-cjs-field="page", type="number", min="1")
-        legend Pages
+        legend Start Page - End Page
     fieldset(data-cjs-field-type="paper-conference")
       label
         input(data-cjs-field="event", type="text")
-        legend Conference
+        legend Conference Name
     fieldset(data-cjs-field-type="book incollection paper-conference")
       label
         input(data-cjs-field="publisher", type="text")
@@ -86,10 +86,10 @@ div.cjs-in
       label
         input(data-cjs-field="URL", type="url")
         legend URL
-    fieldset(data-cjs-field-type="paper-conference article-journal")
-      label
-        input(data-cjs-field="DOI", type="text")
-        legend DOI
+    //- fieldset(data-cjs-field-type="paper-conference article-journal")
+    //-   label
+    //-     input(data-cjs-field="DOI", type="text")
+    //-     legend DOI
     fieldset(data-cjs-field-type="book incollection paper-conference")
       label
         input(data-cjs-field="ISBN", type="text")

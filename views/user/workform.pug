@@ -11,22 +11,7 @@ script(type='text/javascript', src='https://cdn.rawgit.com/larsgw/citation.js/ar
 script(type='text/javascript').
   var Cite = require('citation-js');
 script(type='text/javascript', src='/js/jquery.citation.js')
-script(type='text/javascript').
-  $(function main() {
-    var form = new jQueryCite({ lang: 'en', 
-                                saveInCookies: true, 
-                                add: function() {console.log(JSON.stringify(form._data.data[0])); },
-                                inputForm: $(".cjs-in").html(),
-                                outputForm: ""
-                              });
-    
-    form.insertInputForm($('#cjs-in'));
-    form.insertOutputForm($('#cjs-out')) ;
-    
-    $(window).on('beforeunload', function finish() {
-      form.terminate();
-    });
-  });
+script(type='text/javascript', src='/js/workform.js')
 
 include ../popups.pug
 
