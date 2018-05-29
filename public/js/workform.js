@@ -12,12 +12,4 @@ $(document).ready(function() {
 	$(window).on('beforeunload', function() {
 		form.terminate();
 	});
-
-	$("input.autocomplete").autocomplete({
-		data: {
-			"Apple": null,
-			"Microsoft": null,
-			"Google": 'https://placehold.it/250x250'
-		},
-	});
 });
