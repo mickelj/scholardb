@@ -13,12 +13,17 @@ $(function main() {
 		form.terminate();
 	});
 
-	$("input#journal-title").autocomplete({
+	var options = {
 		data: {
 			"Apple": null,
 			"Microsoft": null,
 			"Google": null
 		},
 		minLength: 3
-	});
+	};
+
+	document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.autocomplete');
+    var instances = M.Autocomplete.init(elems, options);
+  });
 });
