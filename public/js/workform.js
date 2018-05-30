@@ -17,7 +17,7 @@ $(document).ready(function() {
 		source: function(term, suggest) {
 			try {xhr.abort();} catch(e){}
 			xhr = $.getJSON('/publications/search', {q: term}, function(data) {
-				var results = JSON.parse(data);
+				try { var results = JSON.parse(data) } catch(e) { console.error(e) };
 				var suggestions = [];
 				for (var res in results) {
 					suggestions.push(results[res]);
