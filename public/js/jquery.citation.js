@@ -147,7 +147,7 @@ jQuery.fn.CJSShallowText = function () {
 }
 
 var jQueryCite = (function () {
-  const punctutationMatcher = string => string.replace(/$|( )|(?!^)(?=[A-Z])/g, '\\.?$1')
+  const punctutationMatcher = string => string.replace(/$|( )|(?!^)(?=[A-Z])/gi, '\\.?$1')
   const getListMatcher = list => `(?:${list.join('|')})\\b`
   const getSplittingRegex = (matcher, flags) => new RegExp(`(?:^| )(${matcher}$)`, flags)
   // (2017-09-10) Modified from https://boingboing.net/2004/04/28/brit-airways-honorif.html
@@ -187,7 +187,7 @@ var jQueryCite = (function () {
   const suffixes = [
     'I', 'II', 'III', 'IV', 'V', 'Senior', 'Junior', 'Jr', 'Sr', 'PhD', 'Ph\\.D', 'APR',
     'RPh', 'PE', 'MD', 'MA', 'DMD', 'CME', 'BVM', 'CFRE', 'CLU', 'CPA', 'CSC', 'CSJ',
-    'DC', 'DD', 'DDS', 'DO', 'DVM', 'EdD', 'Esq', 'JD', 'LLD', 'OD', 'OSB', 'PC', 'Ret',
+    'DC', 'DD', 'DDS', 'DO', 'DVM', 'EdD', 'Ed\\.D', 'Esq', 'ESQ', 'JD', 'LLD', 'OD', 'OSB', 'PC', 'Ret',
     'RGS', 'RN', 'RNC', 'SHCJ', 'SJ', 'SNJM', 'SSMO', 'USA', 'USAF', 'USAFR', 'USAR',
     'USCG', 'USMC', 'USMCR', 'USN', 'USNR'
   ]
@@ -195,7 +195,8 @@ var jQueryCite = (function () {
   // Released under Apache 2.0
   const particles = [
     'Vere', 'Von', 'Van', 'De', 'Del', 'Della', 'Di', 'Da', 'Pietro', 'Vanden', 'Du',
-    'St.', 'St', 'La', 'Lo', 'Ter', 'O', 'O\'', 'Mac', 'Fitz'
+    'St.', 'St', 'La', 'Lo', 'Ter', 'O', 'O\'', 'Mac', 'Fitz', 'von', 'van', 'de', 'del',
+    'della', 'di', 'da', 'vanden', 'du', 'la', 'lo', 'ter', 'o', 'o\'', 'mac', 'fitz'
   ]
   const titleMatcher = getListMatcher(titles.map(punctutationMatcher))
   const suffixMatcher = getListMatcher(suffixes.map(punctutationMatcher))
