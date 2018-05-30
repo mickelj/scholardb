@@ -201,13 +201,14 @@ function searchJournalByName(req, res) {
 
   console.log(title);
 
-  db.run("SELECT id, name, identifier FROM publications WHERE name ILIKE $1 AND id = authority_id;", ["%" + title + "%"], function(err, results) {
-    if (err || !results.length) return res.status(500).send(err);
+  // db.run("SELECT id, name, identifier FROM publications WHERE name ILIKE $1 AND id = authority_id;", ["%" + title + "%"], function(err, results) {
+  //   if (err || !results.length) return res.status(500).send(err);
 
-    req.journal_name_list = results;
-    console.log(results);
-    res.json(results);
-  });
+  //   req.journal_name_list = results;
+  //   console.log(results);
+  //   res.json(results);
+  // });
+  res.send(title);
 }
 
 router.get('/', getJournalList, getJournalWorkCount, getLetterPagerCounts, renderJournalList);
