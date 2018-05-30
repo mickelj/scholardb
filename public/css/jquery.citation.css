@@ -153,7 +153,7 @@ input {
 .cjs label input[type="number"],
 .cjs label input[type="url"],
 .cjs label input[type="date"] {
-  margin: 0;
+  margin: 1rem 0 0 1rem;
   border: none;
   border-bottom: 1px solid rgba(0, 0, 0, .12);
   font-size: 16px;
@@ -162,7 +162,8 @@ input {
 
 .cjs label input[type="text"]+input,
 .cjs label input[type="number"]+input {
-  margin-left: 8px;
+  /* margin-left: 8px; */
+  display: block;
 }
 
 .cjs label input[type="date"] {
@@ -183,12 +184,12 @@ input {
   position: absolute;
   left: 0;
   bottom: 0;
-  height: 32px;
+  height: 20px;
   padding: 4px 0;
-  opacity: .5;
+  opacity: .6;
   color: inherit;
   font-size: 16px;
-  font-weight: 400;
+  font-weight: 500;
   -webkit-pointer-events: none;
   -moz-pointer-events: none;
   -ms-pointer-events: none;
@@ -199,7 +200,7 @@ input {
 .cjs label input[type="date"]~legend,
 .cjs label input:focus~legend,
 .cjs label input:valid~legend {
-  bottom: 32px;
+  bottom: 20px;
   height: 16px;
   padding: 0;
   font-size: 13px;

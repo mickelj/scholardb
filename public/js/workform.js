@@ -36,7 +36,7 @@ $(document).ready(function() {
 		}
 	});
 
-	$("input[data-cjs-field='container-title']").on('change', function() {
+	$("input[data-cjs-field='container-title']").on('focus', function() {
 		$("fieldset[data-name='issn']").show();
 	});
 });
