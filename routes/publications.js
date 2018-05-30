@@ -212,7 +212,7 @@ function searchJournalByName(req, res) {
 }
 
 router.get('/', getJournalList, getJournalWorkCount, getLetterPagerCounts, renderJournalList);
-router.get('/:id', getJournalDetail, getJournalPeople, getJournalAllWorkCount, getJournalWorksList, getRomeoDetails, getWorksImages, renderJournalDetail);
 router.get('/search', searchJournalByName);
+router.get('/:id', getJournalDetail, getJournalPeople, getJournalAllWorkCount, getJournalWorksList, getRomeoDetails, getWorksImages, renderJournalDetail);
 
 module.exports = router;
