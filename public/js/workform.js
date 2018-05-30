@@ -25,17 +25,18 @@ $(document).ready(function() {
 					suggest(suggestions);
 				})
 				.fail(function(jqxhr, textStatus, error) {
-					var err = textStatus + ", " + error;
-					console.log("Request failed: " + err);
 				});
 		},
 		renderItem: function(item, search) {
 			return '<div class="autocomplete-suggestion" data-pubid="' + item.id + '" data-identifier="' + item.identifier + '" data-name="' + item.name + '" data-val="' + item.name + '">' + item.name + '</div>';
 		},
 		onSelect: function(e, selectedItem, renderedItem) {
-			$("fieldset[data-name='issn']").show();
 			$("#pubid").val(renderedItem.data('pubid'));
 			$("fieldset[data-name='issn']").hide();
 		}
+	});
+
+	$("input[data-cjs-field='container-title']").on('change', function() {
+		$("fieldset[data-name='issn']").show();
 	});
 });
