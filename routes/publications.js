@@ -202,7 +202,7 @@ function searchJournalByName(req, res) {
   console.log(title);
 
   db.run("SELECT id, name, identifier FROM publications WHERE name ILIKE $1 AND id = authority_id;", ["%" + title + "%"], function(err, results) {
-    if (err || !results.length) return next(err);
+    if (err || !results.length) return res.status(500).send(err);
 
     req.journal_name_list = results;
     console.log(results);
