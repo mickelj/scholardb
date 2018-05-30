@@ -16,18 +16,24 @@ $(document).ready(function() {
 	$("input[data-cjs-field='container-title']").autoComplete({
 		source: function(term, suggest) {
 			try {xhr.abort();} catch(e){}
-			xhr = $.getJSON('/publications/search', {q: term}, function(data) {
-				var suggestions = [];
-				for (var d in data) {
-					suggestions.push(data[d]);
-				}	
-				suggest(suggestions);
-			});
+			xhr = $.getJSON('/publications/search', {q: term})
+				.done(function(data) {
+					var suggestions = [];
+					for (var d in data) {
+						suggestions.push(data[d]);
+					}	
+					suggest(suggestions);
+				})
+				.fail(function(jqxhr, textStatus, error) {
+					var err = textStatus + ", " + error;
+					console.log("Request failed: " + err);
+				});
 		},
 		renderItem: function(item, search) {
 			return '<div class="autocomplete-suggestion" data-pubid="' + item.id + '" data-identifier="' + item.identifier + '" data-name="' + item.name + '" data-val="' + item.name + '">' + item.name + '</div>';
 		},
 		onSelect: function(e, selectedItem, renderedItem) {
+			$("fieldset[data-name='issn']").show();
 			$("#pubid").val(renderedItem.data('pubid'));
 			$("fieldset[data-name='issn']").hide();
 		}
