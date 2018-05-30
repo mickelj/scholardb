@@ -17,10 +17,9 @@ $(document).ready(function() {
 		source: function(term, suggest) {
 			try {xhr.abort();} catch(e){}
 			xhr = $.getJSON('/publications/search', {q: term}, function(data) {
-				console.log(data);
 				var suggestions = [];
-				for (var res in results) {
-					suggestions.push(results[res]);
+				for (var d in data) {
+					suggestions.push(data[d]);
 				}	
 				suggest(suggestions);
 			});
