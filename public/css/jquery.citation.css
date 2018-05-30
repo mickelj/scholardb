@@ -160,10 +160,16 @@ input {
   transition: border .1s linear;
 }
 
-.cjs label input[type="text"]+input,
-.cjs label input[type="number"]+input {
-  /* margin-left: 8px; */
+.cjs label input[data-cjs-field="page"] {
+  width: 49%;
+}
+
+.cjs label input[type="text"]+input {
   display: block;
+}
+
+.cjs label input[type="number"]+input {
+  margin-left: 8px;
 }
 
 .cjs label input[type="date"] {
