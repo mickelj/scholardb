@@ -199,11 +199,9 @@ function searchJournalByName(req, res) {
   var nconf = req.app.get('nconf');
   var title = req.query.q;
 
-  db.run("SELECT id, name, identifier FROM publications WHERE name ILIKE $1 AND id = authority_id;", ["%" + title + "%"], function(err, results) {
+  db.run("SELECT id, name, identifier FROM publications WHERE name ILIKE $1 AND id = authority_id ORDER BY sort_name;", ["%" + title + "%"], function(err, results) {
     if (err || !results.length) return res.status(500).send(err);
 
-    req.journal_name_list = results;
-    console.log(results);
     res.json(results);
   });
 }

@@ -14,11 +14,19 @@ $(document).ready(function() {
 	});
 
 	$("input[data-cjs-field='container-title']").autoComplete({
-		source: function(term, response) {
+		source: function(term, suggest) {
 			try {xhr.abort();} catch(e){}
 			xhr = $.getJSON('/publications/search', {q: term}, function(data) {
-				response(data);
+				var results = JSON.parse(data);
+				var suggestions = [];
+				for (var res in results) {
+					suggestions.push(results[res]);
+				}	
+				suggest(suggestions);
 			});
+		},
+		renderItem: function(item, search) {
+			return '<div class="autocomplete-suggestion" data-pubid="' + item.id + '" data-identifier="' + item.identifier + '" data-name="' + item.name + '">' + item.name + '</div>';
 		}
 	});
 });
