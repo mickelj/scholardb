@@ -195,7 +195,21 @@ function renderJournalDetail(req, res) {
   });
 }
 
+function searchJournalByName(req, res) {
+  var nconf = req.app.get('nconf');
+  var title = req.body.q;
+
+  db.run("SELECT id, name, identifier FROM publications WHERE name ILIKE '%$1%' AND id = authority_id;", [title], function(err, results) {
+    if (err || !results.length) return next(err);
+
+    req.journal_name_list = results;
+    console.log(results);
+    res.json(results);
+  });
+}
+
 router.get('/', getJournalList, getJournalWorkCount, getLetterPagerCounts, renderJournalList);
 router.get('/:id', getJournalDetail, getJournalPeople, getJournalAllWorkCount, getJournalWorksList, getRomeoDetails, getWorksImages, renderJournalDetail);
+router.get('/search', searchJournalByName);
 
 module.exports = router;

@@ -12,4 +12,13 @@ $(document).ready(function() {
 	$(window).on('beforeunload', function() {
 		form.terminate();
 	});
+
+	$("input[data-cjs-field='container-title']").autoComplete({
+		source: function(term, response) {
+			try {xhr.abort();} catch(e){}
+			xhr = $.getJSON('URL', {q: term}, function(data) {
+				response(data);
+			});
+		}
+	});
 });
