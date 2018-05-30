@@ -4,10 +4,10 @@ div.cjs-in
       select.browser-default(data-cjs-field="type")
         option(value="book") Book
         option(value="incollection") Chapter
+        option(value="article-journal") Journal Article
         option(value="paper-conference") Paper
-        option(value="article-journal") Article
-        option(value="article-magazine") Magazine article
-        option(value="article-newspaper") Newspaper article
+        option(value="article-magazine") Magazine Article
+        option(value="article-newspaper") Newspaper Article
         option(value="webpage") Webpage
     fieldset(data-cjs-field-type="incollection")
       label
@@ -44,19 +44,19 @@ div.cjs-in
     fieldset(data-cjs-field-type="incollection")
       label
         input(data-cjs-field="author", type="text")
-        legend Chapter author
+        legend Chapter author(s) (as "First Middle Last")
     fieldset(data-cjs-field-type="incollection")
       label
         input(data-cjs-field="container-author", type="text")
-        legend Collection Author (First Middle Last)
+        legend Collection author(s) (as "First Middle Last")
     fieldset(data-cjs-field-type="book paper-conference article-journal article-magazine article-newspaper webpage")
       label
         input(data-cjs-field="author", type="text")
-        legend Author (First Middle Last)
+        legend Author(s) (as "First Middle Last")
     fieldset(data-cjs-field-type="book incollection paper-conference article-journal article-magazine article-newspaper")
       label
         input(data-cjs-field="editor", type="text")
-        legend Editor (First Middle Last)
+        legend Editor(s) (as "First Middle Last")
     fieldset(data-cjs-field-type="book incollection article-newspaper")
       label
         input(data-cjs-field="edition", type="number", min="1")
@@ -73,7 +73,7 @@ div.cjs-in
       label
         input(data-cjs-field="page", type="number", min="1") 
         input(data-cjs-field="page", type="number", min="1")
-        legend Start Page &amp; End Page
+        legend Pages (Enter start page and end page in different fields)
     fieldset(data-cjs-field-type="paper-conference")
       label
         input(data-cjs-field="event", type="text")

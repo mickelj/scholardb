@@ -218,7 +218,18 @@ function renderRssFeed(req, res) {
   });
 }
 
+function searchPersonByName(req, res) {
+  var name = req.query.q;
+
+  db.run("SELECT id, (coalesce(first_name,'') || ' ' || coalesce(middle_name,'') || ' ' || coalesce(last_name,'')) as name FROM people WHERE (coalesce(first_name,'') || ' ' || coalesce(middle_name,'') || ' ' || coalesce(last_name,'')) ILIKE $1 ORDER BY last_name, first_name, middle_name;", ["%" + name + "%"], function(err, results) {
+    if (err || !results.length) return res.json({});
+
+    res.json(results);
+  });
+}
+
 router.get('/', getPeopleList, getPeopleWorkCount, getLetterPagerCounts, renderPeopleList);
+router.get('/search', searchPersonByName);
 router.get('/:id', getPersonDetail, getPersonWorksCount, getPersonWorksList, getPublicationsCount, getCoauthors, getWorksImages, renderPersonDetail);
 router.get('/:id/rss', getRssResults, getPersonName, renderRssFeed);
 

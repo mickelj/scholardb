@@ -95,7 +95,7 @@ select.browser-default {
 .cjs select {
   display: inline-block;
   height: 32px;
-  width: 300px;
+  width: 90%;
   background: none;
   border: none;
   border-bottom: 1px solid rgba(0, 0, 0, .12);
@@ -118,6 +118,7 @@ input {
   display: inline-block;
   position: relative;
   height: 32px;
+  width: 90%;
   margin-right: 16px;
   white-space: nowrap;
 }
@@ -130,12 +131,11 @@ input {
   display: inline-block;
   padding: 4px 0;
   height: 32px;
-  width: 300px !important;
 }
 
 .cjs textarea {
   width: 400px;
-  height: 300px;
+  height: 100%;
 }
 
 .cjs label input[type="file"] {
@@ -153,7 +153,7 @@ input {
 .cjs label input[type="number"],
 .cjs label input[type="url"],
 .cjs label input[type="date"] {
-  margin: 1rem 0 0 1rem;
+  margin: 1rem 0 0 2rem;
   border: none;
   border-bottom: 1px solid rgba(0, 0, 0, .12);
   font-size: 16px;

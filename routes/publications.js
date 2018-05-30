@@ -196,10 +196,9 @@ function renderJournalDetail(req, res) {
 }
 
 function searchJournalByName(req, res) {
-  var nconf = req.app.get('nconf');
   var title = req.query.q;
 
-  db.run("SELECT id, name, identifier FROM publications WHERE name ILIKE $1 AND id = authority_id ORDER BY sort_name;", ["%" + title + "%"], function(err, results) {
+  db.run("SELECT id, name FROM publications WHERE name ILIKE $1 AND id = authority_id ORDER BY sort_name;", ["%" + title + "%"], function(err, results) {
     if (err || !results.length) return res.json({});
 
     res.json(results);
