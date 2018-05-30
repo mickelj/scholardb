@@ -197,7 +197,7 @@ function getRssResults(req, res, next) {
 function getPersonName(req, res, next) {
   var person_id = req.params.id;
 
-  db.run("SELECT (coalesce(first_name,'') || ' ' || coalesce(middle_name,'') || ' ' || coalesce(last_name,'')) as name FROM people WHERE id = $1", [person_id], function(err, results) {
+  db.run("SELECT concat_ws(' ', first_name, middle_name, last_name) as name FROM people WHERE id = $1", [person_id], function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
@@ -221,7 +221,7 @@ function renderRssFeed(req, res) {
 function searchPersonByName(req, res) {
   var name = req.query.q;
 
-  db.run("SELECT id, (coalesce(first_name,'') || ' ' || coalesce(middle_name,'') || ' ' || coalesce(last_name,'')) as name FROM people WHERE (coalesce(first_name,'') || ' ' || coalesce(middle_name,'') || ' ' || coalesce(last_name,'')) ILIKE $1 ORDER BY last_name, first_name, middle_name;", ["%" + name + "%"], function(err, results) {
+  db.run("SELECT id, concat_ws(' ', first_name, middle_name, last_name) as name FROM people WHERE concat_ws(' ', first_name, middle_name, last_name) ILIKE $1 ORDER BY last_name, first_name, middle_name;", ["%" + name + "%"], function(err, results) {
     if (err || !results.length) return res.json({});
 
     res.json(results);
