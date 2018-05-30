@@ -26,6 +26,10 @@ $(document).ready(function() {
 		},
 		renderItem: function(item, search) {
 			return '<div class="autocomplete-suggestion" data-pubid="' + item.id + '" data-identifier="' + item.identifier + '" data-name="' + item.name + '" data-val="' + item.name + '">' + item.name + '</div>';
+		},
+		onSelect: function(e, selectedItem, renderedItem) {
+			$("#pubid").val(renderedItem.data('pubid'));
+			$("fieldset[data-name='issn']").hide();
 		}
 	});
 });

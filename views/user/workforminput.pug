@@ -37,6 +37,10 @@ div.cjs-in
       label
         input(data-cjs-field="container-title", type="text")
         legend Website
+    fieldset(data-name="issn", data-cjs-field-type="article-journal article-magazine article-newspaper")
+      label
+        input(data-cjs-field="ISSN", type="text")
+        legend ISSN
     fieldset(data-cjs-field-type="incollection")
       label
         input(data-cjs-field="author", type="text")
@@ -44,7 +48,7 @@ div.cjs-in
     fieldset(data-cjs-field-type="incollection")
       label
         input(data-cjs-field="container-author", type="text")
-        legend Author (First Middle Last)
+        legend Collection Author (First Middle Last)
     fieldset(data-cjs-field-type="book paper-conference article-journal article-magazine article-newspaper webpage")
       label
         input(data-cjs-field="author", type="text")
@@ -69,7 +73,7 @@ div.cjs-in
       label
         input(data-cjs-field="page", type="number", min="1") 
         input(data-cjs-field="page", type="number", min="1")
-        legend Start Page - End Page
+        legend Start Page &amp; End Page
     fieldset(data-cjs-field-type="paper-conference")
       label
         input(data-cjs-field="event", type="text")
@@ -90,15 +94,11 @@ div.cjs-in
     //-   label
     //-     input(data-cjs-field="DOI", type="text")
     //-     legend DOI
-    fieldset(data-cjs-field-type="book incollection paper-conference")
+    fieldset(data-name="isbn", data-cjs-field-type="book incollection paper-conference")
       label
         input(data-cjs-field="ISBN", type="text")
         legend ISBN
-    fieldset(data-cjs-field-type="article-journal article-magazine article-newspaper")
-      label
-        input(data-cjs-field="ISSN", type="text")
-        legend ISSN
-    fieldset
+    fieldset(data-name="issued")
       label
         input(data-cjs-field="issued", type="text" pattern="[0-9]{4}")
         legend Issued Year

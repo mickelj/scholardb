@@ -89,7 +89,7 @@ jQuery.fn.CJSMultipleInput = function () {
  */
 jQuery.fn.CJSMultipleInputVal = function ( array ) {
   var array = JSON.parse( JSON.stringify( array ) )
-    , elm = this.siblings( 'input.cjs-multipleinput' ).andSelf().first()
+    , elm = this.siblings( 'input.cjs-multipleinput' ).addBack().first()
   
   elm.val( array.shift() )
   
@@ -113,7 +113,7 @@ jQuery.fn.CJSMultipleInputVal = function ( array ) {
  * @return {jQuery} this
  */
 jQuery.fn.CJSMultipleInputClear = function () {
-  var sib = this.siblings( 'input.cjs-multipleinput' ).andSelf()
+  var sib = this.siblings( 'input.cjs-multipleinput' ).addBack()
   
   sib.not( ':first' ).remove()
   
@@ -1200,7 +1200,7 @@ var jQueryCite = (function(){
       
       //BEGIN Event listeners
       form.find( '.cjs-opt select' ).change( function () {
-        var siblings = $( this ).closest( 'fieldset' ).siblings( 'fieldset' ).andSelf().find( 'select' )
+        var siblings = $( this ).closest( 'fieldset' ).siblings( 'fieldset' ).addBack().find( 'select' )
         
         var newOptions = {
           format: 'string'

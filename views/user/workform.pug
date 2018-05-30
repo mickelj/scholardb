@@ -3,9 +3,11 @@ link(rel="stylesheet", href="/css/jquery.auto-complete.css")
 
 p: b Add Work Manually
 
-div#main
-  div#cjs-in
-  div#cjs-out
+form#workform(method="post", action="/user/work/form")
+  div#main
+    div#cjs-in
+    div#cjs-out
+  input#pubid(type="hidden", name="pubid")
 
 script(type='text/javascript', src='/js/jquery.auto-complete.min.js')
 script(type='text/javascript', src='https://cdn.rawgit.com/larsgw/citation.js/archive/citation.js/citation-0.4.0-3.min.js')
