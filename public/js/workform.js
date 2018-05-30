@@ -1,4 +1,5 @@
 $(document).ready(function() {
+	var container_title = "";
 	var form = new jQueryCite({ lang: 'en', 
 															saveInCookies: false, 
 															add: function() {console.log(JSON.stringify(form._data.data[0])); },
@@ -33,11 +34,18 @@ $(document).ready(function() {
 		onSelect: function(e, selectedItem, renderedItem) {
 			$("#pubid").val(renderedItem.data('pubid'));
 			$("fieldset[data-name='issn']").hide();
+			container_title = renderedItem.data('val');
 		}
 	});
 
 	$("input[data-cjs-field='container-title']").on('focus', function() {
 		$("fieldset[data-name='issn']").show();
+	});
+
+	$("input[data-cjs-field='container-title']").on('blur', function() {
+		if ($(this).val() === container_title) {
+			$("fieldset[data-name='issn']").hide();
+		}
 	});
 
 	var peopleAutocomplete = {
