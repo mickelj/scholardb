@@ -25,7 +25,7 @@ $(document).ready(function() {
 			});
 		},
 		renderItem: function(item, search) {
-			return '<div class="autocomplete-suggestion" data-pubid="' + item.id + '" data-identifier="' + item.identifier + '" data-name="' + item.name + '">' + item.name + '</div>';
+			return '<div class="autocomplete-suggestion" data-pubid="' + item.id + '" data-identifier="' + item.identifier + '" data-name="' + item.name + '" data-val="' + item.name + '">' + item.name + '</div>';
 		}
 	});
 });
