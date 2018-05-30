@@ -16,7 +16,7 @@ $(document).ready(function() {
 	$("input[data-cjs-field='container-title']").autoComplete({
 		source: function(term, response) {
 			try {xhr.abort();} catch(e){}
-			xhr = $.getJSON('URL', {q: term}, function(data) {
+			xhr = $.getJSON('/publications/search', {q: term}, function(data) {
 				response(data);
 			});
 		}
