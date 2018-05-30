@@ -40,7 +40,7 @@ $(document).ready(function() {
 		$("fieldset[data-name='issn']").show();
 	});
 
-	$("input[data-cjs-field*='author'], input[data-cjs-field='editor']").autoComplete({
+	var peopleAutocomplete = {
 		source: function(term, suggest) {
 			try {xhr.abort();} catch(e){}
 			xhr = $.getJSON('/people/search', {q: term})
@@ -61,6 +61,10 @@ $(document).ready(function() {
 			var stringToAppend = $("#contributors").val().length > 0 ? $("#contributors").val() + "," : "";
     	$("#contributors").val(stringToAppend + renderedItem.data('personid'));
 		}
-	});
+	};
 
+	$("input[data-cjs-field*='author'], input[data-cjs-field='editor']").autoComplete(peopleAutocomplete);
+	$(document).on('DOMNodeInserted', "input[data-cjs-field*='author'], input[data-cjs-field='editor']", function(){
+		$(this).autoComplete(peopleAutocomplete);
+	});
 });
