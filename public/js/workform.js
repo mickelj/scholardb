@@ -2,7 +2,10 @@ $(document).ready(function() {
 	var container_title = "";
 	var form = new jQueryCite({ lang: 'en', 
 															saveInCookies: false, 
-															add: function() { 
+															add: function() {
+																var formdata = form._data.data[0];
+																delete formdata._graph;
+																delete formdata.id;
 																$("#workdata").val(JSON.stringify(form._data.data[0]));
 																$("#workform").submit();
 															},
