@@ -1,5 +1,7 @@
 $(document).ready(function() {
 	var container_title = "";
+	var publisher_place = "";
+
 	var form = new jQueryCite({ lang: 'en', 
 															saveInCookies: false, 
 															add: function() {
@@ -20,7 +22,8 @@ $(document).ready(function() {
 		form.terminate();
 	});
 
-	$("input[data-cjs-field='container-title']").autoComplete({
+	// Publication autocomplete
+	$("fieldset[data-cjs-field-type*='article'] input[data-cjs-field='container-title']").autoComplete({
 		source: function(term, suggest) {
 			try {xhr.abort();} catch(e){}
 			xhr = $.getJSON('/publications/search', {q: term})
@@ -44,16 +47,41 @@ $(document).ready(function() {
 		}
 	});
 
-	$("input[data-cjs-field='container-title']").on('focus', function() {
+	$("fieldset[data-cjs-field-type*='article'] input[data-cjs-field='container-title']").on('focus', function() {
 		$("fieldset[data-name='issn']").show();
 	});
 
-	$("input[data-cjs-field='container-title']").on('blur', function() {
+	$("fieldset[data-cjs-field-type*='article'] input[data-cjs-field='container-title']").on('blur', function() {
 		if ($(this).val() === container_title) {
 			$("fieldset[data-name='issn']").hide();
 		}
 	});
 
+	// Publisher autocomplete
+	$("input[data-cjs-field='publisher']").autoComplete({
+		source: function(term, suggest) {
+			try {xhr.abort();} catch(e){}
+			xhr = $.getJSON('/publishers/search', {q: term})
+				.done(function(data) {
+					var suggestions = [];
+					for (var d in data) {
+						suggestions.push(data[d]);
+					}	
+					suggest(suggestions);
+				})
+				.fail(function(jqxhr, textStatus, error) {
+				});
+		},
+		renderItem: function(item, search) {
+			return '<div class="autocomplete-suggestion" data-publisherid="' + item.id + '" data-val="' + item.name + '">' + item.name + '</div>';
+		},
+		onSelect: function(e, selectedItem, renderedItem) {
+			$("#publisherid").val(renderedItem.data('publisherid'));
+			container_title = renderedItem.data('val');
+		}
+	});
+
+	// People autocomplete
 	var peopleAutocomplete = {
 		source: function(term, suggest) {
 			try {xhr.abort();} catch(e){}

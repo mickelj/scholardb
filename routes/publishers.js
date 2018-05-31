@@ -172,7 +172,18 @@ function renderPublisherDetail(req, res) {
   });
 }
 
+function searchPublisherByName(req, res) {
+  var pub = req.query.q;
+
+  db.run("SELECT id, name FROM publishers WHERE sort_name ILIKE $1 AND id = authority_id ORDER BY sort_name;", ["%" + pub + "%"], function(err, results) {
+    if (err || !results.length) return res.json({});
+
+    res.json(results);
+  });
+}
+
 router.get('/', getPublisherList, getPublisherWorkCount, getLetterPagerCounts, renderPublisherList);
+router.get('/search', searchPublisherByName);
 router.get('/:id', getPublisherDetail, getPublisherPeople, getPublisherAllWorkCount, getPublisherWorksList, getWorksImages, renderPublisherDetail)
 
 module.exports = router;

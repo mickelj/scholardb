@@ -268,9 +268,10 @@ function storePendingForm(req, res) {
     return res.redirect('/user/work/form');
   }
 
-  var pending_contributors = req.body.contributors.split(',');
+  var pending_contributors = (req.body.contributors) ? req.body.contributors.split(',') : null;
+  var pending_publication = (req.body.pubid) ? req.body.pubid : null;
 
-  db.works_pending.insert({pending_data: req.body.workdata, pending_contributors: pending_contributors, pending_publication: req.body.pubid}, (err, results) => {
+  db.works_pending.insert({pending_data: req.body.workdata, pending_contributors: pending_contributors, pending_publication: pending_publication}, (err, results) => {
     if (err) {
       req.flash('error', 'Error adding new work to pending queue: ' + err);
       return res.redirect('/user/work/form');

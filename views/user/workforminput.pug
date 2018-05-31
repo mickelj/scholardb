@@ -4,13 +4,15 @@ div.cjs-in
       label 
         legend Type
       select.browser-default(data-cjs-field="type")
-        option(value="book") Book
-        option(value="incollection") Chapter
-        option(value="article-journal") Journal Article
-        option(value="paper-conference") Paper
-        option(value="article-magazine") Magazine Article
-        option(value="article-newspaper") Newspaper Article
-        option(value="webpage") Webpage
+        optgroup
+          option(value="book") Book
+          option(value="incollection") Chapter
+          option(value="article-journal") Journal Article
+          option(value="paper-conference") Conference Paper
+        optgroup
+          option(value="article-magazine") Magazine Article
+          option(value="article-newspaper") Newspaper Article
+          option(value="webpage") Webpage
     fieldset(data-cjs-field-type="incollection")
       label
         input(data-cjs-field="title", type="text")
@@ -84,18 +86,14 @@ div.cjs-in
       label
         input(data-cjs-field="publisher", type="text")
         legend Publisher
-    fieldset(data-cjs-field-type="book incollection article-newspaper")
+    fieldset(data-name="publisher-place", data-cjs-field-type="book incollection article-newspaper")
       label
         input(data-cjs-field="publisher-place", type="text")
-        legend Place
-    fieldset
+        legend Publication Place
+    fieldset(data-cjs-field-type="paper-conference article-journal")
       label
-        input(data-cjs-field="URL", type="url")
-        legend URL
-    //- fieldset(data-cjs-field-type="paper-conference article-journal")
-    //-   label
-    //-     input(data-cjs-field="DOI", type="text")
-    //-     legend DOI
+        input(data-cjs-field="DOI", type="text")
+        legend DOI
     fieldset(data-name="isbn", data-cjs-field-type="book incollection paper-conference")
       label
         input(data-cjs-field="ISBN", type="text")
@@ -104,6 +102,10 @@ div.cjs-in
       label
         input(data-cjs-field="issued", type="text" pattern="[0-9]{4}")
         legend Issued Year
+    fieldset
+      label
+        input(data-cjs-field="URL", type="url")
+        legend URL
 
   section.cjs-piece.cjs-preview
     input.cjs-add(type="submit", value="Add")
