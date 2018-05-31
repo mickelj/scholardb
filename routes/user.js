@@ -262,8 +262,22 @@ function checkUrl() {
   
 }
 
-function checkForm() {
-  
+function storePendingForm(req, res) {
+  if (!req.body.workdata) {
+    req.flash('error', 'The form was empty');
+    return res.redirect('/user/work/form');
+  }
+
+  var pending_contributors = req.body.contributors.split(',');
+
+  db.works_pending.insert({pending_data: req.body.workdata, pending_contributors: pending_contributors, pending_publication: req.body.pubid}, (err, results) => {
+    if (err) {
+      req.flash('error', 'Error adding new work to pending queue: ' + err);
+      return res.redirect('/user/work/form');
+    }
+    req.flash('success', 'Work added to pending queue.  It will be reviewed soon.');
+    return res.redirect('/user/work');
+  });
 }
 
 function getAllDepts(req, res, next) {
@@ -445,6 +459,6 @@ router.post('/departments/delete', authHelpers.loginRequired, deleteDepartment);
 router.post('/work/citation', authHelpers.loginRequired, processCitation, checkCitation);
 router.post('/work/identifier', authHelpers.loginRequired, processIdentifier, checkIdentifier);
 router.post('/work/url', authHelpers.loginRequired, processUrl, checkUrl);
-router.post('/work/form', authHelpers.loginRequired, checkForm);
+router.post('/work/form', authHelpers.loginRequired, storePendingForm);
 
 module.exports = router;

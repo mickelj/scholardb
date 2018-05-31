@@ -73,8 +73,8 @@
 }
 
 .cjs [type="submit"] {
-  color: white;
-  background-color: #2196F3;
+  color: white !important;
+  background-color:  #2196F3;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
   border-radius: 3px;
 }

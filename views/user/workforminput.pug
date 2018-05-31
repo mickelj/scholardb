@@ -1,6 +1,8 @@
 div.cjs-in
   section.cjs-piece.cjs-input
     fieldset
+      label 
+        legend Type
       select.browser-default(data-cjs-field="type")
         option(value="book") Book
         option(value="incollection") Chapter
@@ -23,15 +25,15 @@ div.cjs-in
         legend Title
     fieldset(data-cjs-field-type="article-journal")
       label
-        input(data-cjs-field="container-title", type="text")
+        input(data-cjs-field="container-title", type="text", placeholder="If your journal is in the list that appears after you begin typing, please select it.")
         legend Journal
     fieldset(data-cjs-field-type="article-magazine")
       label
-        input(data-cjs-field="container-title", type="text")
+        input(data-cjs-field="container-title", type="text", placeholder="If your magazine is in the list that appears after you begin typing, please select it.")
         legend Magazine
     fieldset(data-cjs-field-type="article-newspaper")
       label
-        input(data-cjs-field="container-title", type="text")
+        input(data-cjs-field="container-title", type="text", placeholder="If your newspaper is in the list that appears after you begin typing, please select it.")
         legend Newspaper
     fieldset(data-cjs-field-type="webpage")
       label
@@ -73,7 +75,7 @@ div.cjs-in
       label
         input(data-cjs-field="page", type="number", min="1", placeholder="Start Page") 
         input(data-cjs-field="page", type="number", min="1", placeholder="End Page")
-        legend Pages (Enter start page and end page in different fields)
+        legend Pages
     fieldset(data-cjs-field-type="paper-conference")
       label
         input(data-cjs-field="event", type="text")

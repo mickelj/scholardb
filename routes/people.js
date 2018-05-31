@@ -221,7 +221,7 @@ function renderRssFeed(req, res) {
 function searchPersonByName(req, res) {
   var name = req.query.q;
 
-  db.run("SELECT id, concat_ws(' ', first_name, middle_name, last_name) as name FROM people WHERE concat_ws(' ', first_name, middle_name, last_name) ILIKE $1 ORDER BY last_name, first_name, middle_name;", ["%" + name + "%"], function(err, results) {
+  db.run("SELECT id, fullname FROM people WHERE fullname ILIKE $1 ORDER BY last_name, first_name, middle_name;", ["%" + name + "%"], function(err, results) {
     if (err || !results.length) return res.json({});
 
     res.json(results);

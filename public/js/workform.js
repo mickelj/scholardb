@@ -2,13 +2,13 @@ $(document).ready(function() {
 	var container_title = "";
 	var form = new jQueryCite({ lang: 'en', 
 															saveInCookies: false, 
-															add: function() {console.log(JSON.stringify(form._data.data[0])); },
+															add: function() { $("#workdata").val(JSON.stringify(form._data.data[0])); },
 															inputForm: $(".cjs-in").html(),
 															outputForm: ""
 														});
 	
 	form.insertInputForm($('#cjs-in'));
-	form.insertOutputForm($('#cjs-out')) ;
+	form.insertOutputForm($('#cjs-out'));
 	
 	$(window).on('beforeunload', function() {
 		form.terminate();
@@ -63,7 +63,7 @@ $(document).ready(function() {
 				});
 		},
 		renderItem: function(item, search) {
-			return '<div class="autocomplete-suggestion" data-personid="' + item.id + '" data-val="' + item.name + '">' + item.name + '</div>';
+			return '<div class="autocomplete-suggestion" data-personid="' + item.id + '" data-val="' + item.fullname + '">' + item.fullname + '</div>';
 		},
 		onSelect: function(e, selectedItem, renderedItem) {
 			var stringToAppend = $("#contributors").val().length > 0 ? $("#contributors").val() + "," : "";
