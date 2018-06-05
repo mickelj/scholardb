@@ -43,11 +43,20 @@ module.exports = {
 					};
 					const data = new Cite(biblatexConv, bloptions);
 
-					console.log("ERR: " + response.statusCode + " | MSG: " + data.data[0]);
-					return {err: response.statusCode, msg: data.data[0]};
+					var result = {
+						err: response.statusCode,
+						msg: data.data[0]
+					};
+
+					return result;
 				});
 			} else {
-				return {err: response.statusCode, msg: csljsonConv};
+				var result = {
+					err: response.statusCode,
+					msg: csljsonConv
+				};
+
+				return result;
 			}
 		});
 	}
