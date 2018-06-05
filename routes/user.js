@@ -204,25 +204,22 @@ function processIdentifier(req, res, next) {
     method: 'POST',
     body: req.body.identifier
   };
-  var r = request(options, (err, response, body) => {
+  var r = request(options, (err, response, content) => {
     if (response.statusCode !== 200) {
-      req.flash('error', 'Error processing identifier: ' + body);
+      req.flash('error', 'Error processing identifier' + res.body.identifier + ': ' + content);
       return res.redirect('back');
     }
 
-    resp = czo.convert(body);
+    resp = czo.convert(content);
     if (resp.err !== 200) {
       req.flash('error', resp.msg);
       return res.redirect('back');
     }
 
-    req.flash('success', 'Successfully processed identifier');
-    return next();
+    console.log(content);
+    req.flash('success', 'Work added to pending queue.  It will be reviewed soon.');
+    return res.redirect('back');
   });
-}
-
-function checkIdentifier() {
-
 }
 
 function processUrl(req, res, next) {
@@ -254,7 +251,7 @@ function processUrl(req, res, next) {
     }
 
     req.flash('success', 'Successfully processed URL');
-    return next();
+    return res.redirect('back');
   });
 }
 
@@ -458,7 +455,7 @@ router.post('/photo', authHelpers.loginRequired, processPhoto);
 router.post('/departments/add', authHelpers.loginRequired, addDepartment);
 router.post('/departments/delete', authHelpers.loginRequired, deleteDepartment);
 router.post('/work/citation', authHelpers.loginRequired, processCitation, checkCitation);
-router.post('/work/identifier', authHelpers.loginRequired, processIdentifier, checkIdentifier);
+router.post('/work/identifier', authHelpers.loginRequired, processIdentifier);
 router.post('/work/url', authHelpers.loginRequired, processUrl, checkUrl);
 router.post('/work/form', authHelpers.loginRequired, storePendingForm);
 

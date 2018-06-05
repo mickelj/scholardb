@@ -24,6 +24,7 @@ $(document).ready(function() {
 
 	// Publication autocomplete
 	$("fieldset[data-cjs-field-type*='article'] input[data-cjs-field='container-title']").autoComplete({
+		minChars: 2,
 		source: function(term, suggest) {
 			try {xhr.abort();} catch(e){}
 			xhr = $.getJSON('/publications/search', {q: term})
@@ -59,6 +60,7 @@ $(document).ready(function() {
 
 	// Publisher autocomplete
 	$("input[data-cjs-field='publisher']").autoComplete({
+		minChars: 2,
 		source: function(term, suggest) {
 			try {xhr.abort();} catch(e){}
 			xhr = $.getJSON('/publishers/search', {q: term})
@@ -83,6 +85,7 @@ $(document).ready(function() {
 
 	// People autocomplete
 	var peopleAutocomplete = {
+		minChars: 2,
 		source: function(term, suggest) {
 			try {xhr.abort();} catch(e){}
 			xhr = $.getJSON('/people/search', {q: term})
