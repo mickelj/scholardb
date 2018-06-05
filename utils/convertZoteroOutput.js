@@ -3,8 +3,8 @@ const nconf = require('nconf');
 const Cite = require('citation-js');
 nconf.file('database', '../config/environment.json');
 
-module.exports = function() {
-	function convert(zjson) {
+module.exports = {
+	convert: function (zjson) {
 		// We got some Zotero JSON, so now let's try to convert to CSL-JSON
 		url = nconf.get('zotero:tsurl') + "/export?format=csljson";
 		var options = {
