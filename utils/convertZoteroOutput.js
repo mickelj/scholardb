@@ -42,7 +42,7 @@ module.exports = {
 					};
 					const data = new Cite(biblatexConv, bloptions);
 
-					return {err: response.statusCode, msg: bl2csljson};
+					return {err: response.statusCode, msg: data.data[0]};
 				});
 			} else {
 				return {err: response.statusCode, msg: csljsonConv};
