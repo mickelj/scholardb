@@ -5,6 +5,7 @@ nconf.file('database', '../config/environment.json');
 
 module.exports = {
 	convert: function (zjson) {
+		console.log('ZJSON: ' + zjson);
 		// We got some Zotero JSON, so now let's try to convert to CSL-JSON
 		url = nconf.get('zotero:tsurl') + "/export?format=csljson";
 		var options = {
@@ -42,6 +43,7 @@ module.exports = {
 					};
 					const data = new Cite(biblatexConv, bloptions);
 
+					console.log("ERR: " + response.statusCode + " | MSG: " + data.data[0]);
 					return {err: response.statusCode, msg: data.data[0]};
 				});
 			} else {

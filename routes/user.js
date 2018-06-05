@@ -210,7 +210,6 @@ function processIdentifier(req, res, next) {
       return res.redirect('back');
     }
 
-    console.log('CONTENT: ' + content);
     resp = czo.convert(content);
     console.log('RESP: ' + resp);
     if (!resp) {
