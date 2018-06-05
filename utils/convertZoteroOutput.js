@@ -48,7 +48,7 @@ module.exports = {
 						msg: data.data[0]
 					};
 
-					return result;
+					return data.data[0];
 				});
 			} else {
 				var result = {
