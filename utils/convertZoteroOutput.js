@@ -16,9 +16,10 @@ module.exports = {
 			body: zjson
 		};
 
-		r = request(options, (err, response, body) => {
+		r = request(options, (err, response, csljsonConv) => {
 			// If the JSON won't convert to CSL, convert to BibTex and then CSL using another library
 			// Otherwise, all converted properly so send back the CSL-JSON
+			console.log(csljsonConv);
 			if (response.statusCode === 500) {
 				url = nconf.get('zotero:tsurl') + "/export?format=biblatex";
 				var options = {
@@ -27,25 +28,25 @@ module.exports = {
 					},
 					uri: url,
 					method: 'POST',
-					body: body
+					body: zjson
 				};
 
-				r = request(options, (err, response, body) => {
+				r = request(options, (err, response, biblatexConv) => {
 					// Whomp whomp...wouldn't convert to return the error message
-					if (response.statusCode !== 200) return {err: response.statusCode, msg: body};
+					if (response.statusCode !== 200) return {err: response.statusCode, msg: biblatexConv};
 
-					const data = new Cite(body);
-					const output = data.get({
+					const data = new Cite(biblatexConv);
+					const bl2csljson = data.get({
 						format: 'string',
 						type: 'json',
 						style: 'csl',
 						lang: 'en-US'
 					});
 
-					return {err: response.statusCode, msg: output};
+					return {err: response.statusCode, msg: bl2csljson};
 				});
 			} else {
-				return {err: response.statusCode, msg: body};
+				return {err: response.statusCode, msg: csljsonConv};
 			}
 		});
 	}

@@ -210,10 +210,7 @@ function processIdentifier(req, res, next) {
       return res.redirect('back');
     }
 
-    console.log(content);
-
     resp = czo.convert(content);
-    console.log(resp);
 
     if (!resp) {
       req.flash('error', 'Unknown error');
