@@ -211,12 +211,12 @@ function processIdentifier(req, res, next) {
     }
 
     resp = czo.convert(content);
+    console.log(resp);
     if (resp.err !== 200) {
       req.flash('error', resp.msg);
       return res.redirect('back');
     }
 
-    console.log(content);
     req.flash('success', 'Work added to pending queue.  It will be reviewed soon.');
     return res.redirect('back');
   });
