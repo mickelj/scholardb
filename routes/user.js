@@ -172,6 +172,8 @@ function processCitation(req, res, next) {
       return res.redirect('back');
     }
 
+    console.log(content);
+
     db.works_pending.insert({pending_data: content}, (err, results) => {
       if (err) {
         req.flash('error', 'Error adding new work to pending queue: ' + err);
