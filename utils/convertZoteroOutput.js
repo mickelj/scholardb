@@ -5,7 +5,10 @@ nconf.file('database', '../config/environment.json');
 
 module.exports = {
 	convert: function(zjson, cb) {
-		console.log(zjson);
+		if (typeof zjson !== 'string') {
+			zjson = JSON.stringify(zjson);
+			console.log("Stringified!\n\n" + zjson);
+		}
 		// We got some Zotero JSON, so now let's try to convert to CSL-JSON
 		var result;
 		//var url = nconf.get('zotero:tsurl') + "/export?format=csljson";
