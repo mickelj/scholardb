@@ -166,30 +166,20 @@ function processCitation(req, res, next) {
     }
   };
 
-  var r = request(options, (err, response, body) => {
+  var r = request(options, (err, response, content) => {
     if (response.statusCode !== 200) {
-      req.flash('error', 'Error parsing citation: ' + body);
+      req.flash('error', 'Error parsing citation: ' + content);
       return res.redirect('back');
     }
 
-    req.citorig = req.body.citation;
-    req.citation = body;
-    req.flash('success', 'Citation successfully parsed');
-    return next();
-  });
-}
-
-function checkCitation(req, res) {
-  var nconf = req.app.get('nconf');
-
-  res.render('user', {
-    appconf: nconf.get(),
-    user: req.user,
-    page: 'citcheck',
-    citorig: req.citorig,
-    citation: JSON.stringify(req.citation),
-    error: req.flash('error'),
-    success: req.flash('success')
+    db.works_pending.insert({pending_data: content}, (err, results) => {
+      if (err) {
+        req.flash('error', 'Error adding new work to pending queue: ' + err);
+        return res.redirect('/user/work/citation');
+      }
+      req.flash('success', 'Work added to pending queue.  It will be reviewed soon.');
+      return res.redirect('/user/work');
+    });
   });
 }
 
@@ -469,7 +459,7 @@ router.post('/info', authHelpers.loginRequired, saveInfo);
 router.post('/photo', authHelpers.loginRequired, processPhoto);
 router.post('/departments/add', authHelpers.loginRequired, addDepartment);
 router.post('/departments/delete', authHelpers.loginRequired, deleteDepartment);
-router.post('/work/citation', authHelpers.loginRequired, processCitation, checkCitation);
+router.post('/work/citation', authHelpers.loginRequired, processCitation);
 router.post('/work/identifier', authHelpers.loginRequired, processIdentifier);
 router.post('/work/url', authHelpers.loginRequired, processUrl);
 router.post('/work/form', authHelpers.loginRequired, storePendingForm);
