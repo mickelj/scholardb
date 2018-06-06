@@ -172,7 +172,10 @@ function processCitation(req, res, next) {
       return res.redirect('back');
     }
 
-    console.log(content);
+    if (typeof content !== 'string') {
+      if (len(content) > 1) content = content[0];
+      content = JSON.stringify(content);
+    }
 
     db.works_pending.insert({pending_data: content}, (err, results) => {
       if (err) {
