@@ -253,7 +253,6 @@ function processUrl(req, res, next) {
       return res.redirect('back');
     }
 
-    console.log(content);
     resp = czo.convert(content, function(data) {
       if (!data) {
         req.flash('error', 'Unknown error');
