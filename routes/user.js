@@ -247,7 +247,7 @@ function processUrl(req, res, next) {
     }
   };
 
-  var r = request(option, (err, response, content) => {
+  var r = request(options, (err, response, content) => {
     if (response.statusCode !== 200) {
       req.flash('error', "Error processing URL (" + req.body.url + "): " + content);
       return res.redirect('back');
