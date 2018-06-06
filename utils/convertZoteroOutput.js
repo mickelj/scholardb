@@ -7,7 +7,8 @@ module.exports = {
 	convert: function(zjson, cb) {
 		// We got some Zotero JSON, so now let's try to convert to CSL-JSON
 		var result;
-		var url = "https://scholarsdb-zotero.herokuapp.com/export?format=csljson";
+		var url = nconf.get('zotero:tsurl') + "/export?format=csljson";
+		//var url = "https://scholarsdb-zotero.herokuapp.com/export?format=csljson";
 		var options = {
 			headers: {
 				'Content-Type' : 'application/json'
@@ -20,8 +21,9 @@ module.exports = {
 		request(options, (err, response, csljsonConv) => {
 			// If the JSON won't convert to CSL, convert to BibTex and then CSL using another library
 			// Otherwise, all converted properly so send back the CSL-JSON
-			if (response.statusCode === 500) {
-				url = "https://scholarsdb-zotero.herokuapp.com/export?format=biblatex";
+			if (response.statusCode !== 200) {
+				url = nconf.get('zotero:tsurl') + "/export?format=biblatex";
+				//url = "https://scholarsdb-zotero.herokuapp.com/export?format=biblatex";
 				var options = {
 					headers: {
 						'Content-Type' : 'application/json'
@@ -44,14 +46,14 @@ module.exports = {
 					var data = new Cite(biblatexConv, bloptions);
 
 					result = {
-						err: response.statusCode,
+						rcode: response.statusCode,
 						msg: data.get()
 					};
 					cb(result);
 				});
 			} else {
 				result = {
-					err: response.statusCode,
+					rcode: response.statusCode,
 					msg: csljsonConv
 				};
 				cb(result);

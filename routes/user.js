@@ -206,22 +206,27 @@ function processIdentifier(req, res, next) {
   };
   var r = request(options, (err, response, content) => {
     if (response.statusCode !== 200) {
-      req.flash('error', 'Error processing identifier' + res.body.identifier + ': ' + content);
+      req.flash('error', 'Error processing identifier (' + req.body.identifier + '): ' + content);
       return res.redirect('back');
     }
 
     czo.convert(content, function(data) {
-      console.log('RESP: ' + data);
       if (!data) {
         req.flash('error', 'Unknown error');
         return res.redirect('back');
-      } else if (data.err !== 200) {
+      } else if (data.rcode !== 200) {
         req.flash('error', data.msg);
         return res.redirect('back');
       }
-  
-      req.flash('success', 'Work added to pending queue.  It will be reviewed soon.');
-      return res.redirect('back');
+
+      db.works_pending.insert({pending_data: data.msg[0]}, (err, results) => {
+        if (err) {
+          req.flash('error', 'Error adding new work to pending queue: ' + err);
+          return res.redirect('/user/work/identifier');
+        }
+        req.flash('success', 'Work added to pending queue.  It will be reviewed soon.');
+        return res.redirect('/user/work');
+      });
     });
   });
 }
@@ -242,25 +247,31 @@ function processUrl(req, res, next) {
     }
   };
 
-  var r = request(option, (err, response, body) => {
+  var r = request(option, (err, response, content) => {
     if (response.statusCode !== 200) {
-      req.flash('error', "Error processing URL: " + body);
+      req.flash('error', "Error processing URL (" + req.body.url + "): " + content);
       return res.redirect('back');
     }
 
-    resp = czo.convert(body);
-    if (resp.err !== 200) {
-      req.flash('error', resp.msg);
-      return res.redirect('back');
-    }
+    resp = czo.convert(content, function(data) {
+      if (!data) {
+        req.flash('error', 'Unknown error');
+        return res.redirect('back');
+      } else if (data.rcode !== 200) {
+        req.flash('error', data.msg);
+        return res.redirect('back');
+      }
 
-    req.flash('success', 'Successfully processed URL');
-    return res.redirect('back');
+      db.works_pending.insert({pending_data: data.msg[0]}, (err, results) => {
+        if (err) {
+          req.flash('error', 'Error adding new work to pending queue: ' + err);
+          return res.redirect('/user/work/url');
+        }
+        req.flash('success', 'Work added to pending queue.  It will be reviewed soon.');
+        return res.redirect('/user/work');
+      });
+    });
   });
-}
-
-function checkUrl() {
-  
 }
 
 function storePendingForm(req, res) {
@@ -460,7 +471,7 @@ router.post('/departments/add', authHelpers.loginRequired, addDepartment);
 router.post('/departments/delete', authHelpers.loginRequired, deleteDepartment);
 router.post('/work/citation', authHelpers.loginRequired, processCitation, checkCitation);
 router.post('/work/identifier', authHelpers.loginRequired, processIdentifier);
-router.post('/work/url', authHelpers.loginRequired, processUrl, checkUrl);
+router.post('/work/url', authHelpers.loginRequired, processUrl);
 router.post('/work/form', authHelpers.loginRequired, storePendingForm);
 
 module.exports = router;
