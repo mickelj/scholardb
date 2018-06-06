@@ -7,7 +7,6 @@ module.exports = {
 	convert: function(zjson, cb) {
 		if (typeof zjson !== 'string') {
 			zjson = JSON.stringify(zjson);
-			console.log("Stringified!\n\n" + zjson);
 		}
 		// We got some Zotero JSON, so now let's try to convert to CSL-JSON
 		var result;

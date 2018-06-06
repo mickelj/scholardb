@@ -262,7 +262,9 @@ function processUrl(req, res, next) {
         return res.redirect('back');
       }
 
-      db.works_pending.insert({pending_data: data.msg[0]}, (err, results) => {
+      console.log(data);
+
+      db.works_pending.insert({pending_data: data.msg}, (err, results) => {
         if (err) {
           req.flash('error', 'Error adding new work to pending queue: ' + err);
           return res.redirect('/user/work/url');
