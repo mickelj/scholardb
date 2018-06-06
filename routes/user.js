@@ -210,18 +210,19 @@ function processIdentifier(req, res, next) {
       return res.redirect('back');
     }
 
-    resp = czo.convert(content);
-    console.log('RESP: ' + resp);
-    if (!resp) {
-      req.flash('error', 'Unknown error');
+    czo.convert(content, function(data) {
+      console.log('RESP: ' + data);
+      if (!data) {
+        req.flash('error', 'Unknown error');
+        return res.redirect('back');
+      } else if (data.err !== 200) {
+        req.flash('error', data.msg);
+        return res.redirect('back');
+      }
+  
+      req.flash('success', 'Work added to pending queue.  It will be reviewed soon.');
       return res.redirect('back');
-    } else if (resp.err !== 200) {
-      req.flash('error', resp.msg);
-      return res.redirect('back');
-    }
-
-    req.flash('success', 'Work added to pending queue.  It will be reviewed soon.');
-    return res.redirect('back');
+    });
   });
 }
 
