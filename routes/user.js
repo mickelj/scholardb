@@ -173,7 +173,7 @@ function processCitation(req, res, next) {
     }
 
     if (typeof content !== 'string') {
-      if (len(content) > 1) content = content[0];
+      if (content.length > 1) content = content[0];
       content = JSON.stringify(content);
     }
 
