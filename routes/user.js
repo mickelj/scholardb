@@ -311,13 +311,15 @@ function processUrl(req, res, next) {
 }
 
 function storePendingForm(req, res) {
+  var nconf = req.app.get('nconf');
+  
   if (!req.body.workdata) {
     req.flash('error', 'The form was empty');
     return res.redirect('/user/work/form');
   }
 
   if (req.body.doi) {
-    getIdentifierData(req.body.doi, function(data) {
+    getIdentifierData(nconf, req.body.doi, function(data) {
       if (data.success) {
         saveIdentifierData(data, function(result) {
           if (!result.success) {
@@ -330,7 +332,7 @@ function storePendingForm(req, res) {
       }
     });
   } else if (req.body.isbn) {
-    getIdentifierData(req.body.isbn, function(data) {
+    getIdentifierData(nconf, req.body.isbn, function(data) {
       if (data.success) {
         saveIdentifierData(data, function(result) {
           if (!result.success) {
