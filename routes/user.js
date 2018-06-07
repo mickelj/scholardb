@@ -7,6 +7,8 @@ const czo = require('../utils/convertZoteroOutput');
 const jimp = require('jimp');
 const request = require('request');
 const nocache = require('node-nocache');
+const regex = /(^\[)(.*)(\]$)/gm;
+const subst = `$2`;
 
 function getWorkTypes(req, res, next) {
   db.run("SELECT type, description FROM work_types ORDER BY description", (err, results) => {
@@ -177,9 +179,7 @@ function processCitation(req, res, next) {
       content = JSON.stringify(content);
     } 
 
-    var regex = /(^\[)(.*)(\]$)/gm;
-    var subst = `$2`;
-    var content = content.replace(regex, subst);
+    content = content.replace(regex, subst);
   
     db.works_pending.insert({pending_data: content}, (err, results) => {
       if (err) {
@@ -261,6 +261,13 @@ function processUrl(req, res, next) {
         return res.redirect('back');
       }
 
+      if (typeof data.msg !== 'string') {
+        if (data.msg.length > 1) data.msg = data.msg[0];
+        data.msg = JSON.stringify(data.msg);
+      } 
+  
+      data.msg = data.msg.replace(regex, subst);
+      
       db.works_pending.insert({pending_data: data.msg}, (err, results) => {
         if (err) {
           req.flash('error', 'Error adding new work to pending queue: ' + err);
