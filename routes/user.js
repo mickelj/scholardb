@@ -179,6 +179,7 @@ function processCitation(req, res, next) {
       content = JSON.stringify(content);
     } 
 
+    content = content.trim();
     content = content.replace(regex, subst);
   
     db.works_pending.insert({pending_data: content}, (err, results) => {
@@ -268,9 +269,8 @@ function processUrl(req, res, next) {
         content = JSON.stringify(content);
       } 
   
-      console.log("BEFORE: " + content);
+      content = content.trim();
       content = content.replace(regex, subst);
-      console.log("AFTER: " + content);
 
       db.works_pending.insert({pending_data: content}, (err, results) => {
         if (err) {
