@@ -268,8 +268,10 @@ function processUrl(req, res, next) {
         content = JSON.stringify(content);
       } 
   
+      console.log("BEFORE: " + content);
       content = content.replace(regex, subst);
-      
+      console.log("AFTER: " + content);
+
       db.works_pending.insert({pending_data: content}, (err, results) => {
         if (err) {
           req.flash('error', 'Error adding new work to pending queue: ' + err);
