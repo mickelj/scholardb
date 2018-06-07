@@ -7,8 +7,7 @@ footer {
 }
 
 main {
-  padding-left: .05rem;
-  padding-right: .05rem;
+  padding-left: .5rem;
 }
 
 form {
@@ -82,6 +81,8 @@ nav i {
 .card .btn-floating {
   width: 25%;
   height: 25%;
+  min-width: 31px;
+  min-height: 31px;
   line-height: 25%;
   font-size: .9rem;
   font-weight: 500;
