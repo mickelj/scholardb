@@ -6,6 +6,10 @@ footer {
   margin-top: 3vh !important;
 }
 
+main {
+  padding: inherit .05rem;
+}
+
 form {
   display: inline;
 }
@@ -67,14 +71,10 @@ nav i {
   margin-bottom: 0;
 }
 
-.row .col {
-  padding: 0 .5rem;
-}
-
 .card .btn-floating.right-fab {
   position: absolute;
-  right: 5px;
-  bottom: -10%;
+  right: 2px;
+  bottom: -9%;
   cursor: pointer;
 }
 
@@ -82,7 +82,9 @@ nav i {
   width: 25%;
   height: 25%;
   line-height: 25%;
-  font-size: .85rem;
+  font-size: .9rem;
+  font-weight: 500;
+  letter-spacing: .04rem;
 }
 
 .detail-title .btn-floating,
