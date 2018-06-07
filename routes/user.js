@@ -227,7 +227,17 @@ function getIdentifierData(nconf, identifier, cb) {
 
 function saveIdentifierData(data, cb) {
   var result;
-  db.works_pending.insert({pending_data: data.msg[0]}, (err, results) => {
+  var content = data.msg;
+
+  if (typeof content !== 'string') {
+    if (content.length) content = content[0];
+    content = JSON.stringify(content);
+  }
+  
+  var js = JSON.parse(content);
+  if (js.length) content = JSON.stringify(js[0]);
+
+  db.works_pending.insert({pending_data: content}, (err, results) => {
     if (err) {
       result = {success: false, msg: 'Error adding new work to pending queue: ' + err};
     } else {
