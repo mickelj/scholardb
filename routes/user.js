@@ -193,9 +193,8 @@ function processCitation(req, res, next) {
   });
 }
 
-function getIdentifierData(identifier, cb) {
+function getIdentifierData(nconf, identifier, cb) {
   var result;
-  var nconf = req.app.get('nconf');
   var url = nconf.get('zotero:tsurl') + "/search";
   var options = {
     headers: {
@@ -208,7 +207,7 @@ function getIdentifierData(identifier, cb) {
 
   var r = request(options, (err, response, content) => {
     if (response.statusCode !== 200) {
-      result = {success: false, msg: 'Error processing identifier (' + req.body.identifier + '): ' + content};
+      result = {success: false, msg: 'Error processing identifier (' + identifier + '): ' + content};
       cb(result);
     }
 
@@ -240,7 +239,8 @@ function saveIdentifierData(data, cb) {
 }
 
 function processIdentifier(req, res, next) {
-  getIdentifierData(req.body.identifier, function(data) {
+  var nconf = req.app.get('nconf');
+  getIdentifierData(nconf, req.body.identifier, function(data) {
     if (!data.success) {
       req.flash('error', data.msg);
       return res.redirect('back');
