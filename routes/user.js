@@ -344,19 +344,19 @@ function storePendingForm(req, res) {
         });
       }
     });
+  } else {
+    var pending_contributors = (req.body.contributors) ? req.body.contributors.split(',') : null;
+    var pending_publication = (req.body.pubid) ? req.body.pubid : null;
+
+    db.works_pending.insert({pending_data: req.body.workdata, pending_contributors: pending_contributors, pending_publication: pending_publication}, (err, results) => {
+      if (err) {
+        req.flash('error', 'Error adding new work to pending queue: ' + err);
+        return res.redirect('/user/work/form');
+      }
+      req.flash('success', 'Work added to pending queue.  It will be reviewed soon.');
+      return res.redirect('/user/work');
+    });
   }
-
-  var pending_contributors = (req.body.contributors) ? req.body.contributors.split(',') : null;
-  var pending_publication = (req.body.pubid) ? req.body.pubid : null;
-
-  db.works_pending.insert({pending_data: req.body.workdata, pending_contributors: pending_contributors, pending_publication: pending_publication}, (err, results) => {
-    if (err) {
-      req.flash('error', 'Error adding new work to pending queue: ' + err);
-      return res.redirect('/user/work/form');
-    }
-    req.flash('success', 'Work added to pending queue.  It will be reviewed soon.');
-    return res.redirect('/user/work');
-  });
 }
 
 function getAllDepts(req, res, next) {
