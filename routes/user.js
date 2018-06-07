@@ -175,12 +175,12 @@ function processCitation(req, res, next) {
     if (typeof content !== 'string') {
       if (content.length > 1) content = content[0];
       content = JSON.stringify(content);
-    } else {
-      var regex = /(^\[)(.*)(\]$)/gm;
-      var subst = `$2`;
-      var content = content.replace(regex, subst);
-    }
+    } 
 
+    var regex = /(^\[)(.*)(\]$)/gm;
+    var subst = `$2`;
+    var content = content.replace(regex, subst);
+  
     db.works_pending.insert({pending_data: content}, (err, results) => {
       if (err) {
         req.flash('error', 'Error adding new work to pending queue: ' + err);
