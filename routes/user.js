@@ -193,7 +193,8 @@ function processCitation(req, res, next) {
   });
 }
 
-function processIdentifier(req, res, next) {
+function getIdentifierData(identifier, cb) {
+  var result;
   var nconf = req.app.get('nconf');
   var url = nconf.get('zotero:tsurl') + "/search";
   var options = {
@@ -202,31 +203,56 @@ function processIdentifier(req, res, next) {
     },
     uri: url,
     method: 'POST',
-    body: req.body.identifier
+    body: identifier
   };
+
   var r = request(options, (err, response, content) => {
     if (response.statusCode !== 200) {
-      req.flash('error', 'Error processing identifier (' + req.body.identifier + '): ' + content);
-      return res.redirect('back');
+      result = {success: false, msg: 'Error processing identifier (' + req.body.identifier + '): ' + content};
+      cb(result);
     }
 
     czo.convert(content, function(data) {
       if (!data) {
-        req.flash('error', 'Unknown error');
-        return res.redirect('back');
+        result = {success: false, msg: 'Unknown error'};
       } else if (data.rcode !== 200) {
-        req.flash('error', data.msg);
-        return res.redirect('back');
+        result = {success: false, msg: data.msg};
+      } else {
+        result = {success: true, msg: data.msg};
       }
 
-      db.works_pending.insert({pending_data: data.msg[0]}, (err, results) => {
-        if (err) {
-          req.flash('error', 'Error adding new work to pending queue: ' + err);
-          return res.redirect('/user/work/identifier');
-        }
-        req.flash('success', 'Work added to pending queue.  It will be reviewed soon.');
-        return res.redirect('/user/work');
-      });
+      cb(result);
+    });
+  });
+}
+
+function saveIdentifierData(data, cb) {
+  var result;
+  db.works_pending.insert({pending_data: data.msg[0]}, (err, results) => {
+    if (err) {
+      result = {success: false, msg: 'Error adding new work to pending queue: ' + err};
+    } else {
+      result = {success: true};
+    }
+
+    cb(result);
+  });
+}
+
+function processIdentifier(req, res, next) {
+  getIdentifierData(req.body.identifier, function(data) {
+    if (!data.success) {
+      req.flash('error', data.msg);
+      return res.redirect('back');
+    }
+
+    saveIdentifierData(data, function(result) {
+      if (!result.success) {
+        req.flash('error', result.msg);
+        return res.redirect('/user/work/identifier');
+      }
+      req.flash('success', 'Work added to pending queue.  It will be reviewed soon.');
+      return res.redirect('/user/work');
     });
   });
 }
@@ -288,6 +314,34 @@ function storePendingForm(req, res) {
   if (!req.body.workdata) {
     req.flash('error', 'The form was empty');
     return res.redirect('/user/work/form');
+  }
+
+  if (req.body.doi) {
+    getIdentifierData(req.body.doi, function(data) {
+      if (data.success) {
+        saveIdentifierData(data, function(result) {
+          if (!result.success) {
+            req.flash('error', result.msg);
+            return res.redirect('/user/work/form');
+          }
+          req.flash('success', 'Work added to pending queue.  It will be reviewed soon.');
+          return res.redirect('/user/work');
+        });
+      }
+    });
+  } else if (req.body.isbn) {
+    getIdentifierData(req.body.isbn, function(data) {
+      if (data.success) {
+        saveIdentifierData(data, function(result) {
+          if (!result.success) {
+            req.flash('error', result.msg);
+            return res.redirect('/user/work/form');
+          }
+          req.flash('success', 'Work added to pending queue.  It will be reviewed soon.');
+          return res.redirect('/user/work');
+        });
+      }
+    });
   }
 
   var pending_contributors = (req.body.contributors) ? req.body.contributors.split(',') : null;

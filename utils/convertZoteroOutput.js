@@ -2,19 +2,20 @@ const request = require('request');
 const nconf = require('nconf');
 const Cite = require('citation-js');
 nconf.file('database', '../config/environment.json');
+const urlHead = nconf.get('zotero:tsurl');
+const cslUrl = urlHead + "/export?format=csljson";
+const blUrl = urlHead + "/export?format=biblatex";
 
 module.exports = {
 	convert: function(zjson, cb) {
 		if (typeof zjson !== 'string') zjson = JSON.stringify(zjson);
 		// We got some Zotero JSON, so now let's try to convert to CSL-JSON
 		var result;
-		//var url = nconf.get('zotero:tsurl') + "/export?format=csljson";
-		var url = "https://scholarsdb-zotero.herokuapp.com/export?format=csljson";
 		var options = {
 			headers: {
 				'Content-Type' : 'application/json'
 			},
-			uri: url,
+			uri: cslUrl,
 			method: 'POST',
 			body: zjson
 		};
@@ -24,19 +25,17 @@ module.exports = {
 			// Otherwise, all converted properly so send back the CSL-JSON
 			if (response) {
 				if (response.statusCode !== 200) {
-					//url = nconf.get('zotero:tsurl') + "/export?format=biblatex";
-					url = "https://scholarsdb-zotero.herokuapp.com/export?format=biblatex";
 					var options = {
 						headers: {
 							'Content-Type' : 'application/json'
 						},
-						uri: url,
+						uri: blUrl,
 						method: 'POST',
 						body: zjson
 					};
 
 					request(options, (err, response, biblatexConv) => {
-						// Whomp whomp...wouldn't convert to return the error message
+						// Whomp whomp...wouldn't convert so return the error message
 						if (response) {
 							if (response.statusCode !== 200) return {err: response.statusCode, msg: biblatexConv};
 

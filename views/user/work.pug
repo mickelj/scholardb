@@ -1,20 +1,24 @@
 p: b How would you like to add a work?
 
 p
-  input#byidentifier.with-gap(name="addwork", type="radio")
-  label(for="byidentifier") By Identifier
+  label.workadd
+    input#byidentifier.with-gap(name="addwork", type="radio")
+    span By Identifier
 
 p
-  input#byurl.with-gap(name="addwork", type="radio")
-  label(for="byurl") By URL
+  label.workadd
+    input#byurl.with-gap(name="addwork", type="radio")
+    span By URL
 
 p
-  input#bycitation.with-gap(name="addwork", type="radio")
-  label(for="bycitation") By Citation
+  label.workadd
+    input#bycitation.with-gap(name="addwork", type="radio")
+    span By Citation
   
 p
-  input#byform.with-gap(name="addwork", type="radio")
-  label(for="byform") By Manual Entry
+  label.workadd
+    input#byform.with-gap(name="addwork", type="radio")
+    span By Manual Entry
 
 script.
   $(document).ready(function() {

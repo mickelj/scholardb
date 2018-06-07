@@ -47,19 +47,19 @@ div.cjs-in
         legend ISSN
     fieldset(data-cjs-field-type="incollection")
       label
-        input(data-cjs-field="author", type="text")
+        input(data-cjs-field="author", type="text", placeholder="If the name is in the list that appears after you begin typing, please select it.")
         legend Chapter author(s)
     fieldset(data-cjs-field-type="incollection")
       label
-        input(data-cjs-field="container-author", type="text")
+        input(data-cjs-field="container-author", type="text", placeholder="If the name is in the list that appears after you begin typing, please select it.")
         legend Collection author(s)
     fieldset(data-cjs-field-type="book paper-conference article-journal article-magazine article-newspaper webpage")
       label
-        input(data-cjs-field="author", type="text")
+        input(data-cjs-field="author", type="text", placeholder="If the name is in the list that appears after you begin typing, please select it.")
         legend Author(s)
     fieldset(data-cjs-field-type="book incollection paper-conference article-journal article-magazine article-newspaper")
       label
-        input(data-cjs-field="editor", type="text")
+        input(data-cjs-field="editor", type="text", placeholder="If the name is in the list that appears after you begin typing, please select it.")
         legend Editor(s)
     fieldset(data-cjs-field-type="book incollection article-newspaper")
       label
@@ -92,11 +92,11 @@ div.cjs-in
         legend Publication Place
     fieldset(data-cjs-field-type="paper-conference article-journal")
       label
-        input(data-cjs-field="DOI", type="text")
+        input(data-cjs-field="DOI", type="text", name="doi")
         legend DOI
     fieldset(data-name="isbn", data-cjs-field-type="book incollection paper-conference")
       label
-        input(data-cjs-field="ISBN", type="text")
+        input(data-cjs-field="ISBN", type="text", name="isbn")
         legend ISBN
     fieldset(data-name="issued")
       label

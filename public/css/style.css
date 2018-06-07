@@ -296,6 +296,10 @@ input[type="search"] {
   letter-spacing: -.02em;
 }
 
+label.workadd {
+  color: #000;
+}
+
 .contrib-role {
   font-size: smaller;
   color: #78909c;
