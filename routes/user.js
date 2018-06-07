@@ -261,14 +261,16 @@ function processUrl(req, res, next) {
         return res.redirect('back');
       }
 
-      if (typeof data.msg !== 'string') {
-        if (data.msg.length > 1) data.msg = data.msg[0];
-        data.msg = JSON.stringify(data.msg);
+      var content = data.msg;
+
+      if (typeof content !== 'string') {
+        if (content.length > 1) content = content[0];
+        content = JSON.stringify(content);
       } 
   
-      data.msg = data.msg.replace(regex, subst);
+      content = content.replace(regex, subst);
       
-      db.works_pending.insert({pending_data: data.msg}, (err, results) => {
+      db.works_pending.insert({pending_data: content}, (err, results) => {
         if (err) {
           req.flash('error', 'Error adding new work to pending queue: ' + err);
           return res.redirect('/user/work/url');
