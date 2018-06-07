@@ -243,7 +243,7 @@ function processUrl(req, res, next) {
     method: 'POST',
     json: {
       "url" : req.body.url,
-      "sessionid" : "scholarsdb"
+      "sessionid" : "scholarsdb-" + Math.floor(Math.random() * 10000000000)
     }
   };
 
