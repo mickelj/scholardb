@@ -177,11 +177,11 @@ function processCitation(req, res, next) {
     if (typeof content !== 'string') {
       if (content.length > 1) content = content[0];
       content = JSON.stringify(content);
-    } 
-
-    content = content.trim();
-    content = content.replace(regex, subst);
-  
+    } else {
+      js = JSON.parse(content);
+      if (js.length > 1) content = JSON.stringify(js[0]);
+    }  
+    
     db.works_pending.insert({pending_data: content}, (err, results) => {
       if (err) {
         req.flash('error', 'Error adding new work to pending queue: ' + err);
@@ -267,11 +267,11 @@ function processUrl(req, res, next) {
       if (typeof content !== 'string') {
         if (content.length > 1) content = content[0];
         content = JSON.stringify(content);
-      } 
+      } else {
+        js = JSON.parse(content);
+        if (js.length > 1) content = JSON.stringify(js[0]);
+      }
   
-      content = content.trim();
-      content = content.replace(regex, subst);
-
       db.works_pending.insert({pending_data: content}, (err, results) => {
         if (err) {
           req.flash('error', 'Error adding new work to pending queue: ' + err);
