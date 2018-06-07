@@ -6,7 +6,7 @@ nconf.file('database', '../config/environment.json');
 module.exports = {
 	convert: function(zjson, cb) {
 		if (typeof zjson !== 'string') {
-			if (zjson.length > 1) zjson = zjson[0];
+			if (zjson.length) zjson = zjson[0];
 			zjson = JSON.stringify(zjson);
 		}
 		// We got some Zotero JSON, so now let's try to convert to CSL-JSON

@@ -175,12 +175,12 @@ function processCitation(req, res, next) {
     }
 
     if (typeof content !== 'string') {
-      if (content.length > 1) content = content[0];
+      if (content.length) content = content[0];
       content = JSON.stringify(content);
     } 
 
     var js = JSON.parse(content);
-    if (js.length > 1) content = JSON.stringify(js[0]);
+    if (js.length) content = JSON.stringify(js[0]);
 
     db.works_pending.insert({pending_data: content}, (err, results) => {
       if (err) {
@@ -265,12 +265,12 @@ function processUrl(req, res, next) {
       var content = data.msg;
 
       if (typeof content !== 'string') {
-        if (content.length > 1) content = content[0];
+        if (content.length) content = content[0];
         content = JSON.stringify(content);
       }
       
       var js = JSON.parse(content);
-      if (js.length > 1) content = JSON.stringify(js[0]);
+      if (js.length) content = JSON.stringify(js[0]);
         
       db.works_pending.insert({pending_data: content}, (err, results) => {
         if (err) {
