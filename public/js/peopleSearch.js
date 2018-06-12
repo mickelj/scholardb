@@ -18,6 +18,7 @@ $(document).ready(function() {
 			return '<div class="autocomplete-suggestion" data-personid="' + item.id + '" data-val="' + item.fullname + '">' + item.fullname + '</div>';
 		},
 		onSelect: function(e, selectedItem, renderedItem) {
+			console.log(selectedItem);
 			$("#uid").val(selectedItem.university_id);
 			$("#usertype").val(selectedItem.user_type);
 			$("#firstname").val(selectedItem.first_name);
