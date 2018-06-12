@@ -15,10 +15,14 @@ $(document).ready(function() {
 				});
 		},
 		renderItem: function(item, search) {
-			return '<div class="autocomplete-suggestion" data-personid="' + item.id + '" data-val="' + item.fullname + '">' + item.fullname + '</div>';
+			return '<div class="autocomplete-suggestion" data-alldata="' + JSON.stringify(item) + '" data-personid="' + item.id + '" data-val="' + item.fullname + '">' + item.fullname + '</div>';
 		},
-		onSelect: function(e, selectedItem, renderedItem) {
-			console.log(selectedItem);
+		onSelect: function(e, term, renderedItem) {
+			try {
+				var selectedItem = JSON.parse(renderedItem.data(alldata));
+			} catch(err) {
+				return false;
+			}
 			$("#uid").val(selectedItem.university_id);
 			$("#usertype").val(selectedItem.user_type);
 			$("#firstname").val(selectedItem.first_name);
@@ -33,7 +37,7 @@ $(document).ready(function() {
 			$("#office").val(selectedItem.office_location);
 			$("#isactive").prop("checked", selectedItem.active);
 			$("#isadmin").prop("checked", selectedItem.admin);
-			$("#usermodform").show();
+			// $("#usermodform").show();
 		}
 	});
 });
