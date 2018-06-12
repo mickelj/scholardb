@@ -18,7 +18,7 @@ $(document).ready(function() {
 			return '<div class="autocomplete-suggestion" data-alldata="' + encodeURI(JSON.stringify(item)) + '" data-personid="' + item.id + '" data-val="' + item.fullname + '">' + item.fullname + '</div>';
 		},
 		onSelect: function(e, term, renderedItem) {
-			var selectedItem = JSON.parse(decodeURI(renderedItem.data(alldata)));
+			var selectedItem = JSON.parse(decodeURI(renderedItem.data("alldata")));
 			console.log(selectedItem);
 			$("#uid").val(selectedItem.university_id);
 			$("#usertype").val(selectedItem.user_type);
