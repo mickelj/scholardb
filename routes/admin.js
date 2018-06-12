@@ -33,7 +33,7 @@ router.get('/', authHelpers.loginRequired, authHelpers.adminRequired, (req, res)
 router.get('/usermod', authHelpers.loginRequired, authHelpers.adminRequired, (req, res, next) => {
   var nconf = req.app.get('nconf');
 
-  res.render('user', {
+  res.render('admin', {
     appconf: nconf.get(),
     user: req.user,
     page: 'usermod',
