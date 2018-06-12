@@ -15,14 +15,10 @@ $(document).ready(function() {
 				});
 		},
 		renderItem: function(item, search) {
-			return "<div class='autocomplete-suggestion' data-alldata='" + encodeURI(JSON.stringify(item)) + "' data-personid='" + item.id + "' data-val='" + item.fullname + "'>" + item.fullname + "</div>";
+			return '<div class="autocomplete-suggestion" data-alldata="' + encodeURI(JSON.stringify(item)) + '" data-personid="' + item.id + '" data-val="' + item.fullname + '">' + item.fullname + '</div>';
 		},
 		onSelect: function(e, term, renderedItem) {
-			try {
-				var selectedItem = JSON.parse(renderedItem.data(decodeURI(alldata)));
-			} catch(err) {
-				return false;
-			}
+			var selectedItem = JSON.parse(renderedItem.data(decodeURI(alldata)));
 			console.log(selectedItem);
 			$("#uid").val(selectedItem.university_id);
 			$("#usertype").val(selectedItem.user_type);
