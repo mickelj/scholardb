@@ -10,48 +10,48 @@ div#usermodform.row
   form.col.s10.offset-s1(method="post", action="/admin/usermod")
     div.input-field
       input#uid.validate(type="text", name="university_id")
-      label.active(for="uid") University ID Number
+      label(for="uid") University ID Number
     div.input-field
+      label(for="usertype") User Type
       select#usertype(name="user_type")
         option(value="faculty") Faculty
         option(value="staff") Staff
         option(value="student") Student
-      label.active(for="usertype") User Type
     div.input-field
       input#firstname.validate(type="text", name="first_name")
-      label.active(for="firstname") Given Name
+      label(for="firstname") Given Name
     div.input-field
       input#middlename.validate(type="text", name="middle_name")
-      label.active(for="middlename") Middle Name/Initial
+      label(for="middlename") Middle Name/Initial
     div.input-field
       input#lastname.validate(type="text", name="last_name")
-      label.active(for="lastname") Surname
+      label(for="lastname") Surname
     div.input-field
       input#altlastnames.validate(type="text", name="alt_last_names", placeholder="Separate with commas")
-      label.active(for="alt_last_names") Previous/Alternative Last Names Used for Publication
+      label(for="alt_last_names") Previous/Alternative Last Names Used for Publication
     div.input-field
       input#altfirstnames.validate(type="text", name="alt_first_names", placeholder="Separate with commas")
-      label.active(for="alt_first_names") Previous/Alternative First Names Used for Publication
+      label(for="alt_first_names") Previous/Alternative First Names Used for Publication
     div.input-field
       input#prefix.validate(type="text", name="prefix")
-      label.active(for="prefix") Prefix
+      label(for="prefix") Prefix
     div.input-field
       input#suffix.validate(type="text", name="suffix")
-      label.active(for="suffix") Suffix
+      label(for="suffix") Suffix
     div.input-field
       input#email.validate(type="email", name="email")
-      label.active(for="email", data-error="Please enter a valide email address") Email Address
+      label(for="email", data-error="Please enter a valide email address") Email Address
     div.input-field
       input#phone.validate(type="tel", name="phone")
-      label.active(for="phone", data-error="Please enter a valid phone number") Phone #
+      label(for="phone", data-error="Please enter a valid phone number") Phone #
     div.input-field
       input#office.validate(type="text", name="office")
-      label.active(for="office") Office Location
-    div.input-field
+      label(for="office") Office Location
+    p
       label
         input#isactive(type="checkbox", name="active")
         span Active User?
-    div.input-field
+    p
       label
         input#isadmin(type="checkbox", name="admin")
         span Is Admin?
