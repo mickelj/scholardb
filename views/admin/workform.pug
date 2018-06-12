@@ -1,0 +1,25 @@
+link(rel="stylesheet", href="/css/jquery.citation.css")
+link(rel="stylesheet", href="/css/jquery.auto-complete.css")
+
+p: b Add Work Manually
+
+form#workform(method="post", action="/user/work/form")
+  div#main
+    div#cjs-in
+    div#cjs-out
+  input#pubid(type="hidden", name="pubid")
+  input#publisherid(type="hidden", name="publisherid")
+  input#contributors(type="hidden", name="contributors")
+  input#workdata(type="hidden", name="workdata")
+
+script(type='text/javascript', src='/js/jquery.auto-complete.min.js')
+script(type='text/javascript', src='https://cdn.rawgit.com/larsgw/citation.js/archive/citation.js/citation-0.4.0-3.min.js')
+script(type='text/javascript').
+  var Cite = require('citation-js');
+script(type='text/javascript', src='/js/jquery.citation.js')
+script(type='text/javascript', src='/js/workform.js')
+
+include ../popups.pug
+
+.hide
+  include workforminput.pug

@@ -1,0 +1,17 @@
+p: b Add Work by Identifier
+
+div.row
+	p.col.s10.offset-s1
+		b Enter an ISBN or DOI that identifies your work:
+
+div.row
+	form.col.s10.offset-s1(method="post", action="/user/work/identifier")
+		div.input-field
+			input#identifier.validate(type="text", name="identifier",autofocus)
+			label.active(for="identifier") Identifier
+
+		div.row
+			div.input-field.col.s12
+				button.btn.blue.darken-4.waves-effect.waves-light(type="submit") Find Work
+
+include ../popups.pug

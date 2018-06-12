@@ -1,0 +1,17 @@
+p: b Add Work by Citation
+
+div.row
+	p.col.s10.offset-s1
+		b Enter or paste a citation in any format (APA, MLA, Chicago, etc.):
+
+div.row
+	form.col.s10.offset-s1(method="post", action="/user/work/citation")
+		div.input-field
+			textarea#citation.materialize-textarea.validate(name="citation",autofocus)
+			label.active(for="citation") Citation
+
+		div.row
+			div.input-field.col.s12
+				button.btn.blue.darken-4.waves-effect.waves-light(type="submit") Add Work
+
+include ../popups.pug

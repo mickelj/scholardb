@@ -1,0 +1,112 @@
+div.cjs-in
+  section.cjs-piece.cjs-input
+    fieldset
+      label 
+        legend Type
+      select.browser-default(data-cjs-field="type")
+        optgroup
+          option(value="book") Book
+          option(value="incollection") Chapter
+          option(value="article-journal") Journal Article
+          option(value="paper-conference") Conference Paper
+        optgroup
+          option(value="article-magazine") Magazine Article
+          option(value="article-newspaper") Newspaper Article
+          option(value="webpage") Webpage
+    fieldset(data-cjs-field-type="incollection")
+      label
+        input(data-cjs-field="title", type="text")
+        legend Chapter title
+    fieldset(data-cjs-field-type="incollection")
+      label
+        input(data-cjs-field="container-title", type="text")
+        legend Book title
+    fieldset(data-cjs-field-type="book paper-conference article-journal article-magazine article-newspaper webpage")
+      label
+        input(data-cjs-field="title", type="text")
+        legend Title
+    fieldset(data-cjs-field-type="article-journal")
+      label
+        input(data-cjs-field="container-title", type="text", placeholder="If your journal is in the list that appears after you begin typing, please select it.")
+        legend Journal
+    fieldset(data-cjs-field-type="article-magazine")
+      label
+        input(data-cjs-field="container-title", type="text", placeholder="If your magazine is in the list that appears after you begin typing, please select it.")
+        legend Magazine
+    fieldset(data-cjs-field-type="article-newspaper")
+      label
+        input(data-cjs-field="container-title", type="text", placeholder="If your newspaper is in the list that appears after you begin typing, please select it.")
+        legend Newspaper
+    fieldset(data-cjs-field-type="webpage")
+      label
+        input(data-cjs-field="container-title", type="text")
+        legend Website
+    fieldset(data-name="issn", data-cjs-field-type="article-journal article-magazine article-newspaper")
+      label
+        input(data-cjs-field="ISSN", type="text")
+        legend ISSN
+    fieldset(data-cjs-field-type="incollection")
+      label
+        input(data-cjs-field="author", type="text", placeholder="If the name is in the list that appears after you begin typing, please select it.")
+        legend Chapter author(s)
+    fieldset(data-cjs-field-type="incollection")
+      label
+        input(data-cjs-field="container-author", type="text", placeholder="If the name is in the list that appears after you begin typing, please select it.")
+        legend Collection author(s)
+    fieldset(data-cjs-field-type="book paper-conference article-journal article-magazine article-newspaper webpage")
+      label
+        input(data-cjs-field="author", type="text", placeholder="If the name is in the list that appears after you begin typing, please select it.")
+        legend Author(s)
+    fieldset(data-cjs-field-type="book incollection paper-conference article-journal article-magazine article-newspaper")
+      label
+        input(data-cjs-field="editor", type="text", placeholder="If the name is in the list that appears after you begin typing, please select it.")
+        legend Editor(s)
+    fieldset(data-cjs-field-type="book incollection article-newspaper")
+      label
+        input(data-cjs-field="edition", type="number", min="1")
+        legend Edition
+    fieldset(data-cjs-field-type="paper-conference article-journal")
+      label
+        input(data-cjs-field="issue", type="number", min="1")
+        legend Issue
+    fieldset(data-cjs-field-type="book incollection paper-conference article-journal article-magazine")
+      label
+        input(data-cjs-field="volume", type="number", min="1")
+        legend Volume
+    fieldset(data-cjs-field-type="incollection article-journal article-magazine article-newspaper")
+      label
+        input(data-cjs-field="page", type="number", min="1", placeholder="Start Page") 
+        input(data-cjs-field="page", type="number", min="1", placeholder="End Page")
+        legend Pages
+    fieldset(data-cjs-field-type="paper-conference")
+      label
+        input(data-cjs-field="event", type="text")
+        legend Conference Name
+    fieldset(data-cjs-field-type="book incollection paper-conference")
+      label
+        input(data-cjs-field="publisher", type="text", placeholder="If your publisher is in the list that appears after you begin typing, please select it.")
+        legend Publisher
+    fieldset(data-name="publisher-place", data-cjs-field-type="book incollection article-newspaper")
+      label
+        input(data-cjs-field="publisher-place", type="text")
+        legend Publication Place
+    fieldset(data-cjs-field-type="paper-conference article-journal")
+      label
+        input(data-cjs-field="DOI", type="text", name="doi")
+        legend DOI
+    fieldset(data-name="isbn", data-cjs-field-type="book incollection paper-conference")
+      label
+        input(data-cjs-field="ISBN", type="text", name="isbn")
+        legend ISBN
+    fieldset(data-name="issued")
+      label
+        input(data-cjs-field="issued", type="text" pattern="[0-9]{4}")
+        legend Issued Year
+    fieldset
+      label
+        input(data-cjs-field="URL", type="url")
+        legend URL
+
+  section.cjs-piece.cjs-preview
+    input.cjs-add(type="submit", value="Add")
+    input.cjs-delete(type="reset", value="Start Over")
