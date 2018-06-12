@@ -23,8 +23,8 @@ $(document).ready(function() {
 			$("#firstname").val(selectedItem.first_name);
 			$("#middlename").val(selectedItem.middle_name);
 			$("#lastname").val(selectedItem.last_name);
-			$("#altlastnames").val(selectedItem.alt_last_names.join(","));
-			$("#altfirstnames").val(selectedItem.alt_first_names.join(","));
+			$("#altlastnames").val((selectedItem.alt_last_names) ? selectedItem.alt_last_names.join(",") : "");
+			$("#altfirstnames").val((selectedItem.alt_first_names) ? selectedItem.alt_first_names.join(",") : "");
 			$("#prefix").val(selectedItem.prefix);
 			$("#suffix").val(selectedItem.suffix);
 			$("#email").val(selectedItem.email);
