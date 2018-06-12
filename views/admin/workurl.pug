@@ -1,0 +1,17 @@
+p: b Add Work by URL
+
+div.row
+	p.col.s10.offset-s1
+		b Enter the URL to a database listing where the work can be found:
+
+div.row
+	form.col.s10.offset-s1(method="post", action="/user/work/url")
+		div.input-field
+			input#url.validate(type="text", name="url",autofocus)
+			label.active(for="url") URL of the Work
+
+		div.row
+			div.input-field.col.s12
+				button.btn.blue.darken-4.waves-effect.waves-light(type="submit") Find Work
+
+include ../popups.pug
