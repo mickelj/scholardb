@@ -7,7 +7,8 @@ router.get('/', authHelpers.loginRequired, authHelpers.adminRequired, (req, res)
   var nconf = req.app.get('nconf');
   
   res.render('admin', {
-    appconf: nconf.get()
+    appconf: nconf.get(),
+    user: req.user
   });
 });
 

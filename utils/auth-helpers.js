@@ -16,7 +16,12 @@ function loginRequired(req, res, next) {
 }
 
 function adminRequired(req, res, next) {
-  return db.people.findOne({email: req.user.email}, function (err, user) {
+  if (!req.user) {
+    req.flash('error', 'Login is required to access the previous page.');
+    return res.redirect('/auth/login');
+  }
+  
+  db.people.findOne({email: req.user.email}, function (err, user) {
     if (err) {
       req.flash('error', 'A database error occurred.  Please try again later.');
       return res.redirect('/');
