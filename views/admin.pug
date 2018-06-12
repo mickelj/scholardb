@@ -10,12 +10,11 @@ block content
       div.col.s3
         div.collection.with-header.z-depth-2
           div.collection-header Actions
-          a.collection-item(href="/user/work") Add/Update a Work
-          a.collection-item(href="/user/personal-info") Update Personal/Professional Information
-          a.collection-item(href="/user/penname") Add Pen Name
-          a.collection-item(href="/user/photo") Add/Update Photograph
-          a.collection-item(href="/user/departments") Update Department/Program Membership
-          a.collection-item(href="/people/" + user.id) View #{appconf.customtext.appname} Page
+          a.collection-item(href="/admin/work") Add/Update a Work
+          a.collection-item(href="/admin/pending") Process Pending Works
+          a.collection-item(href="/admin/personal-info") Update Personal/Professional User Information
+          a.collection-item(href="/admin/photo") Add/Update User Photographs
+          a.collection-item(href="/admin/departments") Update Department/Program Membership
           
       div.col.s9
         p.headline This is where the action will happen
