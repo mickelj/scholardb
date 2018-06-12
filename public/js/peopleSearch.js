@@ -19,7 +19,7 @@ $(document).ready(function() {
 		},
 		onSelect: function(e, term, renderedItem) {
 			try {
-				var selectedItem = JSON.parse(renderedItem.data(decodeURI(alldata));
+				var selectedItem = JSON.parse(renderedItem.data(decodeURI(alldata)));
 			} catch(err) {
 				return false;
 			}
