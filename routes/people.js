@@ -3,6 +3,7 @@ const _ = require('underscore');
 const router = express.Router();
 const request = require('request');
 const db = require('../utils/db');
+const authHelpers = require('../utils/auth-helpers');
 
 function getPeopleList(req, res, next) {
   var page = req.query.page || "A";
@@ -221,7 +222,7 @@ function renderRssFeed(req, res) {
 function searchPersonByName(req, res) {
   var name = req.query.q;
 
-  db.run("SELECT id, fullname FROM people WHERE fullname ILIKE $1 ORDER BY last_name, first_name, middle_name;", ["%" + name + "%"], function(err, results) {
+  db.run("SELECT * FROM people WHERE fullname ILIKE $1 ORDER BY last_name, first_name, middle_name;", ["%" + name + "%"], function(err, results) {
     if (err || !results.length) return res.json({});
 
     res.json(results);
@@ -229,7 +230,7 @@ function searchPersonByName(req, res) {
 }
 
 router.get('/', getPeopleList, getPeopleWorkCount, getLetterPagerCounts, renderPeopleList);
-router.get('/search', searchPersonByName);
+router.get('/search', authHelpers.loginRequired, searchPersonByName);
 router.get('/:id', getPersonDetail, getPersonWorksCount, getPersonWorksList, getPublicationsCount, getCoauthors, getWorksImages, renderPersonDetail);
 router.get('/:id/rss', getRssResults, getPersonName, renderRssFeed);
 

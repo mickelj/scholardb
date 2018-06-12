@@ -4,7 +4,7 @@ block content
   div.container
     div.row
       div.col.s12
-        p.headline #{appconf.customtext.appname} Adminstration Console
+        p.headline.red.darken-4 #{appconf.customtext.appname} Adminstration Console <i class="material-icons left">security</i>
     
     div.row
       div.col.s3
@@ -12,10 +12,33 @@ block content
           div.collection-header Actions
           a.collection-item(href="/admin/work") Add/Update a Work
           a.collection-item(href="/admin/pending") Process Pending Works
-          a.collection-item(href="/admin/personal-info") Update Personal/Professional User Information
+          a.collection-item(href="/admin/usernew") Add a New User
+          a.collection-item(href="/admin/usermod") Update an Existing User
           a.collection-item(href="/admin/photo") Add/Update User Photographs
           a.collection-item(href="/admin/departments") Update Department/Program Membership
           
       div.col.s9
-        p.headline This is where the action will happen
+        case page
+          when "usernew"
+            include admin/usernew.pug
+          when "work"
+            include admin/work.pug
+          when "workcitation"
+            include admin/workcitation.pug
+          when "workform"
+            include admin/workform.pug
+          when "workurl"
+            include admin/workurl.pug
+          when "workidentifier"
+            include admin/workidentifier.pug
+          when "usermod"
+            include admin/usermod.pug
+          when "departments"
+            include admin/departments.pug
+          when "photo"
+            include admin/photo.pug
+          when "citcheck"
+            include admin/citcheck.pug
+          default
+            p Please choose an option from the menu
         

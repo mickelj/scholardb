@@ -1,0 +1,42 @@
+p: b How would you like to add a work?
+
+p
+  label.workadd
+    input#byidentifier.with-gap(name="addwork", type="radio")
+    span By Identifier
+
+p
+  label.workadd
+    input#byurl.with-gap(name="addwork", type="radio")
+    span By URL
+
+p
+  label.workadd
+    input#bycitation.with-gap(name="addwork", type="radio")
+    span By Citation
+  
+p
+  label.workadd
+    input#byform.with-gap(name="addwork", type="radio")
+    span By Manual Entry
+
+script.
+  $(document).ready(function() {
+    $("#byidentifier").on("click", function() {
+      window.location = '/user/work/identifier';
+    });
+
+    $("#bycitation").on("click", function() {
+      window.location = '/user/work/citation';
+    });
+    
+    $("#byform").on("click", function() {
+      window.location = '/user/work/form';
+    });
+
+    $("#byurl").on("click", function() {
+      window.location = '/user/work/url';
+    });
+  });
+
+include ../popups.pug
