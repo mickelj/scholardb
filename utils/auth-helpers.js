@@ -16,14 +16,16 @@ function loginRequired(req, res, next) {
 }
 
 function adminRequired(req, res, next) {
-  if (!req.user) return res.status(401).json({status: 'Please log in'});
-
   return db.people.findOne({email: req.user.email}, function (err, user) {
-    if (err) res.status(500).json({status: 'Uh oh, Spaghettios!'});
-    if (!req.user.admin) {
-      res.status(401).json({status: 'You are not authorized.'});
-      return next();
+    if (err) {
+      req.flash('error', 'A database error occurred.  Please try again later.');
+      return res.redirect('/');
     }
+    if (!req.user.admin) {
+      req.flash('error', 'Sorry, you are not an authorized administrator.');
+      return res.redirect('/');
+    }
+    return next();
   });
 }
 
