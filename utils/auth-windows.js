@@ -26,6 +26,8 @@ passport.use(new WindowsStrategy({
     integrated:      false
   }, 
   function(profile, done){
+    console.log(profile);
+    if (!profile) return done("Sorry, login failed", profile);
     db.run("SELECT * FROM people WHERE email = $1", [profile._json.mail], function(err, results) {
       var user = results[0];
       if (err) return done(err);
