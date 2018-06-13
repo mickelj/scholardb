@@ -26,18 +26,16 @@ passport.use(new WindowsStrategy({
     integrated:      false
   }, 
   function(profile, done){
-    console.log(profile);
-    done(null, profile);
-    // db.run("SELECT * FROM people WHERE email = $1 AND password IS NOT NULL AND password <> ''", [username], function(err, results) {
-    //   var user = results[0];
-    //   if (err) return done(err);
-    //   if (!results.length) return done(null, false, {message: 'User account not found'});
-    //   if (!authHelpers.comparePass(password, user.password)) {
-    //     return done(null, false, {message: 'Incorrect password'});
-    //   } else {
-    //     return done(null, user);
-    //   }
-    // });
+    db.run("SELECT * FROM people WHERE email = $1", [profile._json.mail], function(err, results) {
+      var user = results[0];
+      if (err) return done(err);
+      if (!results.length) return done(null, false, {message: 'User account not found'});
+      if (!authHelpers.comparePass(password, user.password)) {
+        return done(null, false, {message: 'Incorrect password'});
+      } else {
+        return done(null, user);
+      }
+    });
   }
 ));
 
