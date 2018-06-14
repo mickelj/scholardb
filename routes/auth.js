@@ -10,7 +10,8 @@ router.get('/login', authHelpers.loginRedirect, (req, res) => {
 
   res.render('auth/login', {
     appconf: nconf.get(),
-    error: req.flash('error')
+    error: req.flash('error'),
+    success: req.flash('success')
   });
 });
 

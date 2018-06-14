@@ -26,7 +26,9 @@ router.get('/', authHelpers.loginRequired, authHelpers.adminRequired, (req, res)
   
   res.render('admin', {
     appconf: nconf.get(),
-    user: req.user
+    user: req.user,
+    error: req.flash('error'),
+    success: req.flash('success')
   });
 });
 
