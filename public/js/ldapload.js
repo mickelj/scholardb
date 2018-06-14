@@ -18,7 +18,7 @@ $(document).ready(function() {
 
 	$("#ldaploadconfirm").on("click", function(e) {
 		try {xhr.abort();} catch(e){}
-		xhr = $.getJSON('/admin/adsearch', {username: $("#ldapusername").val()})
+		xhr = $.getJSON('/admin/adinfo', {username: $("#ldapusername").val()})
 			.done(function(data) {
 				console.log(data);
 			})
