@@ -24,11 +24,14 @@ $(document).ready(function() {
 				return false;
 			}
 
+			var capUserType = selectedItem.user_type.charAt(0).toUpperCase() + selectedItem.user_type.slice(1);
+
 			$("#peopleid").val(selectedItem.id);
 			$("#uid").val(selectedItem.university_id);
 			$("#usertype").val(selectedItem.user_type);
+			$(".select-dropdown.dropdown-trigger").val(capUserType)
 			$("ul[id*='select-options'] li").removeClass('selected');
-			$("ul[id*='select-options'] li span:contains('" + selectedItem.user_type.charAt(0).toUpperCase() + selectedItem.user_type.slice(1) + "')").parent().addClass('selected');
+			$("ul[id*='select-options'] li span:contains('" + capUserType + "')").parent().addClass('selected');
 			$("#firstname").val(selectedItem.first_name);
 			$("#middlename").val(selectedItem.middle_name);
 			$("#lastname").val(selectedItem.last_name);

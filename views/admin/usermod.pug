@@ -60,7 +60,18 @@ div#usermodform.row
     div.row
       div.input-field.col.s12
         button.btn.blue.darken-4.waves-effect.waves-light(type="submit") Update Information
-        button.btn.waves-effect.waves-light#ldapload Load User Info from LDAP
+        button.btn.waves-effect.waves-light.right.modal-trigger#ldapload(data-target="ldapmodal") Load User Info from LDAP
+
+div#ldapmodal.modal
+  div.modal-content
+    h4 Load User Info from LDAP
+      p.card-panel.red.darken-4.white-text Loading user info from LDAP will overwrite the existing form fields.
+        b: i Are you sure?
+    div.modal-footer
+      button.modal-close.red.darken-4.waves-effect.waves-light.btn-flat Cancel
+      button#loadconfirm.green.darken-4.waves-effect.waves-light.btn-flat Load
+    </div>
+</div>
 
 include ../popups.pug
 script(type='text/javascript', src='/js/jquery.auto-complete.min.js')
