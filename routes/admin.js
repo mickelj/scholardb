@@ -34,6 +34,7 @@ function saveInfo(req, res, next) {
 
   var altfirstnames = (info.alt_first_names) ? info.alt_first_names.split(',') : null;
   var altlastnames  = (info.alt_last_names) ? info.alt_last_names.split(',') : null;
+  var fullname = info.first_name + " " + ((info.middle_name) ? info.middle_name + " " : "") + info.last_name;
 
   db.people.update({ id: info.id },
                    {
