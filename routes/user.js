@@ -127,6 +127,7 @@ function processPhoto(req, res, next) {
           method: 'POST'
         };
         var r = request(options, (err, response, body) => {
+          console.log(body);
           try { 
             resp = JSON.parse(body);
           } catch (e) {
