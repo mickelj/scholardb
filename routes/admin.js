@@ -22,15 +22,25 @@ function getInfo(req, res, next) {
 }
 
 function saveInfo(req, res, next) {
-  var altfirstnames = req.body.alt_first_names.split(',');
-  var altlastnames  = req.body.alt_last_names.split(',');
+  function _cleanInfo(info) {
+    Object.keys(info).forEach(function(val) {
+      if (!info[val]) info[val] = null;
+    });
+  
+    return info;
+  }
+  
+  var info = _cleanInfo(req.body);
 
-  db.people.update({ id: req.body.id }, 
+  var altfirstnames = (info.alt_first_names) ? info.alt_first_names.split(',') : null;
+  var altlastnames  = (info.alt_last_names) ? info.alt_last_names.split(',') : null;
+
+  db.people.update({ id: info.id },
                    {
-                    first_name: req.body.first_name, middle_name: req.body.middle_name, last_name: req.body.last_name,
-                    alt_last_names: altlastnames, alt_first_names: altfirstnames, university_id: req.body.university_id, 
-                    prefix: req.body.prefix, suffix: req.body.suffix, phone: req.body.phone, user_type: req.body.user_type, office_location: req.body.office,
-                    active: req.body.active, admin: req.body.admin
+                    first_name: info.first_name, middle_name: info.middle_name, last_name: info.last_name,
+                    alt_last_names: altlastnames, alt_first_names: altfirstnames, university_id: info.university_id, 
+                    prefix: info.prefix, suffix: info.suffix, phone: info.phone, user_type: info.user_type, office_location: info.office,
+                    active: info.active, admin: info.admin
                    }, (err, results) => {
     if (err) {
       req.flash('error', 'Error updating information: ' + err);
