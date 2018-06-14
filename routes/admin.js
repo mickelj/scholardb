@@ -21,6 +21,23 @@ function getInfo(req, res, next) {
   });
 }
 
+function saveInfo(req, res, next) {
+  db.people.update({
+                    id: req.body.id, first_name: req.body.first_name, middle_name: req.body.middle_name, last_name: req.body.last_name,
+                    alt_last_names: req.body.alt_last_names, alt_first_names: req.body.alt_first_names, university_id: req.body.university_id, 
+                    prefix: req.body.prefix, suffix: req.body.suffix, phone: req.body.phone, user_type: req.body.user_type, office_location: req.body.office,
+                    active: req.body.active, admin: req.body.admin
+                   }, (err, results) => {
+    if (err) {
+      req.flash('error', 'Error updating information: ' + err);
+      return res.redirect('/admin/usermod');
+    }
+    req.flash('success', 'Information updated successfully');
+    return res.redirect('/admin');
+  });
+}
+
+
 router.get('/', authHelpers.loginRequired, authHelpers.adminRequired, (req, res) => {
   var nconf = req.app.get('nconf');
   
@@ -44,5 +61,7 @@ router.get('/usermod', authHelpers.loginRequired, authHelpers.adminRequired, (re
   });
 
 });
+
+router.post('/usermod', authHelpers.loginRequired, authHelpers.adminRequired, saveInfo);
 
 module.exports = router;

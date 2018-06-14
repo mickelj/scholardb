@@ -235,6 +235,10 @@ input[type="search"] {
   margin: 0;
 }
 
+.input-field {
+  margin-top: 2.5rem;
+}
+
 .card-panel {
   padding: 1px 15px;
 }

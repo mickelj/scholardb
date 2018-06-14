@@ -3,11 +3,12 @@ link(rel="stylesheet", href="/css/jquery.auto-complete.css")
 p: b Modify User Information
 
 div.row
-  div.input-field.col.s10.offset-s1
+  div.input-field.col.s11
     input#usersearch(type="text", placeholder="Start typing the name of person you want to modify")
 
 div#usermodform.row
   form.col.s10.offset-s1(method="post", action="/admin/usermod")
+    input#peopleid(type="hidden", name="id")
     div.input-field
       input#uid.validate(type="text", name="university_id")
       label(for="uid") University ID Number

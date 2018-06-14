@@ -24,6 +24,7 @@ $(document).ready(function() {
 				return false;
 			}
 
+			$("#peopleid").val(selectedItem.id);
 			$("#uid").val(selectedItem.university_id);
 			$("#usertype").val(selectedItem.user_type);
 			$("#firstname").val(selectedItem.first_name);
