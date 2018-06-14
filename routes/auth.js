@@ -14,7 +14,7 @@ router.get('/login', authHelpers.loginRedirect, (req, res) => {
   });
 });
 
-router.post('/login', authHelpers.loginRedirect, function(res, req, next) {
+router.post('/login', authHelpers.loginRedirect, function(req, res, next) {
   passport.authenticate('WindowsAuthentication', function(err, user, info) {
     if (err) return next(err);
     if (!user) {
@@ -32,7 +32,7 @@ router.post('/login', authHelpers.loginRedirect, function(res, req, next) {
   })(req, res, next);
 });
 
-// router.post('/login', authHelpers.loginRedirect, (res, req, next) => {
+// router.post('/login', authHelpers.loginRedirect, (req, res, next) => {
 //   passport.authenticate('local', (err, user, info) => {
 //     if (err) return next(err);
 //     if (!user) {
