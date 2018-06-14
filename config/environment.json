@@ -9,8 +9,8 @@
 
   "appurls": {
     "apphome"       : "https://scholarsdb.herokuapp.com/",
-    "imgrootdir"    : "https://scholarsdb.omeka.wlu.edu/",
-    "imguploader"   : "https://scholarsdb.omeka.wlu.edu/upload.php",
+    "imgrootdir"    : "http://localhost/",
+    "imguploader"   : "http://localhost/upload.php",
     "orgurl"        : "https://library.wlu.edu",
     "catalogurl"    : "https://wlu.primo.exlibrisgroup.com/discovery/search?vid=01WLU_INST:01WLU&sortby=rank",
     "linkresolver"  : "https://wlu.alma.exlibrisgroup.com/view/uresolver/01WLU_INST/openurl/",
@@ -21,7 +21,7 @@
     "logo"          : "/images/wlupubs_logo_white.png",
     "defimgext"     : ".jpg",
     "fulltextimage" : "/images/findit.png",
-    "covimgsrv"     : "https://scholarsdb-coce.herokuapp.com/cover?provider=ol,gb&id="
+    "covimgsrv"     : "http://localhost:8080/cover?provider=ol,gb&id="
   },
 
   "romeo": {
