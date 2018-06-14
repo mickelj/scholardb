@@ -127,9 +127,10 @@ function processPhoto(req, res, next) {
           method: 'POST'
         };
         var r = request(options, (err, response, body) => {
-          resp = JSON.parse(body);
-          if (resp.err) {
-            req.flash('error', 'Error saving photo: ' + resp.err);
+          try { 
+            resp = JSON.parse(body);
+          } catch (e) {
+            req.flash('error', 'Error saving photo: ' + e);
             return res.redirect('back');
           }
 
