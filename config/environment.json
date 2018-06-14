@@ -8,7 +8,7 @@
   },
 
   "appurls": {
-    "apphome"       : "https://scholarsdb.herokuapp.com/",
+    "apphome"       : "https://scholarsdb.wlu.edu/",
     "imgrootdir"    : "http://137.113.150.150/photos/",
     "imguploader"   : "http://localhost/photos/upload.php",
     "orgurl"        : "https://library.wlu.edu",
