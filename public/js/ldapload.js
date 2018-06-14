@@ -21,7 +21,7 @@ $(document).ready(function() {
 		xhr = $.getJSON('/admin/adinfo', {username: $("#ldapusername").val()})
 			.done(function(data) {
 				info = JSON.parse(data);
-				$("#uid").val(info.employeeId);
+				$("#uid").val(info.employeeID);
 				$("#firstname").val(info.givenName);
 				$("#middlename").val(info.initials);
 				$("#lastname").val(info.sn);
