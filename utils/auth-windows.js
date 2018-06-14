@@ -23,9 +23,10 @@ passport.use(new WindowsStrategy({
       bindDN:          process.env.LDAP_BIND_USER,
       bindCredentials: process.env.LDAP_BIND_PWD
     },
-    integrated:      false
+    integrated:      false,
+    passReqToCallback: true
   }, 
-  function(profile, done){
+  function(req, profile, done){
     if (!profile) return done(null, false, {message: 'Incorrect username or password'});
     
     db.run("SELECT * FROM people WHERE email = $1", [profile._json.mail], function(err, results) {

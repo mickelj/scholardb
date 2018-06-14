@@ -14,8 +14,8 @@ router.get('/login', authHelpers.loginRedirect, (req, res) => {
   });
 });
 
-router.post('/login', authHelpers.loginRedirect, (res, req, next) => {
-  passport.authenticate('WindowsAuthentication', (err, user, info) => {
+router.post('/login', authHelpers.loginRedirect, function(res, req, next) {
+  passport.authenticate('WindowsAuthentication', function(err, user, info) {
     if (err) return next(err);
     if (!user) {
       req.flash('error', info.message);
