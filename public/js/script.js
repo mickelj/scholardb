@@ -47,6 +47,7 @@ $(document).ready(function() {
   $('.carousel.carousel-slider').carousel({fullWidth: true});
   $('select').formSelect();
   $('.dropdown-trigger').dropdown();
+  $('.tooltipped').tooltip();
 
   $('.page-selector').on('change', function() {
     $(this).parent().submit();

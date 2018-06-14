@@ -17,7 +17,7 @@ $(document).ready(function() {
 	});
 
 	$("#ldaploadconfirm").on("click", function(e) {
-		var changedIcon = '<i class="material-icons prefix amber-text text-accent-4">assignment_late</i>';
+		var changedIcon = '<i class="material-icons prefix amber-text text-accent-4 tooltipped" data-position="top" data-tooltip="Updated from LDAP">assignment_late</i>';
 
 		try {xhr.abort();} catch(e){}
 		xhr = $.getJSON('/admin/adinfo', {username: $("#ldapusername").val()})
