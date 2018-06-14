@@ -44,6 +44,7 @@ $(document).ready(function() {
 			$("#office").val(selectedItem.office_location);
 			$("#isactive").prop("checked", selectedItem.active);
 			$("#isadmin").prop("checked", selectedItem.admin);
+			$("#ldapusername").val((selectedItem.email) ? selectedItem.email.split('@')[0] : "");
 			$("#usermodform form label").addClass("active");
 			$("#usermodform").show();
 		}

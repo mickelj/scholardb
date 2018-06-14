@@ -239,10 +239,6 @@ input[type="search"] {
   margin-top: 2.5rem;
 }
 
-.card-panel {
-  padding: 1px 15px;
-}
-
 .card.horizontal .card-image {
     min-width: 20%;
     max-width: 20%;

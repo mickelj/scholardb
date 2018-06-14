@@ -65,13 +65,14 @@ div#usermodform.row
 div#ldapmodal.modal
   div.modal-content
     h4 Load User Info from LDAP
-      p.card-panel.red.darken-4.white-text Loading user info from LDAP will overwrite the existing form fields.
-        b: i Are you sure?
+    p.card-panel.red.darken-4.white-text Loading user info from LDAP will overwrite the existing form fields. 
+      b: i Are you sure?
+    div.input-field
+      input#ldapusername(type="text", name="ldapusername", placeholder="Enter the person's " + appconf.customtext.orgshortname + " username")
+      label(for="ldapusername") Confirm #{appconf.customtext.orgshortname} Username
     div.modal-footer
-      button.modal-close.red.darken-4.waves-effect.waves-light.btn-flat Cancel
-      button#loadconfirm.green.darken-4.waves-effect.waves-light.btn-flat Load
-    </div>
-</div>
+      button.modal-close.waves-effect.waves-light.btn-flat(style="margin-right:1rem") Cancel
+      button#ldaploadconfirm.green.darken-4.waves-effect.waves-light Load
 
 include ../popups.pug
 script(type='text/javascript', src='/js/jquery.auto-complete.min.js')
