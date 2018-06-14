@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	$("#ldapusername").on("change", function() {
+	$("#ldapusername").on("keydown", function() {
 		if ($(this).val()) {
 			$("#ldaploadconfirm").removeClass('disabled');
 		} else {
@@ -9,6 +9,11 @@ $(document).ready(function() {
 
 	$("#ldapload").on("click", function(e) {
 		e.preventDefault();
+		if ($("#ldapusername").val()) {
+			$("#ldaploadconfirm").removeClass('disabled');
+		} else {
+			$("#ldaploadconfirm").addClass('disabled');
+		}
 	});
 
 	$("#ldaploadconfirm").on("click", function(e) {
