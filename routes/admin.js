@@ -41,7 +41,7 @@ function saveInfo(req, res, next) {
                     first_name: info.first_name, middle_name: info.middle_name, last_name: info.last_name,
                     alt_last_names: altlastnames, alt_first_names: altfirstnames, university_id: info.university_id, 
                     prefix: info.prefix, suffix: info.suffix, phone: info.phone, user_type: info.user_type, office_location: info.office,
-                    active: info.active, admin: info.admin
+                    active: info.active, admin: info.admin, fullname: fullname
                    }, (err, results) => {
     if (err) {
       req.flash('error', 'Error updating information: ' + err);
