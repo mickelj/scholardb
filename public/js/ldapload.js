@@ -1,4 +1,12 @@
 $(document).ready(function() {
+	$("#ldapusername").on("change", function() {
+		if ($(this).val()) {
+			$("#ldaploadconfirm").removeClass('disabled');
+		} else {
+			$("#ldaploadconfirm").addClass('disabled');
+		}
+	});
+
 	$("#ldapload").on("click", function(e) {
 		e.preventDefault();
 	});
