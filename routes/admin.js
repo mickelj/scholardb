@@ -22,11 +22,12 @@ function getInfo(req, res, next) {
 }
 
 function saveInfo(req, res, next) {
-  var altfirstnames = JSON.stringify(req.body.alt_first_names.split(','));
-  var altlastnames  = JSON.stringify(req.body.alt_last_names.split(','));
-  
-  db.people.update({
-                    id: req.body.id, first_name: req.body.first_name, middle_name: req.body.middle_name, last_name: req.body.last_name,
+  var altfirstnames = req.body.alt_first_names.split(',');
+  var altlastnames  = req.body.alt_last_names.split(',');
+
+  db.people.update({ id: req.body.id }, 
+                   {
+                    first_name: req.body.first_name, middle_name: req.body.middle_name, last_name: req.body.last_name,
                     alt_last_names: altlastnames, alt_first_names: altfirstnames, university_id: req.body.university_id, 
                     prefix: req.body.prefix, suffix: req.body.suffix, phone: req.body.phone, user_type: req.body.user_type, office_location: req.body.office,
                     active: req.body.active, admin: req.body.admin

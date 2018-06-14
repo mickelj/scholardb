@@ -29,7 +29,7 @@ function getInfo(req, res, next) {
 }
 
 function saveInfo(req, res, next) {
-  db.people.update({id: req.user.id, prefix: req.body.prefix, suffix: req.body.suffix, phone: req.body.phone, office_location: req.body.office}, (err, results) => {
+  db.people.update({id: req.user.id}, {prefix: req.body.prefix, suffix: req.body.suffix, phone: req.body.phone, office_location: req.body.office}, (err, results) => {
     if (err) {
       req.flash('error', 'Error updating information: ' + err);
       return res.redirect('/user/info');
