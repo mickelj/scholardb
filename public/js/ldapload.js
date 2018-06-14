@@ -17,17 +17,19 @@ $(document).ready(function() {
 	});
 
 	$("#ldaploadconfirm").on("click", function(e) {
+		var changedIcon = '<i class="material-icons prefix amber-text text-accent-4">assignment_late</i>';
+
 		try {xhr.abort();} catch(e){}
 		xhr = $.getJSON('/admin/adinfo', {username: $("#ldapusername").val()})
 			.done(function(data) {
 				info = JSON.parse(data);
-				$("#uid").val(info.employeeID);
-				$("#firstname").val(info.givenName);
-				$("#middlename").val(info.initials);
-				$("#lastname").val(info.sn);
-				$("#email").val(info.mail);
-				$("#phone").val(info.telephoneNumber);
-				$("#office").val(info.physicalDeliveryOfficeName);
+				if (info.employeeID !== $("#uid").val()) 										$("#uid").val(info.employeeID).next().after(changedIcon);
+				if (info.givenName !== $("#firstname").val()) 							$("#firstname").val(info.givenName).next().after(changedIcon);
+				if (info.initials !== $("#middlename").val()) 							$("#middlename").val(info.initials).next().after(changedIcon);
+				if (info.sn !== $("#lastname").val()) 											$("#lastname").val(info.sn).next().after(changedIcon);
+				if (info.mail !== $("#email").val()) 												$("#email").val(info.mail).next().after(changedIcon);
+				if (info.telephoneNumber !== $("#phone").val()) 						$("#phone").val(info.telephoneNumber).next().after(changedIcon);
+			  if (info.physicalDeliveryOfficeName !== $("#office").val()) $("#office").val(info.physicalDeliveryOfficeName).next().after(changedIcon);
 			})
 			.fail(function(jqxhr, textStatus, error) {
 			}
