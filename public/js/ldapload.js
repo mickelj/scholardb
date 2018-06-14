@@ -20,7 +20,14 @@ $(document).ready(function() {
 		try {xhr.abort();} catch(e){}
 		xhr = $.getJSON('/admin/adinfo', {username: $("#ldapusername").val()})
 			.done(function(data) {
-				console.log(data);
+				info = JSON.parse(data);
+				$("#uid").val(info.employeeId);
+				$("#firstname").val(info.givenName);
+				$("#middlename").val(info.initials);
+				$("#lastname").val(info.sn);
+				$("#email").val(info.mail);
+				$("#phone").val(info.telephoneNumber);
+				$("#office").val(info.physicalDeliveryOfficeName);
 			})
 			.fail(function(jqxhr, textStatus, error) {
 			}
