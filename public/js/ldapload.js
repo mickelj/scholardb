@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	$("#ldapusername").on("keydown", function() {
+	$("#ldapusername").on("keyup", function() {
 		if ($(this).val()) {
 			$("#ldaploadconfirm").removeClass('disabled');
 		} else {
