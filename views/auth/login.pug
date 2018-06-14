@@ -1,12 +1,6 @@
 extends ../template
 
 block content
-  if error.length
-    div#error.modal.bottom-sheet
-      div.modal-content
-        a.btn-floating.modal-action.modal-close.red.right(href='#!') 
-          i.material-icons close
-        h4= error
   div.row
     div.col.s12.m8.l6.offset-m2.offset-l3
       p.headline Login to #{appconf.customtext.appname}
