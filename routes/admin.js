@@ -5,11 +5,12 @@ const db = require('../utils/db');
 const ActiveDirectory = require('activedirectory');
 const ADoptions = { url: process.env.LDAP_URL,  baseDN: process.env.LDAP_BASE,  username: process.env.LDAP_BIND_USER,  password: process.env.LDAP_BIND_PWD };
 const AD = new ActiveDirectory(ADoptions);
+const ADattributes = {attributes: { user: ['sAMAccountName', 'mail', 'whenCreated', 'employeeID', 'sn', 'givenName', 'initials', 'title', 'physicalDeliveryOfficeName', 'telephoneNumber']}};
 
 function getADInfo(req, res) {
   if (!req.query.username) return res.json({});
 
-  AD.findUser(req.query.username, function(err, user) {
+  AD.findUser(ADattributes, req.query.username, function(err, user) {
     if (err || !user) return res.json({});
 
     return res.json(JSON.stringify(user));
