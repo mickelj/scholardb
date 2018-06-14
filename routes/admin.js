@@ -2,22 +2,17 @@ const express = require('express');
 const router = express.Router();
 const authHelpers = require('../utils/auth-helpers');
 const db = require('../utils/db');
+const ActiveDirectory = require('activedirectory');
+const ADoptions = { url: process.env.LDAP_URL,  baseDN: process.env.LDAP_BASE,  username: process.env.LDAP_BIND_USER,  password: process.env.LDAP_BIND_PWD };
+const AD = new ActiveDirectory(ADoptions);
 
-function getInfo(req, res, next) {
-  db.run("SELECT * FROM people WHERE id = $1", [req.user.id], (err, results) => {
-    if (err) return next(err);
+function getADInfo(req, res) {
+  if (!req.query.username) return res.json({});
 
-    req.info = results[0];
+  AD.findUser(req.query.username, function(err, user) {
+    if (err || !user) return res.json({});
 
-    if (req.info.alt_last_names) {
-      req.altlastnames = req.info.alt_last_names.join(',');
-    }
-
-    if (req.info.alt_first_names) {
-      req.altfirstnames = req.info.alt_first_names.join(',');
-    }
-
-    return next();
+    return res.json(JSON.stringify(user));
   });
 }
 
@@ -76,6 +71,8 @@ router.get('/usermod', authHelpers.loginRequired, authHelpers.adminRequired, (re
   });
 
 });
+
+router.get('/adinfo', authHelpers.loginRequired, authHelpers.adminRequired, getADInfo);
 
 router.post('/usermod', authHelpers.loginRequired, authHelpers.adminRequired, saveInfo);
 

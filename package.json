@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/mickelj/scholardb#readme",
   "dependencies": {
+    "activedirectory": "^0.7.2",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "brace-expansion": "^1.1.11",
