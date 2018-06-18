@@ -19,8 +19,8 @@ div#photoform
 include ../popups.pug
 script.
   $(document).ready(function() {
-    var urlprefix = #{appconf.appurls.imrootdir};
-    var urlsuffix = #{appconf.images.defimgext};
+    var urlprefix = '#{appconf.appurls.imgrootdir}';
+    var urlsuffix = '#{appconf.images.defimgext}';
   });
 script(type='text/javascript', src='/js/jquery.auto-complete.min.js')
 script(type='text/javascript', src='/js/peopleSearch.js')
