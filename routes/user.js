@@ -135,8 +135,15 @@ function processPhoto(req, res, next) {
             return res.redirect('back');
           }
 
-          req.flash('success', resp.success);
-          return res.redirect('back');
+          db.people.update({id: req.user.id}, {image_url: req.body.fname}, (err, results) => {
+            if (err) {
+              req.flash('error', 'Error updating information: ' + err);
+              return res.redirect('back');
+            }
+
+            req.flash('success', resp.success);
+            return res.redirect('back');
+          });
         });
 
         var form = r.form();

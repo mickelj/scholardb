@@ -59,6 +59,22 @@ $(document).ready(function() {
 					$("#currentimage").html('<p>No photo has been uploaded</p>');
 				}
 				$("#photoform").show();
+			} else if ($("#deptform").length) {
+				try {xhr.abort();} catch(e){}
+				xhr = $.getJSON('/admin/getdepts', {id: selectedItem.id})
+					.done(function(data) {
+						if (data.length) {
+						  for (var d in data) {
+								$(".collection").append('<li class="collection-item"><div>' + data[d].name + ' <a class="secondary-content red-text text-darken-4 deldept" href="#!" data-deptid="' + data[d].group_id + '" data-deptname="' + data[d].name + '"><i class="material-icons">remove_circle</i></a></div></li>');
+								$("#deptlist option[value='" + data[d].group_id + "']").prop('disabled', true);
+						  }
+					  } else {
+							$(".collection").after('<p>Not currently a member of any departments or programs</p>');
+						}
+						$("#dataform").show();
+					})
+					.fail(function(jqxhr, textStatus, error) {
+					});
 			}
 		}
 	});

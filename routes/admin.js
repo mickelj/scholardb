@@ -119,6 +119,53 @@ function processPhoto(req, res, next) {
   }
 }
 
+function getAllDepts(req, res, next) {
+  db.run("SELECT id, name FROM groups WHERE hidden = false ORDER BY name", (err, results) => {
+    if (err) return next(err);
+    req.alldepts = results;
+    return next();
+  });
+}
+
+function getDepartments(req, res, next) {
+  db.run("SELECT group_id, name FROM memberships JOIN groups ON group_id = id WHERE hidden = false AND people_id = $1 ORDER BY name", [req.query.id], (err, results) => {
+    if (err || !results.length) return res.json({});
+
+    res.json(results);
+  });
+}
+
+function addDepartment(req, res, next) {
+  var deptid = req.body.deptid || null;
+
+  if (deptid) {
+    db.memberships.insert({group_id: deptid, people_id: req.body.userid}, (err, results) => {
+      if (err) {
+        req.flash('error', 'Error adding department to database: ' + err);
+        return res.json({success: false});
+      }
+
+      req.flash('success', 'Department added successfully');
+      return res.json({success: true});
+    });
+  }
+}
+
+function deleteDepartment(req, res, next) {
+  var deptid = req.body.deptid || null;
+
+  if (deptid) {
+    db.memberships.destroy({group_id: deptid, people_id: req.body.userid}, (err, results) => {
+      if (err) {
+        req.flash('error', 'Error removing department from database: ' + err);
+        return res.json({success: false});
+      }
+      req.flash('success', 'Department removed successfully');
+      return res.json({success: true});
+    });
+  }
+}
+
 router.get('/', authHelpers.loginRequired, authHelpers.adminRequired, (req, res) => {
   var nconf = req.app.get('nconf');
   
@@ -154,7 +201,21 @@ router.get('/photo', authHelpers.loginRequired, authHelpers.adminRequired, nocac
   });
 });
 
+router.get('/departments', authHelpers.loginRequired, getAllDepts, (req, res) => {
+  var nconf = req.app.get('nconf');
+
+  res.render('admin', {
+    appconf: nconf.get(),
+    user: req.user,
+    page: 'departments',
+    alldepts: req.alldepts,
+    error: req.flash('error'),
+    success: req.flash('success')
+  });
+});
+
 router.get('/adinfo', authHelpers.loginRequired, authHelpers.adminRequired, getADInfo);
+router.get('/getdepts', authHelpers.loginRequired, authHelpers.adminRequired, getDepartments);
 
 router.post('/usermod', authHelpers.loginRequired, authHelpers.adminRequired, saveInfo);
 router.post('/photo', authHelpers.loginRequired, authHelpers.adminRequired, processPhoto);
