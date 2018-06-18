@@ -27,10 +27,8 @@ $(document).ready(function() {
 			var capUserType = selectedItem.user_type.charAt(0).toUpperCase() + selectedItem.user_type.slice(1);
 
 			$("#peopleid").val(selectedItem.id);
-			console.log(selectedItem.id);
 
-
-			if ($("#usermodform")) {
+			if ($("#usermodform").length) {
 				$("#uid").val(selectedItem.university_id);
 				$("#usertype").val(selectedItem.user_type);
 				$(".select-dropdown.dropdown-trigger").val(capUserType)
@@ -51,7 +49,7 @@ $(document).ready(function() {
 				$("#ldapusername").val((selectedItem.email) ? selectedItem.email.split('@')[0] : "");
 				$("#usermodform form label").addClass("active");
 				$("#usermodform").show();
-			} else if ($("#photoform")) {
+			} else if ($("#photoform").length) {
 				if (selectedItem.image_url) {
 					var imageurl = urlprefix + selectedItem.image_url + urlsuffix + new Date().getTime();
 					$("#currentimage").append('<img id="photourl" class="responsive-img" src="' + imageurl + '" alt="Current Profile Image" width="200">');
