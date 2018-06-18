@@ -85,7 +85,6 @@ function processPhoto(req, res, next) {
           method: 'POST'
         };
         var r = request(options, (err, response, body) => {
-          console.log(body);
           try { 
             resp = JSON.parse(body);
           } catch (e) {
@@ -93,8 +92,15 @@ function processPhoto(req, res, next) {
             return res.redirect('back');
           }
 
-          req.flash('success', resp.success);
-          return res.redirect('back');
+          db.people.update({id: req.body.id}, {image_url: req.body.fname}, (err, results) => {
+            if (err) {
+              req.flash('error', 'Error updating information: ' + err);
+              return res.redirect('back');
+            }
+
+            req.flash('success', resp.success);
+            return res.redirect('/admin');
+          });
         });
 
         var form = r.form();
@@ -149,5 +155,6 @@ router.get('/photo', authHelpers.loginRequired, authHelpers.adminRequired, nocac
 router.get('/adinfo', authHelpers.loginRequired, authHelpers.adminRequired, getADInfo);
 
 router.post('/usermod', authHelpers.loginRequired, authHelpers.adminRequired, saveInfo);
+router.post('/photo', authHelpers.loginRequired, authHelpers.adminRequired, processPhoto);
 
 module.exports = router;
