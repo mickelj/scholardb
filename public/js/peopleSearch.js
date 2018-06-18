@@ -52,11 +52,11 @@ $(document).ready(function() {
 			} else if ($("#photoform").length) {
 				if (selectedItem.image_url) {
 					var imageurl = urlprefix + selectedItem.image_url + urlsuffix + "?" + new Date().getTime();
-					$("#currentimage").append('<img id="photourl" class="responsive-img" src="' + imageurl + '" alt="Current Profile Image" width="200">');
+					$("#currentimage").html('<img id="photourl" class="responsive-img" src="' + imageurl + '" alt="Current Profile Image" width="200">');
 					$("#fname").val(selectedItem.image_url)
 				} else {
 					$("#fname").val((selectedItem.email) ? selectedItem.email.split('@')[0] : "");
-					$("currentimage").append('<p>No photo has been uploaded</p>');
+					$("#currentimage").html('<p>No photo has been uploaded</p>');
 				}
 				$("#photoform").show();
 			}
