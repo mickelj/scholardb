@@ -51,7 +51,7 @@ $(document).ready(function() {
 				$("#usermodform").show();
 			} else if ($("#photoform").length) {
 				if (selectedItem.image_url) {
-					var imageurl = urlprefix + selectedItem.image_url + urlsuffix + new Date().getTime();
+					var imageurl = urlprefix + selectedItem.image_url + urlsuffix + "?" + new Date().getTime();
 					$("#currentimage").append('<img id="photourl" class="responsive-img" src="' + imageurl + '" alt="Current Profile Image" width="200">');
 					$("#fname").val(selectedItem.image_url)
 				} else {
