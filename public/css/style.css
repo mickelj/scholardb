@@ -469,7 +469,7 @@ iframe li~div {
   color: #000;
 }
 
-#usermodform {
+#usermodform, #photoform {
   display: none;
 }
 

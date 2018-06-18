@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const authHelpers = require('../utils/auth-helpers');
 const db = require('../utils/db');
+const nocache = require('node-nocache');
 const ActiveDirectory = require('activedirectory');
 const ADoptions = { url: process.env.LDAP_URL,  baseDN: process.env.LDAP_BASE,  username: process.env.LDAP_BIND_USER,  password: process.env.LDAP_BIND_PWD };
 const AD = new ActiveDirectory(ADoptions);
@@ -48,6 +49,67 @@ function saveInfo(req, res, next) {
   });
 }
 
+function processPhoto(req, res, next) {
+  var nconf = req.app.get('nconf');
+
+  if (!req.files) {
+    req.flash('error', 'No photo was uploaded');
+    return res.redirect('back');
+  }
+
+  if (req.files.newphoto.mimetype == 'image/jpeg' || req.files.newphoto.mimetype == 'image/png') {
+    jimp.read(req.files.newphoto.data, (err, image) => {
+      if (err) {
+        req.flash('error', 'Error processing photo: ' + err);
+        return res.redirect('back');
+      }
+
+      if (image.bitmap.width < 350 || image.bitmap.height < 350) {
+        req.flash('error', 'Please choose a photo that is at least 350 pixels wide OR 350 pixels tall');
+        return res.redirect('back');
+      }
+
+      image.cover(400, 400, jimp.HORIZONTAL_ALIGN_CENTER | jimp.VERTICAL_ALIGN_TOP);
+      image.getBuffer(jimp.AUTO, (err, result) => {
+        if (err) {
+          req.flash('error', 'Error buffering photo: ' + err);
+          return res.redirect('back');
+        }
+
+        var url = nconf.get('appurls:imguploader');
+        var options = {
+          headers: {
+            'Referer': nconf.get('appurls:apphome')
+          },
+          uri: url,
+          method: 'POST'
+        };
+        var r = request(options, (err, response, body) => {
+          console.log(body);
+          try { 
+            resp = JSON.parse(body);
+          } catch (e) {
+            req.flash('error', 'Error saving photo: ' + e);
+            return res.redirect('back');
+          }
+
+          req.flash('success', resp.success);
+          return res.redirect('back');
+        });
+
+        var form = r.form();
+        form.append('file', result, {
+          filename:    'temp-' + new Date().getTime() + '.jpg',
+          contentType: req.files.newphoto.mimetype
+        });
+        form.append('filename', req.body.fname);
+      });
+    });
+  } else {
+    req.flash('error', 'Please choose a JPEG or PNG file.');
+    return res.redirect('back');
+  }
+}
 
 router.get('/', authHelpers.loginRequired, authHelpers.adminRequired, (req, res) => {
   var nconf = req.app.get('nconf');
@@ -70,7 +132,18 @@ router.get('/usermod', authHelpers.loginRequired, authHelpers.adminRequired, (re
     error: req.flash('error'),
     success: req.flash('success')
   });
+});
 
+router.get('/photo', authHelpers.loginRequired, authHelpers.adminRequired, nocache, (req, res) => {
+  var nconf = req.app.get('nconf');
+
+  res.render('user', {
+    appconf: nconf.get(),
+    user: req.user,
+    page: 'photo',
+    error: req.flash('error'),
+    success: req.flash('success')
+  });
 });
 
 router.get('/adinfo', authHelpers.loginRequired, authHelpers.adminRequired, getADInfo);

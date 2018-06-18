@@ -1,14 +1,24 @@
-p: b Current Profile Photograph
+link(rel="stylesheet", href="/css/jquery.auto-complete.css")
 
-if (photo.image)
-  img.responsive-img(src=appconf.appurls.imgrootdir + photo.image + appconf.images.defimgext + "?" + new Date().getTime(), alt="Current Profile Image", width="200")
-else
-  p No photo has been uploaded
-  
-p: b Upload a New Photograph (PNG or JPEG format only)
+p: b Add/Modify User Photo
 
-form(method="post", action="/user/photo", encType="multipart/form-data")
-  input#newphoto(type="file", name="newphoto")
-  input#fname(type="hidden", name="fname", value=photo.image)
+div.row
+  div.input-field.col.s11
+    input#usersearch(type="text", placeholder="Start typing the name of person you want to modify")
+
+div#photoform
+  div#currentimage
+    
+  p: b Upload a New Photograph (PNG or JPEG format only)
+
+  form(method="post", action="/admin/photo", encType="multipart/form-data")
+    input#peopleid(type="hidden", name="id")
+    input#newphoto(type="file", name="newphoto")
+    input#fname(type="hidden", name="fname")
 
 include ../popups.pug
+script.
+  var urlprefix = #{appconf.appurls.imrootdir};
+  var urlsuffix = #{appconf.images.defimgext};
+script(type='text/javascript', src='/js/jquery.auto-complete.min.js')
+script(type='text/javascript', src='/js/peopleSearch.js')
