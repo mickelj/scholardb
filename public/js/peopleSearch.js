@@ -1,4 +1,5 @@
 $(document).ready(function() {
+	console.log(urlprefix);
 	$("#usersearch").autoComplete({
 		minChars: 2,
 		source: function(term, suggest) {
