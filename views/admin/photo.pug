@@ -17,8 +17,7 @@ div#photoform
     input#fname(type="hidden", name="fname")
 
 include ../popups.pug
-script.
-  var urlprefix = #{appconf.appurls.imrootdir};
-  var urlsuffix = #{appconf.images.defimgext};
+- var urlprefix = #{appconf.appurls.imrootdir};
+- var urlsuffix = #{appconf.images.defimgext};
 script(type='text/javascript', src='/js/jquery.auto-complete.min.js')
 script(type='text/javascript', src='/js/peopleSearch.js')
