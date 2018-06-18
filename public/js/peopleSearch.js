@@ -27,6 +27,8 @@ $(document).ready(function() {
 			var capUserType = selectedItem.user_type.charAt(0).toUpperCase() + selectedItem.user_type.slice(1);
 
 			$("#peopleid").val(selectedItem.id);
+			console.log(selectedItem.id);
+
 
 			if ($("#usermodform")) {
 				$("#uid").val(selectedItem.university_id);
@@ -51,9 +53,7 @@ $(document).ready(function() {
 				$("#usermodform").show();
 			} else if ($("#photoform")) {
 				if (selectedItem.image_url) {
-					console.log(selectedItem.image_url);
 					var imageurl = urlprefix + selectedItem.image_url + urlsuffix + new Date().getTime();
-					console.log(imageurl);
 					$("#currentimage").append('<img id="photourl" class="responsive-img" src="' + imageurl + '" alt="Current Profile Image" width="200">');
 					$("#fname").val(selectedItem.image_url)
 				} else {
