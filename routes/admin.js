@@ -137,7 +137,7 @@ router.get('/usermod', authHelpers.loginRequired, authHelpers.adminRequired, (re
 router.get('/photo', authHelpers.loginRequired, authHelpers.adminRequired, nocache, (req, res) => {
   var nconf = req.app.get('nconf');
 
-  res.render('user', {
+  res.render('admin', {
     appconf: nconf.get(),
     user: req.user,
     page: 'photo',
