@@ -8,11 +8,11 @@ $(document).ready(function() {
       url: "/admin/departments/add",
       data: {"userid": personid, "deptid": deptid},
       success: function(result) {
-        if (!($(".collection li").length)) {
-          $(".collection + p").remove();
+        if (!($("#userdepts li").length)) {
+          $("#userdepts + p").remove();
         }
         $("#deptlist option[value='" + deptid + "']").prop('disabled', true);
-        $(".collection").append('<li class="collection-item"><div>' + deptname + ' <a class="secondary-content red-text text-darken-4 deldept" href="#!" data-deptid="' + deptid + '" data-deptname="' + deptname + '"><i class="material-icons">remove_circle</i></a></div></li>');
+        $("#userdepts").append('<li class="collection-item"><div>' + deptname + ' <a class="secondary-content red-text text-darken-4 deldept" href="#!" data-deptid="' + deptid + '" data-deptname="' + deptname + '"><i class="material-icons">remove_circle</i></a></div></li>');
         }
     });
   });
@@ -28,9 +28,9 @@ $(document).ready(function() {
         data: {"userid": personid, "deptid": deptid},
         success: function(result) {
           $("#deptlist option[value='" + deptid + "']").prop('disabled', false);
-          $(".collection li div a[data-deptid='" + deptid + "']").parent().parent().parent().remove();
-          if (!($(".collection li").length)) {
-            $(".collection").after('<p>Not currently a member of any departments or programs</p>');
+          $("#userdepts li div a[data-deptid='" + deptid + "']").parent().parent().parent().remove();
+          if (!($("#userdepts li").length)) {
+            $("#userdepts").after('<p>Not currently a member of any departments or programs</p>');
           }
         }
       });
