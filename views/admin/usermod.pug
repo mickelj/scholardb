@@ -10,22 +10,22 @@ div#usermodform.row
   form.col.s10.offset-s1(method="post", action="/admin/user/modify")
     input#peopleid(type="hidden", name="id")
     div.input-field
-      input#uid.validate(type="text", name="university_id")
+      input#uid.validate(type="text", name="university_id", required)
       label(for="uid") University ID Number
     div.input-field
       label(for="usertype") User Type
-      select#usertype(name="user_type")
+      select#usertype(name="user_type", required)
         option(value="faculty") Faculty
         option(value="staff") Staff
         option(value="student") Student
     div.input-field
-      input#firstname.validate(type="text", name="first_name")
+      input#firstname.validate(type="text", name="first_name", required)
       label(for="firstname") Given Name
     div.input-field
       input#middlename.validate(type="text", name="middle_name")
       label(for="middlename") Middle Name/Initial
     div.input-field
-      input#lastname.validate(type="text", name="last_name")
+      input#lastname.validate(type="text", name="last_name", required)
       label(for="lastname") Surname
     div.input-field
       input#altlastnames.validate(type="text", name="alt_last_names", placeholder="Separate with commas")
@@ -40,7 +40,7 @@ div#usermodform.row
       input#suffix.validate(type="text", name="suffix")
       label(for="suffix") Suffix
     div.input-field
-      input#email.validate(type="email", name="email")
+      input#email.validate(type="email", name="email", required)
       label(for="email", data-error="Please enter a valide email address") Email Address
     div.input-field
       input#phone.validate(type="tel", name="phone")

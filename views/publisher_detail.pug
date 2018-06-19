@@ -11,7 +11,7 @@ block content
     div.col.s12
       h4= publisher.name
   div.row
-    div.col.s12.m3.detail-profile-sidebar
+    div.col.s12.m4.detail-profile-sidebar
       div.row
         p.headline Active #{appconf.customtext.orgshortname} Contributors
         include scholar_cards.pug
@@ -42,5 +42,5 @@ block content
                   each pub in pubsets[0]
                     +pubitem(pub)
         
-    div.col.s12.m9.detail-works
+    div.col.s12.m8.detail-works
       include works_block.pug
