@@ -28,6 +28,10 @@ function loadAltImage() {
   }
 }
 
+function popupError(msg) {
+  M.toast({html: "<h2>" + msg + "</h2>", classes: "red darken-4 white-text pulse"});
+}
+
 $(document).ready(function() {
   $(".card-image img").on('error', loadAltImage);
   $(".people-list img").on('error', loadAltImage);

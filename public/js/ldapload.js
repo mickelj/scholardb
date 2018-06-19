@@ -30,9 +30,9 @@ $(document).ready(function() {
 				try {
 					info = JSON.parse(data);
 					if (info.exists) {
-						alert("User already found in the database");
+						popupError("User already found in the database");
 					} else {
-						if (info.employeeID !== $("#uid").val()) 										$("#uid").val(info.employeeID).next().after(changedIcon);
+						if (info.employeeID !== $("#uid").val()) 										$("#uid").val(info.employeeID).next().addClass("active").after(changedIcon);
 						if (info.givenName !== $("#firstname").val()) 							$("#firstname").val(info.givenName).next().after(changedIcon);
 						if (info.initials !== $("#middlename").val()) 							$("#middlename").val(info.initials).next().after(changedIcon);
 						if (info.sn !== $("#lastname").val()) 											$("#lastname").val(info.sn).next().after(changedIcon);
@@ -41,11 +41,11 @@ $(document).ready(function() {
 						if (info.physicalDeliveryOfficeName !== $("#office").val()) $("#office").val(info.physicalDeliveryOfficeName).next().after(changedIcon);
 					}
 				} catch (e) {
-					alert("User not found in LDAP directory");
+					popupError("User not found in LDAP directory");
 				}
 			})
 			.fail(function(jqxhr, textStatus, error) {
-				alert("Error accessing LDAP directory");
+				popupError("Error accessing LDAP directory");
 			}
 		);
 	})
