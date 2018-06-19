@@ -34,13 +34,15 @@ function saveInfo(req, res, next) {
   var altfirstnames = (info.alt_first_names) ? info.alt_first_names.split(',') : null;
   var altlastnames  = (info.alt_last_names) ? info.alt_last_names.split(',') : null;
   var fullname = info.first_name + " " + ((info.middle_name) ? info.middle_name + " " : "") + info.last_name;
+  var admin = (info.admin) ? info.admin : false;
+  var active = (info.active) ? info.active : false;
 
   db.people.update({ id: info.id },
                    {
                     first_name: info.first_name, middle_name: info.middle_name, last_name: info.last_name,
                     alt_last_names: altlastnames, alt_first_names: altfirstnames, university_id: info.university_id, 
                     prefix: info.prefix, suffix: info.suffix, phone: info.phone, user_type: info.user_type, office_location: info.office,
-                    active: info.active, admin: info.admin, fullname: fullname
+                    active: active, admin: admin, fullname: fullname
                    }, (err, results) => {
     if (err) {
       req.flash('error', 'Error updating information: ' + err);
