@@ -45,5 +45,9 @@
 
   "zotero" : {
     "tsurl"         : "https://scholarsdb-zotero.herokuapp.com"
+  },
+
+  "ldap" : {
+    "useldap"       : true
   }
 }

@@ -80,6 +80,9 @@ $(document).ready(function() {
 					})
 					.fail(function(jqxhr, textStatus, error) {
 					});
+			} else if ($("#userdelform").length) {
+				$(".peopleid").val(selectedItem.id);
+				$("#userdelform").show();
 			}
 		}
 	});

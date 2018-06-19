@@ -1,0 +1,24 @@
+link(rel="stylesheet", href="/css/jquery.auto-complete.css")
+
+p: b Remove an Existing User
+
+div.row
+  p.col.s11 Deleting a user is irreversible and will disconnect that user from all works associated with them.  Please consider #[em disabling] the user, which prevents them from logging in and removes them from the "People" list.  (You can later reactivate &mdash; as well as re-deactivate &mdash; a user from the "Update an Existing User" menu option.)
+
+div.row
+  div.input-field.col.s11
+    input#usersearch(type="text", placeholder="Start typing the name of person you want to delete/disable")
+
+div#userremoveform.row
+  form.col.s5.offset-s1(method="post", action="/admin/user/deactivate")
+    input.peopleid(type="hidden", name="id")
+    button#deactivateuser.btn.amber.accent-4.waves-effect.waves-light Deactivate User
+
+  form#userdelform.col.s5.offset-s1(method="post", action="/admin/user/delete")
+    input.peopleid(type="hidden", name="id")
+    button#deleteuser.btn.red.darken-4.waves-effect.waves-light.right Delete User
+
+include ../popups.pug
+script(type='text/javascript', src='/js/jquery.auto-complete.min.js')
+script(type='text/javascript', src='/js/peopleSearch.js')
+script(type='text/javascript', src='/js/userdel.js')

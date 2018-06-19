@@ -119,6 +119,37 @@ function processPhoto(req, res, next) {
   }
 }
 
+function deactivateUser(req, res, next) {
+  db.people.update({id: req.body.id}, {active: false}, (err, results) => {
+    if (err) {
+      req.flash('error', 'Error deactivating user');
+      return res.redirect('back');
+    }
+
+    req.flash('success', 'User successfully deactivated.');
+    return res.redirect('/admin');
+  });
+}
+
+function deleteUser(req, res, next) {
+  db.run("UPDATE works SET contributors = $1 WHERE contributors @> $2;", ["array_remove(contributors, " + req.body.id + ")", "ARRAY[" + req.body.id + "]"], (err, results) => {
+    if (err) {
+      req.flash('error', 'Error deleting user from works.');
+      return res.redirect('back');
+    }
+
+    db.people.destroy({id: req.body.id}, (err, results) => {
+      if (err) {
+        req.flash('error', 'Error deleting user');
+        return res.redirect('back');
+      }
+
+      req.flash('success', 'User successfully deleted.');
+      return res.redirect('/admin');  
+    });
+  });
+}
+
 function getAllDepts(req, res, next) {
   db.run("SELECT id, name FROM groups WHERE hidden = false ORDER BY name", (err, results) => {
     if (err) return next(err);
@@ -141,11 +172,9 @@ function addDepartment(req, res, next) {
   if (deptid) {
     db.memberships.insert({group_id: deptid, people_id: req.body.userid}, (err, results) => {
       if (err) {
-        req.flash('error', 'Error adding department to database: ' + err);
         return res.json({success: false});
       }
 
-      req.flash('success', 'Department added successfully');
       return res.json({success: true});
     });
   }
@@ -157,10 +186,8 @@ function deleteDepartment(req, res, next) {
   if (deptid) {
     db.memberships.destroy({group_id: deptid, people_id: req.body.userid}, (err, results) => {
       if (err) {
-        req.flash('error', 'Error removing department from database: ' + err);
         return res.json({success: false});
       }
-      req.flash('success', 'Department removed successfully');
       return res.json({success: true});
     });
   }
@@ -184,6 +211,18 @@ router.get('/usermod', authHelpers.loginRequired, authHelpers.adminRequired, (re
     appconf: nconf.get(),
     user: req.user,
     page: 'usermod',
+    error: req.flash('error'),
+    success: req.flash('success')
+  });
+});
+
+router.get('/userdel', authHelpers.loginRequired, authHelpers.adminRequired, (req, res, next) => {
+  var nconf = req.app.get('nconf');
+
+  res.render('admin', {
+    appconf: nconf.get(),
+    user: req.user,
+    page: 'userdel',
     error: req.flash('error'),
     success: req.flash('success')
   });
@@ -221,5 +260,7 @@ router.post('/usermod', authHelpers.loginRequired, authHelpers.adminRequired, sa
 router.post('/photo', authHelpers.loginRequired, authHelpers.adminRequired, processPhoto);
 router.post('/departments/add', authHelpers.loginRequired, authHelpers.adminRequired, addDepartment);
 router.post('/departments/delete', authHelpers.loginRequired, authHelpers.adminRequired, deleteDepartment);
+router.post('/user/deactivate', authHelpers.loginRequired, authHelpers.adminRequired, deactivateUser);
+router.post('/user/delete', authHelpers.loginRequired, authHelpers.adminRequired, deleteUser);
 
 module.exports = router;
