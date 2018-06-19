@@ -48,6 +48,6 @@
   },
 
   "ldap" : {
-    "useldap"       : true
+    "useldap"       : false
   }
 }
