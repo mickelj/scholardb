@@ -4,3 +4,6 @@ getimages.js
 *.csv
 node_modules/csv-parse
 *.txt
+environment.yaml
+config/environment.json
+config/database.json
