@@ -21,7 +21,8 @@ passport.use(new WindowsStrategy({
       url:             process.env.LDAP_URL,
       base:            process.env.LDAP_BASE,
       bindDN:          process.env.LDAP_BIND_USER,
-      bindCredentials: process.env.LDAP_BIND_PWD
+      bindCredentials: process.env.LDAP_BIND_PWD,
+      reconnect:       true
     },
     integrated:      false,
     passReqToCallback: true

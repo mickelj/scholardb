@@ -15,7 +15,7 @@
     "imguploader"   : "http://localhost/photos/upload.php",
     "orgurl"        : "https://library.wlu.edu",
     "catalogurl"    : "https://wlu.primo.exlibrisgroup.com/discovery/search?vid=01WLU_INST:01WLU&sortby=rank",
-    "linkresolver"  : "https://wlu.alma.exlibrisgroup.com/view/uresolver/01WLU_INST/openurl/",
+    "linkresolver"  : "https://wlu.primo.exlibrisgroup.com/view/uresolver/01WLU_INST/openurl/",
     "adminemail"    : "leyburnlibrary@gmail.com"
   },
 
