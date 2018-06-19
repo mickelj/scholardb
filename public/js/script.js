@@ -29,7 +29,7 @@ function loadAltImage() {
 }
 
 function popupError(msg) {
-  M.toast({html: "<h2>" + msg + "</h2>", classes: "red darken-4 white-text pulse"});
+  M.toast({html: "<b>" + msg + "</b>", classes: "red darken-4 white-text"});
 }
 
 $(document).ready(function() {

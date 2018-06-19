@@ -2,10 +2,10 @@ link(rel="stylesheet", href="/css/jquery.auto-complete.css")
 
 p: b Add New User
 
-div.row
-  div.input-field.col.s11
-    if appconf.ldap.useldap
-      button.btn.waves-effect.waves-light.right.modal-trigger#ldapload(data-target="ldapmodal") Load User Info from LDAP 
+if appconf.ldap.useldap
+  div.row
+    div.input-field.col.s11
+      button.btn.waves-effect.waves-light.modal-trigger#ldapload(data-target="ldapmodal") Load User Info from LDAP 
 
 div#useraddform.row
   form.col.s10.offset-s1(method="post", action="/admin/useradd")
@@ -14,7 +14,7 @@ div#useraddform.row
       input#uid.validate(type="text", name="university_id")
       label(for="uid") University ID Number
     div.input-field
-      label(for="usertype") User Type
+      label.active(for="usertype") User Type
       select#usertype(name="user_type")
         option(value="faculty") Faculty
         option(value="staff") Staff

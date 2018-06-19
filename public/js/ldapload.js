@@ -26,19 +26,18 @@ $(document).ready(function() {
 		}
 		xhr = $.getJSON('/admin/adinfo', {username: $("#ldapusername").val(), adduser: adduser})
 			.done(function(data) {
-				console.log(data);
 				try {
 					info = JSON.parse(data);
 					if (info.exists) {
-						popupError("User already found in the database");
+						popupError("User already exists in the database");
 					} else {
 						if (info.employeeID !== $("#uid").val()) 										$("#uid").val(info.employeeID).next().addClass("active").after(changedIcon);
-						if (info.givenName !== $("#firstname").val()) 							$("#firstname").val(info.givenName).next().after(changedIcon);
-						if (info.initials !== $("#middlename").val()) 							$("#middlename").val(info.initials).next().after(changedIcon);
-						if (info.sn !== $("#lastname").val()) 											$("#lastname").val(info.sn).next().after(changedIcon);
-						if (info.mail !== $("#email").val()) 												$("#email").val(info.mail).next().after(changedIcon);
-						if (info.telephoneNumber !== $("#phone").val()) 						$("#phone").val(info.telephoneNumber).next().after(changedIcon);
-						if (info.physicalDeliveryOfficeName !== $("#office").val()) $("#office").val(info.physicalDeliveryOfficeName).next().after(changedIcon);
+						if (info.givenName !== $("#firstname").val()) 							$("#firstname").val(info.givenName).next().addClass("active").after(changedIcon);
+						if (info.initials !== $("#middlename").val()) 							$("#middlename").val(info.initials).next().addClass("active").after(changedIcon);
+						if (info.sn !== $("#lastname").val()) 											$("#lastname").val(info.sn).next().addClass("active").after(changedIcon);
+						if (info.mail !== $("#email").val()) 												$("#email").val(info.mail).next().addClass("active").after(changedIcon);
+						if (info.telephoneNumber !== $("#phone").val()) 						$("#phone").val(info.telephoneNumber).next().addClass("active").after(changedIcon);
+						if (info.physicalDeliveryOfficeName !== $("#office").val()) $("#office").val(info.physicalDeliveryOfficeName).next().addClass("active").after(changedIcon);
 					}
 				} catch (e) {
 					popupError("User not found in LDAP directory");
