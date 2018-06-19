@@ -24,8 +24,7 @@ function getADInfo(req, res) {
   AD.findUser(ADattributes, req.query.username, function(err, user) {
     if (err || !user) return res.json({});
 
-    if (req.query.adduser) {
-      console.log("Is it checking this?");
+    if (req.query.adduser === "true") {
       db.people.where("university_id = $1 OR email = $2", [user.employeeID, user.mail], (err, results) => {
         if (err) return res.json({});
         if (results.length) return res.json(JSON.stringify({exists: true}));
