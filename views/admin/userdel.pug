@@ -4,7 +4,7 @@ p: b Remove an Existing User
 
 div.row
   div.col.s11
-    p.red.darken-4.white-text 
+    p#delwarn.red.darken-4.white-text 
       strong Deleting a user is irreversible and will disconnect that user from all works associated with them.  Please consider #[em disabling] the user, which prevents them from logging in and removes them from the "People" list. #[br]#[br] (You can later reactivate &mdash; as well as re-deactivate &mdash; a user from the "Update an Existing User" menu option.)
 
 div.row
@@ -12,11 +12,11 @@ div.row
     input#usersearch(type="text", placeholder="Start typing the name of person you want to delete/disable")
 
 div#userremoveform.row
-  form.col.s5.offset-s1(method="post", action="/admin/user/deactivate")
+  form.col.s5.offset-s2(method="post", action="/admin/user/deactivate")
     input.peopleid(type="hidden", name="id")
     button#deactivateuser.btn.amber.accent-4.waves-effect.waves-light Deactivate User
 
-  form#userdelform.col.s5.offset-s1(method="post", action="/admin/user/delete")
+  form#userdelform.col.s5(method="post", action="/admin/user/delete")
     input.peopleid(type="hidden", name="id")
     button#deleteuser.btn.red.darken-4.waves-effect.waves-light.right Delete User
 

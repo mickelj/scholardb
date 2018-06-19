@@ -82,7 +82,7 @@ $(document).ready(function() {
 					});
 			} else if ($("#userdelform").length) {
 				$(".peopleid").val(selectedItem.id);
-				$("#userdelform").show();
+				$("#userremoveform").show();
 			}
 		}
 	});

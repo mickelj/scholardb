@@ -473,6 +473,10 @@ iframe li~div {
   display: none;
 }
 
+p#delwarn {
+  padding: 1rem;
+}
+
 @media screen and (min-width: 1201px) {
   .xl0 {
     display: none;
