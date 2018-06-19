@@ -1,0 +1,78 @@
+link(rel="stylesheet", href="/css/jquery.auto-complete.css")
+
+p: b Add New User
+
+div.row
+  div.input-field.col.s11
+		if appconf.ldap.useldap
+			button.btn.waves-effect.waves-light.right.modal-trigger#ldapload(data-target="ldapmodal") Load User Info from LDAP
+
+div#useraddform.row
+  form.col.s10.offset-s1(method="post", action="/admin/useradd")
+    //- input#peopleid(type="hidden", name="id")
+    div.input-field
+      input#uid.validate(type="text", name="university_id")
+      label(for="uid") University ID Number
+    div.input-field
+      label(for="usertype") User Type
+      select#usertype(name="user_type")
+        option(value="faculty") Faculty
+        option(value="staff") Staff
+        option(value="student") Student
+    div.input-field
+      input#firstname.validate(type="text", name="first_name")
+      label(for="firstname") Given Name
+    div.input-field
+      input#middlename.validate(type="text", name="middle_name")
+      label(for="middlename") Middle Name/Initial
+    div.input-field
+      input#lastname.validate(type="text", name="last_name")
+      label(for="lastname") Surname
+    div.input-field
+      input#altlastnames.validate(type="text", name="alt_last_names", placeholder="Separate with commas")
+      label(for="alt_last_names") Previous/Alternative Last Names Used for Publication
+    div.input-field
+      input#altfirstnames.validate(type="text", name="alt_first_names", placeholder="Separate with commas")
+      label(for="alt_first_names") Previous/Alternative First Names Used for Publication
+    div.input-field
+      input#prefix.validate(type="text", name="prefix")
+      label(for="prefix") Prefix
+    div.input-field
+      input#suffix.validate(type="text", name="suffix")
+      label(for="suffix") Suffix
+    div.input-field
+      input#email.validate(type="email", name="email")
+      label(for="email", data-error="Please enter a valide email address") Email Address
+    div.input-field
+      input#phone.validate(type="tel", name="phone")
+      label(for="phone", data-error="Please enter a valid phone number") Phone #
+    div.input-field
+      input#office.validate(type="text", name="office")
+      label(for="office") Office Location
+    p
+      label
+        input#isactive(type="checkbox", name="active")
+        span Active User?
+    p
+      label
+        input#isadmin(type="checkbox", name="admin")
+        span Is Admin?
+
+    div.row
+      div.input-field.col.s12
+        button.btn.blue.darken-4.waves-effect.waves-light(type="submit") Add User
+
+div#ldapmodal.modal
+  div.modal-content
+    h4 Load User Info from LDAP
+    div.input-field
+      input#ldapusername(type="text", name="ldapusername", placeholder="Enter the person's " + appconf.customtext.orgshortname + " username")
+      label(for="ldapusername") Search by #{appconf.customtext.orgshortname} Username
+    div.modal-footer
+      button.modal-close.waves-effect.waves-light.btn-flat(style="margin-right:1rem") Cancel
+      button#ldaploadconfirm.modal-close.btn.green.darken-4.waves-effect.waves-light.disabled Load
+
+include ../popups.pug
+script(type='text/javascript', src='/js/jquery.auto-complete.min.js')
+script(type='text/javascript', src='/js/peopleSearch.js')
+script(type='text/javascript', src='/js/ldapload.js')
