@@ -19,7 +19,7 @@ function getADInfo(req, res) {
     if (req.query.adduser) {
       db.people.where("university_id = $1 OR email = $2", [user.employeeID, user.mail], (err, results) => {
         if (err) return res.json({});
-        if (results) return res.json(JSON.stringify({exists: true}));
+        if (results.length) return res.json(JSON.stringify({exists: true}));
         return res.json(JSON.stringify(user));
       });
     } else {
