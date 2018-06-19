@@ -70,6 +70,7 @@ $(document).ready(function() {
 								$("#deptlist option[value='" + data[d].group_id + "']").prop('disabled', true);
 							}
 							$("#userdepts").show();
+							$("#nodepts").hide();
 					  } else {
 							$("#userdepts").hide();
 							$("#nodepts").show();
