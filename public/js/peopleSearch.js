@@ -64,6 +64,7 @@ $(document).ready(function() {
 				xhr = $.getJSON('/admin/getdepts', {id: selectedItem.id})
 					.done(function(data) {
 						$("#userdepts").html("");
+						$("#deptlist option").prop("disabled", false);
 						if (data.length) {
 						  for (var d in data) {
 								$("#userdepts").append('<li class="collection-item"><div>' + data[d].name + ' <a class="secondary-content red-text text-darken-4 deldept" href="#!" data-deptid="' + data[d].group_id + '" data-deptname="' + data[d].name + '"><i class="material-icons">remove_circle</i></a></div></li>');
