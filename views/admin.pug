@@ -13,8 +13,6 @@ block content
           a.collection-item(href="/admin/work") Add/Update a Work
           a.collection-item(href="/admin/pending") Process Pending Works
           a.collection-item(href="/admin/usernew") Add a New User
-          if appconf.ldap.useldap
-            a.collection-item(href="/admin/usersldap") Add New Users from LDAP
           a.collection-item(href="/admin/usermod") Update an Existing User
           a.collection-item(href="/admin/userdel") Remove an Existing User
           a.collection-item(href="/admin/photo") Add/Update User Photographs
@@ -24,8 +22,6 @@ block content
         case page
           when "usernew"
             include admin/usernew.pug
-          when "usersldap"
-            include admin/usersldap.pug
           when "userdel"
             include admin/userdel.pug
           when "work"

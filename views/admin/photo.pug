@@ -11,7 +11,7 @@ div#photoform
     
   p: b Upload a New Photograph (PNG or JPEG format only)
 
-  form(method="post", action="/admin/photo", encType="multipart/form-data")
+  form(method="post", action="/admin/user/photo", encType="multipart/form-data")
     input#peopleid(type="hidden", name="id")
     input#newphoto(type="file", name="newphoto")
     input#fname(type="hidden", name="fname")

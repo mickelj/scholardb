@@ -8,7 +8,7 @@ if appconf.ldap.useldap
       button.btn.waves-effect.waves-light.modal-trigger#ldapload(data-target="ldapmodal") Load User Info from LDAP 
 
 div#useraddform.row
-  form.col.s10.offset-s1(method="post", action="/admin/useradd")
+  form.col.s10.offset-s1(method="post", action="/admin/user/add")
     //- input#peopleid(type="hidden", name="id")
     div.input-field
       input#uid.validate(type="text", name="university_id")

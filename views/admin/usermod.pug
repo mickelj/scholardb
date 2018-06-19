@@ -7,7 +7,7 @@ div.row
     input#usersearch(type="text", placeholder="Start typing the name of person you want to modify")
 
 div#usermodform.row
-  form.col.s10.offset-s1(method="post", action="/admin/usermod")
+  form.col.s10.offset-s1(method="post", action="/admin/user/modify")
     input#peopleid(type="hidden", name="id")
     div.input-field
       input#uid.validate(type="text", name="university_id")

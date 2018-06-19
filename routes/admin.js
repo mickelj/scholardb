@@ -10,6 +10,14 @@ const ADoptions = { url: process.env.LDAP_URL,  baseDN: process.env.LDAP_BASE,  
 const AD = new ActiveDirectory(ADoptions);
 const ADattributes = {attributes: ['sAMAccountName', 'mail', 'whenCreated', 'employeeID', 'sn', 'givenName', 'initials', 'title', 'physicalDeliveryOfficeName', 'telephoneNumber']};
 
+function _cleanInfo(info) {
+  Object.keys(info).forEach(function(val) {
+    if (!info[val]) info[val] = null;
+  });
+
+  return info;
+}
+
 function getADInfo(req, res) {
   if (!req.query.username) return res.json({});
 
@@ -28,15 +36,32 @@ function getADInfo(req, res) {
   });
 }
 
-function saveInfo(req, res, next) {
-  function _cleanInfo(info) {
-    Object.keys(info).forEach(function(val) {
-      if (!info[val]) info[val] = null;
-    });
-  
-    return info;
-  }
-  
+function addUser(req, res, next) {
+  var info = _cleanInfo(req.body);
+
+  var altfirstnames = (info.alt_first_names) ? info.alt_first_names.split(',') : null;
+  var altlastnames  = (info.alt_last_names) ? info.alt_last_names.split(',') : null;
+  var fullname = info.first_name + " " + ((info.middle_name) ? info.middle_name + " " : "") + info.last_name;
+  var admin = (info.admin) ? info.admin : false;
+  var active = (info.active) ? info.active : false;
+
+  db.people.insert({
+                    first_name: info.first_name, middle_name: info.middle_name, last_name: info.last_name,
+                    alt_last_names: altlastnames, alt_first_names: altfirstnames, university_id: info.university_id, 
+                    prefix: info.prefix, suffix: info.suffix, phone: info.phone, user_type: info.user_type, office_location: info.office,
+                    active: active, admin: admin, fullname: fullname
+                   }, (err, results) => {
+    if (err) {
+      req.flash('error', 'Error adding user: ' + err);
+      return res.redirect('back');
+    }
+
+    req.flash('success', 'User added successfully');
+    return res.redirect('/admin');
+  });
+}
+
+function modifyUser(req, res, next) {
   var info = _cleanInfo(req.body);
 
   var altfirstnames = (info.alt_first_names) ? info.alt_first_names.split(',') : null;
@@ -53,10 +78,10 @@ function saveInfo(req, res, next) {
                     active: active, admin: admin, fullname: fullname
                    }, (err, results) => {
     if (err) {
-      req.flash('error', 'Error updating information: ' + err);
-      return res.redirect('/admin/usermod');
+      req.flash('error', 'Error saving information: ' + err);
+      return res.redirect('back');
     }
-    req.flash('success', 'Information updated successfully');
+    req.flash('success', 'User information saved successfully');
     return res.redirect('/admin');
   });
 }
@@ -278,11 +303,12 @@ router.get('/departments', authHelpers.loginRequired, getAllDepts, (req, res) =>
 router.get('/adinfo', authHelpers.loginRequired, authHelpers.adminRequired, getADInfo);
 router.get('/getdepts', authHelpers.loginRequired, authHelpers.adminRequired, getDepartments);
 
-router.post('/usermod', authHelpers.loginRequired, authHelpers.adminRequired, saveInfo);
-router.post('/photo', authHelpers.loginRequired, authHelpers.adminRequired, processPhoto);
-router.post('/departments/add', authHelpers.loginRequired, authHelpers.adminRequired, addDepartment);
-router.post('/departments/delete', authHelpers.loginRequired, authHelpers.adminRequired, deleteDepartment);
+router.post('/user/departments/add', authHelpers.loginRequired, authHelpers.adminRequired, addDepartment);
+router.post('/user/departments/delete', authHelpers.loginRequired, authHelpers.adminRequired, deleteDepartment);
+router.post('/user/add', authHelpers.loginRequired, authHelpers.adminRequired, addUser)
+router.post('/user/modify', authHelpers.loginRequired, authHelpers.adminRequired, modifyUser);
 router.post('/user/deactivate', authHelpers.loginRequired, authHelpers.adminRequired, deactivateUser);
 router.post('/user/delete', authHelpers.loginRequired, authHelpers.adminRequired, deleteUser);
+router.post('/user/photo', authHelpers.loginRequired, authHelpers.adminRequired, processPhoto);
 
 module.exports = router;
