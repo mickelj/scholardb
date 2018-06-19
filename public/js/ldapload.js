@@ -26,6 +26,7 @@ $(document).ready(function() {
 		}
 		xhr = $.getJSON('/admin/adinfo', {username: $("#ldapusername").val(), adduser: adduser})
 			.done(function(data) {
+				console.log(data);
 				try {
 					info = JSON.parse(data);
 					if (info.exists) {
