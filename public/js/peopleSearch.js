@@ -70,7 +70,7 @@ $(document).ready(function() {
 						  }
 					  } else {
 							$("#userdepts").hide();
-							$("#userdepts").after('<p class="col s10 offset-s1 m8 offset-m1 l6 offset-l1">Not currently a member of any departments or programs</p>');
+							$("#nodepts").show();
 						}
 						$("#deptform").show();
 					})
