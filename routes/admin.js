@@ -49,7 +49,7 @@ function addUser(req, res, next) {
                     first_name: info.first_name, middle_name: info.middle_name, last_name: info.last_name,
                     alt_last_names: altlastnames, alt_first_names: altfirstnames, university_id: info.university_id, 
                     prefix: info.prefix, suffix: info.suffix, phone: info.phone, user_type: info.user_type, office_location: info.office,
-                    active: active, admin: admin, fullname: fullname
+                    active: active, admin: admin, fullname: fullname, email: info.email
                    }, (err, results) => {
     if (err) {
       req.flash('error', 'Error adding user: ' + err);
@@ -75,7 +75,7 @@ function modifyUser(req, res, next) {
                     first_name: info.first_name, middle_name: info.middle_name, last_name: info.last_name,
                     alt_last_names: altlastnames, alt_first_names: altfirstnames, university_id: info.university_id, 
                     prefix: info.prefix, suffix: info.suffix, phone: info.phone, user_type: info.user_type, office_location: info.office,
-                    active: active, admin: admin, fullname: fullname
+                    active: active, admin: admin, fullname: fullname, email: info.email
                    }, (err, results) => {
     if (err) {
       req.flash('error', 'Error saving information: ' + err);
