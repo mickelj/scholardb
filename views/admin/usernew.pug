@@ -4,12 +4,12 @@ p: b Add New User
 
 div.row
   div.input-field.col.s11
-	  if appconf.ldap.useldap
-		  button.btn.waves-effect.waves-light.right.modal-trigger#ldapload(data-target="ldapmodal") Load User Info from LDAP 
+    if appconf.ldap.useldap
+      button.btn.waves-effect.waves-light.right.modal-trigger#ldapload(data-target="ldapmodal") Load User Info from LDAP 
 
 div#useraddform.row
-	form.col.s10.offset-s1(method="post", action="/admin/useradd")
-  	//- input#peopleid(type="hidden", name="id")
+  form.col.s10.offset-s1(method="post", action="/admin/useradd")
+    //- input#peopleid(type="hidden", name="id")
     div.input-field
       input#uid.validate(type="text", name="university_id")
       label(for="uid") University ID Number
