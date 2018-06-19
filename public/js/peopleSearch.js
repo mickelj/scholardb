@@ -63,8 +63,8 @@ $(document).ready(function() {
 				try {xhr.abort();} catch(e){}
 				xhr = $.getJSON('/admin/getdepts', {id: selectedItem.id})
 					.done(function(data) {
+						$("#userdepts").html("");
 						if (data.length) {
-							$("#userdepts").html("");
 						  for (var d in data) {
 								$("#userdepts").append('<li class="collection-item"><div>' + data[d].name + ' <a class="secondary-content red-text text-darken-4 deldept" href="#!" data-deptid="' + data[d].group_id + '" data-deptname="' + data[d].name + '"><i class="material-icons">remove_circle</i></a></div></li>');
 								$("#deptlist option[value='" + data[d].group_id + "']").prop('disabled', true);
