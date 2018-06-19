@@ -22,7 +22,7 @@ function getADInfo(req, res) {
         if (results) return res.json({exists: true});
       });
     }
-    
+
     return res.json(JSON.stringify(user));
   });
 }
@@ -208,6 +208,18 @@ router.get('/', authHelpers.loginRequired, authHelpers.adminRequired, (req, res)
   res.render('admin', {
     appconf: nconf.get(),
     user: req.user,
+    error: req.flash('error'),
+    success: req.flash('success')
+  });
+});
+
+router.get('/usernew', authHelpers.loginRequired, authHelpers.adminRequired, (req, res, next) => {
+  var nconf = req.app.get('nconf');
+
+  res.render('admin', {
+    appconf: nconf.get(),
+    user: req.user,
+    page: 'usernew',
     error: req.flash('error'),
     success: req.flash('success')
   });
