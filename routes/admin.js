@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const authHelpers = require('../utils/auth-helpers');
 const db = require('../utils/db');
+const gennames = require('../utils/genNames');
 const nocache = require('node-nocache');
 const jimp = require('jimp');
 const request = require('request');
@@ -53,6 +54,20 @@ function addUser(req, res, next) {
                    }, (err, results) => {
     if (err) {
       req.flash('error', 'Error adding user: ' + err);
+      return res.redirect('back');
+    }
+
+    req.newuserid = results;
+    return next();
+  });
+}
+
+function addUserToBaseGroup(req, res, next) {
+  var nconf = req.app.get('nconf');
+
+  db.memberships.insert({group_id: nconf.get('basegroupid'), people_id: req.newuserid}, (err, results) => {
+    if (err) {
+      req.flash('error', 'Error adding user to base group: ' + err);
       return res.redirect('back');
     }
 
@@ -300,12 +315,25 @@ router.get('/departments', authHelpers.loginRequired, getAllDepts, (req, res) =>
   });
 });
 
+router.get('/deptmod', authHelpers.loginRequired, authHelpers.adminRequired, getAllDepts, (req, res) => {
+  var nconf = req.app.get('nconf');
+
+  res.render('admin', {
+    appconf: nconf.get(),
+    user: req.user,
+    page: 'deptmod',
+    alldepts: req.alldepts,
+    error: req.flash('error'),
+    success: req.flash('success')
+  });
+});
+
 router.get('/adinfo', authHelpers.loginRequired, authHelpers.adminRequired, getADInfo);
 router.get('/getdepts', authHelpers.loginRequired, authHelpers.adminRequired, getDepartments);
 
 router.post('/user/departments/add', authHelpers.loginRequired, authHelpers.adminRequired, addDepartment);
 router.post('/user/departments/delete', authHelpers.loginRequired, authHelpers.adminRequired, deleteDepartment);
-router.post('/user/add', authHelpers.loginRequired, authHelpers.adminRequired, addUser)
+router.post('/user/add', authHelpers.loginRequired, authHelpers.adminRequired, addUser, addUserToBaseGroup)
 router.post('/user/modify', authHelpers.loginRequired, authHelpers.adminRequired, modifyUser);
 router.post('/user/deactivate', authHelpers.loginRequired, authHelpers.adminRequired, deactivateUser);
 router.post('/user/delete', authHelpers.loginRequired, authHelpers.adminRequired, deleteUser);

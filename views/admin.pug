@@ -16,7 +16,10 @@ block content
           a.collection-item(href="/admin/usermod") Update an Existing User
           a.collection-item(href="/admin/userdel") Remove an Existing User
           a.collection-item(href="/admin/photo") Add/Update User Photographs
-          a.collection-item(href="/admin/departments") Update Department/Program Membership
+          a.collection-item(href="/admin/deptadd") Add a New Group
+          a.collection-item(href="/admin/deptmod") Modify an Existing Group
+          a.collection-item(href="/admin/deptdel") Delete an Existing Group
+          a.collection-item(href="/admin/departments") Update Group Membership
           
       div.col.s9
         case page
@@ -24,6 +27,12 @@ block content
             include admin/usernew.pug
           when "userdel"
             include admin/userdel.pug
+          when "deptadd"
+            include admin/deptadd.pug
+          when "deptmod"
+            include admin/deptmod.pug
+          when "deptdel"
+            include admin/deptdel.pug
           when "work"
             include admin/work.pug
           when "workcitation"
