@@ -71,7 +71,7 @@ $(document).ready(function() {
 					  } else {
 							$("#userdepts").after('<p>Not currently a member of any departments or programs</p>');
 						}
-						$("#dataform").show();
+						$("#deptform").show();
 					})
 					.fail(function(jqxhr, textStatus, error) {
 					});

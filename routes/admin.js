@@ -219,5 +219,7 @@ router.get('/getdepts', authHelpers.loginRequired, authHelpers.adminRequired, ge
 
 router.post('/usermod', authHelpers.loginRequired, authHelpers.adminRequired, saveInfo);
 router.post('/photo', authHelpers.loginRequired, authHelpers.adminRequired, processPhoto);
+router.post('/departments/add', authHelpers.loginRequired, authHelpers.adminRequired, addDepartment);
+router.post('/departments/delete', authHelpers.loginRequired, authHelpers.adminRequired, deleteDepartment);
 
 module.exports = router;
