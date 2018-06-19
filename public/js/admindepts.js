@@ -9,7 +9,8 @@ $(document).ready(function() {
       data: {"userid": personid, "deptid": deptid},
       success: function(result) {
         if (!($("#userdepts li").length)) {
-          $("#userdepts + p").remove();
+          $("#nodepts").hide();
+          $("#userdepts").show();
         }
         $("#deptlist option[value='" + deptid + "']").prop('disabled', true);
         $("#userdepts").append('<li class="collection-item"><div>' + deptname + ' <a class="secondary-content red-text text-darken-4 deldept" href="#!" data-deptid="' + deptid + '" data-deptname="' + deptname + '"><i class="material-icons">remove_circle</i></a></div></li>');
@@ -31,7 +32,8 @@ $(document).ready(function() {
           $("#deptlist option[value='" + deptid + "']").prop('disabled', false);
           $("#userdepts li div a[data-deptid='" + deptid + "']").parent().parent().remove();
           if (!($("#userdepts li").length)) {
-            $("#userdepts").after('<p>Not currently a member of any departments or programs</p>');
+            $("#nodepts").show();
+            $("#userdepts").hide();
           }
         }
       });
