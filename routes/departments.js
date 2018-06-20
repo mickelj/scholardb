@@ -180,7 +180,7 @@ function getRssResults(req, res, next) {
   var dept_id = req.params.id;
   var limit = req.query.limit || 10;
 
-  db.run("SELECT DISTINCT works.id, title_primary as title, description as work_type, contributors, publications.name as pubname, publications.id as pubid, publication_date_year as year, works.updated_at, works.created_at FROM works JOIN publications ON publications.id = works.publication_id JOIN work_types USING (type), JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) LEFT JOIN people p ON person_id = p.id LEFT JOIN memberships m on p.id = m.people_id JOIN groups g on m.group_id = g.id WHERE g.hidden = false AND g.id = $1 ORDER BY works.created_at DESC, works.id DESC LIMIT $2", [dept_id, limit], function(err, results) {
+  db.run("SELECT DISTINCT works.id, title_primary as title, description as work_type, contributors, publications.name as pubname, publications.id as pubid, publication_date_year as year, works.updated_at, works.created_at FROM works JOIN publications ON publications.id = works.publication_id JOIN work_types USING (type), JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) LEFT JOIN people p ON person_id = p.id LEFT JOIN memberships m on p.id = m.people_id JOIN groups g on m.group_id = g.id WHERE g.hidden = false AND g.id = $1 ORDER BY year DESC, works.created_at DESC, works.id DESC LIMIT $2", [dept_id, limit], function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
