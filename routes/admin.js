@@ -43,8 +43,8 @@ function addUser(req, res, next) {
   var altfirstnames = (info.alt_first_names) ? info.alt_first_names.split(',') : null;
   var altlastnames  = (info.alt_last_names) ? info.alt_last_names.split(',') : null;
   var fullname = info.first_name + " " + ((info.middle_name) ? info.middle_name + " " : "") + info.last_name;
-  var admin = (info.admin) ? info.admin : false;
-  var active = (info.active) ? info.active : false;
+  var admin = info.admin || false;
+  var active = info.active || false;
 
   db.people.insert({
                     first_name: info.first_name, middle_name: info.middle_name, last_name: info.last_name,
@@ -82,8 +82,8 @@ function modifyUser(req, res, next) {
   var altfirstnames = (info.alt_first_names) ? info.alt_first_names.split(',') : null;
   var altlastnames  = (info.alt_last_names) ? info.alt_last_names.split(',') : null;
   var fullname = info.first_name + " " + ((info.middle_name) ? info.middle_name + " " : "") + info.last_name;
-  var admin = (info.admin) ? info.admin : false;
-  var active = (info.active) ? info.active : false;
+  var admin = info.admin || false;
+  var active = info.active || false;
 
   db.people.update({ id: info.id },
                    {
@@ -258,14 +258,33 @@ function deleteUserGroup(req, res, next) {
   }
 }
 
+function addGroup(req, res, next) {
+  var nconf = req.app.get('nconf');
+  var info = _cleanInfo(req.body);
+
+  var hidden = info.hidden || false;
+  var machine_name = gennames.genMachineName(info.name);
+  var sort_name = gennames.genSortName(info.name);
+  var parentid = info.parent_id || nconf.get('basegroupid');
+
+  db.groups.insert({ name: info.name, url: info.url, parent_id: parentid, hidden: hidden, machine_name: machine_name, sort_name: sort_name }, (err, results) => {
+    if (err) {
+      req.flash('error', 'Error creating new group: ' + err);
+      return res.redirect('back');
+    }
+    req.flash('success', 'New group created successfully');
+    return res.redirect('/admin');
+  });
+}
+
 function modifyGroup(req, res, next) {
   var nconf = req.app.get('nconf');
   var info = _cleanInfo(req.body);
 
-  var hidden = (info.hidden) ? info.hidden : false;
+  var hidden = info.hidden || false;
   var machine_name = gennames.genMachineName(info.name);
   var sort_name = gennames.genSortName(info.name);
-  var parentid = (info.parent_id) ? info.parent_id : nconf.get('basegroupid');
+  var parentid = info.parent_id || nconf.get('basegroupid');
 
   db.groups.update({ id: info.groupid },
                    { name: info.name, url: info.url, parent_id: parentid, hidden: hidden, machine_name: machine_name, sort_name: sort_name }, (err, results) => {
@@ -275,6 +294,67 @@ function modifyGroup(req, res, next) {
     }
     req.flash('success', 'Group information saved successfully');
     return res.redirect('/admin');
+  });
+}
+
+function hideGroup(req, res, next) {
+  db.groups.update({id: req.body.groupid}, {hidden: true}, (err, results) => {
+    if (err) {
+      req.flash('error', 'Error hiding group');
+      return res.redirect('back');
+    }
+
+    req.flash('success', 'Group successfully hidden.');
+    return res.redirect('/admin');
+  });
+}
+
+function removeMemberships(req, res, next) {
+  db.memberships.destroy({group_id: req.body.groupid}, (err, results) => {
+    if (err) {
+      req.flash('error', 'Error unlinking groups and users.');
+      return res.redirect('back');
+    }
+
+    return next();
+  });
+}
+
+function resetParentGroup(req, res, next) {
+  var nconf = req.app.get('nconf');
+
+  function getGroupsWithParent(gid, cb) {
+    db.run("SELECT parent_id FROM groups WHERE id = $1", [gid], (err, results) => {
+      if (err || !results.length) cb(false);
+      cb(results[0].parent_id);
+    });
+  }
+
+  getGroupsWithParent(req.body.groupid, (result) => {
+    if (result) {
+      db.run("UPDATE groups SET parent_id = $1 WHERE parent_id = $2;", [result, req.body.groupid], (err, results) => {
+        if (err) {
+          req.flash('error', 'Error resetting group membership');
+          return res.redirect('back');
+        }
+  
+        return next();
+      });
+    } else {
+      return next();
+    }
+  });
+}
+
+function deleteGroup(req, res, next) {
+  db.groups.destroy({id: req.body.groupid}, (err, results) => {
+    if (err) {
+      req.flash('error', 'Error deleting group');
+      return res.redirect('back');
+    }
+
+    req.flash('success', 'Group successfully deleted.');
+    return res.redirect('/admin');  
   });
 }
 
@@ -373,6 +453,9 @@ router.post('/user/modify', authHelpers.loginRequired, authHelpers.adminRequired
 router.post('/user/deactivate', authHelpers.loginRequired, authHelpers.adminRequired, deactivateUser);
 router.post('/user/delete', authHelpers.loginRequired, authHelpers.adminRequired, removeUserFromWorks, removeUserFromGroups, deleteUser);
 router.post('/user/photo', authHelpers.loginRequired, authHelpers.adminRequired, processPhoto);
+router.post('/group/add', authHelpers.loginRequired, authHelpers.adminRequired, addGroup);
 router.post('/group/modify', authHelpers.loginRequired, authHelpers.adminRequired, modifyGroup);
+router.post('/group/hide', authHelpers.loginRequired, authHelpers.adminRequired, hideGroup);
+router.post('/group/delete', authHelpers.loginRequired, authHelpers.adminRequired, removeMemberships, resetParentGroup, deleteGroup);
 
 module.exports = router;

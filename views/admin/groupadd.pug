@@ -1,0 +1,24 @@
+p: b Add a New Group/Department/Program
+
+div#groupaddform.row
+  form.col.s10.offset-s1(method="post", action="/admin/group/modify")
+    div.input-field
+      input#name.validate(type="text", name="name", required)
+      label(for="uid") Group Name
+    div.input-field
+      input#url.validate(type="text", name="url")
+      label(for="uid") Group URL
+    div.input-field
+      select#parentdeptlist.browser-default.col.s12(name="parentdeptlist")
+        option(value="", disabled, selected) Choose from:
+        each d in alldepts
+          option(value=d.id)= d.name
+      label.active(for="parentdeptlist") Parent Group
+    p.topspace
+      label
+        input#hidden(type="checkbox", name="hidden")
+        span Hide Group from Interface?
+    div.input-field
+      button#deptmod.btn.blue.darken-4.waves-effect.waves-light Add Group
+
+include ../popups.pug

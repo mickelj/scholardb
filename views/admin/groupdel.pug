@@ -1,0 +1,36 @@
+p: b Remove an Existing Group
+
+div.row
+  div.col.s11
+    p#delwarn.red.darken-4.white-text 
+      strong Deleting a group is irreversible and will disconnect that group from all users and works associated with it, and all child groups will automatically be reassigned to the next higher parent group. Please consider #[em hiding] the group, which will remove it from the Groups/Departments/Programs list. #[br]#[br] (You can later re-display &mdash; as well as re-hide &mdash; a group from the "Update an Existing Group" menu option.)
+
+div.row
+  div.input-field.col.s11
+    select#deptlist.browser-default.col.s12(name="deptlist")
+      option(value="", disabled, selected) Choose from:
+      each d in alldepts
+        option(value=d.id)= d.name
+    label.active(for="deptlist") Select the group to modify:
+
+div#groupremoveform.row
+  form.col.s5.offset-s2(method="post", action="/admin/group/hide")
+    input.groupid(type="hidden", name="groupid")
+    button#deactivategroup.btn.amber.accent-4.waves-effect.waves-light Hide Group
+
+  form#groupdelform.col.s5(method="post", action="/admin/group/delete")
+    input.groupid(type="hidden", name="groupid")
+    button#deletegroup.btn.red.darken-4.waves-effect.waves-light Delete Group
+
+include ../popups.pug
+script(type='text/javascript', src='/js/admingroups.js')
+script.
+	$(document).ready(function() {
+		$("#deletegroup").on('click', function(e) {
+			e.preventDefault();
+			if (confirm("LAST CHANCE... Are you sure you want to delete " + $("#deptlist option:selected").text() + "?")) {
+				$("#groupdelform").submit();
+			}
+		});
+});
+
