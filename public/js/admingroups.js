@@ -9,6 +9,7 @@ $(document).ready(function() {
 				} else {
 					try {
 						var info = JSON.parse(data);
+						console.log(info);
 						$("#groupid").val(info.id);
 						$("#name").val(info.name);
 						$("#url").val(info.url);
