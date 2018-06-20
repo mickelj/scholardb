@@ -208,7 +208,7 @@ function getGroupInfo(req, res, next) {
     return res.json({});
   }
 
-  db.run("SELECT g.*, p.name AS parent_name FROM groups g, groups p WHERE g.parent_id = p.id AND p.id = $1;", [req.query.groupid], (err, results) => {
+  db.run("SELECT g.*, p.name AS parent_name FROM groups g, groups p WHERE g.parent_id = p.id AND g.id = $1;", [req.query.groupid], (err, results) => {
     if (err) return res.json({});
     return res.json(JSON.stringify(results));
   });
