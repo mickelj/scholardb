@@ -478,6 +478,10 @@ p#delwarn {
   padding: 1rem;
 }
 
+.input-field ~ p {
+  margin-top: 9rem;
+}
+
 @media screen and (min-width: 1201px) {
   .xl0 {
     display: none;
