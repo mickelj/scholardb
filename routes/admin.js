@@ -430,6 +430,18 @@ router.get('/usergroups', authHelpers.loginRequired, getAllGroups, (req, res) =>
   });
 });
 
+router.get('/groupadd', authHelpers.loginRequired, authHelpers.adminRequired, (req, res) => {
+  var nconf = req.app.get('nconf');
+
+  res.render('admin', {
+    appconf: nconf.get(),
+    user: req.user,
+    page: 'groupadd',
+    error: req.flash('error'),
+    success: req.flash('success')
+  });
+});
+
 router.get('/groupmod', authHelpers.loginRequired, authHelpers.adminRequired, getAllGroups, (req, res) => {
   var nconf = req.app.get('nconf');
 
@@ -437,6 +449,19 @@ router.get('/groupmod', authHelpers.loginRequired, authHelpers.adminRequired, ge
     appconf: nconf.get(),
     user: req.user,
     page: 'groupmod',
+    alldepts: req.alldepts,
+    error: req.flash('error'),
+    success: req.flash('success')
+  });
+});
+
+router.get('/groupdel', authHelpers.loginRequired, authHelpers.adminRequired, getAllGroups, (req, res) => {
+  var nconf = req.app.get('nconf');
+
+  res.render('admin', {
+    appconf: nconf.get(),
+    user: req.user,
+    page: 'groupdel',
     alldepts: req.alldepts,
     error: req.flash('error'),
     success: req.flash('success')
