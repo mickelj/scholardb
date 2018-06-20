@@ -24,7 +24,7 @@ div#groupmodform.row
         each d in alldepts
           option(value=d.id)= d.name
       label.active(for="parentdeptlist") Parent Group
-    p
+    p.topspace
       label
         input#hidden(type="checkbox", name="hidden")
         span Hide Group from Interface?

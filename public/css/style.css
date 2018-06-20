@@ -478,7 +478,7 @@ p#delwarn {
   padding: 1rem;
 }
 
-.input-field ~ p {
+p.topspace {
   margin-top: 9rem;
 }
 
