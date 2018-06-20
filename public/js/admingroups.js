@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	$("#deptlist").on("select", function() {
+	$("#deptlist").on("change", function() {
 		var groupid = $(this).val();
 		try {xhr.abort();} catch(e){}
 		xhr = $.getJSON('/departments/search/', {groupid: groupid})
