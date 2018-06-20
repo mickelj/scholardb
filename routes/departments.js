@@ -208,7 +208,7 @@ function getGroupInfo(req, res, next) {
     return res.json({});
   }
 
-  db.groups.findOne(req.query.groupid, (err, results) => {
+  db.groups.findOne(Number(req.query.groupid), (err, results) => {
     if (err) return res.json({});
     return res.json(JSON.stringify(results));
   });

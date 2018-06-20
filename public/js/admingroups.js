@@ -17,6 +17,7 @@ $(document).ready(function() {
 						$("ul[id*='select-options'] li").removeClass('selected');
 						$("ul[id*='select-options'] li span:contains('" + parent_id + "')").parent().addClass('selected');
 						$("#hidden").prop("checked", info.hidden);
+						$("#groupmodform").show();
 					} catch(e) {
 						popupError("Error with data returned from database search");
 					}

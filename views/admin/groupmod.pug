@@ -8,8 +8,8 @@ div.row
       each d in alldepts
         option(value=d.id)= d.name
 
-div#deptform
-  form.row(method="post", action="/admin/groups/modify")
+div#groupmodform.row
+  form.col.s10.offset-s1(method="post", action="/admin/groups/modify")
     input#groupid(type="hidden", name="groupid")
 
     div.input-field
@@ -24,12 +24,12 @@ div#deptform
         option(value="", disabled, selected) Choose from:
         each d in alldepts
           option(value=d.id)= d.name
-    p
+    p.input-field
       label
         input#hidden(type="checkbox", name="hidden")
         span Hide Group from Interface?
-    
-    button#deptmod.btn.blue.darken-4.waves-effect.waves-light Update Group Information
+    div.input-field
+      button#deptmod.btn.blue.darken-4.waves-effect.waves-light Update Group Information
 
 include ../popups.pug
 script(type='text/javascript', src='/js/admingroups.js')
