@@ -3,7 +3,7 @@ p: b Modify an Existing Group/Department/Program
 div.row
   div.input-field.col.s11
     label.active(for="deptlist") Select the group to modify:
-    select#deptlist.col.s11(name="deptlist")
+    select#deptlist.browser-default.col.s11(name="deptlist")
       option(value="", disabled, selected) Choose from:
       each d in alldepts
         option(value=d.id)= d.name
@@ -20,7 +20,7 @@ div#groupmodform.row
       label(for="uid") Group URL
     div.input-field
       label.active(for="parentdeptlist") Parent Group
-      select#parentdeptlist(name="parentdeptlist", required)
+      select#parentdeptlist.browser-default(name="parentdeptlist", required)
         option(value="", disabled, selected) Choose from:
         each d in alldepts
           option(value=d.id)= d.name
