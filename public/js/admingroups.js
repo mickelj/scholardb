@@ -14,9 +14,9 @@ $(document).ready(function() {
 						$("#name").val(info.name);
 						$("#url").val(info.url);
 						$("#parentdeptlist").val(info.parent_id);
-						$(".select-dropdown.dropdown-trigger").val(info.parent_id)
+						$(".select-dropdown.dropdown-trigger").val(info.parent_name)
 						$("ul[id*='select-options'] li").removeClass('selected');
-						$("ul[id*='select-options'] li span:contains('" + parent_id + "')").parent().addClass('selected');
+						$("ul[id*='select-options'] li span:contains('" + info.parent_name + "')").parent().addClass('selected');
 						$("#hidden").prop("checked", info.hidden);
 						$("#groupmodform").show();
 					} catch(e) {
