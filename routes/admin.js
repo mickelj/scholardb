@@ -265,7 +265,7 @@ function modifyGroup(req, res, next) {
   var machine_name = gennames.genMachineName(info.name);
   var sort_name = gennames.genSortName(info.name);
 
-  db.groups.update({ id: info.id },
+  db.groups.update({ id: info.groupid },
                    { name: info.name, url: info.url, parent_id: info.parent_id, hidden: hidden, machine_name: machine_name, sort_name: sort_name }, (err, results) => {
     if (err) {
       req.flash('error', 'Error saving information: ' + err);
