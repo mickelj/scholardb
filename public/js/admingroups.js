@@ -4,6 +4,7 @@ $(document).ready(function() {
 		try {xhr.abort();} catch(e){}
 		xhr = $.getJSON('/departments/search/', {groupid: groupid})
 			.done(function(data) {
+				console.log(data);
 				if (!data.length) {
 					popupError("Error retrieving group from database");
 				} else {
@@ -19,7 +20,7 @@ $(document).ready(function() {
 						$("#hidden").prop("checked", info.hidden);
 						$("#groupmodform").show();
 					} catch(e) {
-						popupError("Error with data returned from database search");
+						popupError(e);
 					}
 				}
 			});
