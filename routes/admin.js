@@ -341,7 +341,7 @@ router.get('/usergroups', authHelpers.loginRequired, getAllGroups, (req, res) =>
   res.render('admin', {
     appconf: nconf.get(),
     user: req.user,
-    page: 'groups',
+    page: 'usergroups',
     alldepts: req.alldepts,
     error: req.flash('error'),
     success: req.flash('success')
