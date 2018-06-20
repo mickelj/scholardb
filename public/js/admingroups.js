@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	$("#deptlist").on("change", function() {
+	$("#deptlist").on("select", function() {
 		var groupid = $(this).val();
 		try {xhr.abort();} catch(e){}
 		xhr = $.getJSON('/departments/search/', {groupid: groupid})
@@ -17,6 +17,7 @@ $(document).ready(function() {
 						$("#groupmodform ul[id*='select-options'] li").removeClass('selected');
 						$("#groupmodform ul[id*='select-options'] li span:contains('" + info.parent_name + "')").parent().addClass('selected');
 						$("#hidden").prop("checked", info.hidden);
+						$("#groupmodform form label").addClass("active");
 						$("#groupmodform").show();
 					} catch(e) {
 						popupError(e);
