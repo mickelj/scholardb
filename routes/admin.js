@@ -245,7 +245,9 @@ function addUserGroup(req, res, next) {
   }
 }
 
-function add
+function getUserParentGroups(gid) {
+  
+}
 
 function deleteUserGroup(req, res, next) {
   var deptid = req.body.deptid || null;
