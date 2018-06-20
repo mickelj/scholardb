@@ -262,8 +262,8 @@ function modifyGroup(req, res, next) {
   var info = _cleanInfo(req.body);
 
   var hidden = (info.hidden) ? info.hidden : false;
-  var machine_name = gennames.machine_name(info.name);
-  var sort_name = gennames.sort_name(info.name);
+  var machine_name = gennames.genMachineName(info.name);
+  var sort_name = gennames.genSortName(info.name);
 
   db.groups.update({ id: info.id },
                    { name: info.name, url: info.url, parent_id: info.parent_id, hidden: hidden, machine_name: machine_name, sort_name: sort_name }, (err, results) => {
