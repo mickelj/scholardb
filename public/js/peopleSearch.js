@@ -61,7 +61,7 @@ $(document).ready(function() {
 				$("#photoform").show();
 			} else if ($("#deptform").length) {
 				try {xhr.abort();} catch(e){}
-				xhr = $.getJSON('/admin/getdepts', {id: selectedItem.id})
+				xhr = $.getJSON('/admin/getgroups', {id: selectedItem.id})
 					.done(function(data) {
 						$("#userdepts").html("");
 						$("#deptlist option").prop("disabled", false);

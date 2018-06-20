@@ -378,7 +378,7 @@ function storePendingForm(req, res) {
   }
 }
 
-function getAllDepts(req, res, next) {
+function getAllGroups(req, res, next) {
   db.run("SELECT id, name FROM groups WHERE hidden = false ORDER BY name", (err, results) => {
     if (err) return next(err);
     req.alldepts = results;
@@ -386,7 +386,7 @@ function getAllDepts(req, res, next) {
   });
 }
 
-function getDepartments(req, res, next) {
+function getGroups(req, res, next) {
   db.run("SELECT group_id, name FROM memberships JOIN groups ON group_id = id WHERE hidden = false AND people_id = $1 ORDER BY name", [req.user.id], (err, results) => {
     if (err) return next(err);
 
@@ -395,32 +395,32 @@ function getDepartments(req, res, next) {
   });
 }
 
-function addDepartment(req, res, next) {
+function addGroup(req, res, next) {
   var deptid = req.body.deptid || null;
 
   if (deptid) {
     db.memberships.insert({group_id: deptid, people_id: req.user.id}, (err, results) => {
       if (err) {
-        req.flash('error', 'Error adding department to database: ' + err);
+        req.flash('error', 'Error adding group to database: ' + err);
         return res.json({success: false});
       }
 
-      req.flash('success', 'Department added successfully');
+      req.flash('success', 'Group added successfully');
       return res.json({success: true});
     });
   }
 }
 
-function deleteDepartment(req, res, next) {
+function deleteGroup(req, res, next) {
   var deptid = req.body.deptid || null;
 
   if (deptid) {
     db.memberships.destroy({group_id: deptid, people_id: req.user.id}, (err, results) => {
       if (err) {
-        req.flash('error', 'Error removing department from database: ' + err);
+        req.flash('error', 'Error removing group from database: ' + err);
         return res.json({success: false});
       }
-      req.flash('success', 'Department removed successfully');
+      req.flash('success', 'Group removed successfully');
       return res.json({success: true});
     });
   }
@@ -535,13 +535,13 @@ router.get('/photo', authHelpers.loginRequired, getPhoto, nocache, (req, res) =>
   });
 });
 
-router.get('/departments', authHelpers.loginRequired, getAllDepts, getDepartments, (req, res) => {
+router.get('/groups', authHelpers.loginRequired, getAllGroups, getGroups, (req, res) => {
   var nconf = req.app.get('nconf');
 
   res.render('user', {
     appconf: nconf.get(),
     user: req.user,
-    page: 'departments',
+    page: 'groups',
     departments: req.departments,
     alldepts: req.alldepts,
     error: req.flash('error'),
@@ -552,8 +552,8 @@ router.get('/departments', authHelpers.loginRequired, getAllDepts, getDepartment
 router.post('/penname', authHelpers.loginRequired, checkPenName, savePenName);
 router.post('/info', authHelpers.loginRequired, saveInfo);
 router.post('/photo', authHelpers.loginRequired, processPhoto);
-router.post('/departments/add', authHelpers.loginRequired, addDepartment);
-router.post('/departments/delete', authHelpers.loginRequired, deleteDepartment);
+router.post('/groups/add', authHelpers.loginRequired, addGroup);
+router.post('/groups/delete', authHelpers.loginRequired, deleteGroup);
 router.post('/work/citation', authHelpers.loginRequired, processCitation);
 router.post('/work/identifier', authHelpers.loginRequired, processIdentifier);
 router.post('/work/url', authHelpers.loginRequired, processUrl);

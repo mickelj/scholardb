@@ -9,18 +9,18 @@ div.row
         option(value=d.id)= d.name
 
 div#deptform
-  form.row(method="post", action="/admin/departments/modify")
+  form.row(method="post", action="/admin/groups/modify")
 		input#groupid(type="hidden", name="groupid")
 
     div.input-field
       input#name.validate(type="text", name="name", required)
       label(for="uid") Group Name
     div.input-field
-      input#url.validate(type="text", name="url", required)
+      input#url.validate(type="text", name="url")
       label(for="uid") Group URL
 		div.input-field
 			label.active(for="parentdeptlist") Parent Group
-			select#parentdeptlist.browser-default.col.s10.offset-s1.m8.offset-m1.l6.offset-l1(name="parentdeptlist")
+			select#parentdeptlist.browser-default.col.s10.offset-s1.m8.offset-m1.l6.offset-l1(name="parentdeptlist", required)
 				option(value="", disabled, selected) Choose from:
 				each d in alldepts
 					option(value=d.id)= d.name
@@ -32,4 +32,3 @@ div#deptform
 		button#deptmod.btn.blue.darken-4.waves-effect.waves-light Update Group Information
 
 include ../popups.pug
-

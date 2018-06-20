@@ -3,7 +3,7 @@ $(document).ready(function() {
     var deptid = $("#deptlist").val();
     $.ajax({
       method: "POST",
-      url: "/user/departments/add",
+      url: "/user/groups/add",
       data: {"deptid": deptid},
       success: function(result) {
         location.reload();
@@ -17,7 +17,7 @@ $(document).ready(function() {
       var deptid = $(this).data('deptid');
       $.ajax({
         method: "POST",
-        url: "/user/departments/delete",
+        url: "/user/groups/delete",
         data: {"deptid": deptid},
         success: function(result) {
           location.reload(); 

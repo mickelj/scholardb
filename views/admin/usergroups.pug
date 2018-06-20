@@ -1,6 +1,6 @@
 link(rel="stylesheet", href="/css/jquery.auto-complete.css")
 
-p: b Department/Program Membership
+p: b Group/Department/Program Membership
 
 div.row
   div.input-field.col.s11
@@ -9,15 +9,15 @@ div.row
 div#deptform
   div.row
     p.col.s10.offset-s1
-      b Current Departments:
+      b Current Groups:
 
   div.row.departments
     ul#userdepts.collection.col.s10.offset-s1.m8.offset-m1.l6.offset-l1
-    p#nodepts.col.s10.offset-s1.m8.offset-m1.l6.offset-l1 Not currently a member of any departments or programs
+    p#nodepts.col.s10.offset-s1.m8.offset-m1.l6.offset-l1 Not currently a member of any groups/departments/programs
 
   div.row
     p.col.s10.offset-s1
-      b Add a Department:
+      b Add a Group:
   div.row
     select#deptlist.browser-default.col.s10.offset-s1.m8.offset-m1.l6.offset-l1(name="deptlist")
       option(value="", disabled, selected) Choose from:
@@ -29,4 +29,4 @@ div#deptform
 include ../popups.pug
 script(type='text/javascript', src='/js/jquery.auto-complete.min.js')
 script(type='text/javascript', src='/js/peopleSearch.js')
-script(type="text/javascript", src="/js/admindepts.js")
+script(type="text/javascript", src="/js/adminusergroups.js")

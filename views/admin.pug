@@ -19,7 +19,7 @@ block content
           a.collection-item(href="/admin/deptadd") Add a New Group
           a.collection-item(href="/admin/deptmod") Modify an Existing Group
           a.collection-item(href="/admin/deptdel") Delete an Existing Group
-          a.collection-item(href="/admin/departments") Update Group Membership
+          a.collection-item(href="/admin/usergroups") Update Group Membership
           
       div.col.s9
         case page
@@ -45,8 +45,8 @@ block content
             include admin/workidentifier.pug
           when "usermod"
             include admin/usermod.pug
-          when "departments"
-            include admin/departments.pug
+          when "usergroups"
+            include admin/usergroups.pug
           when "photo"
             include admin/photo.pug
           when "citcheck"

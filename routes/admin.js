@@ -181,26 +181,41 @@ function deactivateUser(req, res, next) {
   });
 }
 
-function deleteUser(req, res, next) {
+function removeUserFromWorks(req, res, next) {
   db.run("UPDATE works SET contributors = $1 WHERE contributors @> $2;", ["array_remove(contributors, " + req.body.id + ")", "ARRAY[" + req.body.id + "]"], (err, results) => {
     if (err) {
-      req.flash('error', 'Error deleting user from works.');
+      req.flash('error', 'Error removing user from works.');
       return res.redirect('back');
     }
 
-    db.people.destroy({id: req.body.id}, (err, results) => {
-      if (err) {
-        req.flash('error', 'Error deleting user');
-        return res.redirect('back');
-      }
-
-      req.flash('success', 'User successfully deleted.');
-      return res.redirect('/admin');  
-    });
+    return next();
   });
 }
 
-function getAllDepts(req, res, next) {
+function removeUserFromGroups(req, res, next) {
+  db.memberships.destroy({people_id: req.body.id}, (err, results) => {
+    if (err) {
+      req.flash('error', 'Error removing user from groups.');
+      return res.redirect('back');
+    }
+
+    return next();
+  });
+}
+
+function deleteUser(req, res, next) {
+  db.people.destroy({id: req.body.id}, (err, results) => {
+    if (err) {
+      req.flash('error', 'Error deleting user');
+      return res.redirect('back');
+    }
+
+    req.flash('success', 'User successfully deleted.');
+    return res.redirect('/admin');  
+  });
+}
+
+function getAllGroups(req, res, next) {
   db.run("SELECT id, name FROM groups WHERE hidden = false ORDER BY name", (err, results) => {
     if (err) return next(err);
     req.alldepts = results;
@@ -208,7 +223,7 @@ function getAllDepts(req, res, next) {
   });
 }
 
-function getDepartments(req, res, next) {
+function getGroups(req, res, next) {
   db.run("SELECT group_id, name FROM memberships JOIN groups ON group_id = id WHERE hidden = false AND people_id = $1 ORDER BY name", [req.query.id], (err, results) => {
     if (err || !results.length) return res.json({});
 
@@ -216,7 +231,7 @@ function getDepartments(req, res, next) {
   });
 }
 
-function addDepartment(req, res, next) {
+function addUserGroup(req, res, next) {
   var deptid = req.body.deptid || null;
 
   if (deptid) {
@@ -230,7 +245,7 @@ function addDepartment(req, res, next) {
   }
 }
 
-function deleteDepartment(req, res, next) {
+function deleteUserGroup(req, res, next) {
   var deptid = req.body.deptid || null;
 
   if (deptid) {
@@ -241,6 +256,24 @@ function deleteDepartment(req, res, next) {
       return res.json({success: true});
     });
   }
+}
+
+function modifyGroup(req, res, next) {
+  var info = _cleanInfo(req.body);
+
+  var hidden = (info.hidden) ? info.hidden : false;
+  var machine_name = gennames.machine_name(info.name);
+  var sort_name = gennames.sort_name(info.name);
+
+  db.groups.update({ id: info.id },
+                   { name: info.name, url: info.url, parent_id: info.parent_id, hidden: hidden, machine_name: machine_name, sort_name: sort_name }, (err, results) => {
+    if (err) {
+      req.flash('error', 'Error saving information: ' + err);
+      return res.redirect('back');
+    }
+    req.flash('success', 'Group information saved successfully');
+    return res.redirect('/admin');
+  });
 }
 
 router.get('/', authHelpers.loginRequired, authHelpers.adminRequired, (req, res) => {
@@ -302,26 +335,26 @@ router.get('/photo', authHelpers.loginRequired, authHelpers.adminRequired, nocac
   });
 });
 
-router.get('/departments', authHelpers.loginRequired, getAllDepts, (req, res) => {
+router.get('/usergroups', authHelpers.loginRequired, getAllGroups, (req, res) => {
   var nconf = req.app.get('nconf');
 
   res.render('admin', {
     appconf: nconf.get(),
     user: req.user,
-    page: 'departments',
+    page: 'groups',
     alldepts: req.alldepts,
     error: req.flash('error'),
     success: req.flash('success')
   });
 });
 
-router.get('/deptmod', authHelpers.loginRequired, authHelpers.adminRequired, getAllDepts, (req, res) => {
+router.get('/groupmod', authHelpers.loginRequired, authHelpers.adminRequired, getAllGroups, (req, res) => {
   var nconf = req.app.get('nconf');
 
   res.render('admin', {
     appconf: nconf.get(),
     user: req.user,
-    page: 'deptmod',
+    page: 'groupmod',
     alldepts: req.alldepts,
     error: req.flash('error'),
     success: req.flash('success')
@@ -329,14 +362,15 @@ router.get('/deptmod', authHelpers.loginRequired, authHelpers.adminRequired, get
 });
 
 router.get('/adinfo', authHelpers.loginRequired, authHelpers.adminRequired, getADInfo);
-router.get('/getdepts', authHelpers.loginRequired, authHelpers.adminRequired, getDepartments);
+router.get('/getgroups', authHelpers.loginRequired, authHelpers.adminRequired, getGroups);
 
-router.post('/user/departments/add', authHelpers.loginRequired, authHelpers.adminRequired, addDepartment);
-router.post('/user/departments/delete', authHelpers.loginRequired, authHelpers.adminRequired, deleteDepartment);
+router.post('/user/group/add', authHelpers.loginRequired, authHelpers.adminRequired, addUserGroup);
+router.post('/user/group/delete', authHelpers.loginRequired, authHelpers.adminRequired, deleteUserGroup);
 router.post('/user/add', authHelpers.loginRequired, authHelpers.adminRequired, addUser, addUserToBaseGroup)
 router.post('/user/modify', authHelpers.loginRequired, authHelpers.adminRequired, modifyUser);
 router.post('/user/deactivate', authHelpers.loginRequired, authHelpers.adminRequired, deactivateUser);
-router.post('/user/delete', authHelpers.loginRequired, authHelpers.adminRequired, deleteUser);
+router.post('/user/delete', authHelpers.loginRequired, authHelpers.adminRequired, removeUserFromWorks, removeUserFromGroups, deleteUser);
 router.post('/user/photo', authHelpers.loginRequired, authHelpers.adminRequired, processPhoto);
+router.post('/group/modify', authHelpers.loginRequired, authHelpers.adminRequired, modifyGroup);
 
 module.exports = router;
