@@ -5,7 +5,7 @@ $(document).ready(function() {
     var deptname = $("#deptlist option:selected").text();
     $.ajax({
       method: "POST",
-      url: "/admin/user/groups/add",
+      url: "/admin/user/group/add",
       data: {"userid": personid, "deptid": deptid},
       success: function(result) {
         if (!($("#userdepts li").length)) {
@@ -26,7 +26,7 @@ $(document).ready(function() {
       var deptid = $(this).data('deptid');
       $.ajax({
         method: "POST",
-        url: "/admin/user/groups/delete",
+        url: "/admin/user/group/delete",
         data: {"userid": personid, "deptid": deptid},
         success: function(result) {
           $("#deptlist option[value='" + deptid + "']").prop('disabled', false);
