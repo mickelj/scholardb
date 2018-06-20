@@ -26,6 +26,9 @@ $(document).ready(function() {
 						$("#hidden").prop("checked", info.hidden);
 						$("#groupmodform form label").addClass("active");
 						$("#groupmodform").show();
+					} else if ($("#groupdelform").length) {
+						$(".groupid").val(info.id);
+						$("#groupremoveform").show();
 					}
 				}
 			});
