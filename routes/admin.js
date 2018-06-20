@@ -216,7 +216,7 @@ function deleteUser(req, res, next) {
 }
 
 function getAllGroups(req, res, next) {
-  db.run("SELECT id, name FROM groups WHERE hidden = false ORDER BY name", (err, results) => {
+  db.run("SELECT id, name FROM groups ORDER BY sort_name", (err, results) => {
     if (err) return next(err);
     req.alldepts = results;
     return next();
