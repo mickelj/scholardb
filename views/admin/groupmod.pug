@@ -2,11 +2,11 @@ p: b Modify an Existing Group/Department/Program
 
 div.row
   div.input-field.col.s11
-    label.active(for="deptlist") Select the group to modify:
     select#deptlist.browser-default.col.s12(name="deptlist")
       option(value="", disabled, selected) Choose from:
       each d in alldepts
         option(value=d.id)= d.name
+    label.active(for="deptlist") Select the group to modify:
 
 div#groupmodform.row
   form.col.s10.offset-s1(method="post", action="/admin/groups/modify")
@@ -19,16 +19,16 @@ div#groupmodform.row
       input#url.validate(type="text", name="url")
       label(for="uid") Group URL
     div.input-field
-      label.active(for="parentdeptlist") Parent Group
       select#parentdeptlist.browser-default.col.s12(name="parentdeptlist", required)
         option(value="", disabled, selected) Choose from:
         each d in alldepts
           option(value=d.id)= d.name
+      label.active(for="parentdeptlist") Parent Group
     p
       label
         input#hidden(type="checkbox", name="hidden")
         span Hide Group from Interface?
-    div
+    div.input-field
       button#deptmod.btn.blue.darken-4.waves-effect.waves-light Update Group Information
 
 include ../popups.pug

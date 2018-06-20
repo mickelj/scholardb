@@ -24,8 +24,9 @@ select.browser-default {
   width: auto;
   width: calc(100%/4);
   min-width: 125px;
-  height: auto;
   margin-left: 10px;
+  margin-top: 1rem;
+  margin-bottom: .5rem;
 }
 
 nav ul a.btn, nav ul a.btn-floating {
