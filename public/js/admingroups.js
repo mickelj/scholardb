@@ -9,20 +9,21 @@ $(document).ready(function() {
 				} else {
 					try {
 						var info = JSON.parse(data);
-						console.log(info);
-						$("#groupid").val(info.id);
-						$("#name").val(info.name);
-						$("#url").val(info.url);
-						$("#parentdeptlist").val(info.parent_id);
-						$("#groupmodform .select-dropdown.dropdown-trigger").val(info.parent_name)
-						$("#groupmodform ul[id*='select-options'] li").removeClass('selected');
-						$("#groupmodform ul[id*='select-options'] li span:contains('" + info.parent_name + "')").parent().addClass('selected');
-						$("#hidden").prop("checked", info.hidden);
-						$("#groupmodform form label").addClass("active");
-						$("#groupmodform").show();
 					} catch(e) {
 						popupError(e);
+						return false;
 					}
+
+					$("#groupid").val(info.id);
+					$("#name").val(info.name);
+					$("#url").val(info.url);
+					$("#parentdeptlist").val(info.parent_id);
+					$("#groupmodform .select-dropdown.dropdown-trigger").val(info.parent_name)
+					$("#groupmodform ul[id*='select-options'] li").removeClass('selected');
+					$("#groupmodform ul[id*='select-options'] li span:contains('" + info.parent_name + "')").parent().addClass('selected');
+					$("#hidden").prop("checked", info.hidden);
+					$("#groupmodform form label").addClass("active");
+					$("#groupmodform").show();
 				}
 			});
 	});
