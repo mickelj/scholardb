@@ -25,12 +25,12 @@ div#groupremoveform.row
 include ../popups.pug
 script(type='text/javascript', src='/js/admingroups.js')
 script.
-	$(document).ready(function() {
-		$("#deletegroup").on('click', function(e) {
-			e.preventDefault();
-			if (confirm("LAST CHANCE... Are you sure you want to delete " + $("#deptlist option:selected").text() + "?")) {
-				$("#groupdelform").submit();
-			}
-		});
+  $(document).ready(function() {
+    $("#deletegroup").on('click', function(e) {
+      e.preventDefault();
+      if (confirm("LAST CHANCE... Are you sure you want to delete " + $("#deptlist option:selected").text() + "?")) {
+        $("#groupdelform").submit();
+      }
+    });
 });
 
