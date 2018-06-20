@@ -19,9 +19,13 @@ router.get('/login', authHelpers.loginRedirect, (req, res) => {
 router.post('/login', authHelpers.loginRedirect, function(req, res, next) {
   var nconf = req.app.get('nconf');
 
-  // var strategies = 
+  var strategies = 'local';
 
-  passport.authenticate('local', function(err, user, info) {
+  if (nconf.get('ldap:useldap')) {
+    strategies = ['WindowsAuthentication', 'local'];
+  }
+
+  passport.authenticate(strategies, function(err, user, info) {
     if (err) return next(err);
     if (!user) {
       req.flash('error', info.message);
