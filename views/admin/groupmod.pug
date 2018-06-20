@@ -19,7 +19,7 @@ div#groupmodform.row
       input#url.validate(type="text", name="url")
       label(for="uid") Group URL
     div.input-field
-      select#parentdeptlist.browser-default.col.s12(name="parentdeptlist", required)
+      select#parentdeptlist.browser-default.col.s12(name="parentdeptlist")
         option(value="", disabled, selected) Choose from:
         each d in alldepts
           option(value=d.id)= d.name
