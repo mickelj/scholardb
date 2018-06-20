@@ -4,7 +4,6 @@ $(document).ready(function() {
 		try {xhr.abort();} catch(e){}
 		xhr = $.getJSON('/departments/search/', {groupid: groupid})
 			.done(function(data) {
-				console.log(data);
 				if (!data.length) {
 					popupError("Error retrieving group from database");
 				} else {
@@ -14,9 +13,9 @@ $(document).ready(function() {
 						$("#name").val(info.name);
 						$("#url").val(info.url);
 						$("#parentdeptlist").val(info.parent_id);
-						$(".select-dropdown.dropdown-trigger").val(info.parent_name)
-						$("ul[id*='select-options'] li").removeClass('selected');
-						$("ul[id*='select-options'] li span:contains('" + info.parent_name + "')").parent().addClass('selected');
+						$("#groupmodform .select-dropdown.dropdown-trigger").val(info.parent_name)
+						$("#groupmodform ul[id*='select-options'] li").removeClass('selected');
+						$("#groupmodform ul[id*='select-options'] li span:contains('" + info.parent_name + "')").parent().addClass('selected');
 						$("#hidden").prop("checked", info.hidden);
 						$("#groupmodform").show();
 					} catch(e) {
