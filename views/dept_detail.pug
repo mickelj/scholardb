@@ -7,7 +7,7 @@ block content
         a.btn-floating.orange.darken-3.waves-effect.waves-light(href="/departments/" + dept.group_id + "/rss")
           span.icon.ion-social-rss
   div.row
-    div.col.s12.m5.detail-profile-sidebar
+    div.col.s12.m4.detail-profile-sidebar
       div.row
         p.headline Current Members of #{dept.group_name}
         include scholar_cards.pug
@@ -27,5 +27,5 @@ block content
             div.col.s6
               a(href="/departments/" + dept.parent_id)= dept.parent_name
   
-    div.col.s12.m7.detail-works
+    div.col.s12.m8.detail-works
       include works_block.pug

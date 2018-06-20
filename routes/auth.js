@@ -36,46 +36,11 @@ router.post('/login', authHelpers.loginRedirect, function(req, res, next) {
       if (err) return next(err);
       req.session.save( (err) => {
         if (err) return next(err);
-        res.redirect('back');
+        res.redirect('/user');
       });
     });
   })(req, res, next);
 });
-
-// router.post('/login', authHelpers.loginRedirect, function(req, res, next) {
-//   passport.authenticate('WindowsAuthentication', function(err, user, info) {
-//     if (err) return next(err);
-//     if (!user) {
-//       req.flash('error', info.message);
-//       return res.redirect('/auth/login');
-//     }
-
-//     req.login(user, (err) => {
-//       if (err) return next(err);
-//       req.session.save( (err) => {
-//         if (err) return next(err);
-//         res.redirect('/user');
-//       });
-//     });
-//   })(req, res, next);
-// });
-
-// router.post('/login', authHelpers.loginRedirect, (req, res, next) => {
-//   passport.authenticate('local', (err, user, info) => {
-//     if (err) return next(err);
-//     if (!user) {
-//       req.flash('error', info.message);
-//       return res.redirect('/auth/login');
-//     }
-//     req.login(user, (err) => {
-//       if (err) return next(err);
-//       req.session.save( (err) => {
-//         if (err) return next(err);
-//         res.redirect('/user');
-//       });
-//     });
-//   })(req, res, next);
-// });
 
 router.get('/logout', authHelpers.loginRequired, (req, res) => {
   req.logout();

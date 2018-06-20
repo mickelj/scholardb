@@ -1,6 +1,8 @@
 if people
   each pers, i in people
-    div.col.s4.l3
+    if i % 4 == 0
+      div.row
+    div.col.s3
       div.card.hoverable
         div.card-image
           a(href="/people/" + pers.person_id)
