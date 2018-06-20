@@ -1,7 +1,9 @@
 if people
+  | <div class="row">
   each pers, i in people
-    if i % 4 == 0
-      div.row
+    if i % 4 == 0 && i > 0
+      | </div>
+      | <div class="row">
     div.col.s3
       div.card.hoverable
         div.card-image
@@ -10,5 +12,6 @@ if people
             button.btn-floating.right-fab.blue.darken-4= pers.count
         p.cardname
           a(href="/people/" + pers.person_id)= pers.last_name
+  | </div>
 else
   p None available
