@@ -245,8 +245,12 @@ function addUserGroup(req, res, next) {
   }
 }
 
-function getUserParentGroups(gid) {
-  
+function getUserParentGroups(req, res, next) {
+  var nconf = req.app.get('nconf');
+
+  db.run("SELECT parent_id, count(parent_id) FROM groups, memberships WHERE groups.id = memberships.group_id AND people_id = $1 AND parent_id NOT IN $2 GROUP BY parent_id HAVING count(parent_id) = 1;", [req.body.id, "(0, " + nconf.get('basegroupid') + ")"], (err, results) => {
+     
+  });
 }
 
 function deleteUserGroup(req, res, next) {

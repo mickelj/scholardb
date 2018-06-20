@@ -2,7 +2,8 @@ const express = require('express');
 const router = express.Router();
 const authHelpers = require('../utils/auth-helpers');
 // const passport = require('../utils/auth-local');
-const passport = require('../utils/auth-windows');
+// const passport = require('../utils/auth-windows');
+const passport = require('../utils/auth-strategies');
 const db = require('../utils/db');
 
 router.get('/login', authHelpers.loginRedirect, (req, res) => {
@@ -16,7 +17,11 @@ router.get('/login', authHelpers.loginRedirect, (req, res) => {
 });
 
 router.post('/login', authHelpers.loginRedirect, function(req, res, next) {
-  passport.authenticate('WindowsAuthentication', function(err, user, info) {
+  var nconf = req.app.get('nconf');
+
+  // var strategies = 
+
+  passport.authenticate(['local'], function(err, user, info) {
     if (err) return next(err);
     if (!user) {
       req.flash('error', info.message);
@@ -32,6 +37,24 @@ router.post('/login', authHelpers.loginRedirect, function(req, res, next) {
     });
   })(req, res, next);
 });
+
+// router.post('/login', authHelpers.loginRedirect, function(req, res, next) {
+//   passport.authenticate('WindowsAuthentication', function(err, user, info) {
+//     if (err) return next(err);
+//     if (!user) {
+//       req.flash('error', info.message);
+//       return res.redirect('/auth/login');
+//     }
+
+//     req.login(user, (err) => {
+//       if (err) return next(err);
+//       req.session.save( (err) => {
+//         if (err) return next(err);
+//         res.redirect('/user');
+//       });
+//     });
+//   })(req, res, next);
+// });
 
 // router.post('/login', authHelpers.loginRedirect, (req, res, next) => {
 //   passport.authenticate('local', (err, user, info) => {
