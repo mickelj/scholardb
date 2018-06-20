@@ -16,7 +16,8 @@
     "orgurl"        : "https://library.wlu.edu",
     "catalogurl"    : "https://wlu.primo.exlibrisgroup.com/discovery/search?vid=01WLU_INST:01WLU&sortby=rank",
     "linkresolver"  : "https://wlu.primo.exlibrisgroup.com/view/uresolver/01WLU_INST/openurl/",
-    "adminemail"    : "leyburnlibrary@gmail.com"
+    "adminemail"    : "leyburnlibrary@gmail.com",
+    "rootdomain"    : "wlu.edu"
   },
 
   "images": {
