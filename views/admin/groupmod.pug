@@ -3,7 +3,7 @@ p: b Modify an Existing Group/Department/Program
 div.row
   div.input-field.col.s11
     label.active(for="deptlist") Select the group to modify:
-    select#deptlist.browser-default.col.s10.offset-s1.m8.offset-m1.l6.offset-l1(name="deptlist")
+    select#deptlist.col.s11(name="deptlist")
       option(value="", disabled, selected) Choose from:
       each d in alldepts
         option(value=d.id)= d.name
@@ -20,7 +20,7 @@ div#deptform
       label(for="uid") Group URL
     div.input-field
       label.active(for="parentdeptlist") Parent Group
-      select#parentdeptlist.browser-default.col.s10.offset-s1.m8.offset-m1.l6.offset-l1(name="parentdeptlist", required)
+      select#parentdeptlist(name="parentdeptlist", required)
         option(value="", disabled, selected) Choose from:
         each d in alldepts
           option(value=d.id)= d.name
@@ -32,3 +32,4 @@ div#deptform
     button#deptmod.btn.blue.darken-4.waves-effect.waves-light Update Group Information
 
 include ../popups.pug
+script(type='text/javascript', src='/js/admingroups.js')

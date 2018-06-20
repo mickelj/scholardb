@@ -203,6 +203,17 @@ function getGroupName(req, res, next) {
   })
 }
 
+function getGroupInfo(req, res, next) {
+  if (!req.query.groupid) {
+    return res.json({});
+  }
+
+  db.groups.findOne(req.query.groupid, (err, results) => {
+    if (err) return res.json({});
+    return res.json(JSON.stringify(results));
+  });
+}
+
 function renderRssFeed(req, res) {
   var nconf = req.app.get('nconf');
 
@@ -215,6 +226,7 @@ function renderRssFeed(req, res) {
 }
 
 router.get('/', getDeptList, getDeptMembersCount, getLetterPagerCounts, renderDeptList);
+router.get('/search', getGroupInfo);
 router.get('/:id', getDeptDetail, getDeptPeople, getDeptWorksCount, getDeptWorksList, getWorksImages, renderDeptDetail);
 router.get('/:id/rss', getRssResults, getGroupName, renderRssFeed);
 
