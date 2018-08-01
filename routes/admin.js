@@ -438,13 +438,14 @@ router.get('/usergroups', authHelpers.loginRequired, getAllGroups, (req, res) =>
   });
 });
 
-router.get('/groupadd', authHelpers.loginRequired, authHelpers.adminRequired, (req, res) => {
+router.get('/groupadd', authHelpers.loginRequired, authHelpers.adminRequired, getAllGroups, (req, res) => {
   var nconf = req.app.get('nconf');
 
   res.render('admin', {
     appconf: nconf.get(),
     user: req.user,
     page: 'groupadd',
+    alldepts: req.alldepts,
     error: req.flash('error'),
     success: req.flash('success')
   });
