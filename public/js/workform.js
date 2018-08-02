@@ -76,7 +76,7 @@ $(document).ready(function() {
 				});
 		},
 		renderItem: function(item, search) {
-			return '<div class="autocomplete-suggestion" data-publisherid="' + item.id + '" data-val="' + item.name + '">' + item.name + '</div>';
+			return '<div class="autocomplete-suggestion" data-publisherid="' + item.id + '" data-val="' + item.name + '">' + item.name + ' : ' + item.id + '</div>';
 		},
 		onSelect: function(e, selectedItem, renderedItem) {
 			$("#publisherid").val(renderedItem.data('publisherid'));

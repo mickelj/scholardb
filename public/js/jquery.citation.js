@@ -257,13 +257,17 @@ var jQueryCite = (function () {
     let end = '' // suffix
     if (/[^.], /.test(name)) {
       // reversed name
-      const parts = name.split(', ')
+      const nameAndId = name.split(' : ');
+      const personid = nameAndId[1];
+      const parts = nameAndId[0].split(', ')
       end = parts.shift()
       const suffixMatch = RegExp(suffixMatcher).exec(parts.join(', '))
       start = parts.splice(suffixMatch && suffixMatch.index !== 0 ? 0 : -1, 1)[0]
       mid = parts.join(', ')
     } else {
-      const parts = name.split(suffixSplitter, 2)
+      const nameAndId = name.split(' : ');
+      const personid = nameAndId[1];
+      const parts = nameAndId[0].split(suffixSplitter, 2)
       const main = parts.shift().split(endSplitter, 2)
       start = main[0]
       end = main[1]
@@ -280,7 +284,8 @@ var jQueryCite = (function () {
         given,
         suffix,
         'non-dropping-particle': nonDroppingParticle,
-        family
+        family,
+        personid
       }
       // remove empty parts (easier than if statement for every part)
       Object.keys(nameObject).forEach(key => { if (!nameObject[key]) { delete nameObject[key] } })
