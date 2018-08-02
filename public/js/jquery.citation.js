@@ -255,10 +255,11 @@ var jQueryCite = (function () {
     let start = '' // dropping-particle + given
     let mid = '' // non-dropping-particle + family
     let end = '' // suffix
+    let personid = '';
     if (/[^.], /.test(name)) {
       // reversed name
       const nameAndId = name.split(' : ');
-      const personid = nameAndId[1];
+      personid = nameAndId[1];
       const parts = nameAndId[0].split(', ')
       end = parts.shift()
       const suffixMatch = RegExp(suffixMatcher).exec(parts.join(', '))
@@ -266,7 +267,7 @@ var jQueryCite = (function () {
       mid = parts.join(', ')
     } else {
       const nameAndId = name.split(' : ');
-      const personid = nameAndId[1];
+      personid = nameAndId[1];
       const parts = nameAndId[0].split(suffixSplitter, 2)
       const main = parts.shift().split(endSplitter, 2)
       start = main[0]
