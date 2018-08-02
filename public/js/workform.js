@@ -101,7 +101,7 @@ $(document).ready(function() {
 				});
 		},
 		renderItem: function(item, search) {
-			return '<div class="autocomplete-suggestion" data-personid="' + item.id + '" data-val="' + item.fullname + '">' + item.fullname + ' : ' + item.id +'</div>';
+			return '<div class="autocomplete-suggestion" data-personid="' + item.id + '" data-val="' + item.fullname + ' : ' + item.id + '">' + item.fullname + '</div>';
 		},
 		onSelect: function(e, selectedItem, renderedItem) {
 			var stringToAppend = $("#contributors").val().length > 0 ? $("#contributors").val() + "," : "";
