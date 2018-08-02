@@ -286,7 +286,7 @@ var jQueryCite = (function () {
         suffix,
         'non-dropping-particle': nonDroppingParticle,
         family,
-        personid
+        'contribId': personid
       }
       // remove empty parts (easier than if statement for every part)
       Object.keys(nameObject).forEach(key => { if (!nameObject[key]) { delete nameObject[key] } })
