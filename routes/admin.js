@@ -267,6 +267,7 @@ function deleteUserGroup(req, res, next) {
 }
 
 function addGroup(req, res, next) {
+  // TODO: check if new group already exists
   var nconf = req.app.get('nconf');
   var info = _cleanInfo(req.body);
 

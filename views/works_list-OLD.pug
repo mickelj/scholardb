@@ -4,14 +4,18 @@ div.col.s12.works
       div.card.horizontal.valign-wrapper
         div.card-image.center-align
           if work.coverimage
-            img(src=work.coverimage, alt="Cover Image for " + work.work_data.title)
+            img(src=work.coverimage, alt="Cover Image for " + work.work_title)
           else
             +getMediaIcon(work.work_type, 'blue-grey')
         div.card-stacked
           div.card-content
             p.title.work-title
-              a(href="/works/"+ work.work_id) !{work.work_data.title}
-              
+              a(href="/works/"+ work.id) !{work.work_title}
+                if work.title_secondary
+                  | : !{work.title_secondary}
+                if work.title_tertiary
+                  |  (!{work.title_tertiary})
+
             p.work-type= work.work_type
             if work.contributors && work.contributors.length
               p.contributors

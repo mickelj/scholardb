@@ -9,7 +9,8 @@ $(document).ready(function() {
 																delete formdata._graph;
 																delete formdata.id;
 																$("#workdata").val(JSON.stringify(form._data.data[0]));
-																$("#workform").submit();
+																//$("#workform").submit();
+																console.log(formdata);
 															},
 															inputForm: $(".cjs-in").html(),
 															outputForm: ""
