@@ -286,11 +286,11 @@ var jQueryCite = (function () {
         suffix,
         'non-dropping-particle': nonDroppingParticle,
         family,
-        'contribId': personid
+        'contrib-id': personid
       }
       // remove empty parts (easier than if statement for every part)
-      Object.keys(nameObject).forEach(key => { if (!nameObject[key]) { delete nameObject[key] } })
       console.log(nameObject);
+      Object.keys(nameObject).forEach(key => { if (!nameObject[key]) { delete nameObject[key] } })
       return nameObject
     } else {
       logger.warn('[set]', `Could not parse name: '${name}', falling back to literal`)
@@ -331,7 +331,7 @@ var jQueryCite = (function () {
    * @return {String} Full name
    */
   var getName = function (obj) {
-    var arr = ['dropping-particle', 'given', 'suffix', 'non-dropping-particle', 'family'],
+    var arr = ['dropping-particle', 'given', 'suffix', 'non-dropping-particle', 'family', 'contrib-id'],
       res = ''
 
     for (var i = 0; i < arr.length; i++) {
