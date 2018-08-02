@@ -17,6 +17,7 @@ div.col.s12.works
               p.contributors
                 each contrib, index in work.work_data.author
                   - var fullname = contrib.given + " " + contrib.family
+                  - console.log(contrib)
                   if contrib.contrib-id
                     span
                       a(href="/people/" + contrib.contrib-id)= fullname
