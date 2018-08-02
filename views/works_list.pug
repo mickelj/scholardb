@@ -13,7 +13,7 @@ div.col.s12.works
               a(href="/works/"+ work.work_id) !{work.work_data.title}
 
             p.work-type= work.work_type
-            if work.work_contributors && work.work_contributors.length
+            if work.work_data.author && work.work_data.author.length
               p.contributors
                 each contrib, index in work.work_data.author
                   - var fullname = contrib.given + " " + contrib.family
@@ -22,7 +22,7 @@ div.col.s12.works
                       a(href="/people/" + contrib.contrib-id)= fullname
                   else
                     span= fullname
-                  if index < work.work_contributors.length - 1
+                  if index < work.work_data.author - 1
                     | ; 
             p.work-pub
               a(href="/publications/" + work.pubid)= work.publication
