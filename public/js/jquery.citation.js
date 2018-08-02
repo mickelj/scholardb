@@ -286,7 +286,7 @@ var jQueryCite = (function () {
         suffix,
         'non-dropping-particle': nonDroppingParticle,
         family,
-        'contrib-id': personid
+        'contribid': personid
       }
       // remove empty parts (easier than if statement for every part)
       Object.keys(nameObject).forEach(key => { if (!nameObject[key]) { delete nameObject[key] } })
@@ -330,7 +330,7 @@ var jQueryCite = (function () {
    * @return {String} Full name
    */
   var getName = function (obj) {
-    var arr = ['dropping-particle', 'given', 'suffix', 'non-dropping-particle', 'family', 'contrib-id'],
+    var arr = ['dropping-particle', 'given', 'suffix', 'non-dropping-particle', 'family', 'contribid'],
       res = ''
 
     for (var i = 0; i < arr.length; i++) {
