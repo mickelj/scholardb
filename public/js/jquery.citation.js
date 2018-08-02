@@ -290,7 +290,6 @@ var jQueryCite = (function () {
       }
       // remove empty parts (easier than if statement for every part)
       Object.keys(nameObject).forEach(key => { if (!nameObject[key]) { delete nameObject[key] } })
-      console.log(nameObject);
       return nameObject
     } else {
       logger.warn('[set]', `Could not parse name: '${name}', falling back to literal`)

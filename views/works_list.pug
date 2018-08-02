@@ -11,28 +11,22 @@ div.col.s12.works
           div.card-content
             p.title.work-title
               a(href="/works/"+ work.work_id) !{work.work_data.title}
-              
+
             p.work-type= work.work_type
-            if work.contributors && work.contributors.length
+            if work.work_contributors && work.work_contributors.length
               p.contributors
-                each contrib, index in work.contributors
-                  case contrib.role
-                    when "Author"
-                    when "Performer"
-                    when "Composer"
-                    when "Creator"
-                    when "Director"
-                    when "Presenter"
-                      if contrib.person_id
-                        span
-                          a(href="/people/" + contrib.person_id)= contrib.display_name
-                      else
-                        span= contrib.display_name
-                      if index < work.contributors.length - 1
-                        | ; 
+                each contrib, index in work.work_data.author
+                  - var fullname = contrib.given + " " + contrib.family
+                  if contrib.contrib-id
+                    span
+                      a(href="/people/" + contrib.contrib-id)= fullname
+                  else
+                    span= fullname
+                  if index < work.work_contributors.length - 1
+                    | ; 
             p.work-pub
-              a(href="/publications/" + work.pubid)= work.publication
-              span.work-date= work.year
+              a(href="/publications/" + work.pubid)= work.work_publication
+              span.work-date= work.work_data.issued[0].date-parts[0]
           +buildSearchUrl(work)
           if searchurl || work.archive_url
             div.card-action.right-align
