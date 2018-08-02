@@ -25,7 +25,7 @@ div.col.s12.works
                   if index < work.work_contributors.length - 1
                     | ; 
             p.work-pub
-              a(href="/publications/" + work.pubid)= work.work_publication
+              a(href="/publications/" + work.pubid)= work.publication
               //- span.work-date= work.work_data.issued[0].date-parts[0]
           +buildSearchUrl(work)
           if searchurl || work.archive_url

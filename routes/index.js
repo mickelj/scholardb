@@ -40,7 +40,7 @@ function getRecentWorks(req, res, next) {
 } */
 
 function getRecentWorks(req, res, next) {
-  db.run("SELECT works_new.work_id, work_types.description as work_type, works_new.work_data, works_new.work_contributors, works_new.work_publication, works_new.archive_url FROM works_new JOIN publications ON publications.id = works_new.work_publication JOIN work_types ON work_types.type = works_new.work_data->>'type' ORDER BY works_new.created_at DESC LIMIT 3;", function(err, results) {
+  db.run("SELECT works_new.work_id, work_types.description as work_type, works_new.work_data, works_new.work_contributors, works_new.work_publication as pubid, works_new.archive_url, name as publication, identifier FROM works_new JOIN publications ON publications.id = works_new.work_publication JOIN work_types ON work_types.type = works_new.work_data->>'type' ORDER BY works_new.created_at DESC LIMIT 3;", function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
