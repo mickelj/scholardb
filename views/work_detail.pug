@@ -40,17 +40,19 @@ block content
                 if contrib.contribid
                   div
                     a(href="/people/" + contrib.contribid)= fullname
+                      i  (Author)
                 else
                   div= fullname
-                i  (Author)
+                    i  (Author)
               each contrib in work_detail.work_data.editor
                 - var fullname = contrib.given + " " + contrib.family
                 if contrib.contribid
                   div
                     a(href="/people/" + contrib.contribid)= fullname
+                      i  (Editor)
                 else
                   div= fullname
-                i  (Editor)
+                    i  (Editor)
           if work_detail.publication
             tr
               th.right-align Publication:
