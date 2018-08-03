@@ -1,9 +1,7 @@
 if work_detail.work_data.page
   - [startpage, endpage] = work_detail.work_data.page.split('-')
 - searchurl  = appconf.appurls.linkresolver + '?ctx_ver=Z39.88-2004&rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3A'
-- searchurl += 'journal&rft.genre=article&rft.atitle=' + encodeURIComponent(work_detail.work_data.title).replace(/%20/g, '+') + '&rft.jtitle=' + encodeURIComponent(work_detail.publication).replace(/%20/g, '+') + '&rft.issn=' + work_detail.identifier + '&rft.volume=' + (work_detail.work_data.volume ? work_detail.work_data.volume : '') + '&rft.issue=' +  (work_detail.work_data.issue ? work_detail.work_data.issue : '') + '&rft.spage=' + (startpage ? startpage : '') + '&rft.epage=' + (endpage ? endpage : '')
+- searchurl += 'journal&rft.genre=article&rft.atitle=' + encodeURIComponent(work_detail.work_data.title).replace(/%20/g, '+') + '&rft.jtitle=' + encodeURIComponent(work_detail.publication).replace(/%20/g, '+') + '&rft.date=' + work_detail.work_data.issued[0]["date-parts"][0] + '&rft.issn=' + work_detail.identifier + '&rft.volume=' + (work_detail.work_data.volume ? work_detail.work_data.volume : '') + '&rft.issue=' +  (work_detail.work_data.issue ? work_detail.work_data.issue : '') + '&rft.spage=' + (startpage ? startpage : '') + '&rft.epage=' + (endpage ? endpage : '')
 each contrib in work_detail.work_data.author
   - fullname = contrib.given + " " + contrib.family
   - searchurl += '&rft.au=' + encodeURIComponent(fullname)
-
-//-      + '&rft.date=' + work_detail.work_data.issued[0].date-parts[0]

@@ -27,7 +27,7 @@ div.col.s12.works
                     | ; 
             p.work-pub
               a(href="/publications/" + work.pubid)= work.publication
-              //- span.work-date= work.work_data.issued[0].date-parts[0]
+              span.work-date= work.work_data.issued[0]["date-parts"][0]
           +buildSearchUrl(work)
           if searchurl || work.archive_url
             div.card-action.right-align
