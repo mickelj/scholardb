@@ -199,7 +199,7 @@ function renderWorksList (req, res) {
 function getWorkDetail(req, res, next) {
   var work_id = req.params.id;
 
-  db.run("SELECT works_new.work_id, work_data, description as work_type, work_contributors, publications.name as publication, work_publication as pubid, publishers.name as publisher, publishers.id as publisherid, identifier, identifier_type, alt_identifier, alt_identifier_type, archive_url, archived_at FROM works_new LEFT JOIN publications ON publications.id = works.publication_id LEFT JOIN work_types on work_types.type=works_new.work_data->>'type' LEFT JOIN publishers ON publishers.id = publications.publisher_id WHERE works_new.work_id = $1", [work_id], function(err, results) {
+  db.run("SELECT works_new.work_id, work_data, description as work_type, work_contributors, publications.name as publication, work_publication as pubid, publishers.name as publisher, publishers.id as publisherid, identifier, identifier_type, alt_identifier, alt_identifier_type, archive_url, archived_at FROM works_new LEFT JOIN publications ON publications.id = works_new.work_publication LEFT JOIN work_types on work_types.type=works_new.work_data->>'type' LEFT JOIN publishers ON publishers.id = publications.publisher_id WHERE works_new.work_id = $1", [work_id], function(err, results) {
     if (err || !results.length) {
       return next(err);
     }

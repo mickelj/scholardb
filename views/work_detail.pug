@@ -4,25 +4,21 @@ block content
   div.container
     div.row
       div.col.s12
-        h4.work-title !{work_detail.work_title}
-          if work_detail.title_secondary
-            | : !{work_detail.title_secondary}
-          if work_detail.title_tertiary
-            |  (!{work_detail.title_tertiary})
+        h4.work-title !{work_detail.work_data.title}
         p.work-type
-          +getMediaIcon(work_detail.work_type, 'black')
-          | #{work_detail.work_type}
+          +getMediaIcon(work_detail.work_data.type, 'black')
+          | #{work_detail.work_data.type}
     
     div.row
       +buildSearchUrl(work_detail)
       if searchurl || work_detail.archive_url || romeo
         div.col.s12.m3
           if searchurl
-            if work_detail.work_type == "Book" || work_detail.work_type == "Book Section"
+            if work_detail.work_data.type == "Book" || work_detail.work_data.type == "Book Section"
               - var surl = searchurl
             else
               - var surl = "#searchurl1"
-              +holdings(searchurl, work_detail.work_title, 1)
+              +holdings(searchurl, work_detail.work_data.title, 1)
             a.btn.waves-effect.waves-light.blue.darken-4.local-avail(href=surl, target="_blank")
               i.material-icons.left library_books
               span= appconf.fulltext.buttontext
@@ -39,48 +35,47 @@ block content
           tr
             th.right-align Contributors:
             td
-              each contrib in work_detail.contributors
-                if contrib.person_id
+              each contrib in work_detail.work_data.author
+                - var fullname = contrib.given + " " + contrib.family
+                if contrib.contribid
                   div
-                    a(href="/people/" + contrib.person_id)= contrib.display_name
-                      span.contrib-role  (#{contrib.role})
+                    a(href="/people/" + contrib.contribid)= fullname
                 else
-                  div= contrib.display_name
-                    span.contrib-role  (#{contrib.role})
+                  div= fullname
           if work_detail.publication
             tr
               th.right-align Publication:
               td.work-pub
                 a(href="/publications/" + work_detail.pubid)= work_detail.publication
-          if work_detail.volume
+          if work_detail.work_data.volume
             tr
               th.right-align Volume:
-              td= work_detail.volume
-          if work_detail.issue
+              td= work_detail.work_data.volume
+          if work_detail.work_data.issue
             tr
               th.right-align Issue:
-              td= work_detail.issue
+              td= work_detail.work_data.issue
           if work_detail.publisher
             tr
               th.right-align Publisher:
               td
                 a(href="/publishers/" + work_detail.publisherid)= work_detail.publisher
-          if work_detail.location
-            tr
-              th.right-align Location:
-              td= work_detail.location
-          if work_detail.year
+          if work_detail.work_data['publisher-place']
+              td= work_detail.work_data['publisher-place']
+          if work_detail.work_data.issued[0]["date-parts"][0]
             tr
               th.right-align Date Published:
-              td= work_detail.year
-          if work_detail.start_page
-            tr
-              th.right-align Starting Page:
-              td= work_detail.start_page
-          if work_detail.end_page
-            tr
-              th.right-align Ending Page:
-              td= work_detail.end_page
+              td= work_detail.work_data.issued[0]["date-parts"][0]
+          if work_detail.page
+            - [start_page, end_page] = work_detail.work_data.page.split('-')
+            if start_page
+              tr
+                th.right-align Starting Page:
+                td= start_page
+            if end_page
+              tr
+                th.right-align Ending Page:
+                td= end_page
           if work_detail.identifier_type && work_detail.identifier
             tr
               th.right-align= work_detail.identifier_type
@@ -89,14 +84,14 @@ block content
             tr
               th.right-align= work_detail.alt_identifier_type
               td= work_detail.alt_identifier
-          if work_detail.url
+          if work_detail.work_data.URL
             tr
               th.right-align URL:
               td
-                a(href=work_detail.url)= work_detail.url        
+                a(href=work_detail.work_data.URL)= work_detail.work_data.URL        
       if coverimage
         div.col.s0.m2
-          img.z-depth-4(src=coverimage, alt="Cover Image for " + work_detail.work_title)
+          img.z-depth-4(src=coverimage, alt="Cover Image for " + work_detail.work_data.title)
   
   if romeo && romeo.numhits > 0
     div#romeo.modal.modal-fixed-footer
