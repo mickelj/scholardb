@@ -7,7 +7,7 @@ block content
         h4.work-title !{work_detail.work_data.title}
         p.work-type
           +getMediaIcon(work_detail.work_data.type, 'black')
-          | #{work_detail.description}
+          | #{work_detail.work_type}
     
     div.row
       +buildSearchUrl(work_detail)
