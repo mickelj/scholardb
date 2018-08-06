@@ -7,35 +7,35 @@ feed(xmlns='http://www.w3.org/2005/Atom')
     name= appconf.customtext.organization
   if feed_detail && feed_detail.length
     updated= moment(feed_detail[0].updated_at).toISOString()
-  each work_detail in feed_detail
-    include mixins.pug
-    entry
-      - var worklink = "works/" + work_detail.work_id
-      id= worklink
-      title !{work_detail.work_data.title}
-      updated= moment(work_detail.updated_at).toISOString()
-      link(href=worklink, rel='alternate')
-      category(term=work_detail.work_type)
-      p
-        +contributors('author', true)
-      p
-        +contributors('editor', true)
-      p
-        +contributors('director', true)
-      p
-        +contributors('composer', true)
-      summary(type='xhtml')
-        div(xmlns="http://www.w3.org/1999/xhtml")
-          p: i= work_detail.work_type
-          p
-            +contributors('author', true)
-          p
-            +contributors('editor', true)
-          p
-            +contributors('director', true)
-          p
-            +contributors('composer', true)
-          p
-            a(href="publications/" + work_detail.pubid)= work_detail.pubname
-            |  (#{work_detail.work_data.issued[0]["date-parts"][0]})
+    each work_detail in feed_detail
+      include mixins.pug
+      entry
+        - var worklink = "works/" + work_detail.work_id
+        id= worklink
+        title !{work_detail.work_data.title}
+        updated= moment(work_detail.updated_at).toISOString()
+        link(href=worklink, rel='alternate')
+        category(term=work_detail.work_type)
+        p
+          +contributors('author', true)
+        p
+          +contributors('editor', true)
+        p
+          +contributors('director', true)
+        p
+          +contributors('composer', true)
+        summary(type='xhtml')
+          div(xmlns="http://www.w3.org/1999/xhtml")
+            p: i= work_detail.work_type
+            p
+              +contributors('author', true)
+            p
+              +contributors('editor', true)
+            p
+              +contributors('director', true)
+            p
+              +contributors('composer', true)
+            p
+              a(href="publications/" + work_detail.pubid)= work_detail.pubname
+              |  (#{work_detail.work_data.issued[0]["date-parts"][0]})
 
