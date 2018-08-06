@@ -17,9 +17,8 @@ block content
             if work_detail.work_data.type == "Book" || work_detail.work_data.type == "Book Section"
               - var surl = searchurl
             else
-              - var surl = "#searchurl1"
               +holdings(searchurl, work_detail.work_data.title, 1)
-            a.btn.waves-effect.waves-light.blue.darken-4.local-avail(href=surl, target="_blank")
+            button.btn.waves-effect.waves-light.blue.darken-4.local-avail.modal-trigger(data-target="searchurl1")
               i.material-icons.left library_books
               span= appconf.fulltext.buttontext
           if work_detail.archive_url
