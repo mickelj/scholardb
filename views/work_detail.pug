@@ -35,26 +35,10 @@ block content
           tr
             th.right-align Contributors:
             td
-              if work_detail.work_data.author && work_detail.work_data.author.length
-                each contrib in work_detail.work_data.author
-                  - var fullname = contrib.given + " " + contrib.family
-                  if contrib.contribid
-                    div
-                      a(href="/people/" + contrib.contribid)= fullname
-                      i  (Author)
-                  else
-                    div= fullname
-                      i  (Author)
-              if work_detail.work_data.editor && work_detail.work_data.editor.length
-                each contrib in work_detail.work_data.editor
-                  - var fullname = contrib.given + " " + contrib.family
-                  if contrib.contribid
-                    div
-                      a(href="/people/" + contrib.contribid)= fullname
-                      i  (Editor)
-                  else
-                    div= fullname
-                      i  (Editor)
+              +contributors('author')
+              +contributors('editor')
+              +contributors('director')
+              +contributors('composer')
           if work_detail.publication
             tr
               th.right-align Publication:
