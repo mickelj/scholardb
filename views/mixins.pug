@@ -73,17 +73,27 @@ mixin holdings(url, title, i)
     div.modal-footer
       a.modal-action.modal-close.waves-effect.waves-green.btn-flat(href="#!") OK
 
-mixin contributors(conttype)
+mixin contributors(conttype, rss)
   if work_detail.work_data[conttype] && work_detail.work_data[conttype].length
-    each contrib in work_detail.work_data[conttype]
+    each contrib,idx in work_detail.work_data[conttype]
       - var fullname = contrib.given + " " + contrib.family
       if contrib.contribid
-        div
-          a(href="/people/" + contrib.contribid)= fullname
-          i  (#{conttype.charAt(0).toUpperCase() + conttype.slice(1)})
+        if rss
+          a(href=appconf.appurls.apphome + "/people/" + contrib.contribid)= fullname
+          if idx < work_detail.work_data[conttype].length - 1
+            | ; 
+        else
+          div
+            a(href="/people/" + contrib.contribid)= fullname
+            i  (#{conttype.charAt(0).toUpperCase() + conttype.slice(1)})
       else
-        div= fullname
-          i  (#{conttype.charAt(0).toUpperCase() + conttype.slice(1)})
+        if rss
+          | #{fullname}
+          if idx < work_detail.work_data[conttype].length - 1
+            | ; 
+        else
+          div= fullname
+            i  (#{conttype.charAt(0).toUpperCase() + conttype.slice(1)})
 
 - var searchurl
 - var romeoClassColor
