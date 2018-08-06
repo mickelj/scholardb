@@ -1,5 +1,3 @@
-include mixins.pug
-
 doctype xml
 feed(xmlns='http://www.w3.org/2005/Atom')
   id= feed_link
@@ -32,3 +30,5 @@ feed(xmlns='http://www.w3.org/2005/Atom')
           p
             a(href=appconf.appurls.apphome + "/publications/" + work_detail.pubid)= work_detail.pubname
             |  (#{work_detail.work_data.issued[0]["date-parts"][0]})
+
+include mixins.pug
