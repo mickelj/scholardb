@@ -10,7 +10,7 @@ feed(xmlns='http://www.w3.org/2005/Atom')
   each work_detail in feed_detail
     include mixins.pug
     entry
-      - var worklink = "works/" + work_detail.work_id
+      - var worklink = appconf.appurls.apphome + "/works/" + work_detail.work_id
       id= worklink
       title !{work_detail.work_data.title}
       updated= moment(work_detail.updated_at).toISOString()
@@ -29,6 +29,6 @@ feed(xmlns='http://www.w3.org/2005/Atom')
             +contributors('director')
             +contributors('composer')
           p
-            a(href="publications/" + work_detail.pubid)= work_detail.pubname
+            a(href=appconf.appurls.apphome + "/publications/" + work_detail.pubid)= work_detail.pubname
             |  (#{work_detail.work_data.issued[0]["date-parts"][0]})
 
