@@ -71,7 +71,7 @@ mixin holdings(url, title, i)
         div.frame-container
           iframe(src=url, frameborder="0")
     div.modal-footer
-      a.modal-action.modal-close.waves-effect.waves-green.btn-flat(href="#!") OK
+      button.modal-action.modal-close.waves-effect.waves-green.btn-flat.green.white-text OK
 
 mixin contributors(conttype, rss)
   if work_detail.work_data[conttype] && work_detail.work_data[conttype].length

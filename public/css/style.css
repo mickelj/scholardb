@@ -437,12 +437,13 @@ label.workadd {
 
 .framewrap {
   width: 100%;
+  height: 85%;
 }
 
 .frame-container {
   position: relative;
   padding-bottom: 30%;
-  height: 0;
+  height: 100%;
   overflow: hidden;
 }
 
