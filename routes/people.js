@@ -68,7 +68,7 @@ function renderPeopleList(req, res) {
 function getPersonDetail (req, res, next) {
   var person_id = req.params.id;
 
-  db.run("SELECT p.id as person_id, first_name, middle_name, last_name, image_url as image, user_type, jsonb_agg(g) as memberships, alt_last_names, alt_first_names FROM people p LEFT JOIN LATERAL (select id, name, sort_name from groups join memberships m on groups.id = m.group_id where hidden = false AND m.people_id = p.id order by sort_name) g ON TRUE WHERE p.id = $1 GROUP BY p.id, first_name, last_name, image_url, user_type, alt_last_names, alt_first_names ORDER BY last_name, first_name", [person_id], function(err, results) {
+  db.run("SELECT p.id as person_id, first_name, middle_name, last_name, image_url as image, user_type, jsonb_agg(g) as memberships, alt_last_names, alt_first_names, fullname FROM people p LEFT JOIN LATERAL (select id, name, sort_name from groups join memberships m on groups.id = m.group_id where hidden = false AND m.people_id = p.id order by sort_name) g ON TRUE WHERE p.id = $1 GROUP BY p.id, first_name, last_name, image_url, user_type, alt_last_names, alt_first_names ORDER BY last_name, first_name", [person_id], function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
@@ -166,7 +166,7 @@ function renderPersonDetail(req, res) {
 
   res.render('people_detail', {
     appconf: nconf.get(),
-    title: nconf.get('customtext:appname') + " - Person: " + req.person_detail.last_name + ", " + req.person_detail.first_name + " " + req.person_detail.middle_name,
+    title: nconf.get('customtext:appname') + " - Person: " + req.person_detail.fullname,
     works_list: req.person_works_list,
     pers: req.person_detail,
     total_works: req.total_works,
