@@ -10,7 +10,7 @@ function searchWorks(req, res, next) {
   var query = req.query.terms ? req.query.terms : null;
 
   if (query) {
-    db.run("SELECT id, work_data->>'title', TS_RANK_CD(full_title_search, query, 32/* rank/(rank+1) */) AS rank FROM works, TO_TSQUERY('''" + query + "''') query WHERE query @@ full_title_search ORDER BY rank DESC", function(err, results) {
+    db.run("SELECT id, work_data->>'title', TS_RANK_CD(full_title_search, query, 32/* rank/(rank+1) */) AS rank FROM works_new, TO_TSQUERY('''" + query + "''') query WHERE query @@ full_title_search ORDER BY rank DESC", function(err, results) {
       if (err) {
         return next(err);
       }
