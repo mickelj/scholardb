@@ -182,7 +182,7 @@ function deactivateUser(req, res, next) {
 }
 
 function removeUserFromWorks(req, res, next) {
-  db.run("UPDATE works SET contributors = $1 WHERE contributors @> $2;", ["array_remove(contributors, " + req.body.id + ")", "ARRAY[" + req.body.id + "]"], (err, results) => {
+  db.run("UPDATE works_new SET work_contributors = $1 WHERE work_contributors @> $2;", ["array_remove(contributors, " + req.body.id + ")", "ARRAY[" + req.body.id + "]"], (err, results) => {
     if (err) {
       req.flash('error', 'Error removing user from works.');
       return res.redirect('back');

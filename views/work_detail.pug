@@ -28,7 +28,7 @@ block content
               span= appconf.archive.buttontext
           if romeo && romeo.numhits > 0
             +romeocolor(romeo.publisher.romeocolour[0])
-            a(class="btn waves-effect waves-light black-text lighten-1 romeo-detail local-avail " + romeoClassColor, href="#romeo") RoMEO: #{romeo.publisher.romeocolour[0]}
+            a(class="btn waves-effect waves-light black-text lighten-1 romeo-detail local-avail " + romeoClassColor, href="#romeo", data-target="#romeo") RoMEO: #{romeo.publisher.romeocolour[0]}
 
       div.col.s12.m7
         table
