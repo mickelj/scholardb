@@ -24,7 +24,7 @@ block content
     div.col.hide-on-small-only.m3.z-depth-2.detail-profile-sidebar.person-profile-sidebar
       div.col.s3.m12.center-align
         img.responsive-img.circle(data-usertype=pers.user_type, src=appconf.appurls.imgrootdir + pers.image + appconf.images.defimgext, alt=pers.first_name + " " + pers.last_name)
-      if person.alt_last_names && pers.alt_last_names.length
+      if pers.alt_last_names && pers.alt_last_names.length
         div.col.s3.m12
           p.person-profile-section.blue.darken-4.white-text Alternate Surnames
           table
@@ -33,7 +33,7 @@ block content
                 tr
                   td= pn
 
-      if person.alt_first_names && pers.alt_first_names.length
+      if pers.alt_first_names && pers.alt_first_names.length
         div.col.s3.m12
           p.person-profile-section.blue.darken-4.white-text Alternate Given Names
           table
