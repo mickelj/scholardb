@@ -5,7 +5,7 @@ feed(xmlns='http://www.w3.org/2005/Atom')
   link(href=feed_link, rel='self')
   author
     name= appconf.customtext.organization
-  if feed_detail.length
+  if feed_detail && feed_detail.length
     updated= moment(feed_detail[0].updated_at).toISOString()
   each work_detail in feed_detail
     include mixins.pug
