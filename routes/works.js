@@ -266,7 +266,7 @@ function renderWorkDetail(req, res) {
 
   res.render('work_detail', {
     appconf: nconf.get(),
-    title: nconf.get('customtext:appname') + " - Work: " + req.work_detail.work_title,
+    title: nconf.get('customtext:appname') + " - Work: " + req.work_detail.work_data.title,
     work_detail: req.work_detail,
     coverimage: req.coverimage,
     romeo: req.romeo,
