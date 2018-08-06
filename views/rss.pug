@@ -9,27 +9,23 @@ feed(xmlns='http://www.w3.org/2005/Atom')
     updated= moment(feed_detail[0].updated_at).toISOString()
   each work in feed_detail
     entry
-      - var worklink = appconf.appurls.apphome + "/works/" + work.id
+      - var worklink = appconf.appurls.apphome + "/works/" + work.work_id
       id= worklink
-      title !{work.title}
+      title !{work.work_data.title}
       updated= moment(work.updated_at).toISOString()
       link(href=worklink, rel='alternate')
       category(term=work.work_type)
-      each con in work.contributors
+      each con in work.work_contributors
         contributor
           name= con.display_name
       summary(type='xhtml')
         div(xmlns="http://www.w3.org/1999/xhtml")
           p: i= work.work_type
           p
-            each con,idx in work.contributors
-              if con.person_id
-                a(href=appconf.appurls.apphome + "/people/" + con.person_id)= con.display_name
-              else
-                | #{con.display_name}
-              
-              if idx < work.contributors.length - 1
-                | ; 
+            +contributors('author')
+            +contributors('editor')
+            +contributors('director')
+            +contributors('composer')
           p
             a(href=appconf.appurls.apphome + "/publications/" + work.pubid)= work.pubname
-            |  (#{work.year})
+            |  (#{work.work_data.issued[0]["date-parts"][0]})
