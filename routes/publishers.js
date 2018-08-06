@@ -115,7 +115,7 @@ function getPublisherWorksList (req, res, next) {
   var limit = req.query.limit || 10;
   var offset = req.query.page ? (req.query.page - 1) * limit : 0;
 
-  db.run("SELECT DISTINCT works_new.work_id, work_data, description as work_type, contributors, j.name as publication, j.id as pubid, work_data#>>'{issued,0,date-parts,0}' as year, identifier, identifier_type, alt_identifier, alt_identifier_type, archive_url FROM works_new JOIN publications j ON j.id = works_new.work_publication JOIN publishers pub ON j.publisher_id = pub.id JOIN work_types on work_types.type=works_new.work_data->>'type', UNNEST(works_new.work_contributors) AS person_id LEFT JOIN people p ON person_id = p.id WHERE pub.id = $1 ORDER BY work_data#>>'{issued,0,date-parts,0}' DESC, works_new.work_id DESC LIMIT $2 OFFSET $3", [publisher_id, limit, offset], function(err, results) {
+  db.run("SELECT DISTINCT works_new.work_id, work_data, description as work_type, work_contributors, j.name as publication, j.id as pubid, work_data#>>'{issued,0,date-parts,0}' as year, identifier, identifier_type, alt_identifier, alt_identifier_type, archive_url FROM works_new JOIN publications j ON j.id = works_new.work_publication JOIN publishers pub ON j.publisher_id = pub.id JOIN work_types on work_types.type=works_new.work_data->>'type', UNNEST(works_new.work_contributors) AS person_id LEFT JOIN people p ON person_id = p.id WHERE pub.id = $1 ORDER BY work_data#>>'{issued,0,date-parts,0}' DESC, works_new.work_id DESC LIMIT $2 OFFSET $3", [publisher_id, limit, offset], function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
