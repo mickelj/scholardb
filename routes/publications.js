@@ -77,7 +77,7 @@ function getJournalDetail (req, res, next) {
 function getJournalPeople (req, res, next) {
   var journal_id = req.params.id;
 
-  db.run("SELECT person_id, first_name, last_name, image_url as image, user_type, count(works_new.work_id) FROM works_new, UNNEST(works_new.work_contributors) AS person_id LEFT JOIN people p ON p.id = person_id WHERE publication_id = $1 AND active = true GROUP BY person_id, first_name, last_name, email, image_url, user_type ORDER BY last_name, first_name, image_url, user_type", [journal_id], function(err, results) {
+  db.run("SELECT person_id, first_name, last_name, image_url as image, user_type, count(works_new.work_id) FROM works_new, UNNEST(works_new.work_contributors) AS person_id LEFT JOIN people p ON p.id = person_id WHERE work_publication = $1 AND active = true GROUP BY person_id, first_name, last_name, email, image_url, user_type ORDER BY last_name, first_name, image_url, user_type", [journal_id], function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
