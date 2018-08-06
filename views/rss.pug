@@ -16,17 +16,24 @@ feed(xmlns='http://www.w3.org/2005/Atom')
       updated= moment(work_detail.updated_at).toISOString()
       link(href=worklink, rel='alternate')
       category(term=work_detail.work_type)
-      +contributors('author', true)
-      +contributors('editor', true)
-      +contributors('director', true)
-      +contributors('composer', true)
+      p
+        +contributors('author', true)
+      p
+        +contributors('editor', true)
+      p
+        +contributors('director', true)
+      p
+        +contributors('composer', true)
       summary(type='xhtml')
         div(xmlns="http://www.w3.org/1999/xhtml")
           p: i= work_detail.work_type
           p
             +contributors('author', true)
+          p
             +contributors('editor', true)
+          p
             +contributors('director', true)
+          p
             +contributors('composer', true)
           p
             a(href="publications/" + work_detail.pubid)= work_detail.pubname
