@@ -24,11 +24,20 @@ block content
     div.col.hide-on-small-only.m3.z-depth-2.detail-profile-sidebar.person-profile-sidebar
       div.col.s3.m12.center-align
         img.responsive-img.circle(data-usertype=pers.user_type, src=appconf.appurls.imgrootdir + pers.image + appconf.images.defimgext, alt=pers.first_name + " " + pers.last_name)
-      if pers.pen_names.length
+      if pers.alt_last_names.length
         div.col.s3.m12
-          p.person-profile-section.blue.darken-4.white-text Published As
+          p.person-profile-section.blue.darken-4.white-text Alternate Surnames
           table
-            each pn in pers.pen_names
+            each pn in pers.alt_last_names
+              if pn
+                tr
+                  td= pn
+
+      if pers.alt_first_names.length
+        div.col.s3.m12
+          p.person-profile-section.blue.darken-4.white-text Alternate Given Names
+          table
+            each pn in pers.alt_first_names
               if pn
                 tr
                   td= pn
