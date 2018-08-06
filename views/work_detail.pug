@@ -92,7 +92,9 @@ block content
   if romeo && romeo.numhits > 0
     div#romeo.modal.modal-fixed-footer
       div.modal-content.moreinfo
-        p.headline #{work_detail.publication} (#{work_detail.publisher})
+        p.headline #{work_detail.publication} 
+          if work_detail.publisher
+            i (#{work_detail.publisher})
         include romeo.pug
       div.modal-footer
         button.modal-action.modal-close.waves-effect.waves-green.btn-flat.green.white-text OK
