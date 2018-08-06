@@ -77,7 +77,7 @@ function getDeptDetail (req, res, next) {
 function getDeptPeople (req, res, next) {
   var dept_id = req.params.id;
 
-  db.run("SELECT person_id, first_name, last_name, image_url as image, user_type, COUNT(works_new.work_id) FROM works_new, UNNEST(works_new.work_contributors) AS person_id LEFT JOIN people p ON p.id = person_id LEFT JOIN memberships m on p.id = m.people_id JOIN groups g on m.group_id = g.id WHERE g.hidden = false AND g.id = $1 AND active = true GROUP BY person_id, first_name, last_name, email, image_url, user_type ORDER BY last_name, first_name", [dept_id], function(err, results) {
+  db.run("SELECT person_id, first_name, last_name, image_url as image, user_type, count(works.id) FROM works, jsonb_to_recordset(works.contributors) AS w(person_id int) LEFT JOIN people p ON p.id = person_id LEFT JOIN memberships m on p.id = m.people_id JOIN groups g on m.group_id = g.id WHERE g.hidden = false AND g.id = $1 AND active = true GROUP BY person_id, first_name, last_name, email, image_url, user_type ORDER BY last_name, first_name", [dept_id], function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
@@ -90,7 +90,7 @@ function getDeptPeople (req, res, next) {
 function getDeptWorksCount(req, res, next) {
   var dept_id = req.params.id;
 
-  db.run("SELECT COUNT(DISTINCT works_new.work_id) as total_works FROM works_new, UNNEST(works_new.work_contributors) AS person_id LEFT JOIN people p ON person_id = p.id LEFT JOIN memberships m on p.id = m.people_id JOIN groups g on m.group_id = g.id WHERE g.hidden = false AND g.id = $1", [dept_id], function(err, results) {
+  db.run("SELECT count(distinct works.id) as total_works FROM works, JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) LEFT JOIN people p ON person_id = p.id LEFT JOIN memberships m on p.id = m.people_id JOIN groups g on m.group_id = g.id WHERE g.hidden = false AND g.id = $1", [dept_id], function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
@@ -105,7 +105,7 @@ function getDeptWorksList (req, res, next) {
   var limit = req.query.limit || 10;
   var offset = req.query.page ? (req.query.page - 1) * limit : 0;
 
-  db.run("SELECT DISTINCT works_new.work_id, work_data, description as work_type, work_contributors, identifier, identifier_type, alt_identifier, alt_identifier_type, publications.name as publication, publications.authority_id as pubid, work_data#>>'{issued,0,date-parts,0}' as year, archive_url FROM works_new JOIN publications ON publications.id = works_new.work_publication JOIN work_types on work_types.type=works_new.work_data->>'type', UNNEST(works_new.work_contributors) AS person_id LEFT JOIN people p ON person_id = p.id LEFT JOIN memberships m on p.id = m.people_id JOIN groups g on m.group_id = g.id WHERE g.hidden = false AND g.id = $1 ORDER BY work_data#>>'{issued,0,date-parts,0}' DESC, works_new.work_id DESC LIMIT $2 OFFSET $3", [dept_id, limit, offset], function(err, results) {
+  db.run("SELECT DISTINCT works.id, title_primary as work_title, title_secondary, title_tertiary, description as work_type, contributors, identifier, identifier_type, alt_identifier, alt_identifier_type, publications.name as publication, publications.authority_id as pubid, publication_date_year as year, volume, issue, start_page, end_page, archive_url FROM works JOIN publications ON publications.id = works.publication_id JOIN work_types USING (type), JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) LEFT JOIN people p ON person_id = p.id LEFT JOIN memberships m on p.id = m.people_id JOIN groups g on m.group_id = g.id WHERE g.hidden = false AND g.id = $1 ORDER BY publication_date_year DESC, works.id DESC LIMIT $2 OFFSET $3", [dept_id, limit, offset], function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
@@ -180,7 +180,7 @@ function getRssResults(req, res, next) {
   var dept_id = req.params.id;
   var limit = req.query.limit || 10;
 
-  db.run("SELECT DISTINCT works_new.work_id, work_data, description as work_type, work_contributors, publications.name as pubname, publications.id as pubid, work_data#>>'{issued,0,date-parts,0}' as year, works_new.updated_at, works_new.created_at FROM works_new JOIN publications ON publications.id = works_new.work_publication JOIN work_types on work_types.type=works_new.work_data->>'type', UNNEST(works_new.work_contributors) AS person_id LEFT JOIN people p ON person_id = p.id LEFT JOIN memberships m on p.id = m.people_id JOIN groups g on m.group_id = g.id WHERE g.hidden = false AND g.id = $1 ORDER BY year DESC, works_new.created_at DESC, works_new.work_id DESC LIMIT $2", [dept_id, limit], function(err, results) {
+  db.run("SELECT DISTINCT works.id, title_primary as title, description as work_type, contributors, publications.name as pubname, publications.id as pubid, publication_date_year as year, works.updated_at, works.created_at FROM works JOIN publications ON publications.id = works.publication_id JOIN work_types USING (type), JSONB_TO_RECORDSET(works.contributors) AS w(person_id int) LEFT JOIN people p ON person_id = p.id LEFT JOIN memberships m on p.id = m.people_id JOIN groups g on m.group_id = g.id WHERE g.hidden = false AND g.id = $1 ORDER BY year DESC, works.created_at DESC, works.id DESC LIMIT $2", [dept_id, limit], function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
