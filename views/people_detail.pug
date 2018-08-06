@@ -62,7 +62,7 @@ block content
                 tr
                   td
                     a(href="/people/" + ca.id)= ca.name
-                      span.new.badge.blue.darken-1(data-badge-caption=(ca.count > 1 ? "works" : "work")) #{ca.count}
+                      span.new.badge.blue.darken-1(data-badge-caption=(ca.count > 1 ? "works" : "work"))  #{ca.count}
 
       div.col.s3.m12
         p.person-profile-section.blue.darken-4.white-text Journals
@@ -71,7 +71,7 @@ block content
             tr
               td 
                 a(href="/publications/" + detail.id) #{detail.name} 
-                  span.new.badge.blue.darken-1(data-badge-caption=(detail.count > 1 ? "works" : "work")) #{detail.count}
+                  span.new.badge.blue.darken-1(data-badge-caption=(detail.count > 1 ? "works" : "work"))  #{detail.count}
           
     div.col.s12.m9.detail-works
       include works_block.pug
