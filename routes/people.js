@@ -124,7 +124,7 @@ function getPublicationsCount(req, res, next) {
 function getCoauthors(req, res, next) {
   var person_id = req.params.id;
 
-  db.run("SELECT person_id as id, fullname as name, count(works_new.work_id) FROM works_new, UNNEST(works_new.work_contributors) AS person_id JOIN people on person_id = people.id WHERE work_contributors @> $1 GROUP BY person_id, fullname, last_name, first_name ORDER BY last_name ASC, first_name ASC", ["ARRAY[" + person_id + "]"], function(err, results) {
+  db.run("SELECT person_id as id, fullname as name, count(works_new.work_id) FROM works_new, UNNEST(works_new.work_contributors) AS person_id JOIN people on person_id = people.id WHERE work_contributors @> ARRAY[" + person_id + "] GROUP BY person_id, fullname, last_name, first_name ORDER BY last_name ASC, first_name ASC", function(err, results) {
     if (err) {
       return next(err);
     }
