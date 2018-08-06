@@ -17,9 +17,10 @@ feed(xmlns='http://www.w3.org/2005/Atom')
       updated= moment(work_detail.updated_at).toISOString()
       link(href=worklink, rel='alternate')
       category(term=work_detail.work_type)
-      each con in work_detail.work_contributors
-        contributor
-          name= con.display_name
+      +contributors('author')
+      +contributors('editor')
+      +contributors('director')
+      +contributors('composer')
       summary(type='xhtml')
         div(xmlns="http://www.w3.org/1999/xhtml")
           p: i= work_detail.work_type
