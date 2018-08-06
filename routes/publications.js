@@ -90,7 +90,7 @@ function getJournalPeople (req, res, next) {
 function getJournalAllWorkCount (req, res, next) {
   var journal_id = req.params.id;
 
-  db.run("SELECT j.id, COUNT(works_new.work_id) AS cnt FROM publications j JOIN works ON j.id = works_new.work_publication WHERE j.id = $1 GROUP BY j.id", [journal_id], function(err, results) {
+  db.run("SELECT j.id, COUNT(works_new.work_id) AS cnt FROM publications j JOIN works_new ON j.id = works_new.work_publication WHERE j.id = $1 GROUP BY j.id", [journal_id], function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
