@@ -1,37 +1,42 @@
 mixin buildSearchUrl(work_detail)
   case work_detail.work_type
-    when "book"
+    when "Book"
       include fulltext/books.pug
-    when "chapter"
+    when "Book Chapter"
       include fulltext/booksection.pug
-    when "article-journal"
+    when "Journal Article"
       include fulltext/article.pug
-    when "paper-conference"
+    when "Conference Paper"
       include fulltext/conference.pug
     default
       - searchurl = null
 mixin getMediaIcon(worktype, color)
   case worktype
     when "Book"
-    when "Book Section"
+    when "Book Chapter"
       span(class="icon ion-ios-book text-lighten-1 " + color + "-text")
+    when "Article (General)"
     when "Journal Article"
+    when "Magazine Article"
+    when "Newspaper Article"
       span(class="icon ion-document-text text-lighten-1 " + color + "-text")
     when "Conference Paper"
-    when "Presentation/Lecture"
+    when "Speech/Presentation"
     when "Conference Poster"
       span(class="icon ion-ios-people text-lighten-1 " + color + "-text")
-    when "Webpage"
+    when "Webpage/Website"
       span(class="icon ion-earth text-lighten-1 " + color + "-text")
     when "Blog Post"
       span(class="icon ion-social-rss text-lighten-1 " + color + "-text")
-    when "Sound Recording"
+    when "Audio Recording/Podcast"
+    when "Musical Score"
       span(class="icon ion-volume-medium text-lighten-1 " + color + "-text")
-    when "Video Recording"
+    when "Film/Video Recording"
+    when "TV/Radio Broadcast"
       span(class="icon ion-videocamera text-lighten-1 " + color + "-text")
     when "Book Review"
       span(class="icon ion-ios-bookmarks text-lighten-1 " + color + "-text")
-    when "Working Paper/Whitepaper/Report"
+    when "Report"
       span(class="icon ion-ios-list text-lighten-1 " + color + "-text")
     default
       span(class="icon ion-document text-lighten-1 " + color + "-text")
