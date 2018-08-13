@@ -8,7 +8,7 @@ case appconf.fulltext.booksearchtype
         - searchurl = appconf.appurls.catalogurl + 'discovery/search?vid=' + encodeURIComponent(appconf.fulltext.primoinstance) + '&sortby=rank&lang=en&query=isbn,exact,' + encodeURIComponent(work_detail.identifier)
   when "openurl"
     - searchurl  = appconf.appurls.appurls.linkresolver + '?ctx_ver=Z39.88-2004&rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3A'
-    - searchurl += 'book&rft.genre=bookitem&rft.atitle=' + encodeURIComponent(work_detail.work_data.title).replace(/%20/g, '+') + '&rft.btitle=' + work_detail.publication.replace(/%20/g, '+') + '&rft.date=' + work_detail.work_data.issued["date-parts"][0] + '&rft.isbn=' + work_detail.identifier
+    - searchurl += 'book&rft.genre=bookitem&rft.atitle=' + encodeURIComponent(work_detail.work_data.title).replace(/%20/g, '+') + '&rft.btitle=' + work_detail.publication.replace(/%20/g, '+') + '&rft.date=' + work_detail.work_data.issued["date-parts"][0][0] + '&rft.isbn=' + work_detail.identifier
     each contrib in work_detail.work_data.author
       - fullname = contrib.given + " " + contrib.family
       - searchurl += '&rft.au=' + encodeURIComponent(fullname)
