@@ -58,10 +58,10 @@ block content
                 a(href="/publishers/" + work_detail.publisherid)= work_detail.publisher
           if work_detail.work_data['publisher-place']
               td= work_detail.work_data['publisher-place']
-          if work_detail.work_data.issued[0]["date-parts"][0]
+          if work_detail.work_data.issued["date-parts"][0][0]
             tr
               th.right-align Date Published:
-              td= work_detail.work_data.issued[0]["date-parts"][0]
+              td= work_detail.work_data.issued["date-parts"][0][0]
           if work_detail.work_data.page
             - [start_page, end_page] = work_detail.work_data.page.split('-')
             if start_page
