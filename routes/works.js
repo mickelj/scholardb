@@ -277,7 +277,7 @@ function renderWorkDetail(req, res) {
 function getRssResults(req, res, next) {
   var limit = req.query.limit || 10;
 
-  db.run("SELECT DISTINCT works_new.work_id, work_data, work_contributors, publications.name as pubname, publications.id as pubid, works_new.updated_at, works_new.created_at FROM works_new JOIN publications ON publications.id = works.publication_id JOIN work_types on work_types.type=works_new.work_data->>'type' ORDER BY works_new.created_at DESC, works_new.work_id DESC LIMIT $1", [limit], function(err, results) {
+  db.run("SELECT DISTINCT works_new.work_id, work_data, work_contributors, publications.name as pubname, publications.id as pubid, works_new.updated_at, works_new.created_at FROM works_new JOIN publications ON publications.id = works_new.work_publication JOIN work_types on work_types.type=works_new.work_data->>'type' ORDER BY works_new.created_at DESC, works_new.work_id DESC LIMIT $1", [limit], function(err, results) {
     if (err || !results.length) {
       return next(err);
     }
