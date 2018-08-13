@@ -1,12 +1,12 @@
 mixin buildSearchUrl(work_detail)
   case work_detail.work_type
-    when "Book"
+    when "book"
       include fulltext/books.pug
-    when "Book Section"
+    when "chapter"
       include fulltext/booksection.pug
-    when "Journal Article"
+    when "article-journal"
       include fulltext/article.pug
-    when "Conference Paper"
+    when "paper-conference"
       include fulltext/conference.pug
     default
       - searchurl = null
