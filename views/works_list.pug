@@ -35,9 +35,6 @@ div.col.s12.works
                   i.material-icons.left move_to_inbox
                   span= appconf.archive.buttontext
               if searchurl
-                if work.work_type == "Book" || work.work_type == "Book Section"
-                  - var surl = searchurl
-                else
                   - var surl = "searchurl" + index
                   +holdings(searchurl, work.work_data.title, index)
                 button.btn-flat.waves-effect.waves-light.blue-text.text-darken-4.local-avail.modal-trigger(data-target=surl)
