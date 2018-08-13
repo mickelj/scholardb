@@ -76,7 +76,7 @@ function getWorksImages (req, res, next) {
 function getWorksImages (req, res, next) {
   var nconf = req.app.get('nconf');
   var idents = _.map(req.works, function(work) {
-    return work.work_data.ISBN ? work.work_data.ISBN.replace(/-/g, '') : 'null';
+    return work.identifier ? work.identifier.replace(/-/g, '') : 'null';
   });
 
   request.get(nconf.get('images:covimgsrv') + idents.join(','), function(err, res, body) {
@@ -87,7 +87,7 @@ function getWorksImages (req, res, next) {
     imgobj = JSON.parse(body);
 
     _.map(req.works, function(work) {
-      var wi = (work.work_data.ISBN ? work.work_data.ISBN.replace(/-/g, '') : null);
+      var wi = (work.identifier ? work.identifier.replace(/-/g, '') : null);
       work.coverimage = (wi in imgobj ? imgobj[wi] : null);
     });
 
