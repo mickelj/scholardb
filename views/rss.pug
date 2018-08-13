@@ -37,5 +37,5 @@ feed(xmlns='http://www.w3.org/2005/Atom')
               +contributors('composer', true)
             p
               a(href="publications/" + work_detail.pubid)= work_detail.pubname
-              |  (#{work_detail.work_data.issued[0]["date-parts"][0]})
+              |  (#{work_detail.work_data.issued["date-parts"][0][0]})
 
