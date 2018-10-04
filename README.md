@@ -1,7 +1,2 @@
-# scholardb
-
-Coming soon...
-
-#ScholarsDB
-
-A new way to view faculty publications
+# ScholarsDB
+Coming soon... A new way to view faculty publications
