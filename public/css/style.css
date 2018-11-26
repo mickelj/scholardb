@@ -29,6 +29,10 @@ select.browser-default {
   margin-bottom: .5rem;
 }
 
+select.page-selector {
+  margin-top: -0.5rem;
+}
+
 nav ul a.btn, nav ul a.btn-floating {
   margin-left: 5px;
   margin-right: 5px;
