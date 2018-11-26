@@ -300,6 +300,7 @@ function renderRssFeed(req, res) {
 
 router.get('/', processFilters, getWorkTypeCount, getDeptWorkCount, getPeopleWorkCount, getYearWorkCount, getPublicationWorkCount, getPublisherWorkCount, getWorksList, getWorksCount, getWorksImages, renderWorksList);
 router.get('/rss', getRssResults, renderRssFeed);
+router.get('/romeolist', getRomeoList, renderRomeoReport);
 router.get('/:id', getWorkDetail, getSingleImage, getRomeoDetails, renderWorkDetail);
 
 module.exports = router;
