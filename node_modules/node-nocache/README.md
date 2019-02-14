@@ -1,13 +1,14 @@
 node-nocache
 ============
 
+[![Build Status](https://travis-ci.org/mingchen/node-nocache.svg?branch=master)](https://travis-ci.org/mingchen/node-nocache)
+
+[![NPM](https://nodei.co/npm/node-nocache.png?downloads=true)](https://nodei.co/npm/node-nocache/)
+
 
 ## Introduction
 
-[![Build Status](https://travis-ci.org/mingchen/node-nocache.svg?branch=master)](https://travis-ci.org/mingchen/node-nocache)
-
-
-An node `express` middleware which add no-cache related headers for all the express response to disable caches. 
+A node `express` middleware which add no-cache related headers for all the express response to disable caches. 
 It is useful for REST API response, add no-cache headers to avoid browsers cache request response.
 
 The following headers are added to response header:
@@ -41,4 +42,9 @@ or
     });
 
 Checkout `test/nocache_test.js` for example usages.
+
+
+## License
+
+MIT
 
