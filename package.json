@@ -42,7 +42,7 @@
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "passport-windowsauth": "^3.0.1",
-    "pug": "^2.0.3",
+    "pug": "^3.0.1",
     "remove-punctuation": "0.0.4",
     "request": "^2.88.0",
     "stopword": "^0.1.13",
