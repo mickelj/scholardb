@@ -35,7 +35,7 @@
     "massive": "^2.7.5",
     "materialize": "^1.0.0",
     "materialize-css": "^1.0.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "nconf": "^0.8.5",
     "node-gyp": "^3.8.0",
     "node-nocache": "^1.0.5",
